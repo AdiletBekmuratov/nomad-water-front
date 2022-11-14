@@ -1,0 +1,6 @@
+build
+coverage
+
+*.html
+postcss.config.cjs
+tailwind.config.cjs
