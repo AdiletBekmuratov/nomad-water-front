@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import Choose from './choose';
+import Choose from '../components/choose';
 
 const Register: FC = () => {
   const [isPhone, setPhone] = useState('phone');
@@ -12,7 +12,7 @@ const Register: FC = () => {
     <section className="flex justify-center ">
       <div className="block">
         <h3 className="font-roboto text-center font-semibold text-lg">Регистрация</h3>
-        <form action="">
+        <form action="" className="flex justify-between">
           <input
             type="radio"
             name="handleCheck"
