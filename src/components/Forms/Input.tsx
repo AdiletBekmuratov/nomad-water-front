@@ -8,20 +8,20 @@ type Props = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputE
   mask?: string;
 };
 
-const CONSTANT_CLASSNAMES = 'py-2 px-4 bg-white text-sm rounded-md';
+const CONSTANT_CLASSNAMES = 'py-2 px-4 bg-white text-sm rounded-md w-full';
 
 export const Input: FC<Props> = (props) => {
   return (
     <div className="flex flex-col space-y-1">
       {props.label && (
-        <label htmlFor={props.id} className="font-roboto">
+        <label htmlFor={props.id} className="font-montserrat">
           {props.label}
         </label>
       )}
       {props.inputType === 'formik' ? (
         <Field
           {...props}
-          className={`${CONSTANT_CLASSNAMES} ${props.className}`}
+          className={`${CONSTANT_CLASSNAMES} ${props.className} border border-gray-200`}
           component={props.mask ? ReactInputMask : 'input'}
         />
       ) : (

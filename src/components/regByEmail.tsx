@@ -1,6 +1,6 @@
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-import { Button } from './Forms';
+import { Button, Input } from './Forms';
 
 type formValues = {
   email: string;
@@ -25,44 +25,38 @@ const RegByEmail = () => {
         initialValues={initialValues}
         validateOnBlur
         onSubmit={(values) => {
-          alert(values);
+          alert(JSON.stringify(values, null, 2));
         }}
         validationSchema={validation}>
-        {({ values, errors, touched, handleChange, handleBlur, isValid, dirty }) => (
-          <>
-            <label htmlFor="" className="block font-roboto">
-              Почта
-            </label>
+        {({ isValid }) => (
+          <Form className="flex flex-col space-y-4">
+            <Input
+              inputType="formik"
+              id="email"
+              name="email"
+              type="email"
+              label="Почта"
+              placeholder="Почта"
+            />
+            <Input
+              inputType="formik"
+              id="password"
+              name="password"
+              type="password"
+              label="Пароль"
+            />
+            <Input
+              inputType="formik"
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              label="Подтвердите пароль"
+            />
 
-            {touched.email && errors.email && <p className="text-red">{errors.email}</p>}
-            <label htmlFor="" className="block font-roboto">
-              Пароль
-            </label>
-            <input
-              type="password"
-              name={`password`}
-              className="block font-roboto"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-            />
-            {touched.password && errors.password && <p className="text-red">{errors.password}</p>}
-            <label htmlFor="" className="block font-roboto">
-              Повторите пароль
-            </label>
-            <input
-              type="password"
-              name={`confirmPassword`}
-              className="block font-roboto"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.confirmPassword}
-            />
-            {touched.confirmPassword && errors.confirmPassword && (
-              <p className="text-red">{errors.confirmPassword}</p>
-            )}
-            <Button type="submit" />
-          </>
+            <Button type="submit" disabled={!isValid}>
+              Отправить
+            </Button>
+          </Form>
         )}
       </Formik>
     </>

@@ -1,8 +1,6 @@
-import { motion } from 'framer-motion';
-
-import { Header } from '@/components/Header';
 import { First } from '@/components/First';
-import { Second } from '@/components/Second';
+import { Header } from '@/components/Header';
+// import { Second } from '@/components/Second';
 
 const Home = () => {
   return (

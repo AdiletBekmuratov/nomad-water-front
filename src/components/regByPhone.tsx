@@ -1,6 +1,5 @@
 import { Form, Formik } from 'formik';
 import * as yup from 'yup';
-import InputMask from 'react-input-mask';
 
 import { Button, Input } from './Forms';
 
@@ -29,33 +28,33 @@ export const RegByPhone = () => {
         validateOnBlur
         onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
         validationSchema={validation}>
-        {({ values, errors, touched, handleChange, handleBlur, isValid }) => (
+        {({ isValid }) => (
           <Form className="flex flex-col space-y-4">
-            <Input inputType="formik" id="phone" name="phone" type={'tel'} label="Phone" />
+            <Input
+              inputType="formik"
+              id="phone"
+              name="phone"
+              type={'tel'}
+              label="Номер телефона"
+              mask="+7 (999) 999-99-99"
+              placeholder="+7 (999) 999-99-99"
+            />
 
             <Input
               inputType="formik"
               id="password"
               name="password"
               type={'password'}
-              label="Password"
+              label="Пароль"
             />
-            {touched.password && errors.password && <p className="text-red">{errors.password}</p>}
-            <label htmlFor="password" className="font-roboto">
-              Пароль
-            </label>
-            <input
-              type="password"
-              id="password"
+            <Input
+              inputType="formik"
+              id="confirmPassword"
               name="confirmPassword"
-              className="block"
-              value={values.confirmPassword}
-              onBlur={handleBlur}
-              onChange={handleChange}
+              type={`password`}
+              label={`Подтвердите пароль`}
             />
-            {touched.confirmPassword && errors.confirmPassword && (
-              <p className="text-red">{errors.confirmPassword}</p>
-            )}
+
             <Button type="submit" disabled={!isValid}>
               Отправить
             </Button>
