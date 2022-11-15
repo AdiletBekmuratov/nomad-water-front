@@ -3,7 +3,3 @@
 @tailwind components;
 @tailwind utilities;
 
-.container{
-   font-family: 'Montserrat', sans-serif;
-   font-size: 14px;
-}

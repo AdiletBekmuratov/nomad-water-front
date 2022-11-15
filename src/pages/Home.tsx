@@ -1,10 +1,11 @@
 import { Header } from '@/components/Header';
-import React from 'react';
+import { First } from '@/components/First';
 
 const Home = () => {
   return (
-    <div className="bg-[#EBF3F6] h-screen">
+    <div className={`bg-light-blue h-screen relative`}>
       <Header />
+      <First />
     </div>
   );
 };
