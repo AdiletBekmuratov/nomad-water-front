@@ -1,7 +1,8 @@
-import { Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import * as yup from 'yup';
-import Button from './button';
 import InputMask from 'react-input-mask';
+
+import { Button, Input } from './Forms';
 
 type formValues = {
   phone: string;
@@ -26,36 +27,18 @@ export const RegByPhone = () => {
       <Formik
         initialValues={initialValues}
         validateOnBlur
-        onSubmit={(values) => alert(values)}
+        onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
         validationSchema={validation}>
-        {({ values, errors, touched, handleChange, handleBlur, isValid, dirty }) => (
-          <>
-            <label htmlFor="phone" className="font-roboto">
-              Номер телефона
-            </label>
-            <InputMask
-              mask="+7-(999)-999-9999"
-              value={values.phone}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              className="block"
-              name="phone"
-              id="phone"
-              type="tel"
-              placeholder="+7-(999)-999-9999"
-            />
-            {touched.phone && errors.phone && <p className="text-red">{errors.phone}</p>}
-            <label htmlFor="password" className="font-roboto">
-              Пароль
-            </label>
-            <input
-              type="password"
-              name="password"
+        {({ values, errors, touched, handleChange, handleBlur, isValid }) => (
+          <Form className="flex flex-col space-y-4">
+            <Input inputType="formik" id="phone" name="phone" type={'tel'} label="Phone" />
+
+            <Input
+              inputType="formik"
               id="password"
-              className="block"
-              value={values.password}
-              onBlur={handleBlur}
-              onChange={handleChange}
+              name="password"
+              type={'password'}
+              label="Password"
             />
             {touched.password && errors.password && <p className="text-red">{errors.password}</p>}
             <label htmlFor="password" className="font-roboto">
@@ -73,8 +56,10 @@ export const RegByPhone = () => {
             {touched.confirmPassword && errors.confirmPassword && (
               <p className="text-red">{errors.confirmPassword}</p>
             )}
-            <Button isDisabled={!isValid && !dirty} data={values} />
-          </>
+            <Button type="submit" disabled={!isValid}>
+              Отправить
+            </Button>
+          </Form>
         )}
       </Formik>
     </>

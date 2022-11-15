@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import Button from './button';
+import { Button } from './Forms';
 
 type formValues = {
   email: string;
@@ -33,13 +33,7 @@ const RegByEmail = () => {
             <label htmlFor="" className="block font-roboto">
               Почта
             </label>
-            <input
-              type="email"
-              name={`email`}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-            />
+
             {touched.email && errors.email && <p className="text-red">{errors.email}</p>}
             <label htmlFor="" className="block font-roboto">
               Пароль
@@ -67,7 +61,7 @@ const RegByEmail = () => {
             {touched.confirmPassword && errors.confirmPassword && (
               <p className="text-red">{errors.confirmPassword}</p>
             )}
-            <Button isDisabled={!isValid && !dirty} data={values} />
+            <Button type="submit" />
           </>
         )}
       </Formik>
