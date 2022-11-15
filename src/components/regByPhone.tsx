@@ -1,16 +1,17 @@
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import Button from './button';
+import InputMask from 'react-input-mask';
 
 type formValues = {
-  phone: number;
+  phone: string;
   password: string;
   confirmPassword: string;
 };
 
 export const RegByPhone = () => {
   const validation = yup.object().shape({
-    phone: yup.number().required('Это поле обязательное'),
+    phone: yup.string().required('Это поле обязательное'),
     password: yup.string().required('Поле обязательное'),
     confirmPassword: yup
       .string()
@@ -18,7 +19,7 @@ export const RegByPhone = () => {
       .required('Поле обязательное')
   });
 
-  const initialValues: formValues = { phone: 7, password: '', confirmPassword: '' };
+  const initialValues: formValues = { phone: '', password: '', confirmPassword: '' };
 
   return (
     <>
@@ -32,15 +33,16 @@ export const RegByPhone = () => {
             <label htmlFor="phone" className="font-roboto">
               Номер телефона
             </label>
-            <input
-              type="tel"
-              id="phone"
-              className="block"
-              name="phone"
+            <InputMask
+              mask="+7-(999)-999-9999"
               value={values.phone}
               onBlur={handleBlur}
-              pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}"
               onChange={handleChange}
+              className="block"
+              name="phone"
+              id="phone"
+              type="tel"
+              placeholder="+7-(999)-999-9999"
             />
             {touched.phone && errors.phone && <p className="text-red">{errors.phone}</p>}
             <label htmlFor="password" className="font-roboto">
