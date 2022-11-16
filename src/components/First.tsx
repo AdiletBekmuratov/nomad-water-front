@@ -24,7 +24,7 @@ const bottleAnimation = {
   },
   visible: (custom: any) => ({
     scale: 0.7,
-    y: 30,
+    y: 10,
     transition: { duration: 1.5, delay: custom * 0.5 }
   })
 };
@@ -115,7 +115,7 @@ export const First = () => {
       <motion.img
         custom={3}
         variants={downBottleAnimation}
-        className={`absolute top-16 right-32 `}
+        className={`absolute top-4 right-32 `}
         src={bottleDown}
         alt="background"
       />
