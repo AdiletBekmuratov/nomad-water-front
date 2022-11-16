@@ -56,9 +56,9 @@ const astanaAnimation = {
 export const About = () => {
   return (
     <div className={`snap-y `}>
-      {data.map((cart) => (
+      {data.map((item) => (
         <motion.div
-          key={cart.id}
+          key={item.id}
           className={`snap-start bg-light-blue text-dark-blue h-screen w-full relative px-7`}>
           <motion.div className={`absolute top-20 r-2 overflow-x-hidden`}>
             <motion.img
@@ -74,81 +74,18 @@ export const About = () => {
           <motion.div
             className={`flex w-full text-base pt-44 items-center leading-relaxed tracking-wide`}>
             <motion.div className={`w-64 h-44  ml-48 text-right`}>
-              <h2 className={`text-2xl font-bold mb-5`}>{cart.titleLeft}</h2>
-              <span>{cart.textLeft}</span>
+              <h2 className={`text-2xl font-bold mb-5`}>{item.titleLeft}</h2>
+              <span>{item.textLeft}</span>
+              <button></button>
             </motion.div>
-            <motion.img className={`mx-auto `} src={cart.img} alt="bottleX" />
+            <motion.img className={`mx-auto `} src={item.img} alt="bottleX" />
             <motion.div className={`w-64 h-44  mr-48 text-left `}>
-              <h2 className={`text-2xl font-bold mb-5`}> {cart.titleRight}</h2>
-              <span>{cart.textRight}</span>
+              <h2 className={`text-2xl font-bold mb-5`}> {item.titleRight}</h2>
+              <span>{item.textRight}</span>
             </motion.div>
           </motion.div>
         </motion.div>
       ))}
-      {/* <motion.div
-        className={`snap-start bg-light-blue text-dark-blue h-screen w-full relative px-7`}>
-        <motion.div className={`absolute top-20 r-2 overflow-x-hidden`}>
-          <motion.img
-            whileInView="visible"
-            custom={3}
-            viewport={{ amount: 0.1 }}
-            variants={astanaAnimation}
-            className={``}
-            src={astana}
-            alt="astanahub"
-          />
-        </motion.div>
-        <motion.div
-          className={`flex w-full text-base pt-44 items-center leading-relaxed tracking-wide`}>
-          <motion.div className={`w-64 h-44  ml-48 text-right`}>
-            <h2 className={`text-2xl font-bold mb-5`}>4000+ клиентов</h2>
-            <span>
-              Описание характеристики с каким-то подверждением. Описание характеристики с каким-то
-              подверждением.
-            </span>
-          </motion.div>
-          <motion.img className={`mx-auto `} src={bottleX} alt="bottleX" />
-          <motion.div className={`w-64 h-44  mr-48 text-left `}>
-            <h2 className={`text-2xl font-bold mb-5`}> быстрая доставка</h2>
-            <span>
-              Описание характеристики с каким-то подверждением. Описание характеристики с каким-то
-              подверждением.
-            </span>
-          </motion.div>
-        </motion.div>
-      </motion.div>
-      <motion.div
-        className={`snap-start bg-light-blue text-dark-blue h-screen w-full relative px-7`}>
-        <motion.div className={`absolute top-20 r-2 overflow-x-hidden`}>
-          <motion.img
-            whileInView="visible"
-            custom={3}
-            viewport={{ amount: 0.1 }}
-            variants={astanaAnimation}
-            className={``}
-            src={astana}
-            alt="astanahub"
-          />
-        </motion.div>
-        <motion.div
-          className={`flex w-full text-base pt-44 items-center leading-relaxed tracking-wide`}>
-          <motion.div className={`w-64 h-44  ml-48 text-right`}>
-            <h2 className={`text-2xl font-bold mb-5`}>4000+ клиентов</h2>
-            <span>
-              Описание характеристики с каким-то подверждением. Описание характеристики с каким-то
-              подверждением.
-            </span>
-          </motion.div>
-          <motion.img className={`mx-auto `} src={bottleX} alt="bottleX" />
-          <motion.div className={`w-64 h-44  mr-48 text-left `}>
-            <h2 className={`text-2xl font-bold mb-5`}> быстрая доставка</h2>
-            <span>
-              Описание характеристики с каким-то подверждением. Описание характеристики с каким-то
-              подверждением.
-            </span>
-          </motion.div>
-        </motion.div>
-      </motion.div> */}
     </div>
   );
 };
