@@ -34,7 +34,6 @@ export const RegByPhone = () => {
               inputType="formik"
               id="phone"
               name="phone"
-              type={'tel'}
               label="Номер телефона"
               mask="+7 (999) 999-99-99"
               placeholder="+7 (999) 999-99-99"

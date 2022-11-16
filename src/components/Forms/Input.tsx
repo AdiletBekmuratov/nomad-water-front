@@ -8,9 +8,9 @@ type Props = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputE
   mask?: string;
 };
 
-const CONSTANT_CLASSNAMES = 'py-2 px-4 bg-white text-sm rounded-md w-full';
+const CONSTANT_CLASSNAMES = 'py-2 px-4 bg-white text-sm rounded-md w-full border border-gray-200';
 
-export const Input: FC<Props> = (props) => {
+export const Input: FC<Props> = ({ inputType = 'default', ...props }) => {
   return (
     <div className="flex flex-col space-y-1">
       {props.label && (
@@ -18,12 +18,24 @@ export const Input: FC<Props> = (props) => {
           {props.label}
         </label>
       )}
-      {props.inputType === 'formik' ? (
-        <Field
-          {...props}
-          className={`${CONSTANT_CLASSNAMES} ${props.className} border border-gray-200`}
-          component={props.mask ? ReactInputMask : 'input'}
-        />
+      {inputType === 'formik' ? (
+        props?.mask ? (
+          <Field
+            name={props.name}
+            render={({ field }: { field: any }) => {
+              return (
+                <ReactInputMask
+                  {...field}
+                  id={props.name}
+                  mask={props.mask}
+                  className={`${CONSTANT_CLASSNAMES} ${props.className}`}
+                />
+              );
+            }}
+          />
+        ) : (
+          <Field {...props} className={`${CONSTANT_CLASSNAMES} ${props.className}`} />
+        )
       ) : (
         <input {...props} className={`${CONSTANT_CLASSNAMES} ${props.className}`} />
       )}
