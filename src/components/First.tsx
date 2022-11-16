@@ -16,7 +16,6 @@ const textAnimation = {
     opacity: 0.8
   })
 };
-
 const bottleAnimation = {
   hidden: {
     scale: 1,
@@ -24,7 +23,7 @@ const bottleAnimation = {
   },
   visible: (custom: any) => ({
     scale: 0.7,
-    y: 10,
+    y: 1,
     transition: { duration: 1.5, delay: custom * 0.5 }
   })
 };
@@ -45,7 +44,7 @@ const downBottleAnimation = {
   visible: (custom: any) => ({
     y: 550,
     opacity: 1,
-    transition: { duration: 1, delay: custom * 1 }
+    transition: { duration: 0.7, delay: custom * 1 }
   })
 };
 const h1Animation = {
@@ -87,7 +86,7 @@ export const First = () => {
       <motion.img
         custom={2}
         variants={bottleAnimation}
-        className={`absolute z-0 mt-20`}
+        className={`absolute z-0 mt-16`}
         src={bottle}
         alt="bottle"
       />
@@ -110,7 +109,7 @@ export const First = () => {
           content.
         </span>
       </motion.div>
-      <motion.div initial="hidden" whileInView="visible">
+      <motion.div initial="hidden" whileInView="visible" viewport={{ amount: 0.2, once: true }}>
         <motion.img
           custom={4}
           variants={downBottleAnimation}
