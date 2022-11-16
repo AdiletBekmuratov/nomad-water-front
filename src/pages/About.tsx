@@ -76,7 +76,14 @@ export const About = () => {
             <motion.div className={`w-64 h-44  ml-48 text-right`}>
               <h2 className={`text-2xl font-bold mb-5`}>{item.titleLeft}</h2>
               <span>{item.textLeft}</span>
-              <button></button>
+              {item.id === 3 && (
+                <a
+                  href="/"
+                  type="button"
+                  className={`mt-5 px-5 py-3 rounded-3xl leading-7 tracking-widest border text-base border-dark-blue hover:bg-medium-blue`}>
+                  открыть каталог
+                </a>
+              )}
             </motion.div>
             <motion.img className={`mx-auto `} src={item.img} alt="bottleX" />
             <motion.div className={`w-64 h-44  mr-48 text-left `}>

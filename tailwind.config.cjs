@@ -8,14 +8,15 @@ module.exports = {
         montserrat: ['Montserrat', 'sans-serif']
       },
       colors: {
-        main: '#9D9DAB',
-        'dark-blue': '#023646',
-        'light-blue': '#EBF3F6'
-      },
-      backgroundImage: {
-        astana: "url('./src/assets/astanaHub.png')"
+        "dark-blue": "#023646",
+        "medium-blue": "#54B8F0",
+        "light-blue": "#EBF3F6",
+        main: '#9D9DAB',}
+        ,
+        backgroundImage: {
+          astana: "url('./src/assets/astanaHub.png')"
+        }
       }
-    }
-  },
-  plugins: [require('@tailwindcss/forms')]
-};
+    },
+    plugins: [require('@tailwindcss/forms')]
+  };
