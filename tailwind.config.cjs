@@ -8,9 +8,13 @@ module.exports = {
       },
       colors: {
         main: '#9D9DAB',
-        'dark-blue': '#023646'
+        'dark-blue': '#023646',
+        'light-blue': '#EBF3F6'
+      },
+      backgroundImage: {
+        astana: "url('./src/assets/astanaHub.png')"
       }
     }
   },
-  plugins: []
+  plugins: [require('@tailwindcss/forms')]
 };
