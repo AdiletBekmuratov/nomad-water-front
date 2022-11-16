@@ -6,6 +6,9 @@ module.exports = {
       colors: {
         "dark-blue": "#023646",
         "light-blue":"#EBF3F6",
+      },
+      backgroundImage: {
+        'astana': "url('./src/assets/astanaHub.png')",
       }
     },
 
