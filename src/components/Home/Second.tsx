@@ -29,7 +29,7 @@ export const Second = () => {
       initial="hidden"
       whileInView="visible"
       custom={3}
-      viewport={{ amount: 0.5 }}
+      viewport={{ amount: 0.5, once: true }}
       className={`flex justify-center w-full h-screen snap-start bg-light-blue `}>
       <motion.div
         variants={h1Animation}

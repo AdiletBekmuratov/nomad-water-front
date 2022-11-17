@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 
 import bottleX from '../../assets/2l.png';
@@ -95,8 +94,7 @@ export const About = () => {
         whileInView="visible"
         viewport={{ amount: 0.5 }}
         variants={bottleAnimation}
-        className={`absolute top-32 left-1/2 w-1/7 h-1/7
-              `}
+        className={`absolute top-32 left-1/2 w-1/7 h-1/7`}
         src={item.img}
         alt="bottleX"
       />

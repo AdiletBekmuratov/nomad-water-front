@@ -4,4 +4,3 @@ export * from './Footer';
 export * from './Header';
 export * from './Question';
 export * from './Second';
-export * from './Quesh';
