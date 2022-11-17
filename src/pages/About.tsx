@@ -47,52 +47,94 @@ const astanaAnimation = {
     opacity: 1
   },
   visible: {
-    transition: { duration: 2.5, delay: 0.3 },
+    transition: { duration: 1.5, delay: 0.1 },
     x: -1200,
     opacity: 0
+  }
+};
+const textAnimation = {
+  hidden: {
+    y: 100,
+    opacity: 0
+  },
+  visible: {
+    transition: { duration: 1.5 },
+    y: 0,
+    opacity: 1
+  }
+};
+const bottleAnimation = {
+  hidden: {
+    x: 0,
+    opacity: 0
+  },
+  visible: {
+    transition: { duration: 1, delay: 1 },
+    x: -75,
+    opacity: 1
   }
 };
 
 export const About = () => {
   return (
-    <div className={`snap-y `}>
+    <motion.div className={`snap-y `}>
       {data.map((item) => (
         <motion.div
           key={item.id}
           className={`snap-start bg-light-blue text-dark-blue h-screen w-full relative px-7`}>
-          <motion.div className={`absolute top-20 r-2 overflow-x-hidden`}>
+          <motion.div className={`absolute top-0 r-2 overflow-x-hidden`}>
             <motion.img
               whileInView="visible"
               custom={3}
               viewport={{ amount: 0.1 }}
               variants={astanaAnimation}
-              className={``}
               src={astana}
               alt="astanahub"
             />
           </motion.div>
+          <motion.img
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.5 }}
+            variants={bottleAnimation}
+            className={`absolute top-16 left-1/2 w-1/7 h-1/7
+              `}
+            src={item.img}
+            alt="bottleX"
+          />
           <motion.div
-            className={`flex w-full text-base pt-44 items-center leading-relaxed tracking-wide`}>
-            <motion.div className={`w-64 h-44  ml-48 text-right`}>
+            className={`flex w-full text-base  pt-44 items-center leading-relaxed tracking-wide`}>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ amount: 0.5 }}
+              variants={textAnimation}
+              className={`w-72 h-44  mx-auto text-right`}>
               <h2 className={`text-2xl font-bold mb-5`}>{item.titleLeft}</h2>
-              <span>{item.textLeft}</span>
+              <span className={`w-32`}>{item.textLeft}</span>
               {item.id === 3 && (
                 <a
                   href="/"
                   type="button"
-                  className={`mt-5 px-5 py-3 rounded-3xl leading-7 tracking-widest border text-base border-dark-blue hover:bg-medium-blue`}>
+                  className={`mt-5 px-5 py-3 rounded-3xl leading-7 tracking-widest 
+                  border text-base border-dark-blue hover:bg-medium-blue text-center`}>
                   открыть каталог
                 </a>
               )}
             </motion.div>
-            <motion.img className={`mx-auto `} src={item.img} alt="bottleX" />
-            <motion.div className={`w-64 h-44  mr-48 text-left `}>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ amount: 0.5 }}
+              variants={textAnimation}
+              className={`w-64 h-44 mx-auto text-left `}>
               <h2 className={`text-2xl font-bold mb-5`}> {item.titleRight}</h2>
-              <span>{item.textRight}</span>
+              <span className={`w-44`}>{item.textRight}</span>
             </motion.div>
           </motion.div>
         </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };

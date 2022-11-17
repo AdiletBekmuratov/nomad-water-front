@@ -18,7 +18,7 @@ const textAnimation = {
 };
 const bottleAnimation = {
   hidden: {
-    scale: 1,
+    scale: 0.9,
     y: 0
   },
   visible: (custom: any) => ({
@@ -92,7 +92,6 @@ export const First = () => {
       />
       <motion.img
         custom={3}
-        //   variants={backgroundAnimation}
         className={`z-10 w-full absolute mt-64`}
         src={backGr}
         alt="background"

@@ -11,6 +11,7 @@ module.exports = {
         "dark-blue": "#023646",
         "medium-blue": "#54B8F0",
         "light-blue": "#EBF3F6",
+        "footer-color": "#232B2E",
         main: '#9D9DAB',}
         ,
         backgroundImage: {
