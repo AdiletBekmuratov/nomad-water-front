@@ -1,7 +1,7 @@
 import { Button, Input } from '@/components/Forms';
 import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
-
+import { motion } from 'framer-motion';
 type formValues = {
   name: string;
   phone: string;
@@ -17,8 +17,8 @@ export const Question = () => {
   const initialValues: formValues = { name: '', phone: '', question: '' };
 
   return (
-    <section className={`bg-light-blue text-dark-blue h-screen relative flex items-center`}>
-      <div className={`w-1/3 h-2/3 mx-auto mt-10 flex flex-col`}>
+    <motion.section className={`  w-full h-screen snap-start`}>
+      <div className={` text-dark-blue mx-auto mt-10 flex flex-col items-center`}>
         <span className={`text-2xl leading-7 font-extrabold tracking-wide`}>
           Появился вопрос? Мы всегда готовы вам помочь!
         </span>
@@ -27,7 +27,7 @@ export const Question = () => {
           validateOnBlur
           onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
           validationSchema={validation}>
-          {({ values, handleChange, handleBlur, isValid }) => (
+          {({ handleChange, handleBlur, isValid }) => (
             <Form className="flex flex-col space-y-4 text-dark-blue">
               <Input
                 inputType="formik"
@@ -60,6 +60,6 @@ export const Question = () => {
           )}
         </Formik>
       </div>
-    </section>
+    </motion.section>
   );
 };

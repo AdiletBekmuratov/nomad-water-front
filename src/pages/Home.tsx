@@ -1,13 +1,12 @@
-import { Header } from '@/components/Header';
-import { First } from '@/components/First';
-import { About } from './About';
-import { Question } from './Question';
-import { Footer } from './Footer';
+import { Header, First, About, Question, Second, Footer } from '@/components/Home';
+
 const Home = () => {
   return (
-    <div className={`bg-light-blue h-screen relative`}>
+    <div
+      className={`bg-light-blue relative w-full scroll-smooth overflow-auto snap-y snap-mandatory h-screen`}>
       <Header />
       <First />
+      <Second />
       <About />
       <Question />
       <Footer />

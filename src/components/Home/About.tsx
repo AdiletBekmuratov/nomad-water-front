@@ -1,11 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import bottleX from '../assets/2l.png';
-import bottleXl from '../assets/5l.png';
-import bottle2Xl from '../assets/8l.png';
+import bottleX from '../../assets/2l.png';
+import bottleXl from '../../assets/5l.png';
+import bottle2Xl from '../../assets/8l.png';
 
-import astana from '../assets/astana2.png';
+import astana from '../../assets/astana2.png';
 
 const data = [
   {
@@ -77,7 +77,7 @@ const bottleAnimation = {
 
 export const About = () => {
   return (
-    <motion.div className={`snap-y `}>
+    <motion.section className={`w-full h-screen snap-start `}>
       {data.map((item) => (
         <motion.div
           key={item.id}
@@ -97,13 +97,13 @@ export const About = () => {
             whileInView="visible"
             viewport={{ amount: 0.5 }}
             variants={bottleAnimation}
-            className={`absolute top-16 left-1/2 w-1/7 h-1/7
+            className={`absolute top-32 left-1/2 w-1/7 h-1/7
               `}
             src={item.img}
             alt="bottleX"
           />
           <motion.div
-            className={`flex w-full text-base  pt-44 items-center leading-relaxed tracking-wide`}>
+            className={`flex w-full text-base  pt-64 items-center leading-relaxed tracking-wide`}>
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -135,6 +135,6 @@ export const About = () => {
           </motion.div>
         </motion.div>
       ))}
-    </motion.div>
+    </motion.section>
   );
 };

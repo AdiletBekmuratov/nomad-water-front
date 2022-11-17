@@ -1,4 +1,4 @@
-import logo from '../assets/logoHead.png';
+import logo from '../../assets/logoHead.png';
 import { BiMenuAltRight } from 'react-icons/bi';
 
 export const Header = () => {

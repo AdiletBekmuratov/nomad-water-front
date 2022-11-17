@@ -1,8 +1,6 @@
-import React from 'react';
-
 export const Footer = () => {
   return (
-    <footer className={`h-60 bg-footer-color text-white px-48 font-bold leading-5 flex`}>
+    <footer className={`h-60 w-full bg-footer-color text-white px-48 font-bold leading-5 flex`}>
       <div className={`w-2/3 grid grid-cols-3 auto-rows-max justify-between py-16 mr-12 gap-5   `}>
         <a href="/">Акции</a>
         <a href="/">Каталог</a>
