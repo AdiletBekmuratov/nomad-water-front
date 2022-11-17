@@ -1,7 +1,7 @@
 import { Header } from '@/components/Header';
 import { First } from '@/components/First';
 import { About } from './About';
-import { Qushions } from './Qushions';
+import { Question } from './Question';
 import { Footer } from './Footer';
 const Home = () => {
   return (
@@ -9,7 +9,7 @@ const Home = () => {
       <Header />
       <First />
       <About />
-      <Qushions />
+      <Question />
       <Footer />
     </div>
   );
