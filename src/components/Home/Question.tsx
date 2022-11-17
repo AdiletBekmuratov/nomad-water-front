@@ -2,6 +2,7 @@ import { Button, Input } from '@/components/Forms';
 import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 import { motion } from 'framer-motion';
+import { Footer } from './Footer';
 type formValues = {
   name: string;
   phone: string;
@@ -60,6 +61,7 @@ export const Question = () => {
           )}
         </Formik>
       </div>
+      <Footer />
     </motion.section>
   );
 };

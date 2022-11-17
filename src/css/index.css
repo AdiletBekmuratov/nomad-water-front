@@ -5,4 +5,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
+@layer base{
+   .content{
+      @apply flex
+   }
+}

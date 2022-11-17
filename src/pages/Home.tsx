@@ -1,4 +1,4 @@
-import { Header, First, About, Question, Second, Footer } from '@/components/Home';
+import { Header, First, About, Question, Second } from '@/components/Home';
 
 const Home = () => {
   return (
@@ -8,8 +8,8 @@ const Home = () => {
       <First />
       <Second />
       <About />
+
       <Question />
-      <Footer />
     </div>
   );
 };
