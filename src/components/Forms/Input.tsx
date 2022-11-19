@@ -9,6 +9,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
   name: string;
   className?: string;
+  placeholder?: string;
 }
 
 const CONSTANT_CLASSNAMES = 'py-2 px-4 bg-white text-sm rounded-md w-full border border-gray-200';

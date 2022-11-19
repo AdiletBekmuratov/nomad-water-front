@@ -1,4 +1,4 @@
-import { Modal } from '@/components/modal';
+import { Modal } from '@/components/UI';
 import { FC } from 'react';
 import { Card } from '../components/Forms/index';
 import Register from './Register';
