@@ -31,13 +31,18 @@ export const Input: FC<Props> = ({ inputType = 'default', ...props }) => {
                   {...field}
                   id={props.name}
                   mask={props.mask}
+                  placeholder={props.placeholder}
                   className={`${CONSTANT_CLASSNAMES} ${props.className}`}
                 />
               );
             }}
           />
         ) : (
-          <Field {...props} className={`${CONSTANT_CLASSNAMES} ${props.className}`} />
+          <Field
+            {...props}
+            className={`${CONSTANT_CLASSNAMES} ${props.className}`}
+            component={'input'}
+          />
         )
       ) : (
         <input {...props} className={`${CONSTANT_CLASSNAMES} ${props.className}`} />

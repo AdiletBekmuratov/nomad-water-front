@@ -16,8 +16,9 @@ export const TextArea: FC<Props> = (props) => {
         </label>
       )}
       <Field
-        className={`${CONSTANT_CLASSNAMES} border border-gray-200`}
+        className={`${CONSTANT_CLASSNAMES} border border-gray-200 ${props.className}`}
         component="textarea"
+        placeholder={props.placeholder}
         {...props}
       />
       <ErrorMessage component={'div'} name={props.name!} className="text-xs text-red-500" />
