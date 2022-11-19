@@ -9,15 +9,16 @@ module.exports = {
       },
       colors: {
         "dark-blue": "#023646",
-        "medium-blue": "#54B8F0",
+        "medium-blue": "#5a8c9a",
         "light-blue": "#EBF3F6",
         "footer-color": "#232B2E",
-        main: '#9D9DAB',}
-        ,
-        backgroundImage: {
-          astana: "url('./src/assets/astanaHub.png')"
-        }
+        main: '#9D9DAB',
       }
-    },
-    plugins: [require('@tailwindcss/forms')]
-  };
+      ,
+      backgroundImage: {
+        astana: "url('./src/assets/astanaHub.png')"
+      }
+    }
+  },
+  plugins: [require('@tailwindcss/forms')]
+};
