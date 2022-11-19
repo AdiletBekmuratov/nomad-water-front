@@ -31,8 +31,11 @@ const FaqComp: FC<Props> = (props) => {
         }}>
         {({ isValid }) => (
           <>
-            <h3 className="text-2xl font-extrabold text-dark-blue">{props.header}</h3>
-            <Form className="flex flex-col space-y-4">
+            <h3
+              className={`mb-2 lg:text-2xl font-bold lg:font-extrabold lg:tracking-wide leading-5 lg:leading-7 text-dark-blue`}>
+              {props.header}
+            </h3>
+            <Form className={`flex flex-col space-y-4 text-sm lg:text-base`}>
               <Input inputType="formik" name="name" type="text" label="Имя" />
               <Input
                 inputType="formik"
@@ -44,7 +47,7 @@ const FaqComp: FC<Props> = (props) => {
                 placeholder="+7 (999) 999-99-99"
               />
               <TextArea name={`question`} id="question" label="Ваш вопрос" />
-              <Button disabled={!isValid} type="submit" className="px-44">
+              <Button disabled={!isValid} type="submit" className="">
                 Отправить заявку
               </Button>
             </Form>

@@ -1,13 +1,15 @@
-import { First } from '@/components/First';
-import { Header } from '@/components/Header';
-// import { Second } from '@/components/Second';
+import { Header, First, About, Question, Second } from '@/components/Home';
 
 const Home = () => {
   return (
-    <div className={`bg-light-blue h-screen relative`}>
+    <div
+      className={`bg-light-blue relative w-full scroll-smooth overflow-auto snap-y snap-mandatory h-screen overflow-x-hidden`}>
       <Header />
       <First />
-      {/* <Second /> */}
+      <Second />
+      <About />
+
+      <Question />
     </div>
   );
 };
