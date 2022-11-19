@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import ScrollToTop from '@/components/ScrollToTop';
 import RegisterForm from '@/pages/RegisterForm';
+import ApplicationForm from '@/pages/ApplicationForm';
 
 const Home = lazy(() => import('@/pages/Home'));
 
@@ -20,6 +21,7 @@ const AppRoutes = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<RegisterForm />} />
+            <Route path="/application" element={<ApplicationForm />} />
           </Routes>
         </ScrollToTop>
       </Router>

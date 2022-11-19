@@ -1,5 +1,6 @@
+import RegByEmail from '@/components/regByEmail';
+import { RegByPhone } from '@/components/regByPhone';
 import { FC, useState } from 'react';
-import Choose from '../components/choose';
 
 const Register: FC = () => {
   const [isPhone, setPhone] = useState('phone');
@@ -36,7 +37,7 @@ const Register: FC = () => {
             По почте
           </label>
         </form>
-        <Choose isPhone={isPhone} />
+        <div>{isPhone === 'phone' ? <RegByPhone /> : <RegByEmail />}</div>;
       </div>
     </section>
   );
