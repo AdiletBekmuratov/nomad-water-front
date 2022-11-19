@@ -36,7 +36,13 @@ const FaqComp: FC<Props> = (props) => {
               {props.header}
             </h3>
             <Form className={`flex flex-col space-y-4 text-sm lg:text-base`}>
-              <Input inputType="formik" name="name" type="text" label="Имя" />
+              <Input
+                inputType="formik"
+                name="name"
+                type="text"
+                label="Имя"
+                placeholder="Петров Андрей"
+              />
               <Input
                 inputType="formik"
                 id="phone"

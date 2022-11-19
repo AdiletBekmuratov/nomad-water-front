@@ -5,7 +5,7 @@ export const Question = () => {
   return (
     <motion.section className={`content flex flex-col`}>
       <div
-        className={` text-dark-blue flex flex-1 flex-col pt-24 lg:pt-32 pb-8 lg:pb-16 lg:px-36 mx-16 xl:mx-96`}>
+        className={` text-dark-blue flex flex-1 flex-col pt-24 lg:pt-32 pb-8 lg:pb-16 mx-16 sm:mx-32 md:mx-64 lg:px-16  xl:mx-96`}>
         <FaqComp header="Появился вопрос? Мы всегда готовы вам помочь!" />
       </div>
 

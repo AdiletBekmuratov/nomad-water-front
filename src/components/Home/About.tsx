@@ -52,7 +52,7 @@ const astanaAnimation = {
 };
 const textAnimation = {
   hidden: {
-    y: 300,
+    y: 200,
     opacity: 0
   },
   visible: (custom: any) => ({
@@ -61,17 +61,17 @@ const textAnimation = {
     opacity: 1
   })
 };
-const butAnimation = {
-  hidden: {
-    x: -300,
-    opacity: 0
-  },
-  visible: (custom: any) => ({
-    transition: { duration: 1, delay: custom * 0.7 },
-    x: 0,
-    opacity: 1
-  })
-};
+// const butAnimation = {
+//   hidden: {
+//     x: -300,
+//     opacity: 0
+//   },
+//   visible: (custom: any) => ({
+//     transition: { duration: 1, delay: custom * 0.7 },
+//     x: 0,
+//     opacity: 1
+//   })
+// };
 const bottleAnimation = {
   hidden: {
     x: 75,
@@ -103,7 +103,7 @@ export const About = () => {
 
         <motion.div
           className={` grid grid-cols-1 md:grid-cols-3 items-center md:pt-8 text-base lg:text-lg 
-           leading-relaxed tracking-wide lg:tracking-widest`}>
+          leading-relaxed tracking-wide lg:tracking-widest`}>
           <motion.div
             initial="hidden"
             whileInView="visible"
