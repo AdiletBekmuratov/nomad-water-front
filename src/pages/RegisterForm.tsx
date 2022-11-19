@@ -8,9 +8,9 @@ const RegisterForm: FC = () => {
     <>
       <Modal title="Test title" buttonOpenText="Open" buttonCloseTest="Close">
         <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores eligendi eos nihil
-          voluptatum cupiditate iusto mollitia, optio fugiat, voluptatem illum consectetur! Non,
-          expedita ipsam harum rem est odio veritatis ratione?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum adipisci rem quaerat
+          recusandae impedit, veritatis fugit numquam necessitatibus atque sed. Voluptas sunt
+          recusandae veniam animi molestias perspiciatis obcaecati alias. Aspernatur!
         </p>
       </Modal>
       <div className="h-screen flex justify-center items-center">
