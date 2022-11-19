@@ -5,10 +5,8 @@ type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
 
 export const Card: FC<Props> = (props) => {
   return (
-    <div>
-      <span className="relative block rounded-xl border border-gray-200 p-8 shadow-xl bg-white w-full">
-        <div className="mt-4 text-gray-500">{props.children}</div>
-      </span>
+    <div className="relative block rounded-md border-gray-200 p-5 shadow-xl bg-white w-full max-w-screen-lg">
+      {props.children}
     </div>
   );
 };
