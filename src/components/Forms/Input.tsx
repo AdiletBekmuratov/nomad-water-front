@@ -1,12 +1,15 @@
 import { ErrorMessage, Field } from 'formik';
-import { DetailedHTMLProps, FC, InputHTMLAttributes } from 'react';
+import { FC, InputHTMLAttributes } from 'react';
 import ReactInputMask from 'react-input-mask';
 
-type Props = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
   inputType: 'formik' | 'default';
   label?: string;
   mask?: string;
-};
+  id: string;
+  name: string;
+  className?: string;
+}
 
 const CONSTANT_CLASSNAMES = 'py-2 px-4 bg-white text-sm rounded-md w-full border border-gray-200';
 
