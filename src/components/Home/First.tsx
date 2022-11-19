@@ -34,32 +34,37 @@ export const First = () => {
       custom={1}
       viewport={{ amount: 0.2, once: true }}
       className={`flex content `}>
-      <motion.div className={`flex flex-col items-center`} initial="hidden" whileInView="visible">
+      <motion.div
+        className={`flex flex-col items-center`}
+        viewport={{ amount: 0.2, once: true }}
+        initial="hidden"
+        whileInView="visible">
         <motion.span
-          className={`mt-2 lg:mt-10 text-xl lg:text-4xl text-medium-blue font-medium tracking-wide`}
+          className={`lg:mt-10 text-xl lg:text-4xl text-medium-blue font-medium tracking-wide`}
           custom={2}
           variants={textAnimation}>
           вода великой степи
         </motion.span>
         <motion.span
-          className={`mt-20 lg:mt-20 text-3xl lg:text-8xl text-dark-blue font-extrabold tracking-tighter`}
+          className={`mt-20 lg:mt-24 text-3xl md:text-5xl lg:text-7xl xl:text-8xl text-dark-blue font-extrabold tracking-tighter`}
           custom={2}
           variants={textAnimation}>
           выбор наших предков
         </motion.span>
+        <motion.img
+          custom={3}
+          className={`z-10 lg:w-screen mt-48 md:mt-24 lg:mt-48 xl:mt-10 `}
+          src={backGr}
+          alt="background"
+        />
       </motion.div>
       <motion.img
         custom={2}
         variants={bottleAnimation}
-        className={`absolute z-0 mt-16 lg:mt-32 `}
+        className={`absolute z-0 mt-24 md:mt-24 lg:mt-32 
+        h-96 w-auto lg:h-auto`}
         src={bottle}
         alt="bottle"
-      />
-      <motion.img
-        custom={3}
-        className={`z-10 absolute lg:w-full mt-64 lg:mt-80`}
-        src={backGr}
-        alt="background"
       />
     </motion.section>
   );

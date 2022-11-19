@@ -87,29 +87,31 @@ const bottleAnimation = {
 export const About = () => {
   return (
     <>
-      <motion.section className={`text-dark-blue content pt-10 lg:pt-16 px-7 lg:px-48`}>
+      <motion.section
+        className={`text-dark-blue content pt-10 md:pt-16 px-7 md:px-12 lg:px-24 xl:px-56`}>
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ amount: 0.2, once: true }}
           custom={1}
           variants={astanaAnimation}
-          className={`grid grid-cols-3 gap-7 my-7 `}>
+          className={`grid grid-cols-3 gap-7 my-5 lg:my-7 `}>
           <motion.img src={astana} alt="astanahub" />
           <motion.img src={astana} alt="astanahub" />
           <motion.img src={astana} alt="astanahub" />
         </motion.div>
 
         <motion.div
-          className={` grid grid-cols-1 lg:grid-cols-3 text-base items-center leading-relaxed tracking-wide`}>
+          className={` grid grid-cols-1 md:grid-cols-3 items-center md:pt-8 text-base lg:text-lg 
+           leading-relaxed tracking-wide lg:tracking-widest`}>
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ amount: 0.5, once: true }}
+            viewport={{ amount: 0.2, once: true }}
             variants={textAnimation}
             custom={1}
-            className={`text-center lg:text-right my-4 `}>
-            <h2 className={`text-2xl font-bold mb-5`}>4000+ клиентов</h2>
+            className={`text-center sm:text-right my-2 `}>
+            <h2 className={`text-2xl font-bold mb-2 lg:mb-5`}>4000+ клиентов</h2>
             <span className={``}>
               Описание характеристики с каким-то подверждением. Описание характеристики с каким-то
               подверждением.
@@ -118,20 +120,20 @@ export const About = () => {
           <motion.img
             initial="hidden"
             whileInView="visible"
-            viewport={{ amount: 0.5, once: true }}
+            viewport={{ amount: 0.2, once: true }}
             variants={bottleAnimation}
-            className={`mx-auto hidden lg:block`}
+            className={`mx-auto lg:block w-16 h-auto md:w-28 lg:w-auto`}
             src={bottleX}
             alt="bottleX"
           />
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ amount: 0.5, once: true }}
-            custom={2}
+            custom={1}
+            viewport={{ amount: 0.2, once: true }}
             variants={textAnimation}
-            className={` my-4 text-center lg:text-left `}>
-            <h2 className={`text-2xl font-bold mb-5`}> полезные элементы</h2>
+            className={` my-2 text-center sm:text-left `}>
+            <h2 className={`text-2xl font-bold mb-2 lg:mb-5`}> быстрая доставка</h2>
             <span>
               Описание характеристики с каким-то подверждением. Описание характеристики с каким-то
               подверждением.
@@ -139,17 +141,20 @@ export const About = () => {
           </motion.div>
         </motion.div>
       </motion.section>
-      <motion.section className={`text-dark-blue content pt-20 lg:pt-44 px-7 lg:px-48`}>
+
+      <motion.section
+        className={`text-dark-blue content pt-20 md:pt-24 lg:pt-32 px-7 md:px-12 lg:px-24 xl:px-56`}>
         <motion.div
-          className={` grid grid-cols-1 lg:grid-cols-3 text-base items-center leading-relaxed tracking-wide`}>
+          className={` grid grid-cols-1 md:grid-cols-3 md:pt-8 text-base lg:text-lg 
+          items-center leading-relaxed tracking-wide lg:tracking-widest`}>
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ amount: 0.5, once: true }}
+            viewport={{ amount: 0.2, once: true }}
             variants={textAnimation}
             custom={1}
-            className={`text-center lg:text-right my-4 `}>
-            <h2 className={`text-2xl font-bold mb-5`}>4000+ клиентов</h2>
+            className={`text-center sm:text-right my-2 `}>
+            <h2 className={`text-2xl font-bold mb-2 lg:mb-5`}>качество фильтрации</h2>
             <span className={``}>
               Описание характеристики с каким-то подверждением. Описание характеристики с каким-то
               подверждением.
@@ -158,20 +163,20 @@ export const About = () => {
           <motion.img
             initial="hidden"
             whileInView="visible"
-            viewport={{ amount: 0.5, once: true }}
+            viewport={{ amount: 0.2, once: true }}
             variants={bottleAnimation}
-            className={`mx-auto hidden lg:block`}
+            className={`mx-auto lg:block w-24 h-auto md:w-40 lg:w-auto`}
             src={bottleXl}
             alt="bottleX"
           />
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ amount: 0.5, once: true }}
-            custom={2}
+            custom={1}
+            viewport={{ amount: 0.2, once: true }}
             variants={textAnimation}
-            className={` my-4 text-center lg:text-left `}>
-            <h2 className={`text-2xl font-bold mb-5`}> полезные элементы</h2>
+            className={` my-2 text-center sm:text-left `}>
+            <h2 className={`text-2xl font-bold mb-2 lg:mb-5`}> полезные элементы</h2>
             <span>
               Описание характеристики с каким-то подверждением. Описание характеристики с каким-то
               подверждением.
@@ -179,42 +184,40 @@ export const About = () => {
           </motion.div>
         </motion.div>
       </motion.section>
-      <motion.section className={`text-dark-blue content pt-12 lg:pt-44 px-7 lg:px-48`}>
+
+      <motion.section
+        className={`text-dark-blue content pt-16 md:pt-24 lg:pt-32 px-7 md:px-12 lg:px-24 xl:px-56`}>
         <motion.div
-          className={` grid grid-cols-1 lg:grid-cols-3 text-base items-center leading-relaxed tracking-wide`}>
+          className={` grid grid-cols-1 md:grid-cols-3 md:pt-8 text-base lg:text-lg items-center 
+            leading-relaxed tracking-wide lg:tracking-widest`}>
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ amount: 0.4 }}
+            viewport={{ amount: 0.2, once: true }}
             variants={textAnimation}
             custom={1}
-            className={`text-center lg:text-right mt-3 `}>
-            <h2 className={`text-2xl font-bold md-2 lg:mb-5`}>4000+ клиентов</h2>
+            className={`text-center sm:text-right my-2 `}>
+            <h2 className={`text-2xl font-bold my-3 lg:mb-5`}>качество фильтрации</h2>
             <span className={``}>
               Описание характеристики с каким-то подверждением. Описание характеристики с каким-то
               подверждением.
             </span>
-            <motion.div className={`mt-1 lg:mt-3`}>
-              <motion.a
-                initial="hidden"
-                whileInView="visible"
-                //viewport={{ once: true }}
-                variants={butAnimation}
-                custom={2}
+            <motion.div className={`my-3 lg:mt-5`}>
+              <a
                 href="/"
                 type="button"
-                className={`py-2 px-4 rounded-3xl leading-7 tracking-widest text-base text-center
+                className={`py-3 px-4 rounded-3xl leading-7 tracking-widest text-base text-center
                 border  border-dark-blue hover:bg-medium-blue hover:text-white hover:border-none`}>
                 открыть каталог
-              </motion.a>
+              </a>
             </motion.div>
           </motion.div>
           <motion.img
             initial="hidden"
             whileInView="visible"
-            viewport={{ amount: 0.1 }}
+            viewport={{ amount: 0.2, once: true }}
             variants={bottleAnimation}
-            className={`mx-auto `}
+            className={`mx-auto lg:block w-48 h-auto md:w-48 lg:w-auto`}
             src={bottle2Xl}
             alt="bottleX"
           />
