@@ -5,8 +5,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base{
-   .content{
-      @apply w-full h-screen snap-start justify-center bg-light-blue 
-   }
+@layer base {
+  .content {
+    @apply w-full h-screen snap-start justify-center bg-light-blue;
+  }
 }

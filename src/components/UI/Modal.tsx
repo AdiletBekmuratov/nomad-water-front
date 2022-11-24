@@ -17,7 +17,7 @@ export const Modal: FC<Props> = (props) => {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed bg-black opacity-50 inset-0" />
-        <Dialog.Content className="bg-white fixed w-1/3 top-1/3 left-1/3 p-2 rounded-xl">
+        <Dialog.Content className="bg-white p-5 rounded-md z-10 w-full fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-screen-md">
           <Dialog.Title className="text-center font-montserrat text-lg font-bold">
             {props.title}
           </Dialog.Title>
