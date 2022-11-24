@@ -12,6 +12,8 @@ module.exports = {
         'medium-blue': '#5a8c9a',
         'light-blue': '#EBF3F6',
         'footer-color': '#232B2E',
+        'bg-crm': '#dedede',
+        'green-color': '#4EC26F',
         main: '#9D9DAB',
         'dark-blue': '#023646',
         'light-blue': '#EBF3F6',

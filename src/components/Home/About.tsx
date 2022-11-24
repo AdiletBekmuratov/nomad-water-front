@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 
-import bottleX from '../../assets/2l.png';
-import bottleXl from '../../assets/5l.png';
-import bottle2Xl from '../../assets/8l.png';
-import astana from '../../assets/astana.png';
+import bottleX from '../../assets/lending/2l.png';
+import bottleXl from '../../assets/lending/5l.png';
+import bottle2Xl from '../../assets/lending/8l.png';
+import astana from '../../assets/lending/astana.png';
 
 // const data = [
 //   {

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 
-import bottle from '../../assets/bottle.png';
-import backGr from '../../assets/backGr.png';
+import bottle from '../../assets/lending/bottle.png';
+import backGr from '../../assets/lending/backGr.png';
 
 const textAnimation = {
   hidden: {

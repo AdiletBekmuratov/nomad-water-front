@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import bottleDown from '../../assets/DROP_WATER.png';
+import bottleDown from '../../assets/lending/DROP_WATER.png';
 const downBottleAnimation = {
   hidden: {
     y: -100,
