@@ -18,7 +18,7 @@ export const Input: FC<Props> = ({ inputType = 'default', ...props }) => {
   return (
     <div className="flex flex-col space-y-1">
       {props.label && (
-        <label htmlFor={props.id} className="font-montserrat">
+        <label htmlFor={props.id} className="font-montserrat text-dark-blue text-xs font-semibold">
           {props.label}
         </label>
       )}
