@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Nomad Water негаз., 5 л",
+    "count": 10,
+    "price": 500,
+    "imgUrl": "../components/Order/bottle.png"
+  },
+  {
+    "name": "Nomad Water негаз., 19 л",
+    "count": 2,
+    "price": 1500,
+    "imgUrl": "../components/Order/bottle.png"
+  }
+]

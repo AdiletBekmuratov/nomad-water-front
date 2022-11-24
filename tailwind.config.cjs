@@ -15,7 +15,10 @@ module.exports = {
         main: '#9D9DAB',
         'dark-blue': '#023646',
         'light-blue': '#EBF3F6',
-        primary: '#00034E'
+        primary: '#00034E',
+        "pseudo-white": "#F3F4F5",
+        "primary-white": "#747474",
+        "light-blue": "#0BA3D1"
       },
       backgroundImage: {
         astana: "url('./src/assets/astanaHub.png')"
