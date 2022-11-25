@@ -4,9 +4,10 @@ type Props = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> & {
   children: ReactNode;
 };
 
-export const Footer: FC<Props> = ({ children }) => {
+export const Footer: FC<Props> = ({ children, className }) => {
   return (
-    <footer className="w-full h-20 bg-white fixed left-0 bottom-0 flex justify-center items-center">
+    <footer
+      className={`w-full bg-white fixed left-0 bottom-0 flex justify-center  border-2 border-lighter shadow-sm ${className}`}>
       {children}
     </footer>
   );
