@@ -1,4 +1,4 @@
 export * from './Catalog';
 
-export * from './Main';
+export * from '../../pages/MainCrm';
 export * from './CardBottle';

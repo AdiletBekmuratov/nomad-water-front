@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import ScrollToTop from '@/components/ScrollToTop';
@@ -8,9 +8,12 @@ import OrderRegistration from '@/pages/OrderRegistration';
 import OrderInfo from '@/pages/OrderInfo';
 
 //const Home = lazy(() => import('@/pages/Home'));
-const Crm = lazy(() => import('@/pages/Crm'));
+const MainCrm = lazy(() => import('@/pages/MainCrm'));
+const Favourite = lazy(() => import('@/pages/Favourite'));
 
 const AppRoutes = () => {
+  const [items, setItems] = React.useState([]);
+  const [favorites, setFavorites] = React.useState([]);
   return (
     <Suspense
       fallback={
@@ -23,7 +26,8 @@ const AppRoutes = () => {
         <ScrollToTop>
           <Routes>
             {/* <Route path="/" element={<Home />} /> */}
-            <Route path="/" element={<Crm />} />
+            <Route path="/crm" element={<MainCrm />} />
+            <Route path="/crm/favourite" element={<Favourite />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/application" element={<ApplicationForm />} />
             <Route path="/order" element={<OrderRegistration />} />
