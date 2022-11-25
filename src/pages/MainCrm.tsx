@@ -1,5 +1,5 @@
-import { Card } from '../components/Crm/CardBottle';
-import { RegByPhone } from '../components/regByPhone';
+import { Card } from '../components/Crm/CardBottle/CardBottle';
+import { RegByPhone } from '../components/RegByPhone';
 import { useState } from 'react';
 import { CrmHeader } from '@/components/Crm/CrmHeader';
 

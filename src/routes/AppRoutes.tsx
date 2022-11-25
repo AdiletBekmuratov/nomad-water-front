@@ -9,11 +9,20 @@ import OrderInfo from '@/pages/OrderInfo';
 
 //const Home = lazy(() => import('@/pages/Home'));
 const MainCrm = lazy(() => import('@/pages/MainCrm'));
-const Favourite = lazy(() => import('@/pages/Favourite'));
+const Orders = lazy(() => import('@/pages/Orders'));
 
 const AppRoutes = () => {
   const [items, setItems] = React.useState([]);
-  const [favorites, setFavorites] = React.useState([]);
+  const [orders, setOrders] = React.useState([]);
+  // const addUser = async (obj: any) => {
+  //   try {
+  //     const { data } = await axios.post('https://62b2813420cad3685c8edbad.mockapi.io/cart', obj);
+  //     setItems((prev) => [...prev, data]);
+  //   } catch (err) {
+  //     alert('Не удалось добавить вас в базу');
+  //     console.error(err);
+  //   }
+  // };
   return (
     <Suspense
       fallback={
