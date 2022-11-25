@@ -10,6 +10,7 @@ import OrderInfo from '@/pages/OrderInfo';
 //const Home = lazy(() => import('@/pages/Home'));
 const MainCrm = lazy(() => import('@/pages/MainCrm'));
 const Orders = lazy(() => import('@/pages/Orders'));
+const OrderPage = lazy(() => import('@/pages/OrderPage'));
 
 const AppRoutes = () => {
   const [items, setItems] = React.useState([]);
