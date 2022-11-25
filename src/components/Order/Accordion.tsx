@@ -1,9 +1,9 @@
 import { DetailedHTMLProps, FC, HTMLAttributes, useState, useEffect } from 'react';
 import { Form, Formik } from 'formik';
-import { Button, Input } from '../Forms';
+import { Input } from '../Forms';
 import * as yup from 'yup';
 import user from '../Order/UserData.json';
-import { Link } from 'react-router-dom';
+import EditCard from './EditCard';
 
 type initialValues = {
   street: string;
@@ -12,6 +12,8 @@ type initialValues = {
 };
 type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
   setIsValid?: Function;
+  setIsEdited?: Function;
+  isEdited?: boolean;
 };
 
 export const Accordion: FC<Props> = (props) => {
@@ -29,7 +31,7 @@ export const Accordion: FC<Props> = (props) => {
 
   const validation = yup.object().shape({
     street: yup.string().required('Поле обязательное'),
-    entrance: yup.string(),
+    entrance: yup.string().required('Поле обязательное'),
     flat: yup.string().required('Поле обязательное')
   });
 
@@ -58,7 +60,7 @@ export const Accordion: FC<Props> = (props) => {
           )}
         </Formik>
       </div>
-      <div className="mt-3 w-10/12 bg-white mx-auto rounded-2xl p-5">
+      <EditCard>
         <h3 className={`font-semibold text-sm ${userStyle}`}>Получатель</h3>
         <h5 className={`${userStyle} text-xs mt-2`}>
           <strong className={`font-medium`}>Имя:</strong> {userData.username}
@@ -66,12 +68,26 @@ export const Accordion: FC<Props> = (props) => {
         <h5 className={`${userStyle} text-xs mt-2`}>
           <strong className="font-medium">Телефон</strong> {userData.phone}
         </h5>
-        <Link
-          className="text-light-blue font-montserrat font-semibold text-xs"
-          to={`/order/${userData.id}`}>
+        <button
+          className="text-blue-light font-montserrat font-semibold text-xs"
+          onClick={() => {
+            props.setIsEdited(true);
+          }}
+          value="useredit">
           Изменить
-        </Link>
-      </div>
+        </button>
+      </EditCard>
+      <EditCard>
+        <h3 className={`font-semibold text-sm ${userStyle}`}>Способ оплаты</h3>
+        <button
+          className="text-blue-light font-montserrat font-semibold text-xs"
+          onClick={() => {
+            props.setIsEdited(true);
+          }}
+          value="payment">
+          Выберите способ оплаты
+        </button>
+      </EditCard>
     </>
   );
 };
