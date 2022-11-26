@@ -14,15 +14,15 @@ export const CardBottle: FC<ICard> = ({
 }) => {
   return (
     <div>
-      <div className={`flex flex-col sm:flex-row sm:bg-white sm:rounded-3xl relative`}>
+      <div className={`flex flex-col sm:flex-row sm:bg-white sm:rounded-3xl relative sm:p-3`}>
         <AddFavourite isFavourite={isFavourite} setIsFavourite={setIsFavourite} />
-        <div className={`sm:p-2`}>
+        <div className={``}>
           <img src={items.img} alt="bottle" />
         </div>
 
         <Link
           to="/crm/bottlePage"
-          className={`flex flex-col sm:ml-5 text-left text-sm sm:text-base lg:text-lg leading-4 font-medium pt-2 sm:pt-5`}>
+          className={`flex flex-col sm:ml-5 text-left text-sm sm:text-base lg:text-lg leading-4 font-medium pt-2 sm:py-5`}>
           <Discription {...items} />
 
           <div className={`flex justify-between`}>
