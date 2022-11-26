@@ -1,11 +1,12 @@
-import { Header } from '@/components/Crm/Header';
+import { Header } from '@/components/Catalog/Header';
 import { dataBottle } from '@/assets/dataBottle';
 import { FC, useState } from 'react';
-import { CardBottle } from './CardBottle/CardBottle';
+
 import { Link } from 'react-router-dom';
 
 import logo from '../assets/crm/logoHead.png';
 import avatar from '../assets/crm/avatar.png';
+import { CardBottle } from '@/components/Catalog';
 
 const Catalog: FC = () => {
   const [counter, setCounter] = useState<number>(1);

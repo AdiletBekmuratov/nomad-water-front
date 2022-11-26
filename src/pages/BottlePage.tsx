@@ -1,5 +1,5 @@
-import { CardBottle } from '@/components/Crm';
-import { Header } from '@/components/Crm/Header';
+import { CardBottle } from '@/components/Catalog';
+import { Header } from '@/components/Catalog/Header';
 import { Button } from '@/components/Forms';
 import React from 'react';
 import { Link } from 'react-router-dom';

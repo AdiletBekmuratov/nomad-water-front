@@ -1,4 +1,4 @@
-import { Header } from '@/components/Crm/Header';
+import { Header } from '@/components/Catalog/Header';
 
 const Orders = () => {
   // const [isAuth, setIsAuth] = useState(true);
