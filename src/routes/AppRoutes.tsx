@@ -15,15 +15,7 @@ const OrderPage = lazy(() => import('@/pages/OrderPage'));
 const AppRoutes = () => {
   const [items, setItems] = React.useState([]);
   const [orders, setOrders] = React.useState([]);
-  // const addUser = async (obj: any) => {
-  //   try {
-  //     const { data } = await axios.post('https://62b2813420cad3685c8edbad.mockapi.io/cart', obj);
-  //     setItems((prev) => [...prev, data]);
-  //   } catch (err) {
-  //     alert('Не удалось добавить вас в базу');
-  //     console.error(err);
-  //   }
-  // };
+
   return (
     <Suspense
       fallback={

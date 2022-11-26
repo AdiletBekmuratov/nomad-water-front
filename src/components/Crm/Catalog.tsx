@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { dataBottle } from '@/assets/dataBottle';
+import { ICatalog } from '@/types/types';
+import { FC, useState } from 'react';
 import { CardBottle } from './CardBottle/CardBottle';
 
-export const Catalog = () => {
-  const [counter, setCounter] = useState(1);
-  const [isFavourite, setIsFavourite] = useState(false);
+export const Catalog: FC<ICatalog> = () => {
+  const [counter, setCounter] = useState<number>(1);
+  const [isFavourite, setIsFavourite] = useState<boolean>(false);
   return (
     <div className={``}>
       <div className={`px-6 lg:px-48 text-xs`}>
@@ -94,32 +96,19 @@ export const Catalog = () => {
         </div>
 
         <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-2 sm:grid-cols-1`}>
-          <CardBottle
-            isFavourite={isFavourite}
-            setIsFavourite={setIsFavourite}
-            counter={counter}
-            setCounter={setCounter}
-          />
-          <CardBottle
-            isFavourite={isFavourite}
-            setIsFavourite={setIsFavourite}
-            counter={counter}
-            setCounter={setCounter}
-          />
-          <CardBottle
-            isFavourite={isFavourite}
-            setIsFavourite={setIsFavourite}
-            counter={counter}
-            setCounter={setCounter}
-          />
-          <CardBottle
-            isFavourite={isFavourite}
-            setIsFavourite={setIsFavourite}
-            counter={counter}
-            setCounter={setCounter}
-          />
+          {dataBottle.map((items, id) => (
+            <CardBottle
+              key={id}
+              items={items}
+              isFavourite={isFavourite}
+              setIsFavourite={setIsFavourite}
+              counter={counter}
+              setCounter={setCounter}
+            />
+          ))}
         </div>
-        <div className={`border-b border-solid border-y border-gray-300 mb-4 md:border-none`}></div>
+        <div
+          className={`border-b border-solid border-y border-gray-300 mt-8 mb-4 md:border-none`}></div>
       </div>
 
       <div className={`bg-white px-12 pt-5 pb-8 flex items-center justify-between lg:hidden`}>

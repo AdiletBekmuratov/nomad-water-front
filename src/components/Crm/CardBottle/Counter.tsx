@@ -1,7 +1,8 @@
-import React from 'react';
+import { ICounter } from '@/types/types';
+import { FC } from 'react';
 
-export const Counter = ({ counter, setCounter }) => {
-  const onPlusClick = () => setCounter(counter + 1);
+export const Counter: FC<ICounter> = ({ counter, setCounter }) => {
+  const onPlusClick = () => setCounter(counter++);
   const onMinusClick = () => setCounter(counter - 1);
 
   return (
