@@ -10,7 +10,10 @@ type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
 
 export const BottomMenu: FC<Props> = (props) => {
   return (
-    <motion.footer className="w-full" initial={{ y: '50vw' }} animate={{ y: 15 }}>
+    <motion.footer
+      className="w-full"
+      initial={{ y: '25rem' }}
+      animate={{ y: 0, transition: { duration: 0.5 } }}>
       <Footer className={`${props.className}`}>{props.children}</Footer>
     </motion.footer>
   );

@@ -7,7 +7,7 @@ type Props = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> & {
 export const Footer: FC<Props> = ({ children, className }) => {
   return (
     <footer
-      className={`w-full bg-white fixed left-0 bottom-0 flex justify-center  border-2 border-lighter shadow-sm ${className}`}>
+      className={`w-full bg-white fixed left-0 bottom-0 border-2 border-lighter shadow-sm ${className}`}>
       {children}
     </footer>
   );
