@@ -1,8 +1,5 @@
 import React, { ReactNode } from 'react';
 
-// export interface IdeliveryStatus {
-//   [('waiting', 'completed', 'cancelled')];
-// }
 export interface IBottle {
   id: number;
   img?: string;
