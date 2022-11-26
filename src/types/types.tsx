@@ -13,6 +13,7 @@ export interface IBottle {
   count?: number;
   orderNumber?: number;
   deliveryStatus?: string;
+  children?: ReactNode;
 }
 
 export interface ICard {

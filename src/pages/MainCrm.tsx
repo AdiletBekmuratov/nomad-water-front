@@ -7,7 +7,7 @@ import logo from '../assets/crm/logoHead.png';
 import avatar from '../assets/crm/avatar.png';
 
 const MainCrm = () => {
-  const [isAuth, setIsAuth] = useState<boolean>(true);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
   const [user, setUser] = useState([]);
 
   return (

@@ -6,6 +6,7 @@ import { ICard } from '@/types/types';
 import { Discription } from './Discription';
 
 export const CardBottle: FC<ICard> = ({
+  children,
   isFavourite,
   setIsFavourite,
   counter,

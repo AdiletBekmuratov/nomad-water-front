@@ -1,10 +1,12 @@
-import { CrmHeader } from '@/components/Crm/CrmHeader';
+import { Header } from '@/components/Crm/Header';
 
 const Orders = () => {
   // const [isAuth, setIsAuth] = useState(true);
   return (
     <div className={`w-full bg-bg-crm `}>
-      <CrmHeader />
+      <Header>
+        <></>
+      </Header>
       <h1>Мои заказы</h1>
     </div>
   );
