@@ -12,7 +12,7 @@ export const Discription: FC<IBottle> = ({ title, discription, availability }) =
         <span className={`text-xs text-red-600 font-semibold mb-2 `}>Нет в наличии</span>
       )}
 
-      <p className={`text-xs opacity-60 hidden sm:mb-8 sm:block`}>
+      <p className={`text-xs opacity-60 hidden sm:mb-4 sm:block`}>
         Ожидаемая доставка: сегодня до 16:00
       </p>
     </div>

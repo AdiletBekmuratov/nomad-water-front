@@ -6,7 +6,6 @@ import { ICard } from '@/types/types';
 import { Discription } from './Discription';
 
 export const CardBottle: FC<ICard> = ({
-  isAddFavourite,
   isFavourite,
   setIsFavourite,
   counter,
@@ -14,17 +13,16 @@ export const CardBottle: FC<ICard> = ({
   items
 }) => {
   return (
-    <Link to="/crm/orderPage">
+    <div>
       <div className={`flex flex-col sm:flex-row sm:bg-white sm:rounded-3xl relative`}>
-        {isAddFavourite && (
-          <AddFavourite isFavourite={isFavourite} setIsFavourite={setIsFavourite} />
-        )}
+        <AddFavourite isFavourite={isFavourite} setIsFavourite={setIsFavourite} />
         <div className={`sm:p-2`}>
           <img src={items.img} alt="bottle" />
         </div>
 
-        <div
-          className={`flex flex-col sm:ml-5 text-left text-sm sm:text-base leading-4 font-medium pt-2 sm:pt-5`}>
+        <Link
+          to="/crm/bottlePage"
+          className={`flex flex-col sm:ml-5 text-left text-sm sm:text-base lg:text-lg leading-4 font-medium pt-2 sm:pt-5`}>
           <Discription {...items} />
 
           <div className={`flex justify-between`}>
@@ -33,8 +31,8 @@ export const CardBottle: FC<ICard> = ({
               <Counter counter={counter} setCounter={setCounter} />
             </div>
           </div>
-        </div>
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 };

@@ -1,10 +1,10 @@
-import React from 'react';
 import logo from '../../assets/crm/logoHead.png';
 import avatar from '../../assets/crm/avatar.png';
 
 export const CrmHeader = () => {
+  const headerStyle = 'flex py-4 px-10 lg:px-48 bg-white';
   return (
-    <div className={`flex items-center py-4 px-10 lg:px-48 bg-white`}>
+    <div className={`${headerStyle}`}>
       <svg
         className={`hidden lg:block mr-16`}
         width="24"

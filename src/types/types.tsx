@@ -23,7 +23,6 @@ export interface ICard {
   setIsFavourite: React.Dispatch<React.SetStateAction<boolean>>;
   counter: number;
   setCounter: React.Dispatch<React.SetStateAction<number>>;
-  isAddFavourite?: boolean;
 }
 
 export interface IFavourite {
@@ -37,5 +36,5 @@ export interface ICounter {
 }
 
 export interface ICatalog {
-  cardItems: IBottle[];
+  cardItems?: IBottle[];
 }

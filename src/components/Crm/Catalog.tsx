@@ -1,9 +1,8 @@
 import { dataBottle } from '@/assets/dataBottle';
-import { ICatalog } from '@/types/types';
 import { FC, useState } from 'react';
 import { CardBottle } from './CardBottle/CardBottle';
 
-export const Catalog: FC<ICatalog> = () => {
+export const Catalog: FC = () => {
   const [counter, setCounter] = useState<number>(1);
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   return (

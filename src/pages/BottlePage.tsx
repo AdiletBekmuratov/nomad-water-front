@@ -1,11 +1,11 @@
 import { Button } from '@/components/Forms';
 import React from 'react';
 
-const OrderPage = () => {
+const BottlePage = () => {
   return (
     <div className={`w-full bg-bg-crm`}>
       <Button>Заказать</Button>
     </div>
   );
 };
-export default OrderPage;
+export default BottlePage;
