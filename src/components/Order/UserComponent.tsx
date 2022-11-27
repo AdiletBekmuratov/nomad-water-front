@@ -5,6 +5,7 @@ import { FormContainer, Input } from '../Forms';
 
 type Props = {
   buttonName: string;
+  name: string;
 };
 
 type initialValues = {
@@ -26,7 +27,14 @@ export const UserComponent: FC<Props> = (props) => {
       buttonName={props.buttonName}
       className="px-6">
       <div className="mb-5">
-        <Input inputType="formik" name="name" id="name" label="Имя" />
+        <Input
+          inputType="formik"
+          className="font-montserrat text-dark-blue font-medium"
+          name="name"
+          id="name"
+          label="Имя"
+          value={props.name}
+        />
       </div>
       <div className="mb-10">
         <Input
@@ -36,7 +44,8 @@ export const UserComponent: FC<Props> = (props) => {
           label="Номер телефона"
           mask={`+7 (799) 999 9999`}
           placeholder="+7 (7__) ___ ____"
-          className="placeholder:text-gray-400"
+          className="placeholder:text-gray-400 font-montserrat text-dark-blue font-medium"
+          value={props.phone}
         />
       </div>
     </FormContainer>
