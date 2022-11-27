@@ -1,15 +1,15 @@
-import { CardBottle } from '@/components/Catalog';
 import { Header } from '@/components/Catalog/Header';
 import { Button } from '@/components/Forms';
-import React from 'react';
 import { Link } from 'react-router-dom';
+import React from 'react';
+import heart from '../assets/crm/orderHeart.png';
 
 const BottlePage = () => {
   return (
-    <div className={`w-full bg-bg-crm`}>
+    <div className={`w-full bg-bg-crm `}>
       <Header>
         <>
-          <Link to="/" className={`flex items-center`}>
+          <Link to="/catalog" className={`flex items-center`}>
             <svg
               width="7"
               height="14"
@@ -27,8 +27,11 @@ const BottlePage = () => {
           </Link>
         </>
       </Header>
-
-      <Button>Заказать</Button>
+      <div className={`px-7 lg:px-48 xl:px-72 text-xs`}></div>
+      <div className={`bg-white px-7 py-6 pb-8 flex items-center justify-between lg:hidden`}>
+        <Button className={`py-3`}>Заказать</Button>
+        <img src={heart} alt="favourite" className={`ml-3 w-11 h-11`} />
+      </div>
     </div>
   );
 };

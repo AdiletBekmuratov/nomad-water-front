@@ -14,19 +14,18 @@ export const CardBottle: FC<ICard> = ({
 }) => {
   return (
     <div>
-      <div className={`flex flex-col sm:flex-row sm:bg-white sm:rounded-3xl relative sm:p-3`}>
+      <div className={` sm:bg-white sm:rounded-3xl relative sm:p-3`}>
         <AddFavourite isFavourite={isFavourite} setIsFavourite={setIsFavourite} />
-        <div className={``}>
-          <img src={items.img} alt="bottle" />
-        </div>
 
-        <Link
-          to="/crm/bottlePage"
-          className={`flex flex-col sm:ml-5 text-left text-sm sm:text-base lg:text-lg leading-4 font-medium pt-2 sm:py-5`}>
-          <Discription {...items} />
+        <Link to={`/catalog/${items.id}`} className={`flex flex-col sm:flex-row`}>
+          <img src={items.img} alt="bottle" />
+          <div
+            className={`flex flex-col sm:ml-5 text-left text-sm sm:text-base lg:text-lg leading-4 font-medium pt-2`}>
+            <Discription {...items} />
+            <h2 className={`sm:text-lg mt-2 sm:mt-0`}>{items.price}</h2>
+          </div>
 
           <div className={`flex justify-between`}>
-            <h2 className={`sm:text-lg`}>{items.price}</h2>
             <div className={`hidden`}>
               <Counter counter={counter} setCounter={setCounter} />
             </div>

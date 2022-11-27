@@ -7,7 +7,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   mask?: string;
   id: string;
-  name: string;
+  name?: string;
   className?: string;
   placeholder?: string;
 }

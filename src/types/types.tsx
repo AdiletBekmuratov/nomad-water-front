@@ -14,7 +14,7 @@ export interface IBottle {
 }
 
 export interface ICard {
-  items: IBottle;
+  items?: IBottle;
   children?: ReactNode;
   className?: string;
   isFavourite: boolean;

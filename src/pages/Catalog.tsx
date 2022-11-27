@@ -1,18 +1,22 @@
 import { Header } from '@/components/Catalog/Header';
 import { dataBottle } from '@/assets/dataBottle';
 import { FC, useState } from 'react';
-
+import { CardBottle } from '@/components/Catalog';
 import { Link } from 'react-router-dom';
 
 import logo from '../assets/crm/logoHead.png';
 import avatar from '../assets/crm/avatar.png';
-import { CardBottle } from '@/components/Catalog';
+import { Search } from '@/components/Catalog/Search';
 
 const Catalog: FC = () => {
   const [counter, setCounter] = useState<number>(1);
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
+  const [value, setValue] = useState('');
+  const searchArray = dataBottle.filter((items) =>
+    items.title.toLowerCase().includes(value.toLowerCase())
+  );
   return (
-    <div className={`w-full bg-bg-crm `}>
+    <div className={`w-full  bg-bg-crm `}>
       <Header>
         <>
           <svg
@@ -26,8 +30,11 @@ const Catalog: FC = () => {
             <path d="M3 12.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
             <path d="M3 17.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
-          <img className={`mx-auto`} src={logo} alt="nomadLogo" />
-          <Link to="/" className={`cursor-pointer lg:mr-16 flex justify-end relative`}>
+          <Link to="/" className={`mx-auto`}>
+            <img src={logo} alt="nomadLogo" />
+          </Link>
+
+          <Link to="/catalog" className={`cursor-pointer lg:mr-16 flex justify-end relative`}>
             <svg
               width="24"
               height="22"
@@ -55,104 +62,33 @@ const Catalog: FC = () => {
         </>
       </Header>
       <div className={``}>
-        <div className={`px-6 lg:px-48 xl:px-72 text-xs`}>
-          <div className={`flex flex-col gap-6 md:flex-row pt-4 md:gap:0`}>
-            <div
-              className={`flex sm:flex-1 gap-3 items-center justify-items-start mt-6 sm:mt-0 px-5 py-3 rounded-3xl bg-white`}>
-              <svg
-                className={`cursor-pointer`}
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M6.45614 11.7895C9.40165 11.7895 11.7895 9.40165 11.7895 6.45614C11.7895 3.51062 9.40165 1.1228 6.45614 1.1228C3.51062 1.1228 1.1228 3.51062 1.1228 6.45614C1.1228 9.40165 3.51062 11.7895 6.45614 11.7895Z"
-                  stroke="#292D32"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M14.7369 14.3157L11.2281 11.2281"
-                  stroke="#292D32"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <input placeholder="Поиск ..." />
-            </div>
-            <div className={`flex gap-4 `}>
-              <div
-                className={`flex items-center justify-center py-2 px-4 rounded-2xl bg-white cursor-pointer`}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
-                    fill="#023646"
-                  />
-                  <path
-                    d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
-                    fill="#023646"
-                  />
-                </svg>
-                <span>Вода</span>
-              </div>
-              <div
-                className={`flex items-center justify-center px-4 rounded-2xl bg-white opacity-50 cursor-pointer`}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
-                    fill="#023646"
-                  />
-                  <path
-                    d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
-                    fill="#023646"
-                  />
-                </svg>
-                <span>Оборудование</span>
-              </div>
-              <div
-                className={`flex items-center justify-center px-4 rounded-2xl bg-white opacity-50 cursor-pointer`}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
-                    fill="#023646"
-                  />
-                  <path
-                    d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
-                    fill="#023646"
-                  />
-                </svg>
-                <span>Услуги</span>
-              </div>
-            </div>
-          </div>
+        <div className={`px-7 lg:px-48 xl:px-72 text-xs `}>
+          <Search value={value} setValue={setValue} />
 
-          <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-2 sm:grid-cols-1`}>
-            {dataBottle.map((items, id) => (
-              <CardBottle
-                key={id}
-                items={items}
-                isFavourite={isFavourite}
-                setIsFavourite={setIsFavourite}
-                counter={counter}
-                setCounter={setCounter}
-              />
-            ))}
+          <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-2 sm:grid-cols-1 `}>
+            {value.length === 0
+              ? dataBottle
+                  .slice(0, 4)
+                  .map((items, id) => (
+                    <CardBottle
+                      key={id}
+                      items={items}
+                      isFavourite={isFavourite}
+                      setIsFavourite={setIsFavourite}
+                      counter={counter}
+                      setCounter={setCounter}
+                    />
+                  ))
+              : searchArray.map((items, id) => (
+                  <CardBottle
+                    key={id}
+                    items={items}
+                    isFavourite={isFavourite}
+                    setIsFavourite={setIsFavourite}
+                    counter={counter}
+                    setCounter={setCounter}
+                  />
+                ))}
           </div>
           <div
             className={`border-b border-solid border-y border-gray-300 mt-8 mb-4 md:border-none`}></div>

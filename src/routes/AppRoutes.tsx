@@ -13,7 +13,6 @@ const Orders = lazy(() => import('@/pages/Orders'));
 const BottlePage = lazy(() => import('@/pages/BottlePage'));
 
 const AppRoutes = () => {
-
   return (
     <Suspense
       fallback={
