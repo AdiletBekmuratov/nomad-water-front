@@ -85,19 +85,21 @@ const OrderRegistration: FC = () => {
         </Button>
       </Footer>
       {isEdited && (
-        <BottomMenu className="h-96 rounded-t-3xl " isOpen={isOpen}>
-          <div className="border-b-2 border-gray-200 w-full">
-            <div className="flex justify-center">
-              <button className="pt-5 pb-5" onClick={() => setIsEdited(false)}>
-                <div className="bg-gray-300 w-14 h-1 "> </div>
-              </button>
+        <>
+          <BottomMenu className="h-96 rounded-t-3xl " isOpen={isOpen} setIsEdited={setIsEdited}>
+            <div className="border-b-2 border-gray-200 w-full">
+              <div className="flex justify-center">
+                <button className="pt-5 pb-5" onClick={() => setIsEdited(false)}>
+                  <div className="bg-gray-300 w-14 h-1 "> </div>
+                </button>
+              </div>
+              <h3 className="text-sm font-semibold font-montserrat text-center mb-1 text-dark-blue">
+                Изменение данных профиля
+              </h3>
             </div>
-            <h3 className="text-sm font-semibold font-montserrat text-center mb-1 text-dark-blue">
-              Изменение данных профиля
-            </h3>
-          </div>
-          <UserComponent buttonName="Сохранить изменения" />
-        </BottomMenu>
+            <UserComponent buttonName="Сохранить изменения" name={user.username} />
+          </BottomMenu>
+        </>
       )}
     </>
   );
