@@ -19,8 +19,22 @@ import Checkbox from '@/components/Checkbox';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
+const initialArray = [
+  {
+    name: 'Nomad Water негаз., 5 л',
+    count: 10,
+    price: 500,
+    imgUrl: '../components/Order/bottle.png'
+  },
+  {
+    name: 'Nomad Water негаз., 19 л',
+    count: 2,
+    price: 1500,
+    imgUrl: '../components/Order/bottle.png'
+  }
+];
+
 const OrderRegistration: FC = () => {
-  const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [isValid, setIsValid] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
@@ -29,6 +43,7 @@ const OrderRegistration: FC = () => {
   const [pickup, setPickup] = useState(false);
   const [delivery, setDelivery] = useState(false);
   const [total, setTotal] = useState(0);
+  const data = structuredClone(initialArray);
 
   const sumTotal = () => {
     let sum = 0;
@@ -39,16 +54,32 @@ const OrderRegistration: FC = () => {
   };
 
   useEffect(() => {
-    setData(order);
     setUserData(user);
     setTotal(sumTotal);
-  }, []);
+  }, [data]);
+
+  const changeCount = (operator: string, i: number) => {
+    if (operator === '+') {
+      data[i].count++;
+      console.log(data[i].count, data[i].name);
+    } else if (operator === '-') {
+      data[i].count--;
+      console.log(data[i].count, data[i].name);
+    }
+  };
 
   return (
     <>
       <OrderHeader />
-      {data.map((or) => (
-        <OrderCard data={or} key={or.name} />
+      {data.map((or, index: number) => (
+        <OrderCard
+          data={{ ...or }}
+          key={or.name}
+          id={index}
+          changeCount={changeCount}
+          count={or.count}
+          total={or.count * or.count}
+        />
       ))}
       <Address
         setIsOpen={setIsOpen}
@@ -58,7 +89,7 @@ const OrderRegistration: FC = () => {
       />
       {isOpen && (
         <Accordion
-          className="mx-auto mt-4"
+          className="mx-auto mt-4 md:w-5/6 "
           setIsValid={setIsValid}
           setIsEdited={setIsEdited}
           isEdited={isEdited}
@@ -77,7 +108,7 @@ const OrderRegistration: FC = () => {
           Выберите способ оплаты
         </button>
       </EditCard>
-      <div className="h-6 w-3/4 mt-5 mx-auto gap-2.5">
+      <div className="h-6 w-3/4 mt-5 mx-auto gap-2.5 md:w-5/6">
         <div className="flex items-center w-full">
           <Checkbox
             label="Самовывоз"
@@ -125,7 +156,7 @@ const OrderRegistration: FC = () => {
 
       <Footer className={`h-20 items-center flex justify-center`}>
         <Button
-          className="w-80 h-11 text-sm disabled:bg-opacity-70 "
+          className="w-80 h-11 text-sm disabled:bg-opacity-70 md:w-11/12"
           disabled={!isValid}
           onClick={() => alert(JSON.stringify(address, null, 2))}>
           Оформить заказ
