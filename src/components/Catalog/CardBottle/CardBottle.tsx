@@ -1,17 +1,10 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { Counter } from './Counter';
 import { AddFavourite } from './AddFavourite';
 import { ICard } from '@/types/types';
 import { Discription } from './Discription';
 
-export const CardBottle: FC<ICard> = ({
-  isFavourite,
-  setIsFavourite,
-  counter,
-  setCounter,
-  items
-}) => {
+export const CardBottle: FC<ICard> = ({ isFavourite, setIsFavourite, items }) => {
   return (
     <div>
       <div className={` sm:bg-white sm:rounded-3xl relative sm:p-3`}>
@@ -23,12 +16,6 @@ export const CardBottle: FC<ICard> = ({
             className={`flex flex-col sm:ml-5 text-left text-sm sm:text-base lg:text-lg leading-4 font-medium pt-2`}>
             <Discription {...items} />
             <h2 className={`sm:text-lg mt-2 sm:mt-0`}>{items.price}</h2>
-          </div>
-
-          <div className={`flex justify-between`}>
-            <div className={`hidden`}>
-              <Counter counter={counter} setCounter={setCounter} />
-            </div>
           </div>
         </Link>
       </div>

@@ -14,13 +14,11 @@ export interface IBottle {
 }
 
 export interface ICard {
-  items?: IBottle;
+  items: IBottle;
   children?: ReactNode;
   className?: string;
-  isFavourite: boolean;
-  setIsFavourite: React.Dispatch<React.SetStateAction<boolean>>;
-  counter: number;
-  setCounter: React.Dispatch<React.SetStateAction<number>>;
+  isFavourite?: boolean;
+  setIsFavourite?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface IFavourite {

@@ -9,14 +9,13 @@ import avatar from '../assets/crm/avatar.png';
 import { Search } from '@/components/Catalog/Search';
 
 const Catalog: FC = () => {
-  const [counter, setCounter] = useState<number>(1);
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [value, setValue] = useState('');
   const searchArray = dataBottle.filter((items) =>
     items.title.toLowerCase().includes(value.toLowerCase())
   );
   return (
-    <div className={`w-full  bg-bg-crm `}>
+    <div className={`w-full  bg-bg-crm text-dark-blue`}>
       <Header>
         <>
           <svg
@@ -75,8 +74,6 @@ const Catalog: FC = () => {
                       items={items}
                       isFavourite={isFavourite}
                       setIsFavourite={setIsFavourite}
-                      counter={counter}
-                      setCounter={setCounter}
                     />
                   ))
               : searchArray.map((items, id) => (
@@ -85,8 +82,6 @@ const Catalog: FC = () => {
                     items={items}
                     isFavourite={isFavourite}
                     setIsFavourite={setIsFavourite}
-                    counter={counter}
-                    setCounter={setCounter}
                   />
                 ))}
           </div>
