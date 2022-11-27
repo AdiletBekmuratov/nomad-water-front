@@ -4,4 +4,5 @@ export * from './Address';
 export * from './Accordion';
 export * from './Footer';
 export * from './BottomMenu';
-export * from './UserComponent';
+export * from './PaymentComponent';
+export * from './PaymentEdit';

@@ -3,7 +3,7 @@ import { FC, InputHTMLAttributes } from 'react';
 import ReactInputMask from 'react-input-mask';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
-  inputType: 'formik' | 'default';
+  inputType: 'formik' | 'default' | 'checkbox';
   label?: string;
   mask?: string;
   id: string;
@@ -48,7 +48,11 @@ export const Input: FC<Props> = ({ inputType = 'default', ...props }) => {
       ) : (
         <input {...props} className={`${CONSTANT_CLASSNAMES} ${props.className}`} />
       )}
-      <ErrorMessage component={'div'} name={props.name!} className="text-xs text-red-500" />
+      <ErrorMessage
+        component={'div'}
+        name={props.name!}
+        className="text-xs text-red-500 font-montserrat font-medium"
+      />
     </div>
   );
 };

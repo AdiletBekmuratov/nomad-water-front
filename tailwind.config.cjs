@@ -23,6 +23,9 @@ module.exports = {
       },
       backgroundImage: {
         astana: "url('./src/assets/astanaHub.png')"
+      },
+      spacing: {
+        "33.125": "33.125rem"
       }
     }
   },
