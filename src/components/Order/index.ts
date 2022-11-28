@@ -6,3 +6,5 @@ export * from './Footer';
 export * from './BottomMenu';
 export * from './PaymentComponent';
 export * from './PaymentEdit';
+export * from './OrderAcordion';
+export * from './Total';

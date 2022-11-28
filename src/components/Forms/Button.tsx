@@ -2,14 +2,16 @@ import { ButtonHTMLAttributes, DetailedHTMLProps, FC, ReactNode } from 'react';
 
 type Props = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & {
   children: ReactNode;
+  buttonColor?: string;
 };
-
-const buttonStyle =
-  'text-white bg-dark-blue py-4 rounded-lg font-roboto w-full disabled:bg-gray-300';
 
 export const Button: FC<Props> = (props) => {
   return (
-    <button {...props} className={`${buttonStyle} ${props.className}`}>
+    <button
+      {...props}
+      className={`text-white ${
+        props.buttonColor ? props.buttonColor : 'bg-dark-blue font-roboto'
+      } py-4 rounded-lg w-full disabled:bg-gray-300 ${props.className}`}>
       {props.children}
     </button>
   );

@@ -3,7 +3,7 @@ import { ReactComponent as Back } from '../../assets/back.svg';
 
 export const OrderHeader: FC = () => {
   return (
-    <header className="bg-white w-full h-14 md:h-16 flex ">
+    <header className="bg-white w-full h-14 md:h-16 flex lg:h-16">
       <a href="#" className="items-center h-6 px-8 py-6">
         <Back />
       </a>

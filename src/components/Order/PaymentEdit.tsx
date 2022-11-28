@@ -7,16 +7,26 @@ type Props = {
   initialValues: Object;
   validationSchema: Object;
   buttonName: string;
+  setIsValid?: Function;
+  setValues?: Function;
 };
 const paymentStyle = 'placeholder:text-gray-300 font-montserrat';
 
-export const PaymentEdit: FC<Props> = ({ initialValues, validationSchema, buttonName }) => {
+export const PaymentEdit: FC<Props> = ({
+  initialValues,
+  validationSchema,
+  buttonName,
+  setIsValid,
+  setValues
+}) => {
   return (
     <div>
       <FormContainer
         initialValues={initialValues}
         validationSchema={validationSchema}
         buttonName={buttonName}
+        setValues={setValues}
+        setIsValid={setIsValid}
         className="px-6">
         <div className="mb-2">
           <Input
@@ -56,7 +66,7 @@ export const PaymentEdit: FC<Props> = ({ initialValues, validationSchema, button
           />
         </div>
         <div className="border-b-2 mb-5">
-          <Checkbox id="saveCard" name="saveCard" label="Сохранить карту" />;
+          <Checkbox id="saveCard" name="saveCard" label="Сохранить карту" />
         </div>
       </FormContainer>
     </div>
