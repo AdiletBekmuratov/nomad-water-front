@@ -1,6 +1,7 @@
 import React from 'react';
 
-export const Search = ({ value, setValue }) => {
+export const Search = ({ value, setValue, isOpen }) => {
+  const marginRightInput = isOpen ? '16' : '48';
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const onClickClear = () => {
@@ -14,7 +15,8 @@ export const Search = ({ value, setValue }) => {
   return (
     <div className={`flex flex-col  md:flex-row pt-4 gap-6 md:gap:0`}>
       <div
-        className={`flex sm:flex-1 items-center justify-items-start mt-6 sm:mt-0 px-5 xl:mr-48 py-3 rounded-3xl bg-white`}>
+        className={`flex sm:flex-1 items-center justify-items-start mt-6 sm:mt-0 px-5 xl:mr-${marginRightInput}
+        py-3 rounded-3xl bg-white`}>
         <svg
           className={`cursor-pointer mr-3`}
           width="16"
@@ -38,7 +40,7 @@ export const Search = ({ value, setValue }) => {
         <div className={`w-full relative `}>
           <input
             onChange={onChangeInput}
-            className={`w-full border-none`}
+            className={`w-full outline-none`}
             ref={inputRef}
             value={value}
             placeholder="Поиск ..."
