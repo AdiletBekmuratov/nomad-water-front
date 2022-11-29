@@ -6,7 +6,7 @@ export const Counter: FC<ICounter> = ({ counter, setCounter }) => {
   const onMinusClick = () => setCounter(--counter);
 
   return (
-    <div className={`flex items-center justify-between gap-4 `}>
+    <div className={`flex items-center justify-between gap-4 sm:gap-2 lg:ml-12 xl:ml-24 `}>
       <button onClick={onMinusClick}>
         <svg
           className={`border rounded-full`}

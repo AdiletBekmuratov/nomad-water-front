@@ -14,6 +14,7 @@ module.exports = {
         'footer-color': '#232B2E',
         'bg-crm': '#dedede',
         'green-color': '#4EC26F',
+        'blue-order-status':'#06A7D9',
         main: '#9D9DAB',
         'dark-blue': '#023646',
         'light-blue': '#EBF3F6',

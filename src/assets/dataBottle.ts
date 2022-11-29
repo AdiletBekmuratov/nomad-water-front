@@ -9,7 +9,8 @@ export const dataBottle: IBottle[] = [
       title: 'Nomad Water, 5 л, негаз.',
       discription: 'Доп. описание',
       availability: true,
-      price: 5000
+      price: 5000,
+
    }, {
       id: 2,
       img: bottle,
