@@ -13,22 +13,21 @@ const Orders = () => {
   const cardStyle = 'bg-white my-4 p-3 flex rounded-3xl justify-between';
   const [isOpen, setIsOpen] = React.useState(false);
   return (
-    <Sheet isOpen={isOpen}>
+    <Sheet isOpen={isOpen} setIsOpen={setIsOpen}>
       <div className={`w-full bg-bg-crm text-dark-blue`}>
         <Header>
-          <button onClick={() => setIsOpen((prev) => !prev)}>
-            <svg
-              className={`hidden lg:block mr-16`}
-              width="24"
-              height="25"
-              viewBox="0 0 24 25"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 7.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
-              <path d="M3 12.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
-              <path d="M3 17.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </button>
+          <svg
+            onClick={() => setIsOpen((prev) => !prev)}
+            className={`hidden lg:block mr-16`}
+            width="24"
+            height="25"
+            viewBox="0 0 24 25"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 7.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M3 12.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M3 17.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
           <span className="mx-auto font-medium text-base leading-6">Мои заказы</span>
           <img src={avatar} alt="avatar" className={`hidden lg:block mr-4`} />
         </Header>

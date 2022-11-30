@@ -19,23 +19,23 @@ const Catalog: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Sheet isOpen={isOpen}>
+    <Sheet isOpen={isOpen} setIsOpen={setIsOpen}>
       <div className={`w-full  bg-bg-crm text-dark-blue `}>
         <Header>
           <>
-            <button onClick={() => setIsOpen((prev) => !prev)}>
-              <svg
-                className={`hidden lg:block mr-16`}
-                width="24"
-                height="25"
-                viewBox="0 0 24 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 7.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M3 12.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M3 17.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            </button>
+            <svg
+              onClick={() => setIsOpen((prev) => !prev)}
+              className={`hidden lg:block mr-16`}
+              width="24"
+              height="25"
+              viewBox="0 0 24 25"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 7.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
+              <path d="M3 12.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
+              <path d="M3 17.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+
             <Link to="/" className={`mx-auto`}>
               <img src={logo} alt="nomadLogo" />
             </Link>

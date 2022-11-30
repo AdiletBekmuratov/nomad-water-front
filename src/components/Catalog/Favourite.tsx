@@ -1,7 +1,7 @@
 const Favourite = () => {
   // const [isAuth, setIsAuth] = useState(true);
   return (
-    <div className={`w-full bg-bg-crm `}>
+    <div className={`w-full `}>
       <h1>Мои избранные</h1>
     </div>
   );
