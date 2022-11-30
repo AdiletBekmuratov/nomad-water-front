@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, useCallback } from 'react';
 
 // Пока что имитация запроса с сервера
 import user from '@/components/Order/UserData.json';
@@ -14,11 +14,10 @@ import {
   Total
 } from '@/components/Order';
 import EditCard from '@/components/Order/EditCard';
-import Checkbox from '@/components/Checkbox';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
-const initialArray = [
+let initialArray = [
   {
     name: 'Nomad Water негаз., 5 л',
     count: 10,
@@ -42,30 +41,31 @@ const OrderRegistration: FC = () => {
   const [pickup, setPickup] = useState(false);
   const [delivery, setDelivery] = useState(false);
   const [total, setTotal] = useState(0);
-  const data = structuredClone(initialArray);
-
-  const sumTotal = () => {
-    let sum = 0;
-    for (let i = 0; i < data.length; i++) {
-      sum += data[i].price * data[i].count;
-    }
-    return sum;
-  };
+  let data = structuredClone(initialArray);
 
   useEffect(() => {
     setUserData(user);
-    setTotal(sumTotal);
-  }, [data]);
+  }, []);
 
-  const changeCount = (operator: string, i: number) => {
-    if (operator === '+') {
-      data[i].count++;
-      console.log(data[i].count, data[i].name);
-    } else if (operator === '-') {
-      data[i].count--;
-      console.log(data[i].count, data[i].name);
-    }
-  };
+  const handeCounts = useCallback(
+    (count: number, index: number) => {
+      data[index].count = count;
+      let t: number = 0;
+      for (let i = 0; i < data.length; i++) {
+        t += data[i].price * data[i].count;
+      }
+      setTotal(t);
+    },
+    [data]
+  );
+
+  const handleTotal = useCallback(
+    (isDel: boolean = false) => {
+      if (isDel) setTotal(total + 300);
+      else setTotal(total - 300);
+    },
+    [data]
+  );
 
   return (
     <>
@@ -74,12 +74,11 @@ const OrderRegistration: FC = () => {
         <div className="lg:col-span-2 lg:order-1 lg:col-start-1 lg:row-start-1">
           {data.map((or, index: number) => (
             <OrderCard
+              handeCounts={handeCounts}
+              id={index}
               data={{ ...or }}
               key={or.name}
-              id={index}
-              changeCount={changeCount}
               count={or.count}
-              total={or.count * or.price}
             />
           ))}
         </div>
@@ -113,6 +112,7 @@ const OrderRegistration: FC = () => {
           total={total}
           isValid={isValid}
           address={address}
+          handleTotal={handleTotal}
         />
         <div className="h-44"></div>
 

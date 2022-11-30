@@ -29,7 +29,7 @@ export const OrderAcordion: FC<Props> = ({
       />
       {isOpen && (
         <Accordion
-          className="mx-auto mt-4 md:w-5/6 lg:order-3"
+          className="mx-auto mt-4 md:w-5/6 lg:order-3 lg:w-11/12"
           setIsValid={setIsValid}
           setIsEdited={setIsEdited}
           isEdited={isEdited}

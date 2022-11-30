@@ -11,6 +11,7 @@ type Props = {
   total: number;
   isValid: boolean;
   address: Object;
+  handleTotal?: any;
 };
 
 export const Total: FC<Props> = ({
@@ -21,7 +22,8 @@ export const Total: FC<Props> = ({
   setTotal,
   total,
   isValid,
-  address
+  address,
+  handleTotal
 }) => {
   return (
     <div className="lg:order-2 lg:bg-white lg:h-48 lg:mt-6 lg:rounded-2xl lg:row-start-1">
@@ -33,6 +35,7 @@ export const Total: FC<Props> = ({
             checked={pickup}
             id="deliver"
             name="deliver"
+            onChange={() => handleTotal(false)}
             onClick={() => {
               if (delivery) {
                 setDelivery(false);
@@ -50,7 +53,7 @@ export const Total: FC<Props> = ({
             id="delivery"
             name="delivery"
             onChange={(e) => {
-              e.target.checked ? setTotal(total + 300) : setTotal(total - 300);
+              handleTotal(e.target.checked);
             }}
             onClick={() => {
               if (pickup) {
@@ -68,7 +71,7 @@ export const Total: FC<Props> = ({
           </h3>
         </div>
       </div>
-      <div className="lg:w-full lg:flex lg:justify-center lg:h-2/3 lg:items-end">
+      <div className="lg:w-full lg:flex lg:justify-center lg:h-2/3 lg:items-end hidden">
         <Button
           className="w-80 h-11 text-sm disabled:bg-opacity-70 lg:w-5/6"
           buttonColor="bg-dark-blue font-montserrat"
