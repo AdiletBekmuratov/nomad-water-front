@@ -11,6 +11,7 @@ const Home = lazy(() => import('@/pages/Home'));
 const Catalog = lazy(() => import('@/pages/Catalog'));
 const Orders = lazy(() => import('@/pages/Orders'));
 const BottlePage = lazy(() => import('@/pages/BottlePage'));
+const Admin = lazy(() => import('@/pages/Admin'));
 
 const AppRoutes = () => {
   return (

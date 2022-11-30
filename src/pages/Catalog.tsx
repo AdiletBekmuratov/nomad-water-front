@@ -64,7 +64,9 @@ const Catalog: FC = () => {
                 <circle cx="3" cy="3.5" r="3" fill="#DB1A1A" fillOpacity="0.8" />
               </svg>
             </Link>
-            <img src={avatar} alt="avatar" className={`hidden lg:block mr-4`} />
+            <Link to="/myAdmin">
+              <img src={avatar} alt="avatar" className={`hidden lg:block mr-4`} />
+            </Link>
           </>
         </Header>
         <div className={``}>
