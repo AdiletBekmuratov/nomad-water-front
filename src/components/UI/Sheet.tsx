@@ -28,8 +28,14 @@ export const Sheet: FC<ISheetProps> = ({ children, isOpen }) => (
             transition: { duration: 0.5 }
           }}
           className="bg-light-blue">
+          <div className={`px-3 xl:px-10 pt-6 flex gap-3`}>
+            <span className={`lg:text-sm xl:text-base leading-6 font-semibold `}>
+              ВОДА ВЕЛИКОЙ СТЕПИ
+            </span>
+          </div>
+
           <motion.div
-            className={`container px-3 xl:px-10 pt-20`}
+            className={`container px-3 xl:px-10 pt-10`}
             initial="closed"
             animate="open"
             exit="closed"
