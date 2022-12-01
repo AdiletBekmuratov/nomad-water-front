@@ -38,3 +38,20 @@ export interface ICounter {
 export interface ICatalog {
   cardItems?: IBottle[];
 }
+export interface IUsers {
+  id: number;
+  role: EnamSort;
+  firstName: string;
+  name: string;
+  middleName: string;
+  car?: string;
+  phone: string;
+  storage?: string;
+}
+
+export enum EnamSort {
+  buyers = 'Покупатели',
+  couriers = 'Курьеры',
+  worker = 'Работник склада',
+  master = 'Мастер склада'
+}

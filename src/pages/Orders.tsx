@@ -14,11 +14,11 @@ const Orders = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   return (
     <Sheet isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div className={`w-full bg-bg-crm text-dark-blue`}>
+      <div className={`w-full bg-gray-200 text-dark-blue`}>
         <Header>
           <svg
             onClick={() => setIsOpen((prev) => !prev)}
-            className={`hidden lg:block mr-16`}
+            className={`hidden lg:block mr-16 cursor-pointer`}
             width="24"
             height="25"
             viewBox="0 0 24 25"

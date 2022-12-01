@@ -23,7 +23,7 @@ const BottlePage = () => {
   //   console.log(orderNumber);
   // };
   return (
-    <div className={`w-full bg-bg-crm text-dark-blue`}>
+    <div className={`w-full bg-gray-200 text-dark-blue`}>
       <Header>
         <>
           <Link to="/catalog" className={`flex items-center`}>

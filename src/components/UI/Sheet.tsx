@@ -32,26 +32,32 @@ export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
             }}
             className="bg-light-blue absolute z-20 rounded-r-3xl">
             <motion.div className={`px-3 xl:px-10 pt-6 flex gap-3`}>
-              <span className={`lg:text-sm xl:text-base leading-6 font-semibold `}>
+              <span className={`text-base leading-6 font-semibold `}>
                 ВОДА ВЕЛИКОЙ СТЕПИ
+                <div className={`border-b border-solid border-gray-400`}></div>
               </span>
             </motion.div>
 
             <motion.div
-              className={`container px-3 xl:px-10 pt-10 mb-5`}
+              className={`container px-5 xl:px-10 pt-10 mb-5`}
               initial="closed"
               animate="open"
               exit="closed"
               variants={itemVariants}>
-              <div className={`grid grid-cols-1 gap-2 mb-48 xl:mb-80`}>
+              <div className={`grid grid-cols-1 gap-2 mb-16 xl:mb-36`}>
                 <Link to="/catalog">Каталог</Link>
-                <Link to="/myAdmin">Мой аккаунт</Link>
+                <Link to="/catalog">Мой аккаунт</Link>
                 <Link to="/myOrders">Мои заказы</Link>
-                <Link to="/catalog">Мои избранные</Link>
                 <Link to="/catalog">Обратная связь</Link>
                 <Link to="/">На главную</Link>
-              </div>
 
+                <div className={`border-b-2 border-solid border-gray-500 my-5`}></div>
+                <Link to="/catalog">Заказы</Link>
+                <Link to="/users">Пользователи</Link>
+                <Link to="/catalog">Курьеры</Link>
+                <Link to="/catalog">Склады</Link>
+                <Link to="/catalog">Оборудование</Link>
+              </div>
               <div className={`flex flex-col items-left font-medium`}>
                 <span className={`text-center lg:text-left`}>Контакты</span>
                 <div className={`flex flex-col my-1 lg:my-4  leading-6 tracking-wide`}>
