@@ -37,6 +37,7 @@ const FaqComp: FC<Props> = (props) => {
             </h3>
             <Form className={`flex flex-col space-y-4 text-sm lg:text-base`}>
               <Input
+                id="name"
                 inputType="formik"
                 name="name"
                 type="text"

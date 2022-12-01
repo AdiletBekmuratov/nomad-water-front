@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 
 export const MenuBottom = () => {
   return (
-    <div className={`bg-white px-20 pt-5 pb-8 flex items-center justify-between lg:hidden`}>
+    <div
+      className={`bg-white px-20 pt-5 pb-8 fixed w-full bottom-0 flex items-center justify-between md:hidden`}>
       <Link to="/catalog" className={`cursor-pointer`}>
         <svg
           width="24"

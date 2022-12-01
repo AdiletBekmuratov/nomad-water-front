@@ -13,7 +13,7 @@ export const Search = ({ value, setValue }) => {
   };
   return (
     <div
-      className={`flex sm:flex-1 items-center justify-items-start mt-6 sm:mt-0 px-5 xl:mr-48
+      className={`flex sm:flex-1 items-center justify-items-start px-5
         py-3 rounded-3xl bg-white`}>
       <svg
         className={`cursor-pointer mr-3`}
@@ -59,7 +59,6 @@ export const Search = ({ value, setValue }) => {
           </svg>
         )}
       </div>
-      
     </div>
   );
 };

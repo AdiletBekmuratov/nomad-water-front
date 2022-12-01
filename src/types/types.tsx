@@ -5,7 +5,7 @@ export interface IBottle {
   id: number;
   img?: string;
   title: string;
-  discription: string;
+  description: string;
   availability?: boolean;
   price?: number;
   count?: number;
@@ -19,15 +19,15 @@ export interface ICard {
   items: IBottle;
   children?: ReactNode;
   className?: string;
-  deliveryStatus?: string;
-  isOrders?: boolean;
+  deliveryStatus?: VariantStatus;
+  cardType: 'catalog' | 'order';
   isFavourite?: boolean;
   setIsFavourite?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface IFavourite {
-  isFavourite: boolean;
-  setIsFavourite: React.Dispatch<React.SetStateAction<boolean>>;
+  isFavourite?: boolean;
+  setIsFavourite?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export interface ICounter {
   counter: number;
@@ -55,3 +55,5 @@ export enum EnamSort {
   worker = 'Работник склада',
   master = 'Мастер склада'
 }
+
+export type VariantStatus = 'complete' | 'cancel' | 'inProcess';

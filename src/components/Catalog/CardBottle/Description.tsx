@@ -1,9 +1,9 @@
 import { IBottle } from '@/types/types';
 import React, { FC } from 'react';
 
-export const Discription: FC<IBottle> = ({
+export const Description: FC<IBottle> = ({
   title,
-  discription,
+  description,
   availability,
   orderNumber = '#283 349',
   orderAddress = 'адрес доставки',
@@ -13,7 +13,7 @@ export const Discription: FC<IBottle> = ({
     <div className={``}>
       {isOrders && <h1 className={`text-lg font-semibold`}>Заказ: {orderNumber}</h1>}
       <h2>{title}</h2>
-      <p className={`text-xs opacity-60`}>{discription}</p>
+      <p className={`text-xs opacity-60`}>{description}</p>
       {isOrders && <p className={`text-xs opacity-60`}>Адрес: {orderAddress}</p>}
       {availability ? (
         <span className={`text-xs text-green-color font-semibold mb-1 `}>В наличии</span>

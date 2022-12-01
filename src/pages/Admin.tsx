@@ -1,12 +1,11 @@
-import { Header } from '@/components/Catalog/Header';
 import { Sheet } from '@/components/UI/Sheet';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MenuBottom } from '@/components/Catalog/MenuBottom';
 
 import logo from '../assets/crm/logoHead.png';
 import avatar from '../assets/crm/avatar.png';
 import statisticFrame from '../assets/crm/statisticFrame.png';
+import { Header, Layout } from '@/components/Layout';
 
 const Admin = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -36,12 +35,10 @@ const Admin = () => {
             </Link>
           </>
         </Header>
-        <div className={`px-7 lg:px-48 xl:px-72 text-xs `}>
+        <Layout>
           <div
-            className={`bg-white mb-4 py-5 px-7 flex flex-col items-center mt-6 rounded-2xl
-            sm: sm:flex-row-reverse sm:px-20`}>
-            <div
-              className={`flex flex-col items-center sm:items-start font-semibold sm:ml-24 lg:ml-7 xl:ml-52 `}>
+            className={`bg-white mb-4 py-5 px-7 grid md:grid-cols-2 grid-cols-1 items-center justify-center rounded-2xl sm:px-20`}>
+            <div className={`flex flex-col items-center sm:items-start font-semibold md:order-2`}>
               <span className={`text-sm xl:text-lg leading-4 `}>Статистика по продажам</span>
               <div className={`my-4 xl:text-base`}>
                 Заработано: <span className={`text-blue-statisticSum`}>74 838 Т</span>
@@ -85,8 +82,7 @@ const Admin = () => {
             </div>
             <span>Описание запроса. к примеру, отсутствие товаров на складе</span>
           </div>
-        </div>
-        <MenuBottom />
+        </Layout>
       </div>
     </Sheet>
   );

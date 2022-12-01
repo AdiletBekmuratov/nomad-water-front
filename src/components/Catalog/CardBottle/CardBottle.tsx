@@ -2,34 +2,36 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { AddFavourite } from './AddFavourite';
 import { ICard } from '@/types/types';
-import { Discription } from './Discription';
+import { Description } from './Description';
 import { OrderStatus } from '@/components/Catalog/OrderStatus';
 
 export const CardBottle: FC<ICard> = ({
   isFavourite,
   setIsFavourite,
   items,
-  isOrders,
+  cardType,
   deliveryStatus
 }) => {
-  const flexStyleCard = isOrders ? 'flex-row' : 'flex-col';
-  const cardInOrders = deliveryStatus?.length > 0 ? true : false;
-
   return (
-    <div>
-      <div className={` sm:bg-white sm:rounded-3xl relative sm:p-3`}>
-        {!isOrders && <AddFavourite isFavourite={isFavourite} setIsFavourite={setIsFavourite} />}
+    <div
+      className={`${cardType === 'order' ? 'bg-white' : ''} sm:bg-white rounded-3xl relative p-2`}>
+      {cardType === 'order' && (
+        <AddFavourite isFavourite={isFavourite} setIsFavourite={setIsFavourite} />
+      )}
 
-        <Link to={`/catalog/${items.id}`} className={`flex ${flexStyleCard} sm:flex-row`}>
-          <img src={items.img} alt="bottle" />
-          <div
-            className={`flex flex-col sm:ml-5 text-left text-sm sm:text-base lg:text-lg leading-4 font-medium pt-2`}>
-            <Discription {...items} isOrders={cardInOrders} />
-            <h2 className={`sm:text-lg mt-2 font-semibold sm:mt-0`}>{items.price}</h2>
-            {isOrders && <OrderStatus variants={deliveryStatus} />}
-          </div>
-        </Link>
-      </div>
+      <Link
+        to={`/catalog/${items.id}`}
+        className={`flex ${cardType === 'order' ? 'flex-row' : 'flex-col'} sm:flex-row`}>
+        <div className={'bg-white rounded-3xl flex items-center justify-center p-2'}>
+          <img src={items.img} alt="bottle" className="object-contain" />
+        </div>
+        <div
+          className={`flex flex-col sm:ml-5 text-left text-sm sm:text-base lg:text-lg leading-4 font-medium pt-2`}>
+          <Description {...items} isOrders={cardType === 'order'} />
+          <h2 className={`sm:text-lg mt-2 font-semibold sm:mt-0`}>{items.price}</h2>
+          {cardType === 'order' && <OrderStatus variants={deliveryStatus} />}
+        </div>
+      </Link>
     </div>
   );
 };

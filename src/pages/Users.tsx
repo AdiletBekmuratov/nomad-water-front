@@ -1,14 +1,13 @@
 import { dataUsers } from '@/assets/dataUsers';
-import { Header } from '@/components/Catalog/Header';
-import { MenuBottom } from '@/components/Catalog/MenuBottom';
-import { ModalCat } from '@/components/Catalog/ModalCat';
-import { Search } from '@/components/Catalog/Search';
-import { Modal } from '@/components/UI';
+import { Header } from '@/components/Layout/Header';
+import { MenuBottom } from '@/components/Layout/MenuBottom';
 import { Sheet } from '@/components/UI/Sheet';
 import { EnamSort } from '@/types/types';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { AiOutlineSearch } from 'react-icons/ai';
 
+import { Input } from '@/components/Forms';
 import avatar from '../assets/crm/avatar.png';
 
 type SortItem = {
@@ -80,14 +79,25 @@ const Users = () => {
           </>
         </Header>
         <div className={`px-7 lg:px-48 xl:px-72 text-xs pb-6 sm:pt-7 flex-1`}>
-          <Search value={value} setValue={setValue} />
+          {/* <Search value={value} setValue={setValue} /> */}
+          <Input
+            id="search"
+            name="search"
+            inputType="default"
+            placeholder="Поиск"
+            className="rounded-full"
+            leftIcon={<AiOutlineSearch />}
+            rightIcon={
+              <AiOutlineSearch className="cursor-pointer" onClick={() => console.log('hello')} />
+            }
+          />
 
           <div>
             <div className={`grid grid-cols-2 xl:grid-cols-4 gap-4 mt-3 mb-6`}>
               {sortArr.map((items) => (
-                <div
+                <button
                   key={items.name}
-                  className={`${styleBaseFilter}`}
+                  className={`${styleBaseFilter} ${items.name !== isSelected && 'opacity-70'}`}
                   onClick={() => onClickFilter(items.name)}>
                   <svg
                     width="24"
@@ -105,7 +115,7 @@ const Users = () => {
                     />
                   </svg>
                   <span>{items.name}</span>
-                </div>
+                </button>
               ))}
             </div>
             <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3`}>

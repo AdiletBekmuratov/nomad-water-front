@@ -1,14 +1,14 @@
-import { Header } from '@/components/Catalog/Header';
+import { Header } from '@/components/Layout/Header';
 import { dataBottle } from '@/assets/dataBottle';
 import { FC, useState } from 'react';
 import { CardBottle } from '@/components/Catalog';
 import { Link } from 'react-router-dom';
 import { Search } from '@/components/Catalog/Search';
-import { MenuBottom } from '@/components/Catalog/MenuBottom';
 import { Sheet } from '@/components/UI/Sheet';
 
 import logo from '../assets/crm/logoHead.png';
 import avatar from '../assets/crm/avatar.png';
+import { Layout } from '@/components/Layout';
 
 const Catalog: FC = () => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
@@ -69,98 +69,96 @@ const Catalog: FC = () => {
             </Link>
           </>
         </Header>
-        <div className={``}>
-          <div className={`px-7 lg:px-48 xl:px-72 text-xs `}>
-            <div className={`flex flex-col  md:flex-row pt-4 gap-6 md:gap:0`}>
-              <Search value={value} setValue={setValue} />
-              <div className={`flex gap-4 `}>
-                <div
-                  className={`flex items-center justify-center py-2 px-4 rounded-2xl bg-white cursor-pointer`}>
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
-                      fill="#023646"
-                    />
-                    <path
-                      d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
-                      fill="#023646"
-                    />
-                  </svg>
-                  <span>Вода</span>
-                </div>
-                <div
-                  className={`flex items-center justify-center px-4 rounded-2xl bg-white opacity-50 cursor-pointer`}>
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
-                      fill="#023646"
-                    />
-                    <path
-                      d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
-                      fill="#023646"
-                    />
-                  </svg>
-                  <span>Оборудование</span>
-                </div>
-                <div
-                  className={`flex items-center justify-center px-4 rounded-2xl bg-white opacity-50 cursor-pointer`}>
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
-                      fill="#023646"
-                    />
-                    <path
-                      d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
-                      fill="#023646"
-                    />
-                  </svg>
-                  <span>Услуги</span>
-                </div>
+        <Layout>
+          <div className={`flex flex-col md:flex-row gap-6 md:gap:0`}>
+            <Search value={value} setValue={setValue} />
+            <div className={`flex gap-4 flex-wrap`}>
+              <div
+                className={`flex items-center justify-center py-2 px-4 rounded-2xl bg-white cursor-pointer`}>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
+                    fill="#023646"
+                  />
+                  <path
+                    d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
+                    fill="#023646"
+                  />
+                </svg>
+                <span>Вода</span>
+              </div>
+              <div
+                className={`flex items-center justify-center py-2 px-4 rounded-2xl bg-white opacity-50 cursor-pointer`}>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
+                    fill="#023646"
+                  />
+                  <path
+                    d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
+                    fill="#023646"
+                  />
+                </svg>
+                <span>Оборудование</span>
+              </div>
+              <div
+                className={`flex items-center justify-center py-2 px-4 rounded-2xl bg-white opacity-50 cursor-pointer`}>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
+                    fill="#023646"
+                  />
+                  <path
+                    d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
+                    fill="#023646"
+                  />
+                </svg>
+                <span>Услуги</span>
               </div>
             </div>
+          </div>
 
-            <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-2 sm:grid-cols-1 `}>
-              {value.length === 0
-                ? dataBottle
-                    .slice(0, 4)
-                    .map((items, id) => (
-                      <CardBottle
-                        key={id}
-                        items={items}
-                        isFavourite={isFavourite}
-                        setIsFavourite={setIsFavourite}
-                      />
-                    ))
-                : searchArray.map((items, id) => (
+          <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-2 sm:grid-cols-1 `}>
+            {value.length === 0
+              ? dataBottle
+                  .slice(0, 6)
+                  .map((items, id) => (
                     <CardBottle
                       key={id}
                       items={items}
+                      cardType="catalog"
                       isFavourite={isFavourite}
                       setIsFavourite={setIsFavourite}
                     />
-                  ))}
-            </div>
-            <div
-              className={`border-b border-solid border-y border-gray-300 mt-8 mb-4 md:border-none`}></div>
+                  ))
+              : searchArray.map((items, id) => (
+                  <CardBottle
+                    key={id}
+                    items={items}
+                    cardType="catalog"
+                    isFavourite={isFavourite}
+                    setIsFavourite={setIsFavourite}
+                  />
+                ))}
           </div>
-
-          <MenuBottom />
-        </div>
+          <div
+            className={`border-b border-solid border-y border-gray-300 mt-8 mb-4 md:border-none`}></div>
+        </Layout>
       </div>
     </Sheet>
   );

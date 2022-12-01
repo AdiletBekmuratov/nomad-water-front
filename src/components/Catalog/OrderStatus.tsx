@@ -1,15 +1,8 @@
+import { VariantStatus } from '@/types/types';
 import { FC, ReactNode } from 'react';
-export enum variantStatus {
-  complete = 'complete',
-  cancel = 'cancel',
-  inProcess = 'inProcess'
-}
+
 interface IOrderStatus {
-  children: ReactNode;
-  className?: string;
-  id?: number | string;
-  orderNumber?: number;
-  variants?: variantStatus;
+  variants?: VariantStatus;
 }
 export const OrderStatus: FC<IOrderStatus> = ({ variants }) => {
   return (
