@@ -1,5 +1,5 @@
 import { FC, useEffect, useState, useCallback } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 // Пока что имитация запроса с сервера
 import user from '@/components/Order/UserData.json';
 
@@ -43,6 +43,8 @@ const OrderRegistration: FC = () => {
   const [total, setTotal] = useState(0);
   let data = structuredClone(initialArray);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     setUserData(user);
   }, []);
@@ -69,7 +71,7 @@ const OrderRegistration: FC = () => {
 
   return (
     <>
-      <OrderHeader />
+      <OrderHeader>Оформление заказа</OrderHeader>
       <div className="lg:grid lg:grid-cols-3 lg:w-5/6 lg:mx-auto lg:grid-row-3">
         <div className="lg:col-span-2 lg:order-1 lg:col-start-1 lg:row-start-1">
           {data.map((or, index: number) => (
@@ -121,7 +123,10 @@ const OrderRegistration: FC = () => {
             className="w-80 h-11 text-sm disabled:bg-opacity-70 md:w-2/3"
             buttonColor="bg-dark-blue font-montserrat"
             disabled={!isValid}
-            onClick={() => alert(JSON.stringify(address, null, 2))}>
+            onClick={() => {
+              alert(JSON.stringify(address, null, 2));
+              navigate('/orderinfo'); // TODO: Когда будут данные с сервера то направить на order-id
+            }}>
             Оформить заказ
           </Button>
         </Footer>

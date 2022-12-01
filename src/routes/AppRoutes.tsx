@@ -5,6 +5,7 @@ import ScrollToTop from '@/components/ScrollToTop';
 import RegisterForm from '@/pages/RegisterForm';
 import ApplicationForm from '@/pages/ApplicationForm';
 import OrderRegistration from '@/pages/OrderRegistration';
+import OrderInfo from '@/pages/OrderInfo';
 
 const Home = lazy(() => import('@/pages/Home'));
 
@@ -23,7 +24,8 @@ const AppRoutes = () => {
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/application" element={<ApplicationForm />} />
-            <Route path="/order/*" element={<OrderRegistration />} />
+            <Route path="/order" element={<OrderRegistration />} />
+            <Route path="/orderinfo" element={<OrderInfo />} />
           </Routes>
         </ScrollToTop>
       </Router>
