@@ -1,7 +1,9 @@
 import { dataUsers } from '@/assets/dataUsers';
 import { Header } from '@/components/Catalog/Header';
 import { MenuBottom } from '@/components/Catalog/MenuBottom';
+import { ModalCat } from '@/components/Catalog/ModalCat';
 import { Search } from '@/components/Catalog/Search';
+import { Modal } from '@/components/UI';
 import { Sheet } from '@/components/UI/Sheet';
 import { EnamSort } from '@/types/types';
 import React from 'react';
@@ -24,9 +26,9 @@ const Users = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
   const [isSelected, setIsSelected] = React.useState('Покупатели');
+  const [isOpenPopUp, setIsOpenPopUp] = React.useState(false);
   const onClickFilter = (name: string) => {
     setIsSelected(name);
-    console.log(name);
   };
   const searchArray = dataUsers.filter((items) =>
     items.firstName.toLowerCase().includes(value.toLowerCase())
@@ -35,10 +37,11 @@ const Users = () => {
     items.role.toLowerCase().includes(isSelected.toLowerCase())
   );
 
-  const styleFilter = `flex items-center justify-start gap-2 py-2 px-4 rounded-3xl bg-white cursor-pointer`;
+  const styleBaseFilter = `flex items-center justify-start gap-2 py-2 px-4 rounded-3xl bg-white cursor-pointer`;
+
   return (
     <Sheet isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div className={`w-full bg-gray-200 text-dark-blue `}>
+      <div className={`w-full bg-gray-200 text-dark-blue relative`}>
         <Header>
           <>
             <svg
@@ -54,7 +57,9 @@ const Users = () => {
               <path d="M3 17.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
             <span className="mx-auto font-medium text-base leading-6">Пользователи</span>
-            <button className={`flex gap-2 px-2 cursor-pointer`}>
+            <button
+              className={`flex gap-2 px-2 cursor-pointer`}
+              onClick={() => setIsOpenPopUp(!isOpenPopUp)}>
               <span className={`hidden sm:block`}>Добавить</span>
               <svg
                 width="28"
@@ -74,7 +79,7 @@ const Users = () => {
             </Link>
           </>
         </Header>
-        <div className={`px-7 lg:px-48 xl:px-72 text-xs pb-6 sm:pt-7`}>
+        <div className={`px-7 lg:px-48 xl:px-72 text-xs pb-6 sm:pt-7 flex-1`}>
           <Search value={value} setValue={setValue} />
 
           <div>
@@ -82,7 +87,7 @@ const Users = () => {
               {sortArr.map((items) => (
                 <div
                   key={items.name}
-                  className={`${styleFilter}`}
+                  className={`${styleBaseFilter}`}
                   onClick={() => onClickFilter(items.name)}>
                   <svg
                     width="24"
@@ -128,6 +133,7 @@ const Users = () => {
                     </div>
                   ))}
             </div>
+            {/* {isOpenPopUp && <ModalCat isOpenPopUp={isOpenPopUp} setIsOpenPopUp={setIsOpenPopUp} />} */}
           </div>
         </div>
         <MenuBottom />
