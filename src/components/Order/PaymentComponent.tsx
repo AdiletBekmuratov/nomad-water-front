@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import * as yup from 'yup';
-import Arrow from '../../assets/back.svg';
 
+import Arrow from '../../assets/back.svg';
 import Checkbox from '../Checkbox';
 import { Button } from '../Forms';
 import { PaymentEdit } from './PaymentEdit';
@@ -37,6 +37,7 @@ export const PaymentComponent: FC<Props> = (props) => {
   const [isValid, setIsValid] = useState(false);
   const [values, setValues] = useState({});
   const [isCash, setIsCash] = useState(false);
+
   return (
     <>
       <div className="w-full h-14 flex justify-between items-center border-b-2">
@@ -90,7 +91,9 @@ export const PaymentComponent: FC<Props> = (props) => {
           className="w-full mx-6 my-10 md:block md:mx-6 md:my-6 md:w-full"
           disabled={!isValid}
           buttonColor={`font-montserrat bg-dark-blue`}
-          onClick={() => alert(JSON.stringify(values, null, 2))}>
+          onClick={() => {
+            alert(JSON.stringify(values, null, 2));
+          }}>
           {props.buttonName}
         </Button>
       </footer>

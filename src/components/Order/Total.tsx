@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Checkbox from '../Checkbox';
 import { Button } from '../Forms';
 
@@ -19,12 +20,12 @@ export const Total: FC<Props> = ({
   delivery,
   setPickup,
   setDelivery,
-  setTotal,
   total,
   isValid,
   address,
   handleTotal
 }) => {
+  const navigate = useNavigate();
   return (
     <div className="lg:order-2 lg:bg-white lg:h-48 lg:mt-6 lg:rounded-2xl lg:row-start-1">
       <div className="h-6 w-3/4 mt-5 mx-auto gap-2.5 md:w-5/6">
@@ -76,7 +77,10 @@ export const Total: FC<Props> = ({
           className="w-80 h-11 text-sm disabled:bg-opacity-70 lg:w-5/6"
           buttonColor="bg-dark-blue font-montserrat"
           disabled={!isValid}
-          onClick={() => alert(JSON.stringify(address, null, 2))}>
+          onClick={() => {
+            alert(JSON.stringify(address, null, 2));
+            navigate('/orderinfo'); // TODO: Когда будут данные с сервера то направить на order-id
+          }}>
           Оформить заказ
         </Button>
       </div>
