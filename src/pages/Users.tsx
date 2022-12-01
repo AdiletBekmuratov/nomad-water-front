@@ -23,13 +23,18 @@ export const sortArr: SortItem[] = [
 const Users = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
-  const [isSelected, setIsSelected] = React.useState(false);
-  const onClickFilter = () => {
-    setIsSelected(true);
+  const [isSelected, setIsSelected] = React.useState('Покупатели');
+  const onClickFilter = (name: string) => {
+    setIsSelected(name);
+    console.log(name);
   };
   const searchArray = dataUsers.filter((items) =>
     items.firstName.toLowerCase().includes(value.toLowerCase())
   );
+  const sortUsersArray = dataUsers.filter((items) =>
+    items.role.toLowerCase().includes(isSelected.toLowerCase())
+  );
+
   const styleFilter = `flex items-center justify-start gap-2 py-2 px-4 rounded-3xl bg-white cursor-pointer`;
   return (
     <Sheet isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -74,91 +79,54 @@ const Users = () => {
 
           <div>
             <div className={`grid grid-cols-2 gap-4 mt-3 mb-6`}>
-              <div className={`${styleFilter}`} onClick={onClickFilter}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
-                    fill="#023646"
-                  />
-                  <path
-                    d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
-                    fill="#023646"
-                  />
-                </svg>
-                <span>Покупатели</span>
-              </div>
-              <div className={`${styleFilter} `}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
-                    fill="#023646"
-                  />
-                  <path
-                    d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
-                    fill="#023646"
-                  />
-                </svg>
-                <span>Курьеры</span>
-              </div>
-              <div className={`${styleFilter} `}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
-                    fill="#023646"
-                  />
-                  <path
-                    d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
-                    fill="#023646"
-                  />
-                </svg>
-                <span>Работник склада</span>
-              </div>
-              <div className={`${styleFilter} `}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
-                    fill="#023646"
-                  />
-                  <path
-                    d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
-                    fill="#023646"
-                  />
-                </svg>
-                <span>Мастер склада</span>
-              </div>
-            </div>
-            <div className={`grid grid-cols-1 sm:grid-cols-2 gap-3`}>
-              {searchArray.map((items) => (
+              {sortArr.map((items) => (
                 <div
-                  key={items.id}
-                  className={`bg-white rounded-2xl py-2 px-4 flex flex-col gap-1`}>
-                  <span className={`font-semibold`}>ID: {items.id}</span>
-                  <span>
-                    {items.firstName} {items.name}
-                  </span>
-                  <span>{items.phone}</span>
+                  key={items.name}
+                  className={`${styleFilter}`}
+                  onClick={() => onClickFilter(items.name)}>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
+                      fill="#023646"
+                    />
+                    <path
+                      d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
+                      fill="#023646"
+                    />
+                  </svg>
+                  <span>{items.name}</span>
                 </div>
               ))}
+            </div>
+            <div className={`grid grid-cols-1 sm:grid-cols-2 gap-3`}>
+              {value === ''
+                ? sortUsersArray.map((items) => (
+                    <div
+                      key={items.id}
+                      className={`bg-white rounded-2xl py-2 px-4 flex flex-col gap-1`}>
+                      <span className={`font-semibold`}>ID: {items.id}</span>
+                      <span>
+                        {items.firstName} {items.name}
+                      </span>
+                      <span>{items.phone}</span>
+                    </div>
+                  ))
+                : searchArray.map((items) => (
+                    <div
+                      key={items.id}
+                      className={`bg-white rounded-2xl py-2 px-4 flex flex-col gap-1`}>
+                      <span className={`font-semibold`}>ID: {items.id}</span>
+                      <span>
+                        {items.firstName} {items.name}
+                      </span>
+                      <span>{items.phone}</span>
+                    </div>
+                  ))}
             </div>
           </div>
         </div>
