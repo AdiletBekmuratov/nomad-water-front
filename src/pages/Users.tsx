@@ -74,11 +74,11 @@ const Users = () => {
             </Link>
           </>
         </Header>
-        <div className={`px-7 lg:px-48 xl:px-72 text-xs pb-6`}>
+        <div className={`px-7 lg:px-48 xl:px-72 text-xs pb-6 sm:pt-7`}>
           <Search value={value} setValue={setValue} />
 
           <div>
-            <div className={`grid grid-cols-2 gap-4 mt-3 mb-6`}>
+            <div className={`grid grid-cols-2 xl:grid-cols-4 gap-4 mt-3 mb-6`}>
               {sortArr.map((items) => (
                 <div
                   key={items.name}
@@ -103,7 +103,7 @@ const Users = () => {
                 </div>
               ))}
             </div>
-            <div className={`grid grid-cols-1 sm:grid-cols-2 gap-3`}>
+            <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3`}>
               {value === ''
                 ? sortUsersArray.map((items) => (
                     <div
