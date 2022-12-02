@@ -160,7 +160,7 @@ const Users = () => {
         <div
           className={`grid grid-cols-1 gap-2 sm:gap-3 xl:gap-5 w-screen sm:w-full py-5 px-6 lg:layout`}>
           <svg
-            className={`mt-6 sm:hidden`}
+            className={`mx-auto sm:hidden`}
             width="60"
             height="4"
             viewBox="0 0 60 4"
