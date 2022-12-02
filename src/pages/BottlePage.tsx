@@ -1,13 +1,13 @@
 import React from 'react';
+import { CardBottle } from '@/components/Catalog';
+import { Header, Layout } from '@/components/Layout';
 import { dataBottle } from '@/assets/dataBottle';
 import { Button } from '@/components/Forms';
 import { Link, useParams } from 'react-router-dom';
 import { Counter } from '@/components/Catalog/CardBottle/Counter';
 
-import heart from '../assets/crm/orderHeart.png';
+//import heart from '../assets/crm/orderHeart.png';
 import bottle2X from '../assets/crm/bottle2X.png';
-import { CardBottle } from '@/components/Catalog';
-import { Header, Layout } from '@/components/Layout';
 
 const BottlePage = () => {
   const { id } = useParams();
@@ -43,7 +43,7 @@ const BottlePage = () => {
         </>
       </Header>
       <Layout className={`flex flex-col space-y-4 text-lg`}>
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className={`flex flex-col md:flex-row gap-4`}>
           <div>
             <div className={`relative bg-white rounded-2xl aspect-video`}>
               <img src={bottle2X} alt="bottleXs" className={`object-contain`} />

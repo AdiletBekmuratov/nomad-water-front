@@ -1,4 +1,4 @@
-import { Sheet } from '@/components/UI/Sheet';
+import { Sheet } from '@/components/Layout/Sheet';
 import { FC, useState } from 'react';
 import { Button, Card } from '../components/Forms/index';
 

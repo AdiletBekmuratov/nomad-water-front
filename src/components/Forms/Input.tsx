@@ -14,7 +14,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   rightIcon?: ReactNode;
 }
 
-const CONSTANT_CLASSNAMES = 'py-2 px-4 bg-white text-sm rounded-md w-full border border-gray-200';
+const CONSTANT_CLASSNAMES = 'py-2 px-4 bg-white text-sm  w-full border border-gray-200';
 
 export const Input: FC<Props> = ({ inputType = 'default', ...props }) => {
   return (

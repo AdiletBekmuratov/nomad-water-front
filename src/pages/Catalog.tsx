@@ -3,12 +3,16 @@ import { dataBottle } from '@/assets/dataBottle';
 import { FC, useState } from 'react';
 import { CardBottle } from '@/components/Catalog';
 import { Link } from 'react-router-dom';
-import { Search } from '@/components/Catalog/Search';
-import { Sheet } from '@/components/UI/Sheet';
 
+import { Layout } from '@/components/Layout';
+import { Input } from '@/components/Forms';
+import React from 'react';
+
+import { AiOutlineSearch } from 'react-icons/ai';
+import { FiDelete } from 'react-icons/fi';
 import logo from '../assets/crm/logoHead.png';
 import avatar from '../assets/crm/avatar.png';
-import { Layout } from '@/components/Layout';
+import { Sheet } from '@/components/Layout/Sheet';
 
 const Catalog: FC = () => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
@@ -17,7 +21,10 @@ const Catalog: FC = () => {
     items.title.toLowerCase().includes(value.toLowerCase())
   );
   const [isOpen, setIsOpen] = useState(false);
-
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+  const filterStyle = `flex items-center justify-center py-2 px-3 rounded-2xl bg-white cursor-pointer`;
   return (
     <Sheet isOpen={isOpen} setIsOpen={setIsOpen}>
       <div className={`w-full bg-gray-200 text-dark-blue `}>
@@ -70,11 +77,26 @@ const Catalog: FC = () => {
           </>
         </Header>
         <Layout>
-          <div className={`flex flex-col md:flex-row gap-6 md:gap:0`}>
-            <Search value={value} setValue={setValue} />
-            <div className={`flex gap-4 flex-wrap`}>
-              <div
-                className={`flex items-center justify-center py-2 px-4 rounded-2xl bg-white cursor-pointer`}>
+          <div className={`grid grid-cols-1 lg:grid-cols-2 gap-3 items-center`}>
+            <Input
+              id="search"
+              name="search"
+              value={value}
+              onChange={onChangeInput}
+              inputType="default"
+              placeholder="Поиск..."
+              className="rounded-2xl"
+              leftIcon={<AiOutlineSearch />}
+              rightIcon={
+                <FiDelete
+                  className={`cursor-pointer block ${value === '' && 'hidden'}`}
+                  onClick={() => setValue('')}
+                />
+              }
+            />
+
+            <div className={`grid sm:grid-cols-3 gap-4 md:gap-4`}>
+              <div className={`${filterStyle}`}>
                 <svg
                   width="24"
                   height="24"
@@ -92,8 +114,7 @@ const Catalog: FC = () => {
                 </svg>
                 <span>Вода</span>
               </div>
-              <div
-                className={`flex items-center justify-center py-2 px-4 rounded-2xl bg-white opacity-50 cursor-pointer`}>
+              <div className={`opacity-50 ${filterStyle}`}>
                 <svg
                   width="24"
                   height="24"
@@ -111,8 +132,7 @@ const Catalog: FC = () => {
                 </svg>
                 <span>Оборудование</span>
               </div>
-              <div
-                className={`flex items-center justify-center py-2 px-4 rounded-2xl bg-white opacity-50 cursor-pointer`}>
+              <div className={`opacity-50 ${filterStyle}`}>
                 <svg
                   width="24"
                   height="24"
@@ -136,7 +156,7 @@ const Catalog: FC = () => {
           <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-2 sm:grid-cols-1 `}>
             {value.length === 0
               ? dataBottle
-                  .slice(0, 6)
+                  .slice(0, 4)
                   .map((items, id) => (
                     <CardBottle
                       key={id}

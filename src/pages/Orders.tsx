@@ -2,12 +2,11 @@ import React from 'react';
 import { Header } from '@/components/Layout/Header';
 import { CardBottle } from '@/components/Catalog';
 import { dataBottle } from '@/assets/dataBottle';
-import { Link } from 'react-router-dom';
+
+import { Sheet } from '@/components/Layout/Sheet';
+import { Layout } from '@/components/Layout';
 
 import avatar from '../assets/crm/avatar.png';
-import { Sheet } from '@/components/UI/Sheet';
-import { Layout } from '@/components/Layout';
-import { VariantStatus } from '@/types/types';
 
 const Orders = () => {
   const [orderCount, setOrderCount] = React.useState(1);
