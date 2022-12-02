@@ -41,7 +41,7 @@ export const Modal: FC<Props> = (props) => {
             <div className="w-full flex justify-around gap-2.5 mb-4">
               <Dialog.Close>
                 <Button
-                  className="w-40 md:w-56"
+                  className="w-40 md:w-56 lg:w-72"
                   buttonColor="bg-gray-300 font-montserrat font-semibold"
                   textColor="text-dark-blue">
                   {props.buttonCloseTest}
@@ -49,7 +49,7 @@ export const Modal: FC<Props> = (props) => {
               </Dialog.Close>
               <Dialog.Close>
                 <Button
-                  className="w-40 md:w-56"
+                  className="w-40 md:w-56 lg:w-72"
                   buttonColor="bg-dark-blue font-montserrat font-semibold">
                   {props.secondButtonText}
                 </Button>
