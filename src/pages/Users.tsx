@@ -27,7 +27,7 @@ export const sortArr: SortItem[] = [
 const Users = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
-  const [isSelected, setIsSelected] = React.useState('Покупатели');
+  const [isSelected, setIsSelected] = React.useState('');
   const [isOpenPopUp, setIsOpenPopUp] = React.useState(false);
   const onClickFilter = (name: string) => {
     setIsSelected(name);

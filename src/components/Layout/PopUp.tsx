@@ -24,7 +24,7 @@ export const PopUp: FC<Props> = ({ children, isOpenPopUp, setIsOpenPopUp, classN
                            sm:inset-x-40 sm:inset-y-16 
                            lg:inset-x-80 lg:inset-y-20 
                            xl:inset-x-1/3 xl:inset-y-30
-                           sm:rounded-3xl sm:item-center sm:fixed`;
+                           sm:rounded-3xl sm:item-center `;
   return (
     <AnimatePresence>
       {isOpenPopUp && (
@@ -33,8 +33,7 @@ export const PopUp: FC<Props> = ({ children, isOpenPopUp, setIsOpenPopUp, classN
           animate="open"
           exit="closed"
           className={``}
-          //  variants={itemVariants}
-        >
+          variants={itemVariants}>
           <div
             onClick={() => setIsOpenPopUp(false)}
             className={`absolute bg-black opacity-50 inset-0 `}></div>
