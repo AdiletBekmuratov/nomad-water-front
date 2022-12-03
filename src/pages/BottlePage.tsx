@@ -82,7 +82,7 @@ const BottlePage = () => {
           <h2>Рекомендации</h2>
           <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-2 sm:grid-cols-1 `}>
             {dataBottle.slice(0, 2).map((items, id) => (
-              <CardBottle key={id} items={items} />
+              <CardBottle cardType="catalog" key={id} items={items} />
             ))}
           </div>
         </div>

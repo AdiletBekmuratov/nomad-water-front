@@ -36,7 +36,7 @@ const MyFavourite = () => {
               Мои избранные <FaRegHeart />
             </span>
 
-            <Link to="/myAdmin">
+            <Link to="/catalog">
               <img src={avatar} alt="avatar" className={`hidden lg:block`} />
             </Link>
           </>

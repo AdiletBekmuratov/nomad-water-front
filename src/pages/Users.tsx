@@ -79,7 +79,7 @@ const Users = () => {
                   />
                 </svg>
               </button>
-              <Link to="/myAdmin">
+              <Link to="/catalog">
                 <img src={avatar} alt="avatar" className={`hidden lg:block`} />
               </Link>
             </>

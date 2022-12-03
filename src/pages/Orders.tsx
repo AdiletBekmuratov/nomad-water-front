@@ -7,6 +7,7 @@ import { Sheet } from '@/components/Layout/Sheet';
 import { Layout } from '@/components/Layout';
 
 import avatar from '../assets/crm/avatar.png';
+import { Link } from 'react-router-dom';
 
 const Orders = () => {
   const [orderCount, setOrderCount] = React.useState(1);
@@ -28,7 +29,9 @@ const Orders = () => {
             <path d="M3 17.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
           <span className="mx-auto font-medium text-base leading-6">Мои заказы</span>
-          <img src={avatar} alt="avatar" className={`hidden lg:block mr-4`} />
+          <Link to="/catalog">
+            <img src={avatar} alt="avatar" className={`hidden lg:block mr-4`} />
+          </Link>
         </Header>
         <Layout className={`text-left`}>
           <div className={`grid grid-cols-1 gap-4`}>

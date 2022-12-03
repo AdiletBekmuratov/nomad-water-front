@@ -37,8 +37,8 @@ const Admin = () => {
         </Header>
         <Layout>
           <div
-            className={`bg-white mb-4 py-5 px-7 grid md:grid-cols-2 grid-cols-1 items-center justify-center rounded-2xl sm:px-20`}>
-            <div className={`flex flex-col items-center sm:items-start font-semibold md:order-2`}>
+            className={`bg-white mb-4 py-5 px-7 lg:px-36 grid md:grid-cols-2 grid-cols-1 items-center justify-center rounded-2xl sm:px-20`}>
+            <div className={`flex flex-col items-center  font-semibold md:order-2`}>
               <span className={`text-sm xl:text-lg leading-4 `}>Статистика по продажам</span>
               <div className={`my-4 xl:text-base`}>
                 Заработано: <span className={`text-blue-statisticSum`}>74 838 Т</span>
