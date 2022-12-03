@@ -14,10 +14,7 @@ const itemVariants = {
   },
   open: { opacity: 1, transition: { duration: 0.5 } }
 };
-// const shadow = {
-//   closed: { opacity: 0, transition: { duration: 0.1 } },
-//   open: { opacity: 0.5 }
-// };
+
 export const PopUp: FC<Props> = ({ children, isOpenPopUp, setIsOpenPopUp, className }) => {
   const childrenStyle = `absolute bg-white bottom-0 text-dark-blue rounded-t-3xl sm:justify-center
                            sm:inset-x-40 sm:inset-y-16 
