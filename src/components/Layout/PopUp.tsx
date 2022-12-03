@@ -10,10 +10,9 @@ interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDi
 }
 const itemVariants = {
   closed: {
-    opacity: 0,
-    y: 300
+    opacity: 0
   },
-  open: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  open: { opacity: 1, transition: { duration: 0.5 } }
 };
 // const shadow = {
 //   closed: { opacity: 0, transition: { duration: 0.1 } },
