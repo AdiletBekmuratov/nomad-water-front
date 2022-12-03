@@ -9,8 +9,9 @@ import { Layout } from '@/components/Layout';
 
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FiDelete } from 'react-icons/fi';
-import avatar from '../assets/crm/avatar.png';
 import { PopUp } from '@/components/Layout/PopUp';
+
+import avatar from '../assets/crm/avatar.png';
 
 type SortItem = {
   name: string;

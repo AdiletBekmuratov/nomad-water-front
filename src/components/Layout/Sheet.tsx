@@ -50,13 +50,14 @@ export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
                 <Link to="/catalog">Каталог</Link>
                 <Link to="/catalog">Мой аккаунт</Link>
                 <Link to="/myOrders">Мои заказы</Link>
+                <Link to="/myFavourite">Избранное</Link>
                 <Link to="/catalog">Обратная связь</Link>
                 <Link to="/">На главную</Link>
 
                 <div className={`border-b-2 border-solid border-gray-500 my-5`}></div>
-                <Link to="/catalog">Заказы</Link>
+                <Link to="/myAdmin">Панель управления</Link>
                 <Link to="/users">Пользователи</Link>
-                <Link to="/catalog">Курьеры</Link>
+                <Link to="/users">Курьеры</Link>
                 <Link to="/catalog">Склады</Link>
                 <Link to="/catalog">Оборудование</Link>
               </div>

@@ -47,7 +47,7 @@ const Catalog: FC = () => {
               <img src={logo} alt="nomadLogo" />
             </Link>
 
-            <Link to="/catalog" className={`cursor-pointer lg:mr-16 flex justify-end relative`}>
+            <Link to="/myFavourite" className={`cursor-pointer lg:mr-16 flex justify-end relative`}>
               <svg
                 width="24"
                 height="22"
@@ -176,8 +176,7 @@ const Catalog: FC = () => {
                   />
                 ))}
           </div>
-          <div
-            className={`border-b border-solid border-y border-gray-300 mt-8 mb-4 md:border-none`}></div>
+          <div className={`border-b border-solid border-gray-300 mt-8 mb-4 md:border-none`}></div>
         </Layout>
       </div>
     </Sheet>

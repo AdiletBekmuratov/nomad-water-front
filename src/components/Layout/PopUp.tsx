@@ -20,11 +20,11 @@ const itemVariants = {
 //   open: { opacity: 0.5 }
 // };
 export const PopUp: FC<Props> = ({ children, isOpenPopUp, setIsOpenPopUp, className }) => {
-  const childrenStyle = `absolute bg-white bottom-0 text-dark-blue rounded-t-3xl 
+  const childrenStyle = `absolute bg-white bottom-0 text-dark-blue rounded-t-3xl sm:justify-center
                            sm:inset-x-40 sm:inset-y-16 
                            lg:inset-x-80 lg:inset-y-20 
                            xl:inset-x-1/3 xl:inset-y-30
-                           sm:rounded-3xl sm:item-center sm:justify-center sm:fixed`;
+                           sm:rounded-3xl sm:item-center sm:fixed`;
   return (
     <AnimatePresence>
       {isOpenPopUp && (

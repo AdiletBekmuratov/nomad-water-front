@@ -15,7 +15,7 @@ export const CardBottle: FC<ICard> = ({
   return (
     <div
       className={`${cardType === 'order' ? 'bg-white' : ''} sm:bg-white rounded-3xl relative p-2`}>
-      {cardType === 'order' && (
+      {cardType === 'catalog' && (
         <AddFavourite isFavourite={isFavourite} setIsFavourite={setIsFavourite} />
       )}
 

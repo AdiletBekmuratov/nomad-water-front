@@ -13,6 +13,7 @@ const Orders = lazy(() => import('@/pages/Orders'));
 const BottlePage = lazy(() => import('@/pages/BottlePage'));
 const Admin = lazy(() => import('@/pages/Admin'));
 const Users = lazy(() => import('@/pages/Users'));
+const MyFavourite = lazy(() => import('@/pages/MyFavourite'));
 
 const AppRoutes = () => {
   return (
@@ -29,6 +30,15 @@ const AppRoutes = () => {
             {/* <Route path="/" element={<Home />} /> */}
             <Route path="/crm" element={<MainCrm />} />
             <Route path="/crm/favourite" element={<Favourite />} />
+            <Route path="/register" element={<RegisterForm />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/catalog" element={<Catalog />} />
+            <Route path="/catalog/:id" element={<BottlePage />} />
+            <Route path="/myOrders" element={<Orders />} />
+            <Route path="/myAdmin" element={<Admin />} />
+            <Route path="/MyFavourite" element={<MyFavourite />} />
+            <Route path="/users" element={<Users />} />
+
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/application" element={<ApplicationForm />} />
             <Route path="/order" element={<OrderRegistration />} />
