@@ -21,8 +21,9 @@ export const Input: FC<Props> = ({ inputType = 'default', ...props }) => {
     <div className="flex flex-col space-y-1">
       {props.label && (
         <label htmlFor={props.id} className="font-montserrat text-dark-blue text-xs font-semibold">
-        <label htmlFor={props.id} className="font-montserrat cursor-pointer">
-          {props.label}
+          <label htmlFor={props.id} className="font-montserrat cursor-pointer">
+            {props.label}
+          </label>
         </label>
       )}
       <label

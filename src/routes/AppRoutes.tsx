@@ -27,10 +27,6 @@ const AppRoutes = () => {
       <Router>
         <ScrollToTop>
           <Routes>
-            {/* <Route path="/" element={<Home />} /> */}
-            <Route path="/crm" element={<MainCrm />} />
-            <Route path="/crm/favourite" element={<Favourite />} />
-            <Route path="/register" element={<RegisterForm />} />
             <Route path="/" element={<Home />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />
