@@ -10,3 +10,7 @@
     @apply w-full h-screen snap-start justify-center bg-light-blue;
   }
 }
+
+.layout {
+  @apply max-w-screen-lg mx-auto px-4;
+}

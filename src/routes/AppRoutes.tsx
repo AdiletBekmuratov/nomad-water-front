@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import ScrollToTop from '@/components/ScrollToTop';
 import RegisterForm from '@/pages/RegisterForm';
 import ApplicationForm from '@/pages/ApplicationForm';
+import UserAppeal from '@/pages/UserAppeal';
 
 const Home = lazy(() => import('@/pages/Home'));
 
@@ -22,6 +23,7 @@ const AppRoutes = () => {
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/application" element={<ApplicationForm />} />
+            <Route path="/appeal" element={<UserAppeal />} />
           </Routes>
         </ScrollToTop>
       </Router>
