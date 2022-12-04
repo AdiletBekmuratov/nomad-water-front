@@ -2,8 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import ScrollToTop from '@/components/ScrollToTop';
-import RegisterForm from '@/pages/RegisterForm';
-import ApplicationForm from '@/pages/ApplicationForm';
+//import ApplicationForm from '@/components/ApplicationForm';
 import OrderRegistration from '@/pages/OrderRegistration';
 import OrderInfo from '@/pages/OrderInfo';
 
@@ -13,6 +12,7 @@ const Orders = lazy(() => import('@/pages/Orders'));
 const BottlePage = lazy(() => import('@/pages/BottlePage'));
 const Admin = lazy(() => import('@/pages/Admin'));
 const Users = lazy(() => import('@/pages/Users'));
+const UserPage = lazy(() => import('@/pages/UserPage'));
 const MyFavourite = lazy(() => import('@/pages/MyFavourite'));
 
 const AppRoutes = () => {
@@ -28,18 +28,21 @@ const AppRoutes = () => {
         <ScrollToTop>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/register" element={<RegisterForm />} />
+
+            <Route path="/userPage" element={<UserPage />} />
+
+            <Route path="/myFavourite" element={<MyFavourite />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />
-            <Route path="/myOrders" element={<Orders />} />
-            <Route path="/myAdmin" element={<Admin />} />
-            <Route path="/myFavourite" element={<MyFavourite />} />
-            <Route path="/users" element={<Users />} />
-
-            <Route path="/application" element={<ApplicationForm />} />
 
             <Route path="/order" element={<OrderRegistration />} />
+            <Route path="/myOrders" element={<Orders />} />
             <Route path="/orderinfo" element={<OrderInfo />} />
+
+            <Route path="/users" element={<Users />} />
+            <Route path="/myAdmin" element={<Admin />} />
+
+            {/* <Route path="/application" element={<ApplicationForm />} /> */}
           </Routes>
         </ScrollToTop>
       </Router>

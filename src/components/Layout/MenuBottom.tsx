@@ -39,7 +39,7 @@ export const MenuBottom = () => {
           />
         </svg>
       </Link>
-      <Link to="/catalog" className={`cursor-pointer `}>
+      <Link to="/userPage" className={`cursor-pointer `}>
         <svg
           width="18"
           height="18"
