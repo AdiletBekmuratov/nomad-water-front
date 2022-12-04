@@ -21,9 +21,7 @@ export const Input: FC<Props> = ({ inputType = 'default', ...props }) => {
     <div className="flex flex-col space-y-1">
       {props.label && (
         <label htmlFor={props.id} className="font-montserrat text-dark-blue text-xs font-semibold">
-          <label htmlFor={props.id} className="font-montserrat cursor-pointer">
-            {props.label}
-          </label>
+          {props.label}
         </label>
       )}
       <label
@@ -61,11 +59,11 @@ export const Input: FC<Props> = ({ inputType = 'default', ...props }) => {
       {inputType === 'formik' && (
         <ErrorMessage component={'div'} name={props.name!} className="text-xs text-red-500" />
       )}
-      <ErrorMessage
+      {/* <ErrorMessage
         component={'div'}
         name={props.name!}
         className="text-xs text-red-500 font-montserrat font-medium"
-      />
+      /> */}
     </div>
   );
 };

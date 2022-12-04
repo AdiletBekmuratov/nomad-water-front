@@ -74,7 +74,9 @@ const BottlePage = () => {
               <h2 className={`text-lg font-semibold`}>{bottle.price} T</h2>
               <Counter counter={counter} setCounter={setCounter} />
             </div>
-            <Button className={`py-3 :block`}>Заказать</Button>
+            <Link to="/order">
+              <Button className={`py-3 :block`}>Заказать</Button>
+            </Link>
           </div>
         </div>
 

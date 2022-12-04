@@ -151,8 +151,6 @@ const Users = () => {
                       <span>{items.phone}</span>
                     </div>
                   ))}
-
-              {/* {isOpenPopUp && <ModalCat isOpenPopUp={isOpenPopUp} setIsOpenPopUp={setIsOpenPopUp} />} */}
             </div>
           </Layout>
         </div>

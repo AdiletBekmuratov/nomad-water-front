@@ -30,7 +30,7 @@ const Admin = () => {
               <img src={logo} alt="nomadLogo" />
             </Link>
 
-            <Link to="/catalog">
+            <Link to="/register">
               <img src={avatar} alt="avatar" className={`hidden lg:block mr-4`} />
             </Link>
           </>

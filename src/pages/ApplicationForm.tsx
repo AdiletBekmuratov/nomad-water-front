@@ -40,7 +40,7 @@ const ApplicationForm = () => {
           validationSchema={validation}
           onSubmit={(values) => alert(JSON.stringify(values, null, 2))}>
           {({ isValid }) => (
-            <Form className="mt-2 md:grid md:grid-cols-3 gap-5">
+            <Form className={`mt-2 md:grid md:grid-cols-3 gap-5`}>
               <div className="col-span-1">
                 <Input
                   inputType="formik"
@@ -48,7 +48,7 @@ const ApplicationForm = () => {
                   id="street"
                   type="text"
                   placeholder="Улица/Микрорайон"
-                  className="font-montserrat md:w-full md:h-11 mr-6 rounded-2xl"
+                  className={`font-montserrat md:w-full md:h-11 mr-6 rounded-2xl`}
                 />
               </div>
 
@@ -59,7 +59,7 @@ const ApplicationForm = () => {
                   id="house"
                   type="text"
                   placeholder="Дом"
-                  className="font-montserrat md:w-full md:h-11 mr-6 rounded-2xl"
+                  className={`font-montserrat md:w-full md:h-11 mr-6 rounded-2xl`}
                 />
               </div>
               <div className="col-span-1">
@@ -69,7 +69,7 @@ const ApplicationForm = () => {
                   id="flat"
                   type="text"
                   placeholder="Квартира"
-                  className="font-montserrat md:w-full md:h-11 rounded-2xl"
+                  className={`font-montserrat md:w-full md:h-11 rounded-2xl`}
                 />
               </div>
               <div className="col-span-3">
@@ -80,7 +80,7 @@ const ApplicationForm = () => {
                   type="text"
                   placeholder="Номер телефона"
                   mask="+7 (999)-999-9999"
-                  className="font-montserrat md:w-full block md:h-11 rounded-2xl"
+                  className={`font-montserrat md:w-full block md:h-11 rounded-2xl`}
                 />
               </div>
               <div className="col-span-3">
@@ -90,7 +90,7 @@ const ApplicationForm = () => {
                   id="date"
                   type="date"
                   placeholder="Дата доставки"
-                  className="font-montserrat md:w-full block md:h-11 rounded-2xl"
+                  className={`font-montserrat md:w-full block md:h-11 rounded-2xl`}
                 />
               </div>
               <div className="col-span-3">
@@ -103,7 +103,7 @@ const ApplicationForm = () => {
               </div>
               <div className="col-span-1">
                 <Button
-                  className="font-montserrat font-bold text-2xl rounded-2xl bg-primary"
+                  className={`font-montserrat font-bold text-2xl rounded-2xl bg-primary`}
                   disabled={!isValid}>
                   Заказать
                 </Button>

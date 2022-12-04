@@ -28,15 +28,16 @@ const AppRoutes = () => {
         <ScrollToTop>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/register" element={<RegisterForm />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />
             <Route path="/myOrders" element={<Orders />} />
             <Route path="/myAdmin" element={<Admin />} />
-            <Route path="/MyFavourite" element={<MyFavourite />} />
+            <Route path="/myFavourite" element={<MyFavourite />} />
             <Route path="/users" element={<Users />} />
 
-            <Route path="/register" element={<RegisterForm />} />
             <Route path="/application" element={<ApplicationForm />} />
+
             <Route path="/order" element={<OrderRegistration />} />
             <Route path="/orderinfo" element={<OrderInfo />} />
           </Routes>

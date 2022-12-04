@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import logo from '../../assets/lending/logoHead.png';
 
-export const Header = () => {
+export const HeaderLend = () => {
   return (
     <header className={`fixed z-50 w-full px-10 lg:px-20 mt-4 lg:mt-7 text-sm font-semibold`}>
       <div className={`flex `}>

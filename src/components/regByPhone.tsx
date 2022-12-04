@@ -32,7 +32,7 @@ export const RegByPhone: FC = ({ setIsAuth, setUser }) => {
         onSubmit={(values) => setUser(values)}
         validationSchema={validation}>
         {({ isValid }) => (
-          <Form className="flex flex-col space-y-4">
+          <Form className="flex flex-col space-y-4 w-full ">
             <Input
               inputType="formik"
               id="name"

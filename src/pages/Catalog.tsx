@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { Input } from '@/components/Forms';
 import React from 'react';
+import { Sheet } from '@/components/Layout/Sheet';
 
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FiDelete } from 'react-icons/fi';
 import logo from '../assets/crm/logoHead.png';
 import avatar from '../assets/crm/avatar.png';
-import { Sheet } from '@/components/Layout/Sheet';
 
 const Catalog: FC = () => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
@@ -71,7 +71,7 @@ const Catalog: FC = () => {
                 <circle cx="3" cy="3.5" r="3" fill="#DB1A1A" fillOpacity="0.8" />
               </svg>
             </Link>
-            <Link to="/catalog">
+            <Link to="/register">
               <img src={avatar} alt="avatar" className={`hidden lg:block mr-4`} />
             </Link>
           </>

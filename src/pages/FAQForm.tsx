@@ -5,7 +5,7 @@ import { FC } from 'react';
 const FAQForm: FC = () => {
   return (
     <FormComponent>
-      <FaqComp header="Появился вопрос? Мы всегда готовы вам помочь!" />
+      <FaqComp />
     </FormComponent>
   );
 };

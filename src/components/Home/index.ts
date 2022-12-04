@@ -1,6 +1,6 @@
 export * from './About';
 export * from './First';
 
-export * from './Header';
+export * from './HeaderLend';
 export * from './Question';
 export * from './Second';

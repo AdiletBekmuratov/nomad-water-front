@@ -31,8 +31,8 @@ export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
               width: 0,
               transition: { duration: 0.5 }
             }}
-            className="bg-light-blue absolute z-20 rounded-r-3xl">
-            <motion.div className={`px-3 xl:px-10 pt-6 flex justify-between items-center`}>
+            className="bg-light-blue h-screen absolute z-20 rounded-r-3xl">
+            <motion.div className={`px-3 xl:px-7 pt-6 flex justify-between items-center`}>
               <Link to="/" className={`text-sm leading-6 font-semibold `}>
                 ВОДА ВЕЛИКОЙ СТЕПИ
                 <div className={`border-b border-solid border-gray-400`}></div>
@@ -41,7 +41,7 @@ export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
             </motion.div>
 
             <motion.div
-              className={`container px-5 xl:px-10 pt-10 mb-5`}
+              className={`container px-5 xl:px-7 pt-10 mb-5`}
               initial="closed"
               animate="open"
               exit="closed"
@@ -54,7 +54,7 @@ export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
                 <Link to="/catalog">Обратная связь</Link>
                 <Link to="/">На главную</Link>
 
-                <div className={`border-b-2 border-solid border-gray-500 my-5`}></div>
+                <div className={`border-b-2 border-solid border-gray-500 w-52 my-5`}></div>
                 <Link to="/myAdmin">Панель управления</Link>
                 <Link to="/users">Пользователи</Link>
                 <Link to="/users">Курьеры</Link>
