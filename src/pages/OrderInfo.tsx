@@ -1,9 +1,8 @@
 import { FC, useEffect, useState } from 'react';
 
 import Checkbox from '@/components/Checkbox';
-import { Card } from '@/components/Forms';
+import { Button, Card } from '@/components/Forms';
 import { OrderHeader } from '@/components/Order';
-
 
 import checkmark from '../assets/checkmark.svg';
 import dot from '../assets/dot.svg';
@@ -15,6 +14,7 @@ import { Order } from '@/components/Order/Order.card';
 import { Modal } from '@/components/Layout/Modal';
 
 const OrderInfo: FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [delivery, setDelivery] = useState(false);
   const [total, setTotal] = useState(0);
   useEffect(() => {
@@ -117,16 +117,8 @@ const OrderInfo: FC = () => {
         </div>
 
         <div className="lg:col-span-2 lg:mt-1 lg:row-start-3">
-          <Modal
-            title="Выберите причину отмены заказа"
-            className="flex justify-start flex-col"
-            buttonCloseTest="Отмена"
-            buttonOpenText="Отменить заказ"
-            titleClass="font-semibold text-base text-dark-blue mx-5 mt-5 mb-4"
-            contentClass="w-11/12"
-            isTwoButton={true}
-            secondButtonText="Продолжить"
-            openButtonStyle="bg-transparent text-red-700 font-semibold font-montserrat">
+          <Button onClick={() => setIsOpen(true)}>Open</Button>
+          <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
             <div className="my-4">
               <Checkbox
                 label="Не доставлен товар"
