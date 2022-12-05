@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import ScrollToTop from '@/components/ScrollToTop';
-//import ApplicationForm from '@/components/ApplicationForm';
+
 import OrderRegistration from '@/pages/OrderRegistration';
 import OrderInfo from '@/pages/OrderInfo';
 

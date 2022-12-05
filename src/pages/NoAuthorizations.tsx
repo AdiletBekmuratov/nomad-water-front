@@ -1,10 +1,13 @@
 import { Button, Input } from '@/components/Forms';
 import React from 'react';
 
+import { RegByPhone } from '@/components/regByPhone';
+import { Modal } from '@/components/Layout/Modal';
+
 import googleplay from '../assets/crm/GooglePlay_en.png';
 import appstore from '../assets/crm/AppStore_en.png';
-import { Modal } from '@/components/UI';
-import { RegByPhone } from '@/components/regByPhone';
+
+
 
 export const NoAuthorizations = () => {
   return (
@@ -58,8 +61,6 @@ export const NoAuthorizations = () => {
         placeholder="+7 (999) 999-99-99"
       />
       <Button>Перезвоните мне</Button>
-
-      {/* <RegByPhone setIsAuth={setIsAuth} setUser={setUser} /> */}
     </div>
   );
 };

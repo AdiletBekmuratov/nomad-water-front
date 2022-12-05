@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardBottle } from '@/components/Catalog';
+
 import { Header, Layout } from '@/components/Layout';
 import { dataBottle } from '@/assets/dataBottle';
 import { Button } from '@/components/Forms';
@@ -8,18 +8,14 @@ import { Counter } from '@/components/Catalog/CardBottle/Counter';
 
 //import heart from '../assets/crm/orderHeart.png';
 import bottle2X from '../assets/crm/bottle2X.png';
+import { CardBottle } from '@/components/Catalog/CardBottle/CardBottle';
 
 const BottlePage = () => {
   const { id } = useParams();
   const urlId = parseInt(id);
   const bottle = dataBottle.find((item) => item.id === urlId);
   const [counter, setCounter] = React.useState<number>(1);
-  //const [orderNumber, setOrderNumber] = React.useState('');
 
-  // const onClickBuy = () => {
-  //   setOrderNumber('283 00' + id);
-  //   console.log(orderNumber);
-  // };
   return (
     <div className={`w-full bg-gray-200 text-dark-blue`}>
       <Header>

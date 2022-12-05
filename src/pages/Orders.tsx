@@ -1,6 +1,6 @@
 import React from 'react';
 import { Header } from '@/components/Layout/Header';
-import { CardBottle } from '@/components/Catalog';
+
 import { dataBottle } from '@/assets/dataBottle';
 
 import { Sheet } from '@/components/Layout/Sheet';
@@ -8,6 +8,7 @@ import { Layout } from '@/components/Layout';
 
 import avatar from '../assets/crm/avatar.png';
 import { Link } from 'react-router-dom';
+import { CardBottle } from '@/components/Catalog/CardBottle/CardBottle';
 
 const Orders = () => {
   const [orderCount, setOrderCount] = React.useState(1);

@@ -20,7 +20,7 @@ export const CardBottle: FC<ICard> = ({
       )}
 
       <Link
-        to={`/catalog/${items.id}`}
+        to={`${cardType === 'catalog' ? `/catalog/${items.id}` : '/orderinfo'}`}
         className={`flex ${cardType === 'order' ? 'flex-row' : 'flex-col'} sm:flex-row`}>
         <div className={'bg-white rounded-3xl flex items-center justify-center p-2'}>
           <img src={items.img} alt="bottle" className="object-contain" />

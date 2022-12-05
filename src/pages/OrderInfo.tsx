@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import Checkbox from '@/components/Checkbox';
 import { Card } from '@/components/Forms';
 import { OrderHeader } from '@/components/Order';
-import { Modal } from '@/components/UI';
+
 
 import checkmark from '../assets/checkmark.svg';
 import dot from '../assets/dot.svg';
@@ -12,6 +12,7 @@ import user from '../components/Order/UserData.json';
 import order from '../components/Order/Order.json';
 
 import { Order } from '@/components/Order/Order.card';
+import { Modal } from '@/components/Layout/Modal';
 
 const OrderInfo: FC = () => {
   const [delivery, setDelivery] = useState(false);

@@ -23,7 +23,7 @@ export const Modal: FC<Props> = (props) => {
     <Dialog.Root>
       <Dialog.Trigger asChild>
         <div className={`flex items-center gap-2 cursor-pointer`}>
-          <Button buttonColor={props.openButtonStyle}>{props.buttonOpenText}</Button>
+          <Button>{props.buttonOpenText}</Button>
           {props.buttonItem}
         </div>
       </Dialog.Trigger>
