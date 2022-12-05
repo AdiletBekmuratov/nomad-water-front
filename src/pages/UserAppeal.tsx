@@ -9,33 +9,34 @@ import { Reply } from '@/components/Appeal';
 
 const UserAppeal: FC = () => {
   return (
-    <div>
+    <div className="">
       <Header className="flex h-14">
         <div className="mx-4">
           <img src={Arrow} alt="" />
         </div>
-        <h2 className="font-montserrat text-base text-dark-blue font-medium ml-5  ">
+        <h2 className="font-montserrat text-base text-dark-blue font-medium ml-5">
           Пользователь #12333
         </h2>
       </Header>
-      <Layout>
-        <div className="w-11/12 mx-auto">
-          <Card>
+
+      <Layout className="md:grid md:grid-cols-3 ">
+        <Card className="w-11/12 mx-auto md:row-start-1 md:order-2">
+          <div className="md:col-span-1">
             <h2 className="font-semibold text-dark-blue text-xs font-montserrat">ID: 12333</h2>
             <h5 className="text-dark-blue text-xs font-montserrat">{User.username}</h5>
             <h5 className="text-dark-blue text-xs font-montserrat">{User.phone}</h5>
-          </Card>
-
-          <div className="my-7">
-            <Card>
-              <h2 className="font-semibold text-dark-blue text-xs font-montserrat">Обращение</h2>
-              <p className="font-montserrat text-xs mt-2 text-dark-blue">
-                описание какой-то проблемы, с которым сталкнулся пользователь. описание какой-то
-                проблемы, с которым сталкнулся пользователь
-              </p>
-            </Card>
           </div>
+        </Card>
 
+        <Card className="md:col-span-2 md:order-1 md:row-start-1 my-7 w-11/12 mx-auto md:my-0">
+          <h2 className="font-semibold text-dark-blue text-xs font-montserrat">Обращение</h2>
+          <p className="font-montserrat text-xs mt-2 text-dark-blue">
+            описание какой-то проблемы, с которым сталкнулся пользователь. описание какой-то
+            проблемы, с которым сталкнулся пользователь
+          </p>
+        </Card>
+
+        <div className="w-11/12 mx-auto md:mt-4">
           <div className="mx-4 flex flex-col">
             <h2 className="font-semibold text-sm text-dark-blue font-montserrat mb-2">
               Последние действия
@@ -62,7 +63,8 @@ const UserAppeal: FC = () => {
             </span>
           </div>
         </div>
-        <Reply className="w-11/12 mx-auto" />
+
+        <Reply className="w-11/12 mx-auto md:col-span-2 md:row-start-2 md:h-64" />
       </Layout>
     </div>
   );

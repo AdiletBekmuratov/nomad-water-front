@@ -23,11 +23,12 @@ export const Reply: FC<Props> = (props) => {
               <TextArea
                 name="reply"
                 placeholder="Напишите ответ на обращение и отправьте его"
-                className="border rounded-lg placeholder:font-montserrat placeholder:text-dark-blue placeholder:text-xs border-gray-300 mt-4"
+                className="border rounded-lg placeholder:font-montserrat placeholder:text-dark-blue placeholder:text-xs border-gray-300 mt-4 md:h-32"
               />
             </div>
             <div className="w-full flex justify-center pb-5">
               <Button
+                disabled={!isValid}
                 buttonColor="font-montserrat bg-dark-blue"
                 className="w-64 h-10 flex items-center justify-center">
                 Отправить
