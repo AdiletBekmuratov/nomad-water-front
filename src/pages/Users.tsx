@@ -9,9 +9,10 @@ import { Layout } from '@/components/Layout';
 
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FiDelete } from 'react-icons/fi';
-import { PopUp } from '@/components/Layout/PopUp';
+// import { PopUp } from '@/components/Layout/PopUp';
 
 import avatar from '../assets/crm/avatar.png';
+import { Modal } from '@/components/UI';
 
 type SortItem = {
   name: string;
@@ -62,23 +63,83 @@ const Users = () => {
                 <path d="M3 17.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
               <span className="mx-auto font-medium text-base leading-6">Пользователи</span>
-              <button
-                className={`flex gap-2 px-2 cursor-pointer`}
-                onClick={() => setIsOpenPopUp(!isOpenPopUp)}>
-                <span className={`hidden sm:block`}>Добавить</span>
-                <svg
-                  width="28"
-                  height="28"
-                  viewBox="0 0 28 28"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <rect width="28" height="28" rx="14" fill="#023646" />
-                  <path
-                    d="M13.353 17.4826V10.7374H14.6466V17.4826H13.353ZM10.5502 14.726V13.5094H17.4494V14.726H10.5502Z"
-                    fill="white"
-                  />
-                </svg>
-              </button>
+              <div className={`flex px-2 cursor-pointer`}>
+                <Modal
+                  buttonItem={
+                    <svg
+                      width="28"
+                      height="28"
+                      viewBox="0 0 28 28"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <rect width="28" height="28" rx="14" fill="#023646" />
+                      <path
+                        d="M13.353 17.4826V10.7374H14.6466V17.4826H13.353ZM10.5502 14.726V13.5094H17.4494V14.726H10.5502Z"
+                        fill="white"
+                      />
+                    </svg>
+                  }
+                  openButtonStyle="text-black bg-white hidden sm:block "
+                  buttonOpenText="Добавить"
+                  buttonCloseTest="Отмена">
+                  <div
+                    className={`grid grid-cols-1 gap-2 sm:gap-3 xl:gap-5 w-screen sm:w-full py-5 px-6 lg:layout`}>
+                    <svg
+                      className={`mx-auto sm:hidden`}
+                      width="60"
+                      height="4"
+                      viewBox="0 0 60 4"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <rect width="60" height="4" rx="2" fill="#E6EAEE" />
+                    </svg>
+                    <h2 className="font-semibold text-sm text-center">Новый курьер</h2>
+                    <Input
+                      id="name"
+                      name="name"
+                      label="имя"
+                      inputType="default"
+                      placeholder="Иван"
+                      className="rounded-2xl"
+                    />
+                    <Input
+                      id="firstName"
+                      name="firstName"
+                      label="фамилия"
+                      inputType="default"
+                      placeholder="Петров"
+                      className="rounded-2xl"
+                    />
+                    <Input
+                      id="middleName"
+                      name="middleName"
+                      label="Отчество"
+                      inputType="default"
+                      placeholder="Андреевич"
+                      className="rounded-2xl"
+                    />
+                    <Input
+                      id="phone"
+                      name="phone"
+                      label="номер телефона"
+                      inputType="default"
+                      type={'tel'}
+                      mask="+7 (999) 999-99-99"
+                      placeholder="+7 (999) 999-99-99"
+                      className="rounded-2xl"
+                    />
+                    <Input
+                      id="car"
+                      name="car"
+                      label="машина"
+                      inputType="default"
+                      placeholder="Car info"
+                      className="rounded-2xl"
+                    />
+                  </div>
+                </Modal>
+              </div>
+
               <Link to="/catalog">
                 <img src={avatar} alt="avatar" className={`hidden lg:block`} />
               </Link>
@@ -130,7 +191,8 @@ const Users = () => {
             <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3`}>
               {value === ''
                 ? sortUsersArray.map((items) => (
-                    <div
+                    <Link
+                      to="/userPage"
                       key={items.id}
                       className={`bg-white rounded-2xl py-2 px-4 flex flex-col gap-1`}>
                       <span className={`font-semibold`}>ID: {items.id}</span>
@@ -138,10 +200,11 @@ const Users = () => {
                         {items.firstName} {items.name}
                       </span>
                       <span>{items.phone}</span>
-                    </div>
+                    </Link>
                   ))
                 : searchArray.map((items) => (
-                    <div
+                    <Link
+                      to="/userPage"
                       key={items.id}
                       className={`bg-white rounded-2xl py-2 px-4 flex flex-col gap-1`}>
                       <span className={`font-semibold`}>ID: {items.id}</span>
@@ -149,73 +212,20 @@ const Users = () => {
                         {items.firstName} {items.name}
                       </span>
                       <span>{items.phone}</span>
-                    </div>
+                    </Link>
                   ))}
             </div>
           </Layout>
         </div>
       </Sheet>
-      <PopUp setIsOpenPopUp={setIsOpenPopUp} isOpenPopUp={isOpenPopUp}>
-        <div
-          className={`grid grid-cols-1 gap-2 sm:gap-3 xl:gap-5 w-screen sm:w-full py-5 px-6 lg:layout`}>
-          <svg
-            className={`mx-auto sm:hidden`}
-            width="60"
-            height="4"
-            viewBox="0 0 60 4"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <rect width="60" height="4" rx="2" fill="#E6EAEE" />
-          </svg>
-          <h2 className="font-semibold text-sm text-center">Новый курьер</h2>
-          <Input
-            id="name"
-            name="name"
-            label="имя"
-            inputType="default"
-            placeholder="Иван"
-            className="rounded-2xl"
-          />
-          <Input
-            id="firstName"
-            name="firstName"
-            label="фамилия"
-            inputType="default"
-            placeholder="Петров"
-            className="rounded-2xl"
-          />
-          <Input
-            id="middleName"
-            name="middleName"
-            label="Отчество"
-            inputType="default"
-            placeholder="Андреевич"
-            className="rounded-2xl"
-          />
-          <Input
-            id="phone"
-            name="phone"
-            label="номер телефона"
-            inputType="default"
-            type={'tel'}
-            mask="+7 (999) 999-99-99"
-            placeholder="+7 (999) 999-99-99"
-            className="rounded-2xl"
-          />
-          <Input
-            id="car"
-            name="car"
-            label="машина"
-            inputType="default"
-            placeholder="Car info"
-            className="rounded-2xl"
-          />
+      {/* <PopUp setIsOpenPopUp={setIsOpenPopUp} isOpenPopUp={isOpenPopUp}>
+        
           <div className={`grid grid-cols-1 gap-2 xl:mt-7 sm:grid-cols-2`}>
             <Button>Добавить</Button>
             <Button>Отмена</Button>
           </div>
         </div>
-      </PopUp>
+      </PopUp> */}
     </>
   );
 };

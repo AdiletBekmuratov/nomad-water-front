@@ -29,8 +29,6 @@ const AppRoutes = () => {
           <Routes>
             <Route path="/" element={<Home />} />
 
-            <Route path="/userPage" element={<UserPage />} />
-
             <Route path="/myFavourite" element={<MyFavourite />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />
@@ -40,6 +38,7 @@ const AppRoutes = () => {
             <Route path="/orderinfo" element={<OrderInfo />} />
 
             <Route path="/users" element={<Users />} />
+            <Route path="/userPage" element={<UserPage />} />
             <Route path="/myAdmin" element={<Admin />} />
 
             {/* <Route path="/application" element={<ApplicationForm />} /> */}
