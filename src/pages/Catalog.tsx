@@ -1,7 +1,7 @@
 import { Header } from '@/components/Layout/Header';
 import { dataBottle } from '@/assets/dataBottle';
 import { FC, useState } from 'react';
-
+import { CardBottle } from '@/components/Catalog/CardBottle/CardBottle';
 import { Link } from 'react-router-dom';
 
 import { Layout } from '@/components/Layout';
@@ -13,7 +13,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { FiDelete } from 'react-icons/fi';
 import logo from '../assets/crm/logoHead.png';
 import avatar from '../assets/crm/avatar.png';
-import { CardBottle } from '@/components/Catalog/CardBottle/CardBottle';
+
 
 const Catalog: FC = () => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);

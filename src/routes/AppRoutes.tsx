@@ -40,7 +40,6 @@ const AppRoutes = () => {
             <Route path="/users" element={<Users />} />
             <Route path="/userPage" element={<UserPage />} />
             <Route path="/myAdmin" element={<Admin />} />
-
           </Routes>
         </ScrollToTop>
       </Router>
