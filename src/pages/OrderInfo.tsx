@@ -28,7 +28,7 @@ const OrderInfo: FC = () => {
   return (
     <>
       <OrderHeader>Статус заказа #283</OrderHeader>
-      <div className="container mt-6 lg:grid lg:grid-cols-3 lg:w-9/12 lg:mx-auto lg:row-span-2 lg:row-start-1 lg:order-1 lg:col-start-1">
+      <div className="container mt-6 lg:grid lg:grid-cols-3 lg:w-9/12 lg:mx-auto lg:row-span-2 lg:row-start-1 lg:order-1 lg:col-start-1 ">
         <Card className="w-11/12 mx-auto lg:col-span-2 lg:w-3/4 ">
           <div className="mx-6 my-5 mb-3">
             <div className="w-full flex">
@@ -117,8 +117,16 @@ const OrderInfo: FC = () => {
         </div>
 
         <div className="">
-          <Button onClick={() => setIsOpen(true)}>Отменить заказ</Button>
-          <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+          <Button
+            buttonColor="bg-transparent font-montserrat"
+            textColor="text-red-700"
+            onClick={() => setIsOpen(true)}>
+            Отменить заказ
+          </Button>
+          <Modal isOpenModal={isOpen} setIsOpenModal={setIsOpen}>
+            <h3 className="font-montserrat font-semibold text-base text-center text-dark-blue">
+              Выберите причину отмены заказа
+            </h3>
             <div className="my-4">
               <Checkbox
                 label="Не доставлен товар"
@@ -142,6 +150,14 @@ const OrderInfo: FC = () => {
                 id="other"
                 labelClass="font-medium text-dark-blue text-sm ml-2.5"
               />
+            </div>
+            <div className="grid grid-cols-2 gap-2.5">
+              <Button
+                textColor="text-dark-blue font-semibold"
+                buttonColor="font-montserrat bg-gray-300">
+                Отмена
+              </Button>
+              <Button buttonColor="font-montserrat bg-dark-blue font-semibold">Продолжить</Button>
             </div>
           </Modal>
         </div>

@@ -72,23 +72,23 @@ export const PaymentComponent: FC<Props> = (props) => {
           setValues={setValues}
         />
       )}
-      <div className="w-full h-14 flex items-center">
-        <Checkbox
-          label="Наличными"
-          name="cash"
-          id="cash"
-          className="ml-6"
-          checked={isCash}
-          onChange={(e) => {
-            e.target.checked ? setIsValid(true) : setIsValid(false);
-            setIsCash(e.target.checked);
-            setIsOpen(false);
-          }}
-        />
-      </div>
-      <footer className="bottom-0 fixed w-full flex justify-center">
+      <div className="flex justify-center">
+        <div className="w-full h-14 flex items-center">
+          <Checkbox
+            label="Наличными"
+            name="cash"
+            id="cash"
+            className="ml-6"
+            checked={isCash}
+            onChange={(e) => {
+              e.target.checked ? setIsValid(true) : setIsValid(false);
+              setIsCash(e.target.checked);
+              setIsOpen(false);
+            }}
+          />
+        </div>
         <Button
-          className="w-full mx-6 my-10 md:block md:mx-6 md:my-6 md:w-full"
+          className="w-80 mx-6 my-10 md:block md:mx-6 md:my-6 md:w-80 bottom-0 fixed"
           disabled={!isValid}
           buttonColor={`font-montserrat bg-dark-blue`}
           onClick={() => {
@@ -96,7 +96,7 @@ export const PaymentComponent: FC<Props> = (props) => {
           }}>
           {props.buttonName}
         </Button>
-      </footer>
+      </div>
     </>
   );
 };
