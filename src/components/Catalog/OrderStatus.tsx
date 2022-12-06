@@ -1,4 +1,4 @@
-import { VariantStatus } from '@/types/types';
+import { VariantStatus } from '@/assets/types/types';
 import { FC, ReactNode } from 'react';
 
 interface IOrderStatus {

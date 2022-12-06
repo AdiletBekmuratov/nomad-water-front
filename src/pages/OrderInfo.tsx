@@ -116,8 +116,8 @@ const OrderInfo: FC = () => {
           </div>
         </div>
 
-        <div className="lg:col-span-2 lg:mt-1 lg:row-start-3">
-          <Button onClick={() => setIsOpen(true)}>Open</Button>
+        <div className="">
+          <Button onClick={() => setIsOpen(true)}>Отменить заказ</Button>
           <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
             <div className="my-4">
               <Checkbox

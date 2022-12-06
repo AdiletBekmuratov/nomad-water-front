@@ -1,4 +1,4 @@
-import { ICounter } from '@/types/types';
+import { ICounter } from '@/assets/types/types';
 import { FC } from 'react';
 
 export const Counter: FC<ICounter> = ({ counter, setCounter }) => {
@@ -6,7 +6,7 @@ export const Counter: FC<ICounter> = ({ counter, setCounter }) => {
   const onMinusClick = () => setCounter(--counter);
 
   return (
-    <div className={`flex items-center justify-between gap-4 sm:gap-2 lg:ml-12 xl:ml-24 `}>
+    <div className={`flex items-center justify-between gap-3  `}>
       <button onClick={onMinusClick}>
         <svg
           className={`border rounded-full`}

@@ -1,10 +1,10 @@
 import { dataUsers } from '@/assets/dataUsers';
 import { Header } from '@/components/Layout/Header';
 import { Sheet } from '@/components/Layout/Sheet';
-import { EnamSort } from '@/types/types';
+import { EnamSort } from '@/assets/types/types';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Input } from '@/components/Forms';
+import { Button, Input } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';
 
@@ -28,7 +28,7 @@ const Users = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
   const [isSelected, setIsSelected] = React.useState('');
-  const [isOpenPopUp, setIsOpenPopUp] = React.useState(false);
+  const [isOpenModal, setIsOpenModal] = React.useState(false);
   const onClickFilter = (name: string) => {
     setIsSelected(name);
   };
@@ -62,25 +62,27 @@ const Users = () => {
             </svg>
             <span className="mx-auto font-medium text-base leading-6">Пользователи</span>
             <div className={`flex px-2 cursor-pointer `}>
-              <Modal
-                buttonItem={
-                  <svg
-                    width="28"
-                    height="28"
-                    viewBox="0 0 28 28"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <rect width="28" height="28" rx="14" fill="#023646" />
-                    <path
-                      d="M13.353 17.4826V10.7374H14.6466V17.4826H13.353ZM10.5502 14.726V13.5094H17.4494V14.726H10.5502Z"
-                      fill="white"
-                    />
-                  </svg>
-                }
-                buttonOpenText="Добавить"
-                buttonCloseTest="Отмена">
-                <div
-                  className={`grid grid-cols-1 gap-2 sm:gap-3 xl:gap-5 w-screen sm:w-full py-5 px-6 lg:layout`}>
+              <button
+                className={`flex gap-2`}
+                onClick={() => {
+                  setIsOpenModal(true);
+                }}>
+                <span className={`hidden sm:block`}>Добавить</span>
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 28 28"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <rect width="28" height="28" rx="14" fill="#023646" />
+                  <path
+                    d="M13.353 17.4826V10.7374H14.6466V17.4826H13.353ZM10.5502 14.726V13.5094H17.4494V14.726H10.5502Z"
+                    fill="white"
+                  />
+                </svg>
+              </button>
+              <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
+                <div className={`grid grid-cols-1 gap-2 sm:gap-3 xl:gap-5`}>
                   <svg
                     className={`mx-auto sm:hidden`}
                     width="60"
@@ -90,7 +92,7 @@ const Users = () => {
                     xmlns="http://www.w3.org/2000/svg">
                     <rect width="60" height="4" rx="2" fill="#E6EAEE" />
                   </svg>
-                  <h2 className="font-semibold text-sm text-center">Новый курьер</h2>
+                  <h2 className="font-semibold text-sm text-center">Новый пользователь</h2>
                   <Input
                     id="name"
                     name="name"
@@ -125,19 +127,19 @@ const Users = () => {
                     placeholder="+7 (999) 999-99-99"
                     className="rounded-2xl"
                   />
-                  <Input
-                    id="car"
-                    name="car"
-                    label="машина"
-                    inputType="default"
-                    placeholder="Car info"
-                    className="rounded-2xl"
-                  />
+
+                  <Button>Добавить</Button>
+                  <Button
+                    onClick={() => {
+                      setIsOpenModal(false);
+                    }}>
+                    Отмена
+                  </Button>
                 </div>
               </Modal>
             </div>
 
-            <Link to="/catalog">
+            <Link to="/userPage">
               <img src={avatar} alt="avatar" className={`hidden lg:block`} />
             </Link>
           </>

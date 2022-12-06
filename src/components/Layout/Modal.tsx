@@ -4,23 +4,23 @@ import { usePrevious } from '@/hooks';
 
 type Props = {
   children: ReactNode;
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  isOpenModal: boolean;
+  setIsOpenModal: Dispatch<SetStateAction<boolean>>;
 } & Pick<HTMLAttributes<HTMLDivElement>, 'className'>;
 
-export const Modal: FC<Props> = ({ children, isOpen, setIsOpen, className }) => {
+export const Modal: FC<Props> = ({ children, isOpenModal, setIsOpenModal, className }) => {
   const nodeRef = useRef(null);
-  const prevIsOpen = usePrevious(isOpen);
+  const prevIsOpen = usePrevious(isOpenModal);
   const controls = useAnimation();
 
   const handleClose = async () => {
     await controls.start('hidden');
-    setIsOpen(false);
+    setIsOpenModal(false);
   };
 
   const handleOpen = async () => {
     await controls.start('visible');
-    setIsOpen(true);
+    setIsOpenModal(true);
   };
 
   const onDragEnd = async (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
@@ -33,12 +33,12 @@ export const Modal: FC<Props> = ({ children, isOpen, setIsOpen, className }) => 
   };
 
   useEffect(() => {
-    if (prevIsOpen && !isOpen) {
+    if (prevIsOpen && !isOpenModal) {
       controls.start('hidden');
-    } else if (!prevIsOpen && isOpen) {
+    } else if (!prevIsOpen && isOpenModal) {
       controls.start('visible');
     }
-  }, [controls, isOpen, prevIsOpen]);
+  }, [controls, isOpenModal, prevIsOpen]);
 
   useEffect(() => {
     const closeOnEscapeKey = (e: any) => (e.key === 'Escape' ? handleClose() : null);
@@ -48,7 +48,7 @@ export const Modal: FC<Props> = ({ children, isOpen, setIsOpen, className }) => 
     };
   }, [handleClose]);
 
-  if (!isOpen) {
+  if (!isOpenModal) {
     return null;
   }
 
@@ -72,7 +72,7 @@ export const Modal: FC<Props> = ({ children, isOpen, setIsOpen, className }) => 
         }}
         dragConstraints={{ top: 0 }}
         dragElastic={0.2}
-        className={`bg-white p-5 rounded-t-2xl sm:rounded-2xl z-10 fixed w-full left-0 bottom-0 
+        className={`bg-white p-5 sm:px-32 rounded-t-2xl sm:rounded-2xl z-10 fixed w-full left-0 bottom-0 
         sm:!top-1/2 sm:!left-1/2 sm:!bottom-auto sm:!-translate-x-1/2 sm:!-translate-y-1/2 sm:max-w-screen-sm
         ${className}`}>
         {children}

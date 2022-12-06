@@ -1,6 +1,6 @@
-import { IBottle } from './../types/types';
-
 import bottle from '../assets/crm/bottleX.png';
+import { IBottle } from './types/types';
+
 
 export const dataBottle: IBottle[] = [
    {

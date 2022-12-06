@@ -6,7 +6,7 @@ import ScrollToTop from '@/components/ScrollToTop';
 import OrderRegistration from '@/pages/OrderRegistration';
 import OrderInfo from '@/pages/OrderInfo';
 
-const Home = lazy(() => import('@/pages/Home'));
+const Lending = lazy(() => import('@/pages/Lending'));
 const Catalog = lazy(() => import('@/pages/Catalog'));
 const Orders = lazy(() => import('@/pages/Orders'));
 const BottlePage = lazy(() => import('@/pages/BottlePage'));
@@ -27,7 +27,7 @@ const AppRoutes = () => {
       <Router>
         <ScrollToTop>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Lending />} />
 
             <Route path="/myFavourite" element={<MyFavourite />} />
             <Route path="/catalog" element={<Catalog />} />
@@ -41,7 +41,6 @@ const AppRoutes = () => {
             <Route path="/userPage" element={<UserPage />} />
             <Route path="/myAdmin" element={<Admin />} />
 
-            {/* <Route path="/application" element={<ApplicationForm />} /> */}
           </Routes>
         </ScrollToTop>
       </Router>

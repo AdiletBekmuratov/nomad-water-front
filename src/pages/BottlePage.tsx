@@ -1,14 +1,12 @@
 import React from 'react';
-
+import { CardBottle } from '@/components/Catalog/CardBottle/CardBottle';
 import { Header, Layout } from '@/components/Layout';
 import { dataBottle } from '@/assets/dataBottle';
 import { Button } from '@/components/Forms';
 import { Link, useParams } from 'react-router-dom';
 import { Counter } from '@/components/Catalog/CardBottle/Counter';
 
-//import heart from '../assets/crm/orderHeart.png';
-import bottle2X from '../assets/crm/bottle2X.png';
-import { CardBottle } from '@/components/Catalog/CardBottle/CardBottle';
+import bottleX from '../assets/crm/bottle2X.png';
 
 const BottlePage = () => {
   const { id } = useParams();
@@ -41,12 +39,12 @@ const BottlePage = () => {
       <Layout className={`flex flex-col space-y-4 text-lg`}>
         <div className={`flex flex-col md:flex-row gap-4`}>
           <div>
-            <div className={`relative bg-white rounded-2xl aspect-video`}>
-              <img src={bottle2X} alt="bottleXs" className={`object-contain`} />
+            <div className={` bg-white rounded-2xl aspect-video`}>
+              <img src={bottleX} alt="bottleXs" className={`object-contain`} />
             </div>
             <div className={`mt-5 flex flex-col items-start sm:bg-white sm:p-5 sm:rounded-2xl`}>
               <h2 className={`font-semibold`}>{bottle.title}</h2>
-              <p className={`text-sm opacity-60 sm:mt-4 sm:mb-2`}>{bottle.discription}</p>
+              <p className={`text-sm opacity-60 sm:my-3`}>{bottle.description}</p>
               <div className={`text-sm grid grid-cols-2 justify-start gap-x-2`}>
                 <span>Доставка:</span>
                 <p className={`opacity-60`}>Сегодня до 16:00</p>

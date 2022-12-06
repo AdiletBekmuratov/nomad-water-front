@@ -1,4 +1,4 @@
-import { EnamSort, IUsers } from "@/types/types";
+import { EnamSort, IUsers } from "@/assets/types/types";
 
 
 export const dataUsers: IUsers[] = [

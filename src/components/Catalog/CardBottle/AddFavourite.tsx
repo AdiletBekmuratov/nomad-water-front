@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { IFavourite } from '@/types/types';
+import { IFavourite } from '@/assets/types/types';
 
 import favoriteNone from '../../../assets/crm/favoriteNone.png';
 import favoriteHeart from '../../../assets/crm/favoriteHeart.png';
