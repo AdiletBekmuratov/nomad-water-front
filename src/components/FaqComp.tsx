@@ -32,11 +32,13 @@ const FaqComp: FC<Props> = (props) => {
         {({ isValid }) => (
           <>
             <h3
-              className={`mb-2 lg:text-2xl font-bold lg:font-extrabold lg:tracking-wide leading-5 lg:leading-7 text-dark-blue`}>
+              className={`mb-2 lg:text-2xl font-bold lg:font-extrabold lg:tracking-wide leading-5 lg:leading-7
+               text-dark-blue`}>
               {props.header}
             </h3>
             <Form className={`flex flex-col space-y-4 text-sm lg:text-base`}>
               <Input
+                id="name"
                 inputType="formik"
                 name="name"
                 type="text"
