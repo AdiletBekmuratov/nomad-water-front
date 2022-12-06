@@ -51,11 +51,6 @@ export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
               exit="closed"
               variants={itemVariants}>
               <div className={`grid grid-cols-1 gap-2 mb-16 xl:mb-36`}>
-                <div className={`flex gap-5 items-center`}>
-                  <img src={avatar} alt="user" />
-                  <Link to="/userPage">User</Link>
-                  <ImExit />
-                </div>
                 <div className={`border-b-2 border-solid border-gray-500 w-52 my-5`}></div>
                 <Link to="/catalog">Каталог</Link>
                 <Link to="/myOrders">Мои заказы</Link>

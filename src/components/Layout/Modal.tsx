@@ -72,7 +72,7 @@ export const Modal: FC<Props> = ({ children, isOpenModal, setIsOpenModal, classN
         }}
         dragConstraints={{ top: 0 }}
         dragElastic={0.2}
-        className={`bg-white p-5 sm:px-32 rounded-t-2xl sm:rounded-2xl z-10 fixed w-full left-0 bottom-0 
+        className={`bg-white p-5 rounded-t-2xl sm:rounded-2xl z-10 fixed w-full left-0 bottom-0 
         sm:!top-1/2 sm:!left-1/2 sm:!bottom-auto sm:!-translate-x-1/2 sm:!-translate-y-1/2 sm:max-w-screen-sm
         ${className}`}>
         {children}
