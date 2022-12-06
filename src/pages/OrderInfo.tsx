@@ -118,7 +118,7 @@ const OrderInfo: FC = () => {
 
         <div className="">
           <Button onClick={() => setIsOpen(true)}>Отменить заказ</Button>
-          <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+          <Modal isOpenModal={isOpen} setIsOpenModal={setIsOpen}>
             <div className="my-4">
               <Checkbox
                 label="Не доставлен товар"

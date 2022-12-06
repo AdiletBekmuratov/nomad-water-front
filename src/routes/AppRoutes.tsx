@@ -10,7 +10,7 @@ const Lending = lazy(() => import('@/pages/Lending'));
 const Catalog = lazy(() => import('@/pages/Catalog'));
 const Orders = lazy(() => import('@/pages/Orders'));
 const BottlePage = lazy(() => import('@/pages/BottlePage'));
-const Admin = lazy(() => import('@/pages/Admin'));
+const RequestsUser = lazy(() => import('@/pages/RequestsUser'));
 const Users = lazy(() => import('@/pages/Users'));
 const UserPage = lazy(() => import('@/pages/UserPage'));
 const MyFavourite = lazy(() => import('@/pages/MyFavourite'));
@@ -39,7 +39,7 @@ const AppRoutes = () => {
 
             <Route path="/users" element={<Users />} />
             <Route path="/userPage" element={<UserPage />} />
-            <Route path="/myAdmin" element={<Admin />} />
+            <Route path="/requestsUser" element={<RequestsUser />} />
           </Routes>
         </ScrollToTop>
       </Router>
