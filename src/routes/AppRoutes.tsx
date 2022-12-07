@@ -7,6 +7,8 @@ import UserAppeal from '@/pages/UserAppeal';
 import OrderRegistration from '@/pages/OrderRegistration';
 import OrderInfo from '@/pages/OrderInfo';
 import TableExample from '@/pages/TableExample';
+import Warehouses from '@/pages/warehouses';
+import WarehouseAppeal from '@/pages/WarehouseAppeal';
 
 const Lending = lazy(() => import('@/pages/Lending'));
 const Catalog = lazy(() => import('@/pages/Catalog'));
@@ -45,6 +47,9 @@ const AppRoutes = () => {
 
             <Route path="/table" element={<TableExample />} />
             <Route path="/appeal" element={<UserAppeal />} />
+
+            <Route path="/warehouse" element={<Warehouses />} />
+            <Route path="/warehouse/:id" element={<WarehouseAppeal />} />
           </Routes>
         </ScrollToTop>
       </Router>

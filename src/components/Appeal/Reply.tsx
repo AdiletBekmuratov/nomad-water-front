@@ -2,7 +2,9 @@ import { DetailedHTMLProps, FC, HTMLAttributes } from 'react';
 import { Formik, Form } from 'formik';
 import { Button, TextArea } from '../Forms';
 
-type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
+  textareaStyle?: string;
+};
 
 type textArea = {
   reply: string;
@@ -23,7 +25,7 @@ export const Reply: FC<Props> = (props) => {
               <TextArea
                 name="reply"
                 placeholder="Напишите ответ на обращение и отправьте его"
-                className="border rounded-lg placeholder:font-montserrat placeholder:text-dark-blue placeholder:text-xs border-gray-300 mt-4 md:h-32"
+                className={`border rounded-lg placeholder:font-montserrat placeholder:text-dark-blue placeholder:text-xs border-gray-300 mt-4 md:h-32 ${props.textareaStyle}`}
               />
             </div>
             <div className="w-full flex justify-center pb-5">
