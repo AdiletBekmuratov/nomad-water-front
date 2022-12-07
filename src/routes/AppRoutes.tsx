@@ -11,6 +11,7 @@ import Warehouses from '@/pages/warehouses';
 import WarehouseAppeal from '@/pages/WarehouseAppeal';
 
 const Lending = lazy(() => import('@/pages/Lending'));
+const Admin = lazy(() => import('@/pages/Admin'));
 const Catalog = lazy(() => import('@/pages/Catalog'));
 const Orders = lazy(() => import('@/pages/Orders'));
 const BottlePage = lazy(() => import('@/pages/BottlePage'));
@@ -32,6 +33,8 @@ const AppRoutes = () => {
         <ScrollToTop>
           <Routes>
             <Route path="/" element={<Lending />} />
+
+            <Route path="/admin" element={<Admin />} />
 
             <Route path="/myFavourite" element={<MyFavourite />} />
             <Route path="/catalog" element={<Catalog />} />

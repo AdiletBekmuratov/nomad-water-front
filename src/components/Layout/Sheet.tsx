@@ -59,6 +59,8 @@ export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
                 <Link to="/users">Курьеры</Link>
                 <Link to="/catalog">Склады</Link>
                 <Link to="/catalog">Оборудование</Link>
+                <div className={`border-b-2 border-solid border-gray-500 w-52 my-5`}></div>
+                <Link to="/admin">Admin</Link>
               </div>
             </motion.div>
             {/* <div className={`flex flex-col items-left font-medium`}>
