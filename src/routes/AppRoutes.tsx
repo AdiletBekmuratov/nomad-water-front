@@ -5,6 +5,7 @@ import ScrollToTop from '@/components/ScrollToTop';
 
 import OrderRegistration from '@/pages/OrderRegistration';
 import OrderInfo from '@/pages/OrderInfo';
+import TableExample from '@/pages/TableExample';
 
 const Lending = lazy(() => import('@/pages/Lending'));
 const Catalog = lazy(() => import('@/pages/Catalog'));
@@ -40,6 +41,8 @@ const AppRoutes = () => {
             <Route path="/users" element={<Users />} />
             <Route path="/userPage" element={<UserPage />} />
             <Route path="/requestsUser" element={<RequestsUser />} />
+
+            <Route path="/table" element={<TableExample />} />
           </Routes>
         </ScrollToTop>
       </Router>
