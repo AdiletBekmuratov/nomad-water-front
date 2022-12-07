@@ -50,7 +50,7 @@ const NoAuthAdmin = () => {
             </Header>
             <div className={`flex flex-col layout gap-3 py-5 items-center justify-center`}>
               <h1 className={`font-semibold text-lg lg:text-2xl text-center`}>
-                Нет доступа! <br /> Авторизуйтесь либо обратитесь к администратору.
+                Нет доступа! <br /> Авторизуйтесь, либо обратитесь к администратору.
               </h1>
               <div className={`grid gap-5`}>
                 <Input
