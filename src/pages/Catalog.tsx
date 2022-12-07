@@ -14,7 +14,6 @@ import { FiDelete } from 'react-icons/fi';
 import logo from '../assets/crm/logoHead.png';
 import avatar from '../assets/crm/avatar.png';
 
-
 const Catalog: FC = () => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
   const [value, setValue] = useState('');

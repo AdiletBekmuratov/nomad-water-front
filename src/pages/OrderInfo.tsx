@@ -127,6 +127,7 @@ const OrderInfo: FC = () => {
             <h3 className="font-montserrat font-semibold text-base text-center text-dark-blue">
               Выберите причину отмены заказа
             </h3>
+
             <div className="my-4">
               <Checkbox
                 label="Не доставлен товар"
