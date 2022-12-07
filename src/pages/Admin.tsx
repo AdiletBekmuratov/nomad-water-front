@@ -46,7 +46,7 @@ const Admin = () => {
                   <img src={logo} alt="nomadLogo" />
                 </Link>
                 <Link to="/userPage">
-                  <img src={avatar} alt="avatar" className={`hidden lg:block mr-4`} />
+                  <img src={avatar} alt="avatar" className={`hidden md:block mr-4`} />
                 </Link>
               </>
             </Header>
