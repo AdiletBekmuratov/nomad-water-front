@@ -6,8 +6,9 @@ import { RegByPhone } from '@/components/regByPhone';
 import googleplay from '../assets/crm/GooglePlay_en.png';
 import appstore from '../assets/crm/AppStore_en.png';
 import { Modal } from '@/components/Layout/Modal';
+import { Layout } from '@/components/Layout';
 
-export const NoAuthorizations = () => {
+export const NoAuthCatalog = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [buttonValue, setButtonValue] = React.useState('');
   return (

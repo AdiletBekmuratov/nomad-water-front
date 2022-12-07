@@ -1,55 +1,16 @@
-import { SheetAdmin } from '@/components/Admin/SheetAdmin';
-import { Input } from '@/components/Forms';
-import Table from '@/components/Table';
-import { Header } from '@/components/Layout';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ColumnDef } from '@tanstack/react-table';
-import { dataUsers } from '@/assets/dataUsers';
+import { SheetAdmin } from '@/components/Admin/SheetAdmin';
 
-import avatar from '../assets/crm/avatar.png';
+import { Header } from '@/components/Layout';
+import { Link } from 'react-router-dom';
+
 import logo from '../assets/crm/logoHead.png';
 import { AiOutlineMenuUnfold } from 'react-icons/ai';
+import { CgDanger } from 'react-icons/cg';
+import { Button, Input } from '@/components/Forms';
 
-const Admin = () => {
+const NoAuthAdmin = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const columns = React.useMemo<ColumnDef<{ id: number; name: string }, any>[]>(
-    () => [
-      {
-        header: 'ID',
-        accessorKey: 'id'
-      },
-      {
-        header: 'firstName',
-        accessorKey: 'firstName'
-      },
-      {
-        header: 'name',
-        accessorKey: 'name'
-      },
-      {
-        header: 'middleName',
-        accessorKey: 'middleName'
-      },
-      {
-        header: 'role',
-        accessorKey: 'role'
-      },
-      {
-        header: 'car',
-        accessorKey: 'car'
-      },
-      {
-        header: 'phone',
-        accessorKey: 'phone'
-      },
-      {
-        header: 'storage',
-        accessorKey: 'storage'
-      }
-    ],
-    []
-  );
 
   return (
     <>
@@ -71,7 +32,8 @@ const Admin = () => {
               <Link to="/hardware">Оборудование</Link>
             </div>
           </div>
-          <div className={`flex-col`}>
+          {/* Drawer Mobile */}
+          <div className={`flex-col flex-1`}>
             <Header>
               <>
                 <AiOutlineMenuUnfold
@@ -82,12 +44,32 @@ const Admin = () => {
                   <img src={logo} alt="nomadLogo" />
                 </Link>
                 <Link to="/admin/*">
-                  <img src={avatar} alt="avatar" className={`hidden md:block mr-4`} />
+                  <CgDanger className={`w-7 h-7`} />
                 </Link>
               </>
             </Header>
-            <div className={`flex gap-3 px-7 py-5 xl:px-16`}>
-              <Table id="user" data={dataUsers} columns={columns} />
+            <div className={`flex flex-col layout gap-3 py-5 items-center justify-center`}>
+              <h1 className={`font-semibold text-lg lg:text-2xl text-center`}>
+                Нет доступа! <br /> Авторизуйтесь либо обратитесь к администратору.
+              </h1>
+              <div className={`grid gap-5`}>
+                <Input
+                  inputType="default"
+                  id="login"
+                  name="login"
+                  label="Логин"
+                  placeholder="Шпион"
+                />
+                <Input
+                  inputType="default"
+                  id="password"
+                  name="password"
+                  type={'password'}
+                  label="Пароль"
+                  placeholder="Секрет"
+                />
+                <Button>Войти</Button>
+              </div>
             </div>
           </div>
         </div>
@@ -95,4 +77,4 @@ const Admin = () => {
     </>
   );
 };
-export default Admin;
+export default NoAuthAdmin;

@@ -12,6 +12,7 @@ import WarehouseAppeal from '@/pages/WarehouseAppeal';
 
 const Lending = lazy(() => import('@/pages/Lending'));
 const Admin = lazy(() => import('@/pages/Admin'));
+const NoAuthAdmin = lazy(() => import('@/pages/NoAuthAdmin'));
 const Catalog = lazy(() => import('@/pages/Catalog'));
 const Orders = lazy(() => import('@/pages/Orders'));
 const BottlePage = lazy(() => import('@/pages/BottlePage'));
@@ -35,6 +36,7 @@ const AppRoutes = () => {
             <Route path="/" element={<Lending />} />
 
             <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/*" element={<NoAuthAdmin />} />
 
             <Route path="/myFavourite" element={<MyFavourite />} />
             <Route path="/catalog" element={<Catalog />} />

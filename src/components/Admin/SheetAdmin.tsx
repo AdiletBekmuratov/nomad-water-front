@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { FC, ReactNode } from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 // import { Link } from 'react-router-dom';
 
 // import { AiOutlineCloseCircle } from 'react-icons/ai';
@@ -12,13 +13,6 @@ interface ISheetProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const itemVariants = {
-  closed: {
-    opacity: 0
-  },
-  open: { opacity: 1 }
-};
-
 export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
   <div className={`h-screen flex text-dark-blue`}>
     <AnimatePresence>
@@ -27,21 +21,20 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
           <motion.aside
             initial={{ width: 0 }}
             animate={{
-              width: 270
+              width: 250
             }}
             exit={{
               width: 0,
               transition: { duration: 0.5 }
             }}
             className={`bg-light-blue h-screen absolute z-20 rounded-r-3xl`}>
-            <div className={`container px-5 xl:px-7 pt-10 mb-5`}>
-              <div className={`grid grid-cols-1 gap-2 mb-16 xl:mb-36`}>
-                <Link to="/requestsUser">Панель управления</Link>
-                <Link to="/users">Пользователи</Link>
-                <Link to="/couriers">Курьеры</Link>
-                <Link to="/warehouses">Склады</Link>
-                <Link to="/hardware">Оборудование</Link>
-              </div>
+            <div className={`grid grid-cols-1 p-5  xl:px-7`}>
+              <AiOutlineCloseCircle className="cursor-pointer" onClick={() => setIsOpen(false)} />
+              <Link to="/requestsUser">Панель управления</Link>
+              <Link to="/users">Пользователи</Link>
+              <Link to="/couriers">Курьеры</Link>
+              <Link to="/warehouses">Склады</Link>
+              <Link to="/hardware">Оборудование</Link>
             </div>
           </motion.aside>
           <div
