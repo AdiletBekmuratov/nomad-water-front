@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import ScrollToTop from '@/components/ScrollToTop';
 
+import UserAppeal from '@/pages/UserAppeal';
 import OrderRegistration from '@/pages/OrderRegistration';
 import OrderInfo from '@/pages/OrderInfo';
 import TableExample from '@/pages/TableExample';
@@ -43,6 +44,7 @@ const AppRoutes = () => {
             <Route path="/requestsUser" element={<RequestsUser />} />
 
             <Route path="/table" element={<TableExample />} />
+            <Route path="/appeal" element={<UserAppeal />} />
           </Routes>
         </ScrollToTop>
       </Router>

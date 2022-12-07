@@ -81,7 +81,7 @@ const OrderInfo: FC = () => {
         </Card>
 
         <div className=" lg:row-start-1 lg:order-2 lg:col-start-3 lg:row-span-1">
-          <Card className="w-11/12 mx-auto mt-4 flex items-center justify-between m-5">
+          <Card className="w-11/12 mx-auto mt-4 flex items-center justify-between m-5 lg:mt-0">
             <div className="">
               <h3 className="font-semibold font-montserrat text-sm text-dark-blue">
                 Способ оплаты
