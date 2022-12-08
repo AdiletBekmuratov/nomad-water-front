@@ -43,15 +43,15 @@ const BottlePage = () => {
               <img src={bottleX} alt="bottleXs" className={`object-contain`} />
             </div>
             <div className={`mt-5 flex flex-col items-start sm:bg-white sm:p-5 sm:rounded-2xl`}>
-              <h2 className={`font-semibold`}>{bottle.title}</h2>
-              <p className={`text-sm opacity-60 sm:my-3`}>{bottle.description}</p>
+              <h2 className={`font-semibold`}>{bottle?.title}</h2>
+              <p className={`text-sm opacity-60 sm:my-3`}>{bottle?.description}</p>
               <div className={`text-sm grid grid-cols-2 justify-start gap-x-2`}>
                 <span>Доставка:</span>
                 <p className={`opacity-60`}>Сегодня до 16:00</p>
                 <span>Объем:</span>
                 <p className={`opacity-60`}>50 л</p>
               </div>
-              {bottle.availability ? (
+              {bottle?.availability ? (
                 <span className={`text-base text-green-color font-semibold `}>В наличии</span>
               ) : (
                 <span className={`text-base text-red-600 font-semibold `}>Нет в наличии</span>
@@ -65,7 +65,7 @@ const BottlePage = () => {
               Заказать
             </span>
             <div className={`flex items-center justify-between mb-2`}>
-              <h2 className={`text-lg font-semibold`}>{bottle.price} T</h2>
+              <h2 className={`text-lg font-semibold`}>{bottle?.price} T</h2>
               <Counter counter={counter} setCounter={setCounter} />
             </div>
             <Link to="/order">

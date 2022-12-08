@@ -1,13 +1,17 @@
-import React, { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
 import ScrollToTop from '@/components/ScrollToTop';
+import { lazy, Suspense } from 'react';
+import { Toaster } from 'react-hot-toast';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import OrderRegistration from '@/pages/OrderRegistration';
 import OrderInfo from '@/pages/OrderInfo';
-import TableExample from '@/pages/TableExample';
+import OrderRegistration from '@/pages/OrderRegistration';
+import UserAppeal from '@/pages/UserAppeal';
+import WarehouseAppeal from '@/pages/WarehouseAppeal';
+import Warehouses from '@/pages/Warehouses';
 
-const Lending = lazy(() => import('@/pages/Lending'));
+const Landing = lazy(() => import('@/pages/Landing'));
+const Admin = lazy(() => import('@/pages/Admin'));
+const NoAuthAdmin = lazy(() => import('@/pages/NoAuthAdmin'));
 const Catalog = lazy(() => import('@/pages/Catalog'));
 const Orders = lazy(() => import('@/pages/Orders'));
 const BottlePage = lazy(() => import('@/pages/BottlePage'));
@@ -28,7 +32,10 @@ const AppRoutes = () => {
       <Router>
         <ScrollToTop>
           <Routes>
-            <Route path="/" element={<Lending />} />
+            <Route path="/" element={<Landing />} />
+
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/*" element={<NoAuthAdmin />} />
 
             <Route path="/myFavourite" element={<MyFavourite />} />
             <Route path="/catalog" element={<Catalog />} />
@@ -42,7 +49,10 @@ const AppRoutes = () => {
             <Route path="/userPage" element={<UserPage />} />
             <Route path="/requestsUser" element={<RequestsUser />} />
 
-            <Route path="/table" element={<TableExample />} />
+            <Route path="/appeal" element={<UserAppeal />} />
+
+            <Route path="/warehouse" element={<Warehouses />} />
+            <Route path="/warehouse/:id" element={<WarehouseAppeal />} />
           </Routes>
         </ScrollToTop>
       </Router>

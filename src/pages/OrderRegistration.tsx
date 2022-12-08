@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 // Пока что имитация запроса с сервера
 import user from '@/components/Order/UserData.json';
 
+import { Modal } from '@/components/Layout/Modal';
 import { Button } from '@/components/Forms';
 import {
   OrderHeader,
@@ -70,7 +71,7 @@ const OrderRegistration: FC = () => {
   );
 
   return (
-    <>
+    <div className="h-screen bg-gray-200">
       <OrderHeader>Оформление заказа</OrderHeader>
       <div className="lg:grid lg:grid-cols-3 lg:w-5/6 lg:mx-auto lg:grid-row-3">
         <div className="lg:col-span-2 lg:order-1 lg:col-start-1 lg:row-start-1">
@@ -125,17 +126,17 @@ const OrderRegistration: FC = () => {
             disabled={!isValid}
             onClick={() => {
               alert(JSON.stringify(address, null, 2));
-              navigate('/orderinfo'); // TODO: Когда будут данные с сервера то направить на order-id
+              navigate('/orderinfo');
             }}>
             Оформить заказ
           </Button>
         </Footer>
         {isEdited && (
           <>
-            <BottomMenu
+            <Modal
               className="h-33.125 rounded-t-3xl"
-              isOpen={isOpen}
-              setIsEdited={setIsEdited}>
+              isOpenModal={isOpen}
+              setIsOpenModal={setIsEdited}>
               <div className="border-b-2 border-gray-200 w-full">
                 <div className="flex justify-center">
                   <button className="pt-5 pb-5" onClick={() => setIsEdited(false)}>
@@ -144,11 +145,11 @@ const OrderRegistration: FC = () => {
                 </div>
               </div>
               <PaymentComponent buttonName="Продолжить" name={userData.username} />
-            </BottomMenu>
+            </Modal>
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

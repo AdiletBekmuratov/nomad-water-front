@@ -11,6 +11,6 @@
   }
 
   .layout {
-    @apply max-w-screen-lg mx-auto px-4
+    @apply max-w-screen-lg mx-auto px-4;
   }
 }

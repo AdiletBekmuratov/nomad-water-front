@@ -9,12 +9,11 @@ import logo from '../assets/crm/logoHead.png';
 import avatar from '../assets/crm/avatar.png';
 import userPhoto from '../assets/crm/userPhoto.jpg';
 
-import { NoAuthorizations } from './NoAuthorizations';
+import { NoAuthCatalog } from './NoAuthCatalog';
 
 const UserPage = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
-  const [user, setUser] = useState({});
+  const [isAuth, setIsAuth] = useState(true);
 
   return (
     <Sheet isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -74,7 +73,7 @@ const UserPage = () => {
         </Header>
         <Layout>
           {!isAuth ? (
-            <NoAuthorizations />
+            <NoAuthCatalog />
           ) : (
             <div className={`flex flex-col items-center justify-center`}>
               <h2>Пользователь № 1001</h2>

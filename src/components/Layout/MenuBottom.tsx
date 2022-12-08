@@ -1,9 +1,10 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 export const MenuBottom = () => {
   return (
     <div
-      className={`bg-white px-16 lg:px-20 py-6 fixed w-full bottom-0 flex items-center justify-between lg:hidden`}>
+      className={`bg-white px-20 pt-5 pb-8 fixed w-full bottom-0 flex items-center justify-between md:hidden`}>
       <Link to="/catalog" className={`cursor-pointer`}>
         <svg
           width="24"
@@ -38,7 +39,8 @@ export const MenuBottom = () => {
           />
         </svg>
       </Link>
-      <Link to="/userPage" className={`cursor-pointer `}>
+
+      <Link to="/catalog" className={`cursor-pointer `}>
         <svg
           width="18"
           height="18"

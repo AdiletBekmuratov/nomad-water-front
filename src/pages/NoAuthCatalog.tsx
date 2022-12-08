@@ -7,12 +7,12 @@ import googleplay from '../assets/crm/GooglePlay_en.png';
 import appstore from '../assets/crm/AppStore_en.png';
 import { Modal } from '@/components/Layout/Modal';
 
-export const NoAuthorizations = () => {
+export const NoAuthCatalog = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [buttonValue, setButtonValue] = React.useState('');
   return (
     <div className={`grid grid-cols-1 gap-5 justify-center max-w-screen-sm sm:px-36 mx-auto`}>
-      <span className={`text-base lg:text-lg font-semibold text-center `}>
+      <span className={`text-base lg:text-lg font-semibold text-center`}>
         Вы не авторизованы! Пожалуйста, авторизуйтесь или зарегистрируйтесь!
       </span>
 
