@@ -16,19 +16,17 @@ module.exports = {
         'blue-order-status': '#06A7D9',
         'blue-statisticSum': '#0BA3D1',
         main: '#9D9DAB',
-        'dark-blue': '#023646',
-        'light-blue': '#EBF3F6',
         primary: '#00034E',
-        "pseudo-white": "#F3F4F5",
-        "primary-white": "#747474",
-        "blue-light": "#0BA3D1",
-        "lighter": "#F3F4F5"
+        'pseudo-white': '#F3F4F5',
+        'primary-white': '#747474',
+        'blue-light': '#0BA3D1',
+        lighter: '#F3F4F5'
       },
       backgroundImage: {
         astana: "url('./src/assets/astanaHub.png')"
       },
       spacing: {
-        "33.125": "33.125rem"
+        33.125: '33.125rem'
       }
     }
   },

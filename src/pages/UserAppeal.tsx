@@ -9,7 +9,7 @@ import { Reply } from '@/components/Appeal';
 
 const UserAppeal: FC = () => {
   return (
-    <div className="">
+    <div className="bg-gray-200 h-screen">
       <Header className="flex h-14">
         <div className="mx-4">
           <img src={Arrow} alt="" />
@@ -19,7 +19,7 @@ const UserAppeal: FC = () => {
         </h2>
       </Header>
 
-      <Layout className="md:grid md:grid-cols-3 ">
+      <Layout className="md:grid md:grid-cols-3">
         <Card className="w-11/12 mx-auto md:row-start-1 md:order-2">
           <div className="md:col-span-1">
             <h2 className="font-semibold text-dark-blue text-xs font-montserrat">ID: 12333</h2>

@@ -71,7 +71,7 @@ const OrderRegistration: FC = () => {
   );
 
   return (
-    <>
+    <div className="h-screen bg-gray-200">
       <OrderHeader>Оформление заказа</OrderHeader>
       <div className="lg:grid lg:grid-cols-3 lg:w-5/6 lg:mx-auto lg:grid-row-3">
         <div className="lg:col-span-2 lg:order-1 lg:col-start-1 lg:row-start-1">
@@ -149,7 +149,7 @@ const OrderRegistration: FC = () => {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

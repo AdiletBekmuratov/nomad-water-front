@@ -10,7 +10,7 @@ const cardTextStyle = 'font-montserrat text-dark-blue text-xs';
 
 const Warehouses: FC = () => {
   return (
-    <div>
+    <div className="bg-gray-200 h-screen">
       <Header className="h-14 flex">
         <a href="#">
           <img src={Arrow} alt="" className="mx-4" />

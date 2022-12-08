@@ -26,7 +26,7 @@ const OrderInfo: FC = () => {
   }, [order]);
 
   return (
-    <>
+    <div className="bg-gray-200 h-screen">
       <OrderHeader>Статус заказа #283</OrderHeader>
       <div className="container mt-6 lg:grid lg:grid-cols-3 lg:w-9/12 lg:mx-auto lg:row-span-2 lg:row-start-1 lg:order-1 lg:col-start-1 ">
         <Card className="w-11/12 mx-auto lg:col-span-2 lg:w-3/4 ">
@@ -163,7 +163,7 @@ const OrderInfo: FC = () => {
           </Modal>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

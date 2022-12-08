@@ -14,7 +14,6 @@ import { NoAuthCatalog } from './NoAuthCatalog';
 const UserPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuth, setIsAuth] = useState(true);
-  const [user, setUser] = useState({});
 
   return (
     <Sheet isOpen={isOpen} setIsOpen={setIsOpen}>

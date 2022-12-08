@@ -11,13 +11,12 @@ const cardTextStyle = 'font-montserrat text-dark-blue text-xs';
 
 const WarehouseAppeal: FC = () => {
   const { id } = useParams();
-
   const urlId = parseInt(id);
 
   const warehouse = warehouses.find((e) => e.warehouseId === urlId);
 
   return (
-    <div>
+    <div className="h-screen bg-gray-200">
       <Header className="h-14 flex md:block">
         <a href="#">
           <img src={Arrow} alt="" className="mx-4 md:hidden" />

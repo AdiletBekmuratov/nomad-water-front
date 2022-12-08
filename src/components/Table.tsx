@@ -81,8 +81,9 @@ const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
         </div>
       </div>
 
-      <div className="overflow-x-auto mt-4">
-        <table className={`w-full text-sm text-left text-gray-500 dark:text-gray-400`}>
+      <div className="overflow-x-auto mt-4 rounded">
+        <table
+          className={`w-full table relative text-sm text-left text-gray-500 dark:text-gray-400`}>
           <thead
             className={`text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400`}>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -146,7 +147,7 @@ const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
           <div className="flex space-x-2">
             <div data-tip="First Page" className="tooltip">
               <Button
-                className="rounded-full"
+                className="rounded-full w-5 h-5 items-center flex justify-center"
                 onClick={() => table.setPageIndex(0)}
                 disabled={!table.getCanPreviousPage()}>
                 <HiChevronDoubleLeft />
@@ -154,7 +155,7 @@ const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
             </div>
             <div data-tip="Previous Page" className="tooltip">
               <Button
-                className="rounded-full"
+                className="rounded-full w-5 h-5 items-center flex justify-center"
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}>
                 <HiChevronLeft />
@@ -168,12 +169,11 @@ const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
               <span className="font-bold">{table.getState().pagination.pageIndex + 1}</span> из{' '}
               <span className="font-bold">{table.getPageCount()}</span>
             </div>
-            <div className="flex-shrink-0 hidden lg:block">Перейти на:</div>
+            <div className="flex-shrink-0 hidden lg:block mr-2">Перейти на:</div>
             <Input
               id="go-to-input"
               inputType="default"
               type="number"
-              className="ml-2 mr-8 input input-bordered hidden lg:block"
               min={1}
               max={table.getPageCount()}
               defaultValue={table.getState().pagination.pageIndex + 1}
@@ -182,7 +182,7 @@ const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
                 table.setPageIndex(page);
               }}
             />
-            <div className="flex-shrink-0">Показать:</div>{' '}
+            <div className="flex-shrink-0 ml-4">Показать:</div>{' '}
             <select
               className="select select-bordered ml-2 "
               value={table.getState().pagination.pageSize}
@@ -200,7 +200,7 @@ const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
           <div className="flex space-x-2">
             <div data-tip="Next Page" className="tooltip">
               <Button
-                className="rounded-full"
+                className="rounded-full w-5 h-5 items-center flex justify-center"
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}>
                 <HiChevronRight />
@@ -208,7 +208,7 @@ const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
             </div>
             <div data-tip="Last Page" className="tooltip">
               <Button
-                className="rounded-full"
+                className="rounded-full w-5 h-5 items-center flex justify-center"
                 onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                 disabled={!table.getCanNextPage()}>
                 <HiChevronDoubleRight />
