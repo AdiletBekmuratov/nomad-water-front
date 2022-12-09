@@ -7,7 +7,7 @@ type Props = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputE
 
 const Checkbox: FC<Props> = (props) => {
   return (
-    <>
+    <div>
       <input
         type="checkbox"
         id={props.id}
@@ -24,7 +24,7 @@ const Checkbox: FC<Props> = (props) => {
           {props.label}
         </label>
       )}
-    </>
+    </div>
   );
 };
 

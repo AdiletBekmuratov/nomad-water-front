@@ -16,51 +16,24 @@ const MyFavourite = () => {
     setValue(event.target.value);
   };
   return (
-    <Sheet isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div className={`w-full bg-gray-200 text-dark-blue `}>
-        <Header>
-          <>
-            <svg
-              onClick={() => setIsOpen((prev) => !prev)}
-              className={`hidden lg:block mr-16 cursor-pointer`}
-              width="24"
-              height="25"
-              viewBox="0 0 24 25"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 7.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
-              <path d="M3 12.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
-              <path d="M3 17.5H21" stroke="#023646" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-            <span className="mx-auto font-medium text-base leading-6 flex items-center gap-2">
-              Мои избранные <FaRegHeart />
-            </span>
-
-            <Link to="/catalog">
-              <img src={avatar} alt="avatar" className={`hidden lg:block`} />
-            </Link>
-          </>
-        </Header>
-        <Layout className={`text-xs`}>
-          <Input
-            id="search"
-            name="search"
-            value={value}
-            onChange={onChangeInput}
-            inputType="default"
-            placeholder="Поиск..."
-            className="rounded-full"
-            leftIcon={<AiOutlineSearch />}
-            rightIcon={
-              <FiDelete
-                className={`cursor-pointer block ${value === '' && 'hidden'}`}
-                onClick={() => setValue('')}
-              />
-            }
+    <Layout className={`text-xs`}>
+      <Input
+        id="search"
+        name="search"
+        value={value}
+        onChange={onChangeInput}
+        inputType="default"
+        placeholder="Поиск..."
+        className="rounded-full"
+        leftIcon={<AiOutlineSearch />}
+        rightIcon={
+          <FiDelete
+            className={`cursor-pointer block ${value === '' && 'hidden'}`}
+            onClick={() => setValue('')}
           />
-        </Layout>
-      </div>
-    </Sheet>
+        }
+      />
+    </Layout>
   );
 };
 export default MyFavourite;

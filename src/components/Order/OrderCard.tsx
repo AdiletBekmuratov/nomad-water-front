@@ -1,14 +1,14 @@
 import React, { FC, useState, useEffect } from 'react';
 import { Card } from '../Forms';
 
-type Props = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   data: {
     name: string;
     price: number;
     count: number;
   };
   id: number;
-  count?: number;
+  count: number;
   handeCounts?: any;
 };
 
@@ -41,7 +41,7 @@ export const OrderCard: FC<Props> = (props) => {
   };
 
   return (
-    <div className="w-4/5 md:w-11/12 md:h-44 mx-auto" key={``}>
+    <div>
       <Card className="mt-6 pr-10 md:col-span-3 ">
         <div className="grid grid-cols-3 md:grid-cols-4 ">
           <div className="w-24 h-16 md:h-32 md:w-40 mx-auto bg-pseudo-white rounded-2xl flex col-span-1">

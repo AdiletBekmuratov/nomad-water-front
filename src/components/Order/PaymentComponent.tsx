@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import * as yup from 'yup';
 
-import Arrow from '../../assets/back.svg';
 import Checkbox from '../Checkbox';
 import { Button } from '../Forms';
 import { PaymentEdit } from './PaymentEdit';
@@ -39,30 +38,17 @@ export const PaymentComponent: FC<Props> = (props) => {
   const [isCash, setIsCash] = useState(false);
 
   return (
-    <>
-      <div className="w-full h-14 flex justify-between items-center border-b-2">
-        <div className="w-64">
-          <Checkbox
-            onChange={(e) => {
-              e.target.checked ? setIsValid(true) : setIsValid(false);
-              setIsOpen(e.target.checked);
-              setIsCash(false);
-            }}
-            label="Оплатить картой"
-            id="pay"
-            className="w-3.5 h-3.5 ml-6"
-            checked={isOpen}
-          />
-        </div>
-        <div className="w-3.5 h-1.5 mr-6">
-          <img
-            onClick={() => setIsOpen(!isOpen)}
-            src={Arrow}
-            alt=""
-            className={isOpen ? 'rotate-90' : '-rotate-90'}
-          />
-        </div>
-      </div>
+    <div className="grid grid-cols-1 gap-4 p-4">
+      <Checkbox
+        onChange={(e) => {
+          e.target.checked ? setIsValid(true) : setIsValid(false);
+          setIsOpen(e.target.checked);
+          setIsCash(false);
+        }}
+        label="Оплатить картой"
+        id="pay"
+        checked={isOpen}
+      />
       {isOpen && (
         <PaymentEdit
           initialValues={initialValues}
@@ -72,31 +58,25 @@ export const PaymentComponent: FC<Props> = (props) => {
           setValues={setValues}
         />
       )}
-      <div className="flex justify-center">
-        <div className="w-full h-14 flex items-center">
-          <Checkbox
-            label="Наличными"
-            name="cash"
-            id="cash"
-            className="ml-6"
-            checked={isCash}
-            onChange={(e) => {
-              e.target.checked ? setIsValid(true) : setIsValid(false);
-              setIsCash(e.target.checked);
-              setIsOpen(false);
-            }}
-          />
-        </div>
-        <Button
-          className="w-80 mx-6 my-10 md:block md:mx-6 md:my-6 md:w-80 bottom-0 fixed"
-          disabled={!isValid}
-          buttonColor={`font-montserrat bg-dark-blue`}
-          onClick={() => {
-            alert(JSON.stringify(values, null, 2));
-          }}>
-          {props.buttonName}
-        </Button>
-      </div>
-    </>
+      <Checkbox
+        label="Наличными"
+        name="cash"
+        id="cash"
+        checked={isCash}
+        onChange={(e) => {
+          e.target.checked ? setIsValid(true) : setIsValid(false);
+          setIsCash(e.target.checked);
+          setIsOpen(false);
+        }}
+      />
+      <Button
+        disabled={!isValid}
+        buttonColor={`font-montserrat bg-dark-blue`}
+        onClick={() => {
+          alert(JSON.stringify(values, null, 2));
+        }}>
+        {props.buttonName}
+      </Button>
+    </div>
   );
 };

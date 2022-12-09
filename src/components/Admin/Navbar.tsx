@@ -8,9 +8,9 @@ interface INavbarProps {
 const Navbar: FC<INavbarProps> = ({ setIsOpen }) => {
   return (
     <div className="flex justify-between items-center w-full bg-light-blue px-4 py-2">
-      <div className="flex-1">
+      <div className="flex-1 flex items-center space-x-2">
         <div>
-          <label onClick={() => setIsOpen((prev) => !prev)} className="lg:hidden">
+          <label onClick={() => setIsOpen((prev) => !prev)} className="md:hidden">
             <AiOutlineMenu className="h-5 w-5" />
           </label>
         </div>

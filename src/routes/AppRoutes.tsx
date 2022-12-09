@@ -8,6 +8,7 @@ import OrderRegistration from '@/pages/OrderRegistration';
 import UserAppeal from '@/pages/UserAppeal';
 import WarehouseAppeal from '@/pages/WarehouseAppeal';
 import Warehouses from '@/pages/Warehouses';
+import Login from '@/pages/admin/Login';
 
 const Landing = lazy(() => import('@/pages/Landing'));
 const Admin = lazy(() => import('@/pages/Admin'));
@@ -35,8 +36,8 @@ const AppRoutes = () => {
             <Route path="/" element={<Landing />} />
 
             <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/login" element={<Login />} />
             <Route path="/admin/*" element={<NoAuthAdmin />} />
-
             <Route path="/myFavourite" element={<MyFavourite />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />
