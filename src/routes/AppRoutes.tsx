@@ -34,8 +34,8 @@ const AppRoutes = () => {
         <ScrollToTop>
           <Routes>
             <Route path="/" element={<Landing />} />
-
             <Route path="/admin" element={<Admin />} />
+
             <Route path="/admin/login" element={<Login />} />
             <Route path="/admin/*" element={<NoAuthAdmin />} />
             <Route path="/myFavourite" element={<MyFavourite />} />

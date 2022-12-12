@@ -25,7 +25,7 @@ const Login = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (user) {
+    if (!user) {
       navigate('/admin/login');
     }
   }, [user]);
