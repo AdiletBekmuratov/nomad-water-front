@@ -79,7 +79,7 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
                 Курьеры
               </Link>
               <Link
-                to="/warehouses"
+                to="/warehouse"
                 className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
                 Склады
               </Link>
