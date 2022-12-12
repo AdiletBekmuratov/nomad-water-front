@@ -3,8 +3,8 @@ import React from 'react';
 
 import { RegByPhone } from '@/components/regByPhone';
 
-import googleplay from '../assets/crm/GooglePlay_en.png';
-import appstore from '../assets/crm/AppStore_en.png';
+import googleplay from '@/assets/crm/GooglePlay_en.png';
+import appstore from '@/assets/crm/AppStore_en.png';
 import { Modal } from '@/components/Layout/Modal';
 
 export const NoAuthCatalog = () => {

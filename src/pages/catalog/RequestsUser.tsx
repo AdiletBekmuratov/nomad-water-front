@@ -1,5 +1,5 @@
 import { Layout } from '@/components/Layout';
-import statisticFrame from '../assets/crm/statisticFrame.png';
+import statisticFrame from '@/assets/crm/statisticFrame.png';
 
 const RequestsUser = () => {
   return (

@@ -56,26 +56,20 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
       setIsOpen(false);
     }
   }, [width]);
-
+  const linkStyle = `hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all`;
   return (
     <div className={`h-screen flex w-full`}>
       <AnimatePresence>
         {!isMobile ? (
           <aside className={`bg-light-blue h-screen w-64`}>
             <div className={`grid grid-cols-1 gap-2 p-2 text-dark-blue`}>
-              <Link
-                to="/requestsUser"
-                className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
+              <Link to="/requestsUser" className={`${linkStyle}`}>
                 Панель управления
               </Link>
-              <Link
-                to="/users"
-                className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
+              <Link to="/admin/usersAdmin" className={`${linkStyle}`}>
                 Пользователи
               </Link>
-              <Link
-                to="/couriers"
-                className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
+              <Link to="/couriers" className={`${linkStyle}`}>
                 Курьеры
               </Link>
               <Link
@@ -83,9 +77,7 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
                 className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
                 Склады
               </Link>
-              <Link
-                to="/hardware"
-                className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
+              <Link to="/hardware" className={`${linkStyle}`}>
                 Оборудование
               </Link>
             </div>

@@ -1,12 +1,12 @@
+import React from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { dataBottle } from '@/assets/dataBottle';
 import { CardBottle } from '@/components/Catalog/CardBottle/CardBottle';
 import { Counter } from '@/components/Catalog/CardBottle/Counter';
 import { Button } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
 
-import bottleX from '../assets/crm/bottle2X.png';
+import bottleX from '@/assets/crm/bottle2X.png';
 
 const BottlePage = () => {
   const { id } = useParams();

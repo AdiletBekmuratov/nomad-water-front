@@ -17,15 +17,19 @@ import Loader from '@/components/Loader';
 import AdminWarehouses from '@/pages/admin/AdminWarehouses';
 
 const Landing = lazy(() => import('@/pages/Landing'));
-const Admin = lazy(() => import('@/pages/Admin'));
-const NoAuthAdmin = lazy(() => import('@/pages/NoAuthAdmin'));
-const Catalog = lazy(() => import('@/pages/Catalog'));
+
+const Admin = lazy(() => import('@/pages/admin/Admin'));
+const NoAuthAdmin = lazy(() => import('@/pages/admin/NoAuthAdmin'));
+const Login = lazy(() => import('@/pages/admin/Login'));
+const UsersAdmin = lazy(() => import('@/pages/admin/UsersAdmin'));
+
+const Catalog = lazy(() => import('@/pages/catalog/Catalog'));
 const Orders = lazy(() => import('@/pages/Orders'));
-const BottlePage = lazy(() => import('@/pages/BottlePage'));
-const RequestsUser = lazy(() => import('@/pages/RequestsUser'));
-const Users = lazy(() => import('@/pages/Users'));
-const UserPage = lazy(() => import('@/pages/UserPage'));
-const MyFavourite = lazy(() => import('@/pages/MyFavourite'));
+const BottlePage = lazy(() => import('@/pages/catalog/BottlePage'));
+const RequestsUser = lazy(() => import('@/pages/catalog/RequestsUser'));
+const Users = lazy(() => import('@/pages/catalog/Users'));
+const UserPage = lazy(() => import('@/pages/catalog/UserPage'));
+const MyFavourite = lazy(() => import('@/pages/catalog/MyFavourite'));
 
 const AppRoutes = () => {
   const { user, isLoading } = useAppSelector((state) => state.auth);
@@ -70,6 +74,7 @@ const AppRoutes = () => {
             />
             <Route path="/admin/warehouses" element={<AdminWarehouses />} />
             <Route path="/admin/*" element={<NoAuthAdmin />} />
+
             <Route path="/myFavourite" element={<MyFavourite />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />

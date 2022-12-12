@@ -4,7 +4,7 @@ import { Button, Input } from '@/components/Forms';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import userPhoto from '../assets/crm/userPhoto.jpg';
+import userPhoto from '@/assets/crm/userPhoto.jpg';
 import { NoAuthCatalog } from './NoAuthCatalog';
 
 const UserPage = () => {
