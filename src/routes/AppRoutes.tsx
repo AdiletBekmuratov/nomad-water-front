@@ -9,6 +9,8 @@ import UserAppeal from '@/pages/UserAppeal';
 import WarehouseAppeal from '@/pages/WarehouseAppeal';
 import Warehouses from '@/pages/Warehouses';
 import Login from '@/pages/admin/Login';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import ProtectedRoute from './ProtectedRoute';
 
 const Landing = lazy(() => import('@/pages/Landing'));
 const Admin = lazy(() => import('@/pages/Admin'));
@@ -22,6 +24,7 @@ const UserPage = lazy(() => import('@/pages/UserPage'));
 const MyFavourite = lazy(() => import('@/pages/MyFavourite'));
 
 const AppRoutes = () => {
+  const { user } = useAppSelector((state) => state.auth);
   return (
     <Suspense
       fallback={
@@ -34,7 +37,15 @@ const AppRoutes = () => {
         <ScrollToTop>
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/admin" element={<Admin />} />
+
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
 
             <Route path="/admin/login" element={<Login />} />
             <Route path="/admin/*" element={<NoAuthAdmin />} />
