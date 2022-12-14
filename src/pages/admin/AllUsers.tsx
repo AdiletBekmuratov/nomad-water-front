@@ -7,9 +7,8 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { getAllUsers } from '@/redux/slices/users';
 
-const UsersAdmin = () => {
+const AllUsers = () => {
   const { users, isLoading, isSuccess, isError } = useAppSelector((state) => state.users);
-  console.log(users);
   const dispatch = useAppDispatch();
   React.useEffect(() => {
     dispatch(getAllUsers());
@@ -63,4 +62,4 @@ const UsersAdmin = () => {
     </LayoutAdmin>
   );
 };
-export default UsersAdmin;
+export default AllUsers;

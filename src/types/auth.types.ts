@@ -13,7 +13,7 @@ export interface IUsersState {
   message: string;
 }
 export interface IUser {
-  id: number;
+  id: number | string;
   username: string;
   role: string;
   email: string;

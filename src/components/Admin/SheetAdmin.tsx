@@ -66,6 +66,9 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
               <Link to="/requestsUser" className={`${linkStyle}`}>
                 Панель управления
               </Link>
+              <Link to="/admin/userME" className={`${linkStyle}`}>
+                Мой аккаунт
+              </Link>
               <Link to="/admin/usersAdmin" className={`${linkStyle}`}>
                 Пользователи
               </Link>
@@ -96,11 +99,24 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
                     className="cursor-pointer"
                     onClick={() => setIsOpen(false)}
                   />
-                  <Link to="/requestsUser">Панель управления</Link>
-                  <Link to="/users">Пользователи</Link>
-                  <Link to="/couriers">Курьеры</Link>
-                  <Link to="/admin/warehouse">Склады</Link>
-                  <Link to="/hardware">Оборудование</Link>
+                  <Link to="/requestsUser" className={`${linkStyle}`}>
+                    Панель управления
+                  </Link>
+                  <Link to="/admin/userME" className={`${linkStyle}`}>
+                    Мой аккаунт
+                  </Link>
+                  <Link to="/admin/usersAdmin" className={`${linkStyle}`}>
+                    Пользователи
+                  </Link>
+                  <Link to="/couriers" className={`${linkStyle}`}>
+                    Курьеры
+                  </Link>
+                  <Link to="/warehouses" className={`${linkStyle}`}>
+                    Склады
+                  </Link>
+                  <Link to="/hardware" className={`${linkStyle}`}>
+                    Оборудование
+                  </Link>
                 </motion.div>
               </motion.aside>
               <div

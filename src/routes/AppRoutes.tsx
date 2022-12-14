@@ -19,9 +19,10 @@ import AdminWarehouses from '@/pages/admin/AdminWarehouses';
 const Landing = lazy(() => import('@/pages/Landing'));
 
 const Admin = lazy(() => import('@/pages/admin/Admin'));
-const NoAuthAdmin = lazy(() => import('@/pages/admin/NoAuthAdmin'));
+const NoPage = lazy(() => import('@/pages/admin/NoPage'));
 const Login = lazy(() => import('@/pages/admin/Login'));
-const UsersAdmin = lazy(() => import('@/pages/admin/UsersAdmin'));
+const AllUsers = lazy(() => import('@/pages/admin/AllUsers'));
+const UserME = lazy(() => import('@/pages/admin/UserME'));
 
 const Catalog = lazy(() => import('@/pages/catalog/Catalog'));
 const Orders = lazy(() => import('@/pages/Orders'));
@@ -55,11 +56,30 @@ const AppRoutes = () => {
           <Routes>
             <Route path="/" element={<Landing />} />
 
+            <Route path="/admin/login" element={<Login />} />
+
             <Route
               path="/admin"
               element={
                 <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
                   <Admin />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/userME"
+              element={
+                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
+                  <UserME />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
+                  <Admin />
+                  <AllUsers />
                 </ProtectedRoute>
               }
             />
@@ -74,6 +94,7 @@ const AppRoutes = () => {
             />
             <Route path="/admin/warehouses" element={<AdminWarehouses />} />
             <Route path="/admin/*" element={<NoAuthAdmin />} />
+            <Route path="/admin/*" element={<NoPage />} />
 
             <Route path="/myFavourite" element={<MyFavourite />} />
             <Route path="/catalog" element={<Catalog />} />

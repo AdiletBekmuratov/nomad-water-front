@@ -5,8 +5,14 @@ const getAllUsers = async () => {
   return response.data;
 };
 
+const getUserMe = async (id: string | number) => {
+  const response = await axiosInstance.get(`admin/user/${id}`);
+  return response.data;
+};
+
 const usersService = {
-  getAllUsers
+  getAllUsers,
+  getUserMe
 };
 
 export default usersService;
