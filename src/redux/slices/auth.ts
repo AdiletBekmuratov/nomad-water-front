@@ -1,9 +1,11 @@
 import { IAuthState, ILoginForm, IUser } from '@/types';
+
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import authService from '../services/auth.service';
 
 const initialState: IAuthState = {
+  user: null,
   user: null,
   isError: false,
   isSuccess: false,
