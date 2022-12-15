@@ -1,18 +1,10 @@
 import { IAuthState, ILoginForm, IUser } from '@/types';
-import { isExpired } from '@/utils';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import authService from '../services/auth.service';
 
-const userStorage = JSON.parse(localStorage.getItem('user') ?? '');
-
-const user = userStorage ? (isExpired(userStorage?.refreshToken) ? null : userStorage) : null;
-if (!user) {
-  localStorage.removeItem('user');
-}
-
 const initialState: IAuthState = {
-  user: user,
+  user: null,
   isError: false,
   isSuccess: false,
   isLoading: true,
@@ -35,7 +27,7 @@ export const getMe = createAsyncThunk<IUser, undefined, { rejectValue: string }>
 
 // Login user
 export const login = createAsyncThunk<IUser, ILoginForm, { rejectValue: string }>(
-  'auth/login',
+  'api/auth/login',
   async (user, thunkAPI) => {
     try {
       await authService.login(user);

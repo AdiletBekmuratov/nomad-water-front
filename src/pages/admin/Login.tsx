@@ -25,8 +25,8 @@ const Login = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (user) {
-      navigate('/admin/batteries');
+    if (!user) {
+      navigate('/admin/login');
     }
   }, [user]);
 
@@ -38,7 +38,7 @@ const Login = () => {
         error: (err) => err.toString()
       })
       .then(() => {
-        navigate('/admin/batteries');
+        navigate('/admin');
       });
   };
 

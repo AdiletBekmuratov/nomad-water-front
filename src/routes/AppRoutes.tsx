@@ -1,14 +1,20 @@
 import ScrollToTop from '@/components/ScrollToTop';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import Login from '@/pages/admin/Login';
 import OrderInfo from '@/pages/OrderInfo';
 import OrderRegistration from '@/pages/OrderRegistration';
 import UserAppeal from '@/pages/UserAppeal';
 import WarehouseAppeal from '@/pages/WarehouseAppeal';
 import Warehouses from '@/pages/Warehouses';
-import Login from '@/pages/admin/Login';
+import { getMe } from '@/redux/slices/auth';
+import ProtectedRoute from './ProtectedRoute';
+import Loader from '@/components/Loader';
+import AdminWarehouses from '@/pages/admin/AdminWarehouses';
 
 const Landing = lazy(() => import('@/pages/Landing'));
 const Admin = lazy(() => import('@/pages/Admin'));
@@ -22,21 +28,47 @@ const UserPage = lazy(() => import('@/pages/UserPage'));
 const MyFavourite = lazy(() => import('@/pages/MyFavourite'));
 
 const AppRoutes = () => {
+  const { user, isLoading } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const getUser = async () => {
+      await dispatch(getMe());
+    };
+
+    getUser();
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
-    <Suspense
-      fallback={
-        <div className="h-screen flex justify-center items-center">
-          <p>Loading...</p>
-        </div>
-      }>
+    <Suspense fallback={<Loader />}>
       <Toaster position="top-right" />
       <Router>
         <ScrollToTop>
           <Routes>
             <Route path="/" element={<Landing />} />
 
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/admin/login" element={<Login />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/admin/login"
+              element={
+                <ProtectedRoute isAllowed={!user} redirectPath="/admin">
+                  <Login />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/admin/warehouses" element={<AdminWarehouses />} />
             <Route path="/admin/*" element={<NoAuthAdmin />} />
             <Route path="/myFavourite" element={<MyFavourite />} />
             <Route path="/catalog" element={<Catalog />} />

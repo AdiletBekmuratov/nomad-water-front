@@ -23,7 +23,7 @@ import {
 } from 'react-icons/hi';
 
 import { useLocalStorage } from '@/hooks';
-import { Button, Input, Toggle } from './Forms';
+import { Button, Input, Toggle } from '../Forms';
 
 interface ITableProps {
   id: string;
@@ -73,7 +73,7 @@ const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
         <div className="flex space-x-4">
           {onAddClick && (
             <div data-tip="Create" className="tooltip">
-              <Button onClick={onAddClick} className="rounded-full">
+              <Button onClick={onAddClick} className="!rounded-full p-2">
                 <HiPlus />
               </Button>
             </div>
