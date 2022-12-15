@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import Login from '@/pages/admin/Login';
 import OrderInfo from '@/pages/OrderInfo';
 import OrderRegistration from '@/pages/OrderRegistration';
 import UserAppeal from '@/pages/UserAppeal';
@@ -18,7 +17,6 @@ import AdminWarehouses from '@/pages/admin/AdminWarehouses';
 
 const Landing = lazy(() => import('@/pages/Landing'));
 
-const Admin = lazy(() => import('@/pages/admin/Admin'));
 const NoPage = lazy(() => import('@/pages/admin/NoPage'));
 const Login = lazy(() => import('@/pages/admin/Login'));
 const AllUsers = lazy(() => import('@/pages/admin/AllUsers'));
@@ -56,46 +54,36 @@ const AppRoutes = () => {
           <Routes>
             <Route path="/" element={<Landing />} />
 
-            <Route path="/admin/login" element={<Login />} />
-
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
-                  <Admin />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/userME"
-              element={
-                <ProtectedRoute
-                  isAllowed={user?.role === 'ROLE_ADMIN' || user?.role === 'ROLE_USER'}
-                  redirectPath="/admin/login">
-                  <UserME />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
-                  <Admin />
-                  <AllUsers />
-                </ProtectedRoute>
-              }
-            />
-
             <Route
               path="/admin/login"
               element={
-                <ProtectedRoute isAllowed={!user} redirectPath="/admin">
+                <ProtectedRoute isAllowed={!user} redirectPath="/usersAdmin">
                   <Login />
                 </ProtectedRoute>
               }
             />
+
+            <Route
+              path="/admin/allUsers"
+              element={
+                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
+                  <>
+                    <AllUsers />
+                  </>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/userMe"
+              element={
+                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
+                  <>
+                    <UserME />
+                  </>
+                </ProtectedRoute>
+              }
+            />
             <Route path="/admin/warehouses" element={<AdminWarehouses />} />
-            <Route path="/admin/*" element={<NoAuthAdmin />} />
             <Route path="/admin/*" element={<NoPage />} />
 
             <Route path="/myFavourite" element={<MyFavourite />} />

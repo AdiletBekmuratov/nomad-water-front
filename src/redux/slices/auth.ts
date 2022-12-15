@@ -6,7 +6,6 @@ import authService from '../services/auth.service';
 
 const initialState: IAuthState = {
   user: null,
-  user: null,
   isError: false,
   isSuccess: false,
   isLoading: true,

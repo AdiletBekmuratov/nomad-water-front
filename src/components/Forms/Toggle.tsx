@@ -18,7 +18,8 @@ export const Toggle: FC<IToggleProps> = ({ id, inputType, label, name, ...props 
           <Field {...props} type="checkbox" id={id} className="peer sr-only" name={name} />
         )}
 
-        <span className="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-medium-blue"></span>
+        <span
+          className={`absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-medium-blue`}></span>
 
         <span className="absolute inset-0 m-1 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-6"></span>
       </label>

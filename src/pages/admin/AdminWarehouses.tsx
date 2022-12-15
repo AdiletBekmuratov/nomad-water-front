@@ -1,8 +1,8 @@
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
 import { CreateModal, EditModal } from '@/components/Admin/Pages/Warehouses';
 import Loader from '@/components/Loader';
-import { ActionButtons, DeleteModal } from '@/components/Table';
-import Table from '@/components/Table/Table';
+import { ActionButtons, DeleteModal, Table } from '@/components/Table';
+
 import {
   useDeleteWarehouseMutation,
   useGetAllWarehousesQuery

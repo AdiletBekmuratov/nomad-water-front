@@ -13,14 +13,18 @@ export const ActionButtons: FC<IActionButtonsProps> = ({ handleDeleteClick, hand
       <div className="flex space-x-2">
         {handleEditClick && (
           <div data-tip="Edit" className="tooltip">
-            <Button onClick={() => handleEditClick()} className="!rounded-full p-2">
+            <Button
+              onClick={() => handleEditClick()}
+              className={`bg-medium-blue !rounded-full p-2`}>
               <HiPencil />
             </Button>
           </div>
         )}
         {handleDeleteClick && (
           <div data-tip="Delete" className="tooltip">
-            <Button onClick={() => handleDeleteClick()} className="!rounded-full p-2">
+            <Button
+              onClick={() => handleDeleteClick()}
+              className={`bg-medium-blue !rounded-full p-2`}>
               <HiTrash />
             </Button>
           </div>

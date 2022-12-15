@@ -69,15 +69,13 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
               <Link to="/admin/userME" className={`${linkStyle}`}>
                 Мой аккаунт
               </Link>
-              <Link to="/admin/usersAdmin" className={`${linkStyle}`}>
+              <Link to="/admin/allUsers" className={`${linkStyle}`}>
                 Пользователи
               </Link>
               <Link to="/couriers" className={`${linkStyle}`}>
                 Курьеры
               </Link>
-              <Link
-                to="/admin/warehouses"
-                className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
+              <Link to="/admin/warehouses" className={`${linkStyle}`}>
                 Склады
               </Link>
               <Link to="/hardware" className={`${linkStyle}`}>
@@ -111,7 +109,7 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
                   <Link to="/couriers" className={`${linkStyle}`}>
                     Курьеры
                   </Link>
-                  <Link to="/warehouses" className={`${linkStyle}`}>
+                  <Link to="/admin/warehouses" className={`${linkStyle}`}>
                     Склады
                   </Link>
                   <Link to="/hardware" className={`${linkStyle}`}>

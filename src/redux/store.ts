@@ -1,18 +1,18 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-// import { baseApi } from './services/base.service';
-import usersReducer from './slices/users';
+import { baseApi } from './services/base.service';
+//import usersReducer from './slices/users';
 import authReducer from './slices/auth';
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  users: usersReducer
-  // [baseApi.reducerPath]: baseApi.reducer
+  //users: usersReducer
+  [baseApi.reducerPath]: baseApi.reducer
 });
 
 export const store = configureStore({
   reducer: rootReducer,
-  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
   devTools: import.meta.env.NODE_ENV !== 'production'
 });
 

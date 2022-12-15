@@ -1,8 +1,8 @@
 import { Button, Input } from '@/components/Forms';
-import { Modal } from '@/components/Layout/Modal';
+// import { Modal } from '@/components/Layout/Modal';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { login, getPassword } from '@/redux/slices/auth';
+import { login } from '@/redux/slices/auth';
 import { ILoginForm } from '@/types';
 import { Form, Formik } from 'formik';
 import React from 'react';
@@ -44,17 +44,17 @@ const Login = () => {
       });
   };
 
-  const sendPhoneNumber = async (phone: string) => {
-    toast.promise(dispatch(getPassword(phone)).unwrap(), {
-      success: 'Все верно, ждите пароль',
-      loading: 'Загрузка',
-      error: (err) => err.toString()
-    });
-  };
-  const [value, setValue] = React.useState('');
-  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+  // const sendPhoneNumber = async (phone: string) => {
+  //   toast.promise(dispatch(getPassword(phone)).unwrap(), {
+  //     success: 'Все верно, ждите пароль',
+  //     loading: 'Загрузка',
+  //     error: (err) => err.toString()
+  //   });
+  // };
+  // const [value, setValue] = React.useState('');
+  // const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setValue(event.target.value);
+  // };
 
   return (
     <section className="relative flex min-h-screen">
@@ -83,15 +83,7 @@ const Login = () => {
               validationSchema={SignInSchema}>
               {() => (
                 <Form className="mt-8 space-y-6">
-                  <Input
-                    inputType="formik"
-                    id="phone"
-                    name="phone"
-                    label="Login"
-                    width="w-full"
-                    value={value}
-                    onChange={onChangeInput}
-                  />
+                  <Input inputType="formik" id="phone" name="phone" label="Login" width="w-full" />
                   <Input
                     inputType="formik"
                     id="password"
@@ -101,8 +93,6 @@ const Login = () => {
                     type="password"
                   />
                   <Button type="submit">Войти</Button>
-                  <p>Для получения пароля введите номер телефона в "Login" и нажмите кнопку:</p>
-                  <Button onClick={(value) => sendPhoneNumber(value)}>Получить пароль</Button>
                 </Form>
               )}
             </Formik>
