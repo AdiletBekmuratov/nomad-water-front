@@ -4,6 +4,7 @@ export interface IAuthState {
   isSuccess: boolean;
   isLoading: boolean;
   message: string;
+  phone: string;
 }
 export interface IUsersState {
   users: IUser[];

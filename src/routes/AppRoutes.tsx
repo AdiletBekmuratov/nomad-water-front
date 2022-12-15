@@ -69,7 +69,9 @@ const AppRoutes = () => {
             <Route
               path="/admin/userME"
               element={
-                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
+                <ProtectedRoute
+                  isAllowed={user?.role === 'ROLE_ADMIN' || user?.role === 'ROLE_USER'}
+                  redirectPath="/admin/login">
                   <UserME />
                 </ProtectedRoute>
               }

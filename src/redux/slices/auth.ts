@@ -10,7 +10,8 @@ const initialState: IAuthState = {
   isError: false,
   isSuccess: false,
   isLoading: true,
-  message: ''
+  message: '',
+  phone: ''
 };
 
 export const getMe = createAsyncThunk<IUser, undefined, { rejectValue: string }>(
@@ -18,6 +19,20 @@ export const getMe = createAsyncThunk<IUser, undefined, { rejectValue: string }>
   async (_, thunkAPI) => {
     try {
       return await authService.getMe();
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const message = error.message || error.toString();
+        return thunkAPI.rejectWithValue(message);
+      }
+    }
+  }
+);
+//send phone number
+export const getPassword = createAsyncThunk<string, string, { rejectValue: string }>(
+  'auth/password',
+  async (phone, thunkAPI) => {
+    try {
+      return await authService.getPassword(phone);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const message = error.message || error.toString();
@@ -82,6 +97,22 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.user = null;
+        if (action.payload) {
+          state.message = action.payload;
+        }
+      })
+      .addCase(getPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.phone = action.payload;
+      })
+      .addCase(getPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.phone = '';
         if (action.payload) {
           state.message = action.payload;
         }

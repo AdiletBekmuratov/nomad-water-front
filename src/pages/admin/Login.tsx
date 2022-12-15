@@ -1,10 +1,11 @@
 import { Button, Input } from '@/components/Forms';
+import { Modal } from '@/components/Layout/Modal';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { login } from '@/redux/slices/auth';
+import { login, getPassword } from '@/redux/slices/auth';
 import { ILoginForm } from '@/types';
 import { Form, Formik } from 'formik';
-
+import React from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +16,7 @@ const SignInSchema = Yup.object().shape({
   password: Yup.string().required('Обязательное поле для заполнения')
 });
 
-const initialValues: ILoginForm = {
+const initialValues: ILoginForm | string = {
   phone: '',
   password: ''
 };
@@ -39,8 +40,20 @@ const Login = () => {
         error: (err) => err.toString()
       })
       .then(() => {
-        navigate('/admin');
+        navigate('/admin/userME');
       });
+  };
+
+  const sendPhoneNumber = async (phone: string) => {
+    toast.promise(dispatch(getPassword(phone)).unwrap(), {
+      success: 'Все верно, ждите пароль',
+      loading: 'Загрузка',
+      error: (err) => err.toString()
+    });
+  };
+  const [value, setValue] = React.useState('');
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
   };
 
   return (
@@ -74,8 +87,10 @@ const Login = () => {
                     inputType="formik"
                     id="phone"
                     name="phone"
-                    label="Имя пользователя"
+                    label="Login"
                     width="w-full"
+                    value={value}
+                    onChange={onChangeInput}
                   />
                   <Input
                     inputType="formik"
@@ -86,6 +101,8 @@ const Login = () => {
                     type="password"
                   />
                   <Button type="submit">Войти</Button>
+                  <p>Для получения пароля введите номер телефона в "Login" и нажмите кнопку:</p>
+                  <Button onClick={(value) => sendPhoneNumber(value)}>Получить пароль</Button>
                 </Form>
               )}
             </Formik>
