@@ -38,7 +38,7 @@ const Login = () => {
         error: (err) => err.toString()
       })
       .then(() => {
-        navigate('/admin/');
+        navigate('/admin');
       });
   };
 

@@ -79,7 +79,7 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
                 Курьеры
               </Link>
               <Link
-                to="/warehouse"
+                to="/admin/warehouses"
                 className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
                 Склады
               </Link>
@@ -107,7 +107,7 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
                   <Link to="/requestsUser">Панель управления</Link>
                   <Link to="/users">Пользователи</Link>
                   <Link to="/couriers">Курьеры</Link>
-                  <Link to="/warehouses">Склады</Link>
+                  <Link to="/admin/warehouse">Склады</Link>
                   <Link to="/hardware">Оборудование</Link>
                 </motion.div>
               </motion.aside>
