@@ -17,7 +17,7 @@ import Loader from '@/components/Loader';
 import AdminWarehouses from '@/pages/admin/AdminWarehouses';
 
 const Landing = lazy(() => import('@/pages/Landing'));
-const Admin = lazy(() => import('@/pages/Admin'));
+// const Admin = lazy(() => import('@/pages/Admin'));
 const NoAuthAdmin = lazy(() => import('@/pages/NoAuthAdmin'));
 const Catalog = lazy(() => import('@/pages/Catalog'));
 const Orders = lazy(() => import('@/pages/Orders'));
@@ -51,14 +51,14 @@ const AppRoutes = () => {
           <Routes>
             <Route path="/" element={<Landing />} />
 
-            <Route
+            {/* <Route
               path="/admin"
               element={
                 <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
                   <Admin />
                 </ProtectedRoute>
               }
-            />
+            /> */}
 
             <Route
               path="/admin/login"
