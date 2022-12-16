@@ -7,7 +7,7 @@ import astana from '../../assets/lending/astana.png';
 
 const astanaAnimation = {
   hidden: {
-    x: 300,
+    x: 200,
     opacity: 0
   },
   visible: {
