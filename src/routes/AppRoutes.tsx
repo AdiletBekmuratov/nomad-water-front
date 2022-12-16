@@ -14,10 +14,14 @@ import { getMe } from '@/redux/slices/auth';
 import ProtectedRoute from './ProtectedRoute';
 import Loader from '@/components/Loader';
 
+import AdminProducts from '@/pages/admin/AdminProducts';
+import AdminCategory from '@/pages/admin/AdminCategory';
+
 const Landing = lazy(() => import('@/pages/Landing'));
 const NoPage = lazy(() => import('@/pages/admin/NoPage'));
-const AdminWarehouses = lazy(() => import('@/pages/admin/AdminWarehouses'));
 const Login = lazy(() => import('@/pages/admin/Login'));
+
+const AdminWarehouses = lazy(() => import('@/pages/admin/AdminWarehouses'));
 const AdminAllUsers = lazy(() => import('@/pages/admin/AdminAllUsers'));
 const AdminCouriers = lazy(() => import('@/pages/admin/AdminCouriers'));
 
@@ -77,9 +81,12 @@ const AppRoutes = () => {
                 </ProtectedRoute>
               }
             />
-            <Route path="/admin/warehouses" element={<AdminWarehouses />} />
-            <Route path="/admin/*" element={<NoPage />} />
 
+            <Route path="/admin/warehouses" element={<AdminWarehouses />} />
+            <Route path="/admin/products" element={<AdminProducts />} />
+            <Route path="/admin/category" element={<AdminCategory />} />
+
+            <Route path="/admin/*" element={<NoPage />} />
             <Route path="/myFavourite" element={<MyFavourite />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />
