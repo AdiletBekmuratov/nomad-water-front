@@ -84,9 +84,19 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
                 Склады
               </Link>
               <Link
-                to="/hardware"
+                to="/admin/hardware"
                 className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
                 Оборудование
+              </Link>
+              <Link
+                to="/admin/products"
+                className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
+                Продукты
+              </Link>
+              <Link
+                to="/admin/category"
+                className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
+                Категории
               </Link>
             </div>
           </aside>

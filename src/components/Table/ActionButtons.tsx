@@ -1,13 +1,19 @@
 import { FC } from 'react';
 import { HiPencil, HiTrash } from 'react-icons/hi';
 import { Button } from '../Forms';
+import { AiFillFileImage } from 'react-icons/ai';
 
 interface IActionButtonsProps {
   handleEditClick?: Function;
   handleDeleteClick?: Function;
+  handleImageClick?: Function;
 }
 
-export const ActionButtons: FC<IActionButtonsProps> = ({ handleDeleteClick, handleEditClick }) => {
+export const ActionButtons: FC<IActionButtonsProps> = ({
+  handleDeleteClick,
+  handleEditClick,
+  handleImageClick
+}) => {
   return (
     <>
       <div className="flex space-x-2">
@@ -22,6 +28,13 @@ export const ActionButtons: FC<IActionButtonsProps> = ({ handleDeleteClick, hand
           <div data-tip="Delete" className="tooltip">
             <Button onClick={() => handleDeleteClick()} className="!rounded-full p-2">
               <HiTrash />
+            </Button>
+          </div>
+        )}
+        {handleImageClick && (
+          <div data-tip="Delete" className="tooltip">
+            <Button onClick={() => handleImageClick()} className="!rounded-full p-2">
+              <AiFillFileImage />
             </Button>
           </div>
         )}

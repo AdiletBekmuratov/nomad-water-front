@@ -15,6 +15,8 @@ import { getMe } from '@/redux/slices/auth';
 import ProtectedRoute from './ProtectedRoute';
 import Loader from '@/components/Loader';
 import AdminWarehouses from '@/pages/admin/AdminWarehouses';
+import AdminProducts from '@/pages/admin/AdminProducts';
+import AdminCategory from '@/pages/admin/AdminCategory';
 
 const Landing = lazy(() => import('@/pages/Landing'));
 // const Admin = lazy(() => import('@/pages/Admin'));
@@ -68,7 +70,11 @@ const AppRoutes = () => {
                 </ProtectedRoute>
               }
             />
+
             <Route path="/admin/warehouses" element={<AdminWarehouses />} />
+            <Route path="/admin/products" element={<AdminProducts />} />
+            <Route path="/admin/category" element={<AdminCategory />} />
+
             <Route path="/admin/*" element={<NoAuthAdmin />} />
             <Route path="/myFavourite" element={<MyFavourite />} />
             <Route path="/catalog" element={<Catalog />} />
