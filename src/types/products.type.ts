@@ -1,6 +1,6 @@
 export type IProduct = {
   id?: number;
-  image?: string;
+  imageUrl?: string;
   description: string;
   productCategoryId: number;
   productName: string;
@@ -8,7 +8,7 @@ export type IProduct = {
   urgencyPrice: number;
 };
 
-export type IProductCreate = Omit<IProduct, 'image'>;
+export type IProductCreate = Omit<IProduct, 'image'> & { imageFile?: File | null };
 
 export type IProductCategoryCreate = {
   id?: number;

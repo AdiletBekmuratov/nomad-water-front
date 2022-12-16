@@ -52,7 +52,12 @@ const AdminProducts = () => {
         accessorKey: 'id'
       },
       {
-        header: 'product_name',
+        header: 'Image',
+        accessorKey: 'imageUrl',
+        cell: ({ getValue }) => <img src={getValue()} alt={getValue()} />
+      },
+      {
+        header: 'Name',
         accessorKey: 'productName'
       },
       {
@@ -63,24 +68,21 @@ const AdminProducts = () => {
         header: 'Description',
         accessorKey: 'description'
       },
+
       {
-        header: 'Image',
-        accessorKey: 'image'
-      },
-      {
-        header: 'productPrice',
+        header: 'Product Price',
         accessorKey: 'productPrice'
       },
       {
-        header: 'urgency_price',
+        header: 'Urgency Price',
         accessorKey: 'urgencyPrice'
       },
       {
-        header: 'createdDate',
+        header: 'Created Date',
         accessorKey: 'createdDate'
       },
       {
-        header: 'updatedDate',
+        header: 'Updated Date',
         accessorKey: 'updatedDate'
       },
 

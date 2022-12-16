@@ -1,16 +1,16 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
+import LayoutAdmin from '@/components/Admin/LayoutAdmin';
 import Loader from '@/components/Loader';
 import { ActionButtons, DeleteModal } from '@/components/Table';
 import Table from '@/components/Table/Table';
-import {
-  useGetProductCategoryQuery,
-  useDeleteProductCategoryMutation
-} from '../../redux/services/base.service';
 import { IProductCategoryCreate } from '@/types/products.type';
 import { ColumnDef, Row } from '@tanstack/react-table';
 import { toast } from 'react-hot-toast';
-import LayoutAdmin from '@/components/Admin/LayoutAdmin';
+import {
+  useDeleteProductCategoryMutation,
+  useGetProductCategoryQuery
+} from '../../redux/services/base.service';
 
 import { CreateCategory } from '@/components/Admin/Pages/Category';
 
@@ -52,7 +52,7 @@ const AdminCategory = () => {
         accessorKey: 'id'
       },
       {
-        header: 'name',
+        header: 'Name',
         accessorKey: 'name'
       },
       {

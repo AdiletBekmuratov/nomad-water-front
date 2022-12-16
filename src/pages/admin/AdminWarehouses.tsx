@@ -59,11 +59,11 @@ const AdminWarehouses = () => {
         accessorKey: 'warehouseAddress'
       },
       {
-        header: 'createdDate',
+        header: 'Created Date',
         accessorKey: 'createdDate'
       },
       {
-        header: 'updatedDate',
+        header: 'Updated Date',
         accessorKey: 'updatedDate'
       },
       {
