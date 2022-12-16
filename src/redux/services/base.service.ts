@@ -1,12 +1,11 @@
 import { ICouriers, ICouriersUpdate } from '@/types/couriers.types';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 import {
-  IWarehouse,
-  IWarehouseUpdate,
   IProduct,
-  IProductCreate,
   IProductCategoryCreate,
-  IProductImage
+  IProductCreate,
+  IWarehouse,
+  IWarehouseUpdate
 } from '@/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '../http';
@@ -95,7 +94,7 @@ export const baseApi = createApi({
           ]
           : [{ type: 'Products', id: 'LIST' }]
     }),
-    createProduct: builder.mutation<void, IProductCreate>({
+    createProduct: builder.mutation<IProduct, IProductCreate>({
       query: (body) => ({
         url: `/admin/product`,
         method: 'POST',
@@ -156,11 +155,11 @@ export const baseApi = createApi({
       invalidatesTags: [{ type: 'ProductCategory', id: 'LIST' }]
     }),
     // Загрузка картинки на сервер с продуктами
-    uploadProductImage: builder.mutation<void, IProductImage>({
+    uploadProductImage: builder.mutation<void, { id: number; formData: FormData }>({
       query: (body) => ({
         url: `/admin/product/${Number(body.id)}/image`,
         method: 'PUT',
-        body
+        body: body.formData
       }),
       invalidatesTags: [{ type: 'Products', id: 'LIST' }]
     }),
