@@ -6,7 +6,12 @@ export const Categories: FC = () => {
   const { data } = useGetProductCategoryQuery();
 
   return (
-    <Input inputType="formik" as="select" name="productCategoryId" id="productCategoryId">
+    <Input
+      inputType="formik"
+      as="select"
+      name="productCategoryId"
+      id="productCategoryId"
+      label="Выберите категорию продукта">
       <option>Выберите категорию</option>
       {data?.map((category) => (
         <option key={category.id} value={category.id} id="productCategoryId">
