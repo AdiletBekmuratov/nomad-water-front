@@ -1,67 +1,42 @@
+import { FC, Dispatch, SetStateAction } from 'react';
+
+import { useUpdateCourierMutation } from '@/redux/services/base.service';
+import { ICouriers, ICouriersUpdate } from '@/types';
+
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
-import { useCreateUserMutation } from '@/redux/services/base.service';
-import { IUserFullCreate } from '@/types/users.types';
-
 import { Form, Formik } from 'formik';
-import { Dispatch, FC, SetStateAction } from 'react';
-import { toast } from 'react-hot-toast';
-interface ICreateModalProps {
+import toast from 'react-hot-toast';
+
+interface IEditModalProps {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
+  data: ICouriers;
 }
 
-const INITIAL_VALUES: IUserFullCreate = {
-  phone: '',
-  firstname: '',
-  middleName: '',
-  lastname: '',
-  role: '',
-  birthday: '',
-  street: '',
-  houseNumber: '',
-  flat: '',
-  addressComment: '',
-  telegramAccount: ''
-};
-const userRoles = [
-  { id: 1, role: 'ROLE_USER', name: 'user' },
-  { id: 2, role: 'ROLE_ADMIN', name: 'admin' },
-  { id: 3, role: 'ROLE_MASTER', name: 'master' },
-  { id: 4, role: 'ROLE_EMPLOYEE', name: 'employee' },
-  { id: 5, role: 'ROLE_KEEPER', name: 'keeper' },
-  { id: 6, role: 'ROLE_COURIER', name: 'courier' }
-];
-export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
-  const [create, { isLoading }] = useCreateUserMutation();
-  const handleCreate = (values: IUserFullCreate) => {
-    console.log(values);
+export const EditModal: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
+  const [update, { isLoading: isLoadingUpdate }] = useUpdateCourierMutation();
+
+  const handleEdit = (values: ICouriersUpdate) => {
     toast
-      .promise(create(values).unwrap(), {
-        loading: 'Загрузка...',
-        success: 'Создано Успешно',
+      .promise(update(values).unwrap(), {
+        loading: 'Loading',
+        success: 'Updated Successfully',
         error: (error) => JSON.stringify(error, null, 2)
       })
       .finally(() => {
         setVisible(false);
       });
   };
+
   return (
-    <Modal isOpenModal={visible} setIsOpenModal={setVisible}>
-      <h2 className={`text-center`}>Добавить нового пользователя</h2>
-      <Formik initialValues={INITIAL_VALUES} onSubmit={handleCreate}>
+    <Modal setIsOpenModal={setVisible} isOpenModal={visible}>
+      <h2 className={`text-center`}>Изменение данных курьера</h2>
+      <Formik initialValues={data} onSubmit={handleEdit}>
         {() => (
           <Form className="flex flex-col space-y-4">
             <Input inputType="formik" name="id" id="id" label="ID" disabled />
-            <Input
-              inputType="formik"
-              name="phone"
-              id="phone"
-              label="Телефон"
-              mask="+7 (999) 999 9999"
-              placeholder="+7 (999) 999 9999"
-            />
-
+            
             <Input inputType="formik" name="firstname" id="firstname" label="Фамилия" />
             <Input inputType="formik" name="middleName" id="middleName" label="Имя" />
             <Input inputType="formik" name="lastname" id="lastname" label="Отчество" />
@@ -79,7 +54,7 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
                 />
               </div>
             </div>
-            <div className={`grid grid-cols-3 items-center`}>
+            <div className={`flex justify-between`}>
               <Input inputType="formik" as="select" name="role" id="role" label="Статус">
                 {userRoles?.map((role) => (
                   <option key={role.id} value={role.role} id="userRole">
@@ -101,10 +76,9 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
                 label="Telegtam"
               />
             </div>
-
             <div className="modal-action">
-              <Button type="submit" loading={isLoading}>
-                Добавить
+              <Button type="submit" loading={isLoadingUpdate}>
+                Подтвердить изменения
               </Button>
             </div>
           </Form>

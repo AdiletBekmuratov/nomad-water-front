@@ -1,7 +1,8 @@
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
-import { useCreateUserMutation } from '@/redux/services/base.service';
-import { IUserFullCreate } from '@/types/users.types';
+
+import { useCreateCourierMutation, useGetAllUsersQuery } from '@/redux/services/base.service';
+import { ICouriersUpdate } from '@/types';
 
 import { Form, Formik } from 'formik';
 import { Dispatch, FC, SetStateAction } from 'react';
@@ -10,31 +11,23 @@ interface ICreateModalProps {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
 }
+//const { data, isLoading } = useGetAllUsersQuery();
 
-const INITIAL_VALUES: IUserFullCreate = {
-  phone: '',
-  firstname: '',
-  middleName: '',
-  lastname: '',
-  role: '',
-  birthday: '',
-  street: '',
-  houseNumber: '',
-  flat: '',
-  addressComment: '',
-  telegramAccount: ''
+const INITIAL_VALUES: ICouriersUpdate = {
+  userId: data.ewif.id
+
 };
-const userRoles = [
-  { id: 1, role: 'ROLE_USER', name: 'user' },
-  { id: 2, role: 'ROLE_ADMIN', name: 'admin' },
-  { id: 3, role: 'ROLE_MASTER', name: 'master' },
-  { id: 4, role: 'ROLE_EMPLOYEE', name: 'employee' },
-  { id: 5, role: 'ROLE_KEEPER', name: 'keeper' },
-  { id: 6, role: 'ROLE_COURIER', name: 'courier' }
-];
+// const userRoles = [
+//   { id: 1, role: 'ROLE_USER', name: 'user' },
+//   { id: 2, role: 'ROLE_ADMIN', name: 'admin' },
+//   { id: 3, role: 'ROLE_MASTER', name: 'master' },
+//   { id: 4, role: 'ROLE_EMPLOYEE', name: 'employee' },
+//   { id: 5, role: 'ROLE_KEEPER', name: 'keeper' },
+//   { id: 6, role: 'ROLE_COURIER', name: 'courier' }
+// ];
 export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
-  const [create, { isLoading }] = useCreateUserMutation();
-  const handleCreate = (values: IUserFullCreate) => {
+  const [create, { isLoading }] = useCreateCourierMutation();
+  const handleCreate = (values: ICouriersUpdate) => {
     console.log(values);
     toast
       .promise(create(values).unwrap(), {

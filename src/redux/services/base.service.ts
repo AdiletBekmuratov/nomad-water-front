@@ -34,17 +34,11 @@ export const baseApi = createApi({
           ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
-    getUserID: builder.query<IUserFull[], number>({
+    getUserID: builder.query<IUserFull, number>({
       query: (id) => ({
         url: `/user/${Number(id)}`
       }),
-      providesTags: (result) =>
-        result
-          ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
-          : [{ type: 'Users', id: 'LIST' }]
+      providesTags: [{ type: 'Users' }]
     }),
     getUserROLE: builder.query<IUserFull[], string>({
       query: (role) => ({
@@ -214,9 +208,15 @@ export const baseApi = createApi({
           ]
           : [{ type: 'Couriers', id: 'LIST' }]
     }),
-    createCourier: builder.mutation<void, ICouriers>({
+    getCourier: builder.query<IUserFull, number>({
+      query: (id) => ({
+        url: `/admin/courier${Number(id)}`
+      }),
+      providesTags: [{ type: 'Couriers' }]
+    }),
+    createCourier: builder.mutation<void, ICouriersUpdate>({
       query: (body) => ({
-        url: `/admin/courier`,
+        url: `/ admin / courier`,
         method: 'POST',
         body
       }),
@@ -224,20 +224,21 @@ export const baseApi = createApi({
     }),
     deleteCourier: builder.mutation<void, number>({
       query: (id) => ({
-        url: `/admin/courier/${Number(id)}`,
+        url: `/ admin / courier / ${Number(id)}`,
         method: 'DELETE'
       }),
       invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
     }),
     updateCourier: builder.mutation<void, ICouriersUpdate>({
       query: (body) => ({
-        url: `/admin/courier/${Number(body.id)}`,
+        url: `/ admin / courier / ${Number(body.id)
+          }`,
         method: 'PUT',
         body
       }),
       invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
     })
-  }),
+  })
 });
 
 export const {
