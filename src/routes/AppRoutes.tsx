@@ -53,14 +53,14 @@ const AppRoutes = () => {
           <Routes>
             <Route path="/" element={<Landing />} />
 
-            {/* <Route
+            <Route
               path="/admin"
               element={
                 <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
-                  <Admin />
+                  <AdminWarehouses />
                 </ProtectedRoute>
               }
-            /> */}
+            />
 
             <Route
               path="/admin/login"
