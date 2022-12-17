@@ -82,7 +82,6 @@ const AppRoutes = () => {
               }
             />
 
-
             <Route path="/admin/warehouses" element={<AdminWarehouses />} />
             <Route path="/admin/products" element={<AdminProducts />} />
             <Route path="/admin/category" element={<AdminCategory />} />
