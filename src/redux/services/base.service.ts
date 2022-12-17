@@ -1,5 +1,5 @@
 import { IWarehouse, IWarehouseUpdate } from '@/types';
-import { ICouriers } from '@/types/couriers.types';
+import { ICouriers, ICouriersUpdate } from '@/types/couriers.types';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '../http';
@@ -124,7 +124,7 @@ export const baseApi = createApi({
           ]
           : [{ type: 'Couriers', id: 'LIST' }]
     }),
-    createCourier: builder.mutation<void, IWarehouseUpdate>({
+    createCourier: builder.mutation<void, ICouriers>({
       query: (body) => ({
         url: `/admin/courier`,
         method: 'POST',
@@ -132,6 +132,21 @@ export const baseApi = createApi({
       }),
       invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
     }),
+    deleteCourier: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `/admin/courier/${Number(id)}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
+    }),
+    updateCourier: builder.mutation<void, ICouriersUpdate>({
+      query: (body) => ({
+        url: `/admin/courier/${Number(body.id)}`,
+        method: 'PUT',
+        body
+      }),
+      invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
+    })
   }),
 });
 
@@ -150,5 +165,7 @@ export const {
   useUpdateWarehouseMutation,
   //Couriers
   useGetAllCouriersQuery,
-  useCreateCourierMutation
+  useCreateCourierMutation,
+  useDeleteCourierMutation,
+  useUpdateCourierMutation
 } = baseApi;
