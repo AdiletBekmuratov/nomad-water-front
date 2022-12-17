@@ -2,8 +2,8 @@ import { useMemo, useState } from 'react';
 
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
 import Loader from '@/components/Loader';
-import { ActionButtons, DeleteModal } from '@/components/Table';
-import Table from '@/components/Table/Table';
+import { ActionButtons, DeleteModal, Table } from '@/components/Table';
+
 import { IProductCategoryCreate } from '@/types/products.type';
 import { ColumnDef, Row } from '@tanstack/react-table';
 import { toast } from 'react-hot-toast';
