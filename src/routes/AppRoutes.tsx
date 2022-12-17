@@ -19,7 +19,6 @@ const NoPage = lazy(() => import('@/pages/admin/NoPage'));
 const AdminWarehouses = lazy(() => import('@/pages/admin/AdminWarehouses'));
 const Login = lazy(() => import('@/pages/admin/Login'));
 const AdminAllUsers = lazy(() => import('@/pages/admin/AdminAllUsers'));
-const UserME = lazy(() => import('@/pages/admin/UserME'));
 const AdminCouriers = lazy(() => import('@/pages/admin/AdminCouriers'));
 
 const Catalog = lazy(() => import('@/pages/catalog/Catalog'));
@@ -70,7 +69,6 @@ const AppRoutes = () => {
                 </ProtectedRoute>
               }
             />
-            <Route path="/admin/userMe" element={<UserME />} />
             <Route
               path="/admin/couriers"
               element={
