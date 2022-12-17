@@ -12,6 +12,8 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
+  children?: ReactNode;
+  as?: string;
 }
 
 const CONSTANT_CLASSNAMES = 'py-2 px-4 bg-white text-sm  w-full border border-gray-200';
@@ -45,11 +47,7 @@ export const Input: FC<Props> = ({ inputType = 'default', ...props }) => {
               }}
             />
           ) : (
-            <Field
-              {...props}
-              className="w-full outline-none ring-0 border-none"
-              component={'input'}
-            />
+            <Field {...props} className="w-full outline-none ring-0 border-none" />
           )
         ) : (
           <input {...props} className="w-full outline-none" />

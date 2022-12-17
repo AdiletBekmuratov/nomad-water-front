@@ -6,16 +6,16 @@ import { getUserMe } from '@/redux/slices/users';
 import React from 'react';
 
 const UserME = () => {
-  const id = useAppSelector((state) => state.auth.user?.id);
-  // const { _id } = useAppSelector((state) => state.users.user.id);
-  const dispatch = useAppDispatch();
-  React.useEffect(() => {
-    dispatch(getUserMe(id));
-  }, [dispatch]);
-  console.log(id);
+  // const id = useAppSelector((state) => state.auth.user?.id);
+  // // const { _id } = useAppSelector((state) => state.users.user.id);
+  // const dispatch = useAppDispatch();
+  // React.useEffect(() => {
+  //   dispatch(getUserMe(id));
+  // }, [dispatch]);
+  // console.log(id);
   return (
     <LayoutAdmin>
-      <>f</>
+      <>me</>
     </LayoutAdmin>
   );
 };

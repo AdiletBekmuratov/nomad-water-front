@@ -1,4 +1,6 @@
 import { IWarehouse, IWarehouseUpdate } from '@/types';
+import { ICouriers } from '@/types/couriers.types';
+import { IUserFull, IUserFullCreate } from '@/types/users.types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '../http';
 
@@ -10,8 +12,68 @@ export const baseApi = createApi({
       return headers;
     }
   }),
-  tagTypes: ['Warehouses'],
+  tagTypes: ['Users', 'Warehouses', 'Couriers'],
   endpoints: (builder) => ({
+    //Users
+    getAllUsers: builder.query<IUserFull[], void>({
+      query: () => ({
+        url: `admin/user`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
+          : [{ type: 'Users', id: 'LIST' }]
+    }),
+    getUserID: builder.query<IUserFull[], number>({
+      query: (id) => ({
+        url: `/user/${Number(id)}`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
+          : [{ type: 'Users', id: 'LIST' }]
+    }),
+    getUserROLE: builder.query<IUserFull[], string>({
+      query: (role) => ({
+        url: `/userWithRole/${role}`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
+          : [{ type: 'Users', id: 'LIST' }]
+    }),
+    createUser: builder.mutation<void, IUserFullCreate>({
+      query: (body) => ({
+        url: `admin/user`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
+    }),
+    updateUser: builder.mutation<void, IUserFullCreate>({
+      query: (body) => ({
+        url: `admin/user/${Number(body.id)}`,
+        method: 'PUT',
+        body
+      }),
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
+    }),
+    deleteUser: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `admin/user/${Number(id)}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
+    }),
     // Warehouses
     getAllWarehouses: builder.query<IWarehouse[], void>({
       query: () => ({
@@ -20,9 +82,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
-              { type: 'Warehouses', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+            { type: 'Warehouses', id: 'LIST' }
+          ]
           : [{ type: 'Warehouses', id: 'LIST' }]
     }),
     createWarehouse: builder.mutation<void, IWarehouseUpdate>({
@@ -47,14 +109,46 @@ export const baseApi = createApi({
         body
       }),
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
-    })
-  })
+    }),
+
+    //Couriers
+    getAllCouriers: builder.query<ICouriers[], void>({
+      query: () => ({
+        url: `/admin/courier`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+            ...result.map(({ id }) => ({ type: 'Couriers', id } as const)),
+            { type: 'Couriers', id: 'LIST' }
+          ]
+          : [{ type: 'Couriers', id: 'LIST' }]
+    }),
+    createCourier: builder.mutation<void, IWarehouseUpdate>({
+      query: (body) => ({
+        url: `/admin/courier`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
+    }),
+  }),
 });
 
 export const {
+  //users
+  useGetAllUsersQuery,
+  useGetUserIDQuery,
+  useGetUserROLEQuery,
+  useCreateUserMutation,
+  useDeleteUserMutation,
+  useUpdateUserMutation,
   // Warehouses
   useGetAllWarehousesQuery,
   useCreateWarehouseMutation,
   useDeleteWarehouseMutation,
-  useUpdateWarehouseMutation
+  useUpdateWarehouseMutation,
+  //Couriers
+  useGetAllCouriersQuery,
+  useCreateCourierMutation
 } = baseApi;

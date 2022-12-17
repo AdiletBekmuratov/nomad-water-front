@@ -58,7 +58,7 @@ export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
                 <Link to="/warehouse">Склады</Link>
                 <Link to="/catalog">Оборудование</Link>
                 <div className={`border-b-2 border-solid border-gray-500 w-52 my-5`}></div>
-                <Link to="/admin/usersAdmin">Admin</Link>
+                <Link to="/admin/allUsers">Admin</Link>
               </div>
             </motion.div>
           </motion.aside>

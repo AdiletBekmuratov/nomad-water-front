@@ -1,36 +1,20 @@
-import { IUser } from '@/types';
-
-export const user: IUser = {
-
-   id: '',
-   username: '',
-   role: '',
-   email: '',
-   enabled: false,
-   updatedAt: '',
-
-   address_comment: '',
-   birthday: '',
-   bonuses: null,
-   created_date: '',
-   firstname: '',
-   flat: '',
-   house_number: '',
-   lastname: '',
-   middle_name: '',
-   password: '',
-   phone: '',
-   street: '',
-   telegram_account: '',
-   updated_date: ''
+export interface IUserFull {
+   id?: number;
+   phone: string;
+   password: string;
+   firstname: string;
+   middleName: string;
+   lastname: string;
+   role: string;
+   birthday: string;
+   street: string;
+   houseNumber: string;
+   flat: string;
+   created_date: string;
+   addressComment: string;
+   bonuses: number;
+   telegramAccount: string;
 }
+export type IUserFullCreate = Omit<IUserFull, 'created_date' | 'password' | 'bonuses'>;
+//export type IIUserFullUpdate = Pick<IUserFull, 'firstname' | 'lastname'>;
 
-
-export interface IUsersState {
-   users: IUser[];
-   user: IUser;
-   isError: boolean | null;
-   isSuccess: boolean;
-   isLoading: boolean;
-   message: string;
-}

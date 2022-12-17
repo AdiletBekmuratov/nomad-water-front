@@ -13,14 +13,14 @@ import Warehouses from '@/pages/Warehouses';
 import { getMe } from '@/redux/slices/auth';
 import ProtectedRoute from './ProtectedRoute';
 import Loader from '@/components/Loader';
-import AdminWarehouses from '@/pages/admin/AdminWarehouses';
 
 const Landing = lazy(() => import('@/pages/Landing'));
-
 const NoPage = lazy(() => import('@/pages/admin/NoPage'));
+const AdminWarehouses = lazy(() => import('@/pages/admin/AdminWarehouses'));
 const Login = lazy(() => import('@/pages/admin/Login'));
-const AllUsers = lazy(() => import('@/pages/admin/AllUsers'));
+const AdminAllUsers = lazy(() => import('@/pages/admin/AdminAllUsers'));
 const UserME = lazy(() => import('@/pages/admin/UserME'));
+const AdminCouriers = lazy(() => import('@/pages/admin/AdminCouriers'));
 
 const Catalog = lazy(() => import('@/pages/catalog/Catalog'));
 const Orders = lazy(() => import('@/pages/Orders'));
@@ -38,7 +38,6 @@ const AppRoutes = () => {
     const getUser = async () => {
       await dispatch(getMe());
     };
-
     getUser();
   }, []);
 
@@ -57,7 +56,7 @@ const AppRoutes = () => {
             <Route
               path="/admin/login"
               element={
-                <ProtectedRoute isAllowed={!user} redirectPath="/usersAdmin">
+                <ProtectedRoute isAllowed={!user} redirectPath="/admin/allUsers">
                   <Login />
                 </ProtectedRoute>
               }
@@ -67,19 +66,16 @@ const AppRoutes = () => {
               path="/admin/allUsers"
               element={
                 <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
-                  <>
-                    <AllUsers />
-                  </>
+                  <AdminAllUsers />
                 </ProtectedRoute>
               }
             />
+            <Route path="/admin/userMe" element={<UserME />} />
             <Route
-              path="/admin/userMe"
+              path="/admin/couriers"
               element={
                 <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
-                  <>
-                    <UserME />
-                  </>
+                  <AdminCouriers />
                 </ProtectedRoute>
               }
             />
