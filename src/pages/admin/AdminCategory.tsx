@@ -12,7 +12,7 @@ import {
   useGetProductCategoryQuery
 } from '../../redux/services/base.service';
 
-import { CreateCategory } from '@/components/Admin/Pages/Category';
+import { CreateCategory, EditCategory } from '@/components/Admin/Pages/Category';
 
 const AdminCategory = () => {
   const { data, isLoading } = useGetProductCategoryQuery();
@@ -82,7 +82,7 @@ const AdminCategory = () => {
       />
 
       <CreateCategory visible={visibleCreate} setVisible={setVisibleCreate} />
-
+      <EditCategory data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} />
       <DeleteModal
         loading={isLoadingDelete}
         handleDelete={handleDelete}
