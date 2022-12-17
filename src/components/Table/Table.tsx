@@ -85,7 +85,7 @@ export const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
         <table
           className={`w-full table relative text-sm text-left text-dark-blue dark:text-dark-blue`}>
           <thead
-            className={`text-xs text-gray-700 uppercase bg-gray-50 dark:bg-blue-200 dark:text-dark-blue`}>
+            className={`text-xs text-gray-700 uppercase bg-gray-50 dark:bg-light-blue dark:text-gray-400`}>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -124,7 +124,7 @@ export const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
               return (
                 <tr
                   key={row.id}
-                  className={`bg-white border-b dark:bg-blue-100 dark:border-gray-400`}>
+                  className="bg-white border-b dark:bg-light-blue-800 dark:border-gray-300">
                   {row.getVisibleCells().map((cell) => {
                     return (
                       <td
