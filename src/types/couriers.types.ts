@@ -1,5 +1,5 @@
 export type ICouriers = {
-  id: number;
+  id?: number;
   userId?: number;
   courierDeliveringStatus: number;
   successfulOrders: number;
@@ -7,4 +7,4 @@ export type ICouriers = {
 };
 //export type ICouriersCreate = Pick<ICouriers, 'car'>;
 //export type ICouriersId = Pick<ICouriers, 'userId'>;
-export type ICouriersCreate = Pick<ICouriers, 'car' | 'userId'>;
+export type ICouriersCreate = Pick<ICouriers, 'car' | 'userId' | 'id'>;

@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import {
   useDeleteCourierMutation,
-  useGetAllCouriersQuery,
+  // useGetAllCouriersQuery,
   useGetUserROLEQuery
 } from '@/redux/services/base.service';
 import { ICouriers } from '@/types';
@@ -16,9 +16,9 @@ import { CreateModal } from '@/components/Admin/Pages/Couriers/CreateModal';
 import { EditModal } from '@/components/Admin/Pages/Couriers/EditModal';
 
 const AdminCouriers = () => {
-  const { data: userCouriers = [] } = useGetUserROLEQuery('ROLE_COURIER');
-  console.log(userCouriers);
-  const { data: couriers = [], isLoading } = useGetAllCouriersQuery();
+  const { data: userCouriers = [], isLoading } = useGetUserROLEQuery('ROLE_COURIER');
+  // console.log(userCouriers);
+  //const { data: couriers = [], isLoading } = useGetAllCouriersQuery();
   const [deleteCourier, { isLoading: isLoadingDelete }] = useDeleteCourierMutation();
 
   const [rowData, setRowData] = useState<ICouriers>();
