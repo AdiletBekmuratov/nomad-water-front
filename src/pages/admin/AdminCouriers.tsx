@@ -1,119 +1,117 @@
+import React, { useMemo, useState } from 'react';
+import {
+  useGetAllCouriersQuery,
+  useDeleteCourierMutation,
+  useGetUserROLEQuery
+} from '@/redux/services/base.service';
+import { ICouriers, IUserFull } from '@/types';
+
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
 import Loader from '@/components/Loader';
-import { ActionButtons, DeleteModal, Table } from '@/components/Table';
-import { useGetUserROLEQuery } from '@/redux/services/base.service';
-import { ICouriers } from '@/types';
+
+import { toast } from 'react-hot-toast';
 import { ColumnDef, Row } from '@tanstack/react-table';
-import React, { useMemo, useState } from 'react';
+import { ActionButtons, DeleteModal, Table } from '@/components/Table';
+import { CreateModal } from '@/components/Admin/Pages/Couriers/CreateModal';
+import { EditModal } from '@/components/Admin/Pages/Couriers/EditModal';
 
 const AdminCouriers = () => {
-  // const { data, isLoading } = useGetAllCouriersQuery();
-
-  const { data: users, isLoading: isLoadingUsers } = useGetUserROLEQuery('ROLE_COURIER');
-
+  const { data: users } = useGetUserROLEQuery('ROLE_COURIER');
   console.log(users);
-  // const [rowData, setRowData] = useState<ICouriers>();
-  // const [visibleCreate, setVisibleCreate] = useState(false);
-  // const [visibleDelete, setVisibleDelete] = useState(false);
-  // const [visibleEdit, setVisibleEdit] = useState(false);
+  const courierId = users ? users.forEach((item: IUserFull) => item.id) : [];
 
-  // const handleDelete = async () => {
-  //   toast
-  //     .promise(deleteProduct(rowData!.id!).unwrap(), {
-  //       loading: 'Loading',
-  //       success: 'Deleted Successfully',
-  //       error: (error) => JSON.stringify(error, null, 2)
-  //     })
-  //     .finally(() => {
-  //       setVisibleDelete(false);
-  //     });
-  // };
+  console.log(courierId);
 
-  // const handleEditRowClick = (row: Row<ICouriers>) => {
-  //   setRowData(row.original);
-  //   setVisibleEdit(true);
-  // };
+  const { data: couriers, isLoading } = useGetAllCouriersQuery();
 
-  // const handleDeleteRowClick = (row: Row<ICouriers>) => {
-  //   setRowData(row.original);
-  //   setVisibleDelete(true);
-  // };
+  const [deleteCourier, { isLoading: isLoadingDelete }] = useDeleteCourierMutation();
 
-  // const columns = useMemo<ColumnDef<ICouriers, any>[]>(
-  //   () => [
-  //     {
-  //       header: 'ID',
-  //       accessorKey: 'id'
-  //     },
+  const [rowData, setRowData] = useState<ICouriers>();
+  const [visibleCreate, setVisibleCreate] = useState(false);
+  const [visibleDelete, setVisibleDelete] = useState(false);
+  const [visibleEdit, setVisibleEdit] = useState(false);
 
-  //     {
-  //       header: 'Name',
-  //       accessorKey: 'productName'
-  //     },
-  //     {
-  //       header: 'Category',
-  //       accessorKey: 'productCategory.name'
-  //     },
-  //     {
-  //       header: 'Description',
-  //       accessorKey: 'description'
-  //     },
+  const handleDelete = async () => {
+    toast
+      .promise(deleteCourier(rowData!.id!).unwrap(), {
+        loading: 'Loading',
+        success: 'Deleted Successfully',
+        error: (error) => JSON.stringify(error, null, 2)
+      })
+      .finally(() => {
+        setVisibleDelete(false);
+      });
+  };
 
-  //     {
-  //       header: 'Product Price',
-  //       accessorKey: 'productPrice'
-  //     },
-  //     {
-  //       header: 'Urgency Price',
-  //       accessorKey: 'urgencyPrice'
-  //     },
-  //     {
-  //       header: 'Created Date',
-  //       accessorKey: 'createdDate'
-  //     },
-  //     {
-  //       header: 'Updated Date',
-  //       accessorKey: 'updatedDate'
-  //     },
+  const handleEditRowClick = (row: Row<ICouriers>) => {
+    setRowData(row.original);
+    setVisibleEdit(true);
+  };
 
-  //     {
-  //       header: 'Actions',
-  //       cell: ({ row }) => (
-  //         <ActionButtons
-  //           handleEditClick={() => handleEditRowClick(row)}
-  //           handleDeleteClick={() => handleDeleteRowClick(row)}
-  //         />
-  //       )
-  //     }
-  //   ],
-  //   []
-  // );
+  const handleDeleteRowClick = (row: Row<ICouriers>) => {
+    setRowData(row.original);
+    setVisibleDelete(true);
+  };
+  const columns = useMemo<ColumnDef<ICouriers, any>[]>(
+    () => [
+      {
+        header: 'ID курьера',
+        accessorKey: 'id'
+      },
 
-  // if (isLoading) {
-  //   return <Loader />;
-  // }
+      {
+        header: 'ID пользователя',
+        accessorKey: 'userId'
+      },
+      {
+        header: 'авто',
+        accessorKey: 'car'
+      },
+      {
+        header: 'Статус доставки',
+        accessorKey: 'courierDeliveringStatus'
+      },
 
-  // return (
-  //   <LayoutAdmin>
-  //     <Table
-  //       id="ProductsTable"
-  //       data={data}
-  //       columns={columns}
-  //       onAddClick={() => setVisibleCreate(true)}
-  //     />
+      {
+        header: 'Выполненые заказы',
+        accessorKey: 'successfulOrders'
+      },
 
-  //     {/* <CreateProduct visible={visibleCreate} setVisible={setVisibleCreate} /> */}
+      {
+        header: 'Actions',
+        cell: ({ row }) => (
+          <ActionButtons
+            handleEditClick={() => handleEditRowClick(row)}
+            handleDeleteClick={() => handleDeleteRowClick(row)}
+          />
+        )
+      }
+    ],
+    []
+  );
 
-  //     {/* <EditProducts data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} /> */}
+  if (isLoading) {
+    return <Loader />;
+  }
 
-  //     <DeleteModal
-  //       loading={isLoadingDelete}
-  //       handleDelete={handleDelete}
-  //       setVisible={setVisibleDelete}
-  //       visible={visibleDelete}
-  //     />
-  //   </LayoutAdmin>
-  // );
+  return (
+    <LayoutAdmin>
+      <Table
+        id="CouriersTable"
+        data={couriers}
+        columns={columns}
+        onAddClick={() => setVisibleCreate(true)}
+      />
+      <CreateModal visible={visibleCreate} setVisible={setVisibleCreate} />
+      <EditModal data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} />
+      <DeleteModal
+        loading={isLoadingDelete}
+        handleDelete={handleDelete}
+        setVisible={setVisibleDelete}
+        visible={visibleDelete}
+      />
+    </LayoutAdmin>
+  );
 };
 
 export default AdminCouriers;

@@ -110,7 +110,7 @@ const AdminAllUsers = () => {
   return (
     <LayoutAdmin>
       <Table
-        id="WarehousesTable"
+        id="AllUsersTable"
         data={data}
         columns={columns}
         onAddClick={() => setVisibleCreate(true)}

@@ -1,6 +1,8 @@
 import { IWorker } from './../../types/warehouseWorker.types';
 // import { IEmployee } from './../../types/employee.types';
-import { ICouriers, ICouriersUpdate } from '@/types/couriers.types';
+
+import { ICouriers, ICouriersCreate, ICouriersUpdate } from '@/types/couriers.types';
+
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 import {
   IProduct,
@@ -42,7 +44,6 @@ export const baseApi = createApi({
       }),
       providesTags: [{ type: 'Users' }]
     }),
-
     getUserROLE: builder.query<IUserFull[], string>({
       query: (role) => ({
         url: `/admin/userWithRole/${role}`
@@ -63,7 +64,7 @@ export const baseApi = createApi({
       }),
       invalidatesTags: [{ type: 'Users', id: 'LIST' }]
     }),
-    updateUser: builder.mutation<void, IUserFullCreate>({
+    updateUser: builder.mutation<void, IUserFull>({
       query: (body) => ({
         url: `admin/user/${Number(body.id)}`,
         method: 'PUT',
@@ -78,6 +79,7 @@ export const baseApi = createApi({
       }),
       invalidatesTags: [{ type: 'Users', id: 'LIST' }]
     }),
+
     //Products
     getAllProducts: builder.query<IProduct[], void>({
       query: () => ({
@@ -199,6 +201,14 @@ export const baseApi = createApi({
     }),
 
     //Couriers
+    createCourier: builder.mutation<void, ICouriersCreate>({
+      query: (body) => ({
+        url: `/admin/courier`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
+    }),
     getAllCouriers: builder.query<ICouriers[], void>({
       query: () => ({
         url: `/admin/courier`
@@ -211,20 +221,13 @@ export const baseApi = createApi({
             ]
           : [{ type: 'Couriers', id: 'LIST' }]
     }),
-    getCourier: builder.query<IUserFull, number>({
+    getCourier: builder.query<ICouriers[], number>({
       query: (id) => ({
         url: `/admin/courier${Number(id)}`
       }),
       providesTags: [{ type: 'Couriers' }]
     }),
-    createCourier: builder.mutation<void, ICouriersUpdate>({
-      query: (body) => ({
-        url: `/admin /courier`,
-        method: 'POST',
-        body
-      }),
-      invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
-    }),
+
     deleteCourier: builder.mutation<void, number>({
       query: (id) => ({
         url: `/admin/courier/${Number(id)}`,
@@ -288,11 +291,13 @@ export const {
   useCreateUserMutation,
   useDeleteUserMutation,
   useUpdateUserMutation,
+
   // Warehouses
   useGetAllWarehousesQuery,
   useCreateWarehouseMutation,
   useDeleteWarehouseMutation,
   useUpdateWarehouseMutation,
+
   //Couriers
   useGetAllCouriersQuery,
   useCreateCourierMutation,
