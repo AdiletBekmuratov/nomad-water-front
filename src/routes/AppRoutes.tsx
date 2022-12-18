@@ -16,6 +16,7 @@ import Loader from '@/components/Loader';
 
 import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminCategory from '@/pages/admin/AdminCategory';
+import AdminEmployee from '@/pages/admin/AdminEmployee';
 
 const Landing = lazy(() => import('@/pages/Landing'));
 const NoPage = lazy(() => import('@/pages/admin/NoPage'));
@@ -82,9 +83,32 @@ const AppRoutes = () => {
               }
             />
 
-            <Route path="/admin/warehouses" element={<AdminWarehouses />} />
-            <Route path="/admin/products" element={<AdminProducts />} />
-            <Route path="/admin/category" element={<AdminCategory />} />
+            <Route
+              path="/admin/warehouses"
+              element={
+                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
+                  <AdminWarehouses />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/products"
+              element={
+                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
+                  <AdminProducts />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/category"
+              element={
+                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
+                  <AdminCategory />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="/admin/employee" element={<AdminEmployee />} />
 
             <Route path="/admin/*" element={<NoPage />} />
             <Route path="/myFavourite" element={<MyFavourite />} />

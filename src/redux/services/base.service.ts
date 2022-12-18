@@ -1,3 +1,5 @@
+import { IWorker } from './../../types/warehouseWorker.types';
+// import { IEmployee } from './../../types/employee.types';
 import { ICouriers, ICouriersUpdate } from '@/types/couriers.types';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 import {
@@ -18,7 +20,7 @@ export const baseApi = createApi({
       return headers;
     }
   }),
-  tagTypes: ['Users', 'Warehouses', 'Couriers', 'Products', 'ProductCategory'],
+  tagTypes: ['Users', 'Warehouses', 'Couriers', 'Products', 'ProductCategory', 'Worker'],
 
   endpoints: (builder) => ({
     //Users
@@ -217,7 +219,7 @@ export const baseApi = createApi({
     }),
     createCourier: builder.mutation<void, ICouriersUpdate>({
       query: (body) => ({
-        url: `/ admin / courier`,
+        url: `/admin /courier`,
         method: 'POST',
         body
       }),
@@ -225,18 +227,55 @@ export const baseApi = createApi({
     }),
     deleteCourier: builder.mutation<void, number>({
       query: (id) => ({
-        url: `/ admin / courier / ${Number(id)}`,
+        url: `/admin/courier/${Number(id)}`,
         method: 'DELETE'
       }),
       invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
     }),
     updateCourier: builder.mutation<void, ICouriersUpdate>({
       query: (body) => ({
-        url: `/ admin / courier / ${Number(body.id)}`,
+        url: `/admin/courier/${Number(body.id)}`,
         method: 'PUT',
         body
       }),
       invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
+    }),
+
+    // Warehouse keeper
+    createWarehouseWorker: builder.mutation<void, IWorker>({
+      query: (body) => ({
+        url: `/admin/warehouseWorker`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: [{ type: 'Worker', id: 'LIST' }]
+    }),
+    updateWarehouseWorker: builder.mutation<void, IWorker>({
+      query: (body) => ({
+        url: `/admin/warehouseWorker/${Number(body.id)}`,
+        method: 'PUT',
+        body
+      }),
+      invalidatesTags: [{ type: 'Worker', id: 'LIST' }]
+    }),
+    getAllWorker: builder.query<IWorker[], void>({
+      query: () => ({
+        url: `/admin/warehouseWorker`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: 'Worker', id } as const)),
+              { type: 'Worker', id: 'LIST' }
+            ]
+          : [{ type: 'Worker', id: 'LIST' }]
+    }),
+    deleteWorker: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `/admin/warehouseWorker/${Number(id)}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: [{ type: 'Worker', id: 'LIST' }]
     })
   })
 });
@@ -271,5 +310,11 @@ export const {
   useDeleteProductCategoryMutation,
   useGetProductCategoryQuery,
   useUpdateProductCategoryMutation,
-  useUploadProductImageMutation
+  useUploadProductImageMutation,
+
+  //Worker
+  useGetAllWorkerQuery,
+  useCreateWarehouseWorkerMutation,
+  useUpdateWarehouseWorkerMutation,
+  useDeleteWorkerMutation
 } = baseApi;
