@@ -1,5 +1,5 @@
 export interface IUserFull {
-   id?: number;
+   id: number;
    phone: string;
    password: string;
    firstname: string;
@@ -15,6 +15,5 @@ export interface IUserFull {
    bonuses: number;
    telegramAccount: string;
 }
-export type IUserFullCreate = Omit<IUserFull, 'created_date' | 'password' | 'bonuses'>;
+export type IUserFullCreate = Omit<IUserFull, 'created_date' | 'password' | 'bonuses' | 'id'>;
 //export type IIUserFullUpdate = Pick<IUserFull, 'firstname' | 'lastname'>;
-

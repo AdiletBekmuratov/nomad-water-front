@@ -1,8 +1,9 @@
 export type ICouriers = {
-  id: number;
+  id?: number;
   userId: number;
   courierDeliveringStatus: number;
   successfulOrders: number;
   car: string;
 };
-export type ICouriersUpdate = Omit<ICouriers, 'successfulOrders' | 'courierDeliveringStatus'>;
+export type ICouriersCreate = Pick<ICouriers, 'car' | 'userId' | 'id'>;
+export type ICouriersUpdate = Pick<ICouriers, 'car' | 'id'>;
