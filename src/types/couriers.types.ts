@@ -5,6 +5,6 @@ export type ICouriers = {
   successfulOrders: number;
   car: string;
 };
-//export type ICouriersCreate = Pick<ICouriers, 'car'>;
+//export type ICouriersCreate = Pick<ICouriers, 'car' | 'id'>;
 //export type ICouriersId = Pick<ICouriers, 'userId'>;
 export type ICouriersCreate = Pick<ICouriers, 'car' | 'userId' | 'id'>;

@@ -197,11 +197,11 @@ export const baseApi = createApi({
     }),
 
     //Couriers
-    createCourier: builder.mutation<number, ICouriersCreate>({
+    createCourier: builder.mutation<number, { userId: number; courier: ICouriersCreate }>({
       query: (body) => ({
         url: `/admin/courier`,
         method: 'POST',
-        body
+        body: body.userId
       }),
       invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
     }),

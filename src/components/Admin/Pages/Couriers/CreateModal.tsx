@@ -12,19 +12,19 @@ interface ICreateModalProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-// const { data: users = [] } = useGetUserROLEQuery('ROLE_COURIER');
-// const userId = users.forEach((item) => item.id);
-
 const INITIAL_VALUES: ICouriersCreate = {
   car: ''
 };
 
 export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
+  const { data: users = [] } = useGetUserROLEQuery('ROLE_COURIER');
   const [create, { isLoading }] = useCreateCourierMutation();
 
-  const handleCreate = (values: ICouriersCreate) => {
+  const handleCreate = async (values: ICouriersCreate) => {
+    console.log({ values });
+    const userId = await users!.forEach((item) => item.id);
     toast
-      .promise(create(values).unwrap(), {
+      .promise(create({ userId: userId, values }).unwrap(), {
         loading: 'Загрузка...',
         success: 'Курьер добавлен',
         error: (error) => JSON.stringify(error, null, 2)
@@ -39,14 +39,7 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
       <Formik initialValues={INITIAL_VALUES} onSubmit={handleCreate}>
         {() => (
           <Form className="flex flex-col space-y-4">
-            <Input
-              inputType="formik"
-              name="userId"
-              id="userId"
-              label="ID пользователя"
-              value={userId}
-              disabled
-            />
+            <Input inputType="formik" name="userId" id="userId" label="ID пользователя" disabled />
             <Input inputType="formik" name="car" id="car" label="авто" />
             <div className="modal-action">
               <Button type="submit" loading={isLoading}>
