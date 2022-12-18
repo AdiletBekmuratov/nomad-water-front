@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import {
-  useGetAllCouriersQuery,
   useDeleteCourierMutation,
+  useGetAllCouriersQuery,
   useGetUserROLEQuery
 } from '@/redux/services/base.service';
-import { ICouriers, IUserFull } from '@/types';
+import { ICouriers } from '@/types';
 
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
 import Loader from '@/components/Loader';
@@ -16,14 +16,9 @@ import { CreateModal } from '@/components/Admin/Pages/Couriers/CreateModal';
 import { EditModal } from '@/components/Admin/Pages/Couriers/EditModal';
 
 const AdminCouriers = () => {
-  const { data: users } = useGetUserROLEQuery('ROLE_COURIER');
-  console.log(users);
-  const courierId = users ? users.forEach((item: IUserFull) => item.id) : [];
-
-  console.log(courierId);
-
-  const { data: couriers, isLoading } = useGetAllCouriersQuery();
-
+  const { data: userCouriers = [] } = useGetUserROLEQuery('ROLE_COURIER');
+  console.log(userCouriers);
+  const { data: couriers = [], isLoading } = useGetAllCouriersQuery();
   const [deleteCourier, { isLoading: isLoadingDelete }] = useDeleteCourierMutation();
 
   const [rowData, setRowData] = useState<ICouriers>();
@@ -98,7 +93,7 @@ const AdminCouriers = () => {
     <LayoutAdmin>
       <Table
         id="CouriersTable"
-        data={couriers}
+        data={userCouriers}
         columns={columns}
         onAddClick={() => setVisibleCreate(true)}
       />

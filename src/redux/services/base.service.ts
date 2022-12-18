@@ -1,4 +1,4 @@
-import { ICouriers, ICouriersCreate, ICouriersUpdate } from '@/types/couriers.types';
+import { ICouriers, ICouriersCreate } from '@/types/couriers.types';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 import {
   IProduct,
@@ -197,7 +197,7 @@ export const baseApi = createApi({
     }),
 
     //Couriers
-    createCourier: builder.mutation<void, ICouriersCreate>({
+    createCourier: builder.mutation<number, ICouriersCreate>({
       query: (body) => ({
         url: `/admin/courier`,
         method: 'POST',
@@ -231,7 +231,7 @@ export const baseApi = createApi({
       }),
       invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
     }),
-    updateCourier: builder.mutation<void, ICouriersUpdate>({
+    updateCourier: builder.mutation<void, ICouriersCreate>({
       query: (body) => ({
         url: `/admin/courier/${Number(body.id)}`,
         method: 'PUT',
