@@ -74,14 +74,7 @@ const AppRoutes = () => {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/admin/couriers"
-              element={
-                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
-                  <AdminCouriers />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/admin/couriers" element={<AdminCouriers />} />
 
             <Route
               path="/admin/warehouses"

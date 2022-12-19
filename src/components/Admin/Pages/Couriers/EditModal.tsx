@@ -35,7 +35,6 @@ export const EditModal: FC<IEditModalProps> = ({ visible, setVisible, data }) =>
       <Formik initialValues={data} onSubmit={handleEdit}>
         {() => (
           <Form className="flex flex-col space-y-4">
-            <Input inputType="formik" name="id" id="id" label="ID курьера" disabled />
             <Input inputType="formik" name="userId" id="userId" label="ID пользователя" disabled />
             <Input inputType="formik" name="car" id="car" label="авто" />
             <div className="modal-action">
