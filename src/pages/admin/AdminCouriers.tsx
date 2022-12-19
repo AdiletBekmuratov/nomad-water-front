@@ -17,8 +17,14 @@ import { EditModal } from '@/components/Admin/Pages/Couriers/EditModal';
 
 const AdminCouriers = () => {
   const { data: userCouriers = [], isLoading } = useGetUserROLEQuery('ROLE_COURIER');
-  // console.log(userCouriers);
   //const { data: couriers = [], isLoading } = useGetAllCouriersQuery();
+  //const [couriers, setCouriers] = useState<ICouriers[]>([]);
+  let couriers: ICouriers[] = [];
+  const userIdArray = userCouriers!.map((item) => item.id);
+
+  let couriersArr = userIdArray.map((userId, i) => ({ userId, ...couriers[i] }));
+  console.log(couriersArr);
+
   const [deleteCourier, { isLoading: isLoadingDelete }] = useDeleteCourierMutation();
 
   const [rowData, setRowData] = useState<ICouriers>();
@@ -93,7 +99,7 @@ const AdminCouriers = () => {
     <LayoutAdmin>
       <Table
         id="CouriersTable"
-        data={userCouriers}
+        data={couriersArr}
         columns={columns}
         onAddClick={() => setVisibleCreate(true)}
       />
