@@ -122,7 +122,7 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
                     label="Выберите роль"
                     onChange={(value) => setChoiceRole(value.target.value)}>
                     {userRoles?.map((role) => (
-                      <option key={role.id} value={role.role} id="userRole">
+                      <option key={role.id} value={role.role}>
                         {role.name}
                       </option>
                     ))}
