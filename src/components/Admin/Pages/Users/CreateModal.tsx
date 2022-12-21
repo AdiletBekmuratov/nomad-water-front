@@ -4,7 +4,7 @@ import { useCreateUserMutation } from '@/redux/services/base.service';
 import { IUserFullCreate } from '@/types/users.types';
 
 import { Form, Formik } from 'formik';
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 import * as yup from 'yup';
 interface ICreateModalProps {
@@ -17,7 +17,7 @@ const INITIAL_VALUES: IUserFullCreate = {
   firstname: '',
   middleName: '',
   lastname: '',
-  role: '',
+  role: 'ROLE_KEEPER',
   birthday: '',
   street: '',
   houseNumber: '',
@@ -32,8 +32,8 @@ const INITIAL_VALUES: IUserFullCreate = {
   shopkeeperPhone: ''
 };
 const userRoles = [
-  { id: 1, role: 'ROLE_USER', name: 'user' },
-  { id: 2, role: 'ROLE_KEEPER', name: 'keeper' },
+  { id: 1, role: 'ROLE_KEEPER', name: 'keeper' },
+  { id: 2, role: 'ROLE_USER', name: 'user' },
   { id: 3, role: 'ROLE_COURIER', name: 'courier' },
   { id: 4, role: 'ROLE_MASTER', name: 'master' },
   { id: 5, role: 'ROLE_EMPLOYEE', name: 'employee' },
@@ -54,23 +54,20 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
         setVisible(false);
       });
   };
-  const [choiceRole, setChoiceRole] = useState('ROLE_USER');
-  console.log(choiceRole);
-
   const validation = yup.object().shape({
     middleName: yup.string().required('Это поле обязательное'),
-    phone: yup.string().required('Это поле обязательное')
+    phone: yup.string().required('Это поле обязательное'),
+    role: yup.string().required('Это поле обязательное')
   });
   return (
     <Modal isOpenModal={visible} setIsOpenModal={setVisible}>
-      <h2 className={`text-center pb-3`}>Добавить нового пользователя</h2>
-      <Formik initialValues={INITIAL_VALUES} onSubmit={handleCreate} validationSchema={validation}>
-        {() => (
-          <Form className="flex flex-col space-y-4">
-            <>
-              <Input inputType="formik" name="id" id="id" label="ID" disabled />
+      <h2 className={`text-center pb-3`}>Новый пользователь</h2>
 
-              <div className={`grid grid-cols-3 items-center`}>
+      <Formik initialValues={INITIAL_VALUES} onSubmit={handleCreate} validationSchema={validation}>
+        {(props) => (
+          <Form className={`flex flex-col space-y-1 sm:space-y-4`}>
+            <>
+              <div className={`grid grid-cols-1 sm:grid-cols-3 items-center`}>
                 <Input inputType="formik" name="firstname" id="firstname" label="Фамилия" />
                 <Input inputType="formik" name="middleName" id="middleName" label="Имя" />
                 <Input inputType="formik" name="lastname" id="lastname" label="Отчество" />
@@ -89,7 +86,7 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
                   />
                 </div>
               </div>
-              <div className={`grid grid-cols-3 items-center`}>
+              <div className={`grid grid-cols-1 sm:grid-cols-3 items-center`}>
                 <Input
                   inputType="formik"
                   name="phone"
@@ -120,16 +117,18 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
                     name="role"
                     id="role"
                     label="Выберите роль"
-                    onChange={(value) => setChoiceRole(value.target.value)}>
+                    // onChange={}
+                  >
                     {userRoles?.map((role) => (
                       <option key={role.id} value={role.role}>
                         {role.name}
                       </option>
                     ))}
                   </Input>
-                  {choiceRole === 'ROLE_USER' ? (
+
+                  {props.values.role === 'ROLE_USER' ? (
                     <Input inputType="formik" name="bonuses" id="bonuses" label="Бонусы" />
-                  ) : choiceRole === 'ROLE_COURIER' ? (
+                  ) : props.values.role === 'ROLE_COURIER' ? (
                     <div className={`grid grid-cols-3 items-center`}>
                       <Input inputType="formik" name="car" id="car" label="car" />
                       <Input
@@ -145,7 +144,7 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
                         label="successfulOrders"
                       />
                     </div>
-                  ) : choiceRole === 'ROLE_MASTER' ? (
+                  ) : props.values.role === 'ROLE_MASTER' ? (
                     <Input
                       inputType="formik"
                       name="warehouseId"
@@ -153,7 +152,7 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
                       label="Id склада"
                     />
                   ) : (
-                    choiceRole === 'ROLE_EMPLOYEE' && (
+                    props.values.role === 'ROLE_EMPLOYEE' && (
                       <Input
                         inputType="formik"
                         name="warehouseId"
@@ -163,7 +162,7 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
                     )
                   )}
                   {/* {(() => {
-                    switch (choiceRole) {
+                    switch (props.values.role) {
                       case 'ROLE_COURIER':
                         <div>
                           <Input inputType="formik" name="car" id="car" label="car" />
