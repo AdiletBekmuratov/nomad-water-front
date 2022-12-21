@@ -67,7 +67,7 @@ export const EditModal: FC<IEditModalProps> = ({ visible, setVisible, data }) =>
             <div className={`flex justify-between`}>
               <Input inputType="formik" as="select" name="role" id="role" label="Изменить роль">
                 {userRoles?.map((role) => (
-                  <option key={role.id} value={role.role} id="userRole">
+                  <option key={role.id} value={role.role}>
                     {role.name}
                   </option>
                 ))}
