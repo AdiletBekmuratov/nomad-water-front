@@ -59,18 +59,13 @@ export const EditModal: FC<IEditModalProps> = ({ visible, setVisible, data }) =>
             <div className={`flex flex-1`}>
               <Input inputType="formik" name="street" id="street" label="Улица" />
               <div className={`grid grid-cols-3`}>
-                <Input inputType="formik" name="houseNumber" id="houseNumber" label="Номер дома" />
+                <Input inputType="formik" name="houseNumber" id="houseNumber" label="Дом" />
                 <Input inputType="formik" name="flat" id="flat" label="Квартира" />
-                <Input
-                  inputType="formik"
-                  name="addressComment"
-                  id="addressComment"
-                  label="Укажите этаж"
-                />
+                <Input inputType="formik" name="addressComment" id="addressComment" label="Этаж" />
               </div>
             </div>
             <div className={`flex justify-between`}>
-              <Input inputType="formik" as="select" name="role" id="role" label="Статус">
+              <Input inputType="formik" as="select" name="role" id="role" label="Изменить роль">
                 {userRoles?.map((role) => (
                   <option key={role.id} value={role.role} id="userRole">
                     {role.name}

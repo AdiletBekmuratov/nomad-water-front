@@ -17,7 +17,7 @@ const itemVariants = {
 };
 
 export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
-  <div className="h-screen flex text-dark-blue">
+  <div className=" text-dark-blue">
     <AnimatePresence>
       {isOpen && (
         <>

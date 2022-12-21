@@ -14,15 +14,17 @@ export const CardBottle: FC<ICard> = ({
 }) => {
   return (
     <div
-      className={`${cardType === 'order' ? 'bg-white' : ''} sm:bg-white rounded-3xl relative p-2`}>
+      className={`${
+        cardType === 'order' ? 'bg-white' : ''
+      } sm:bg-white rounded-3xl relative p-2 shadow-xl`}>
       {cardType === 'catalog' && (
         <AddFavourite isFavourite={isFavourite} setIsFavourite={setIsFavourite} />
       )}
 
       <Link
         to={`${cardType === 'catalog' ? `/catalog/${items.id}` : '/orderinfo'}`}
-        className={`flex ${cardType === 'order' ? 'flex-row' : 'flex-col'} sm:flex-row`}>
-        <div className={'bg-white rounded-3xl flex items-center justify-center p-2'}>
+        className={`flex ${cardType === 'order' ? 'flex-row' : 'flex-col'} sm:flex-row `}>
+        <div className={'bg-white rounded-3xl flex items-center justify-center p-2 '}>
           <img src={items.img} alt="bottle" className="object-contain" />
         </div>
         <div

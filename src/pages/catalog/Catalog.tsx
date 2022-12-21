@@ -21,7 +21,7 @@ const Catalog: FC = () => {
   const filterStyle = `flex items-center justify-center py-2 px-3 rounded-2xl bg-white cursor-pointer`;
   return (
     <Layout>
-      <div className={`grid grid-cols-1 lg:grid-cols-2 gap-3 items-center`}>
+      <div className={`grid grid-cols-1 lg:grid-cols-2 gap-3 items-center `}>
         <Input
           id="search"
           name="search"
