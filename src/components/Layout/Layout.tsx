@@ -12,7 +12,9 @@ export const Layout: FC<ILayoutProps> = ({ children, ...props }) => {
   return (
     <Sheet isOpen={isOpen} setIsOpen={setIsOpen}>
       <Header setIsOpen={setIsOpen} />
-      <div {...props} className={`layout py-4 md:py-8 mb-20 md:mb-0 w-full ${props.className}`}>
+      <div
+        {...props}
+        className={`layout py-4 md:py-8 mb-20 md:mb-0 w-full h-full ${props.className}`}>
         {children}
       </div>
       <MenuBottom />

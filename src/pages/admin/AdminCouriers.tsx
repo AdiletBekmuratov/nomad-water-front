@@ -16,9 +16,11 @@ import { CreateModal } from '@/components/Admin/Pages/Couriers/CreateModal';
 import { EditModal } from '@/components/Admin/Pages/Couriers/EditModal';
 
 const AdminCouriers = () => {
-  const { data: userCouriers = [], isLoading } = useGetUserROLEQuery('ROLE_COURIER');
   //const { data: couriers = [], isLoading } = useGetAllCouriersQuery();
   //const [couriers, setCouriers] = useState<ICouriers[]>([]);
+
+  const { data: userCouriers = [], isLoading } = useGetUserROLEQuery('ROLE_COURIER');
+
   let couriers: ICouriers[] = [];
   const userIdArray = userCouriers!.map((item) => item.id);
 

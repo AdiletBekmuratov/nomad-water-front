@@ -1,7 +1,7 @@
 export interface IUserFull {
-  id?: number;
+  id: number;
   phone: string;
-  password?: string;
+  password: string;
   firstname: string;
   middleName: string;
   lastname: string;
@@ -14,6 +14,15 @@ export interface IUserFull {
   addressComment: string;
   bonuses: number;
   telegramAccount: string;
+  //courier
+  courierDeliveringStatus: number;
+  successfulOrders: number;
+  car: string;
+  //id склада
+  warehouseId: number;
+  //покупатель без регистрации
+  shopkeeperPhone: string;
 }
-export type IUserFullCreate = Omit<IUserFull, 'created_date' | 'password' | 'bonuses' | 'id'>;
+
+export type IUserFullCreate = Omit<IUserFull, 'created_date' | 'password' | 'id'>;
 //export type IIUserFullUpdate = Pick<IUserFull, 'firstname' | 'lastname'>;
