@@ -1,8 +1,7 @@
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
-import { useCreateUserMutation } from '@/redux/services/base.service';
+import { useCreateUserMutation, useGetAllWarehousesQuery } from '@/redux/services/base.service';
 import { IUserFullCreate } from '@/types/users.types';
-
 import { Form, Formik } from 'formik';
 import { Dispatch, FC, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
@@ -41,6 +40,8 @@ const userRoles = [
 ];
 
 export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
+  const { data: warehouse, isLoading: loadingWarehouse } = useGetAllWarehousesQuery();
+
   const [create, { isLoading }] = useCreateUserMutation();
   const handleCreate = (values: IUserFullCreate) => {
     console.log(values);
@@ -150,7 +151,14 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
                       name="warehouseId"
                       id="warehouseId"
                       label="Id склада"
-                    />
+                      as="select">
+                      <option>Выберите ID склада</option>
+                      {warehouse?.map((w) => (
+                        <option value={w.id} key={w.id}>
+                          ID: {w.id}, Адрес: {w.warehouseAddress}
+                        </option>
+                      ))}
+                    </Input>
                   ) : (
                     props.values.role === 'ROLE_EMPLOYEE' && (
                       <Input
@@ -158,7 +166,14 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
                         name="warehouseId"
                         id="warehouseId"
                         label="Id склада"
-                      />
+                        as="select">
+                        <option>Выберите ID склада</option>
+                        {warehouse?.map((w) => (
+                          <option value={w.id} key={w.id}>
+                            ID: {w.id}, Адрес: {w.warehouseAddress}
+                          </option>
+                        ))}
+                      </Input>
                     )
                   )}
                   {/* {(() => {
@@ -213,7 +228,7 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
               </div>
             </>
             <div className="modal-action">
-              <Button type="submit" loading={isLoading}>
+              <Button type="submit" loading={isLoading || loadingWarehouse}>
                 Добавить
               </Button>
             </div>
