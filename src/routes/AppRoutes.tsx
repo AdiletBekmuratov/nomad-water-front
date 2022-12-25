@@ -20,11 +20,13 @@ import AdminEmployee from '@/pages/admin/AdminEmployee';
 
 const Landing = lazy(() => import('@/pages/Landing'));
 const NoPage = lazy(() => import('@/pages/admin/NoPage'));
-const Login = lazy(() => import('@/pages/admin/Login'));
 
-const AdminWarehouses = lazy(() => import('@/pages/admin/AdminWarehouses'));
+const Login = lazy(() => import('@/pages/admin/Login'));
+const AdminRegisterEmp = lazy(() => import('@/pages/admin/AdminRegisterEmp'));
+
 const AdminAllUsers = lazy(() => import('@/pages/admin/AdminAllUsers'));
 const AdminCouriers = lazy(() => import('@/pages/admin/AdminCouriers'));
+const AdminWarehouses = lazy(() => import('@/pages/admin/AdminWarehouses'));
 
 const Catalog = lazy(() => import('@/pages/catalog/Catalog'));
 const Orders = lazy(() => import('@/pages/Orders'));
@@ -60,12 +62,12 @@ const AppRoutes = () => {
             <Route
               path="/admin/login"
               element={
-                <ProtectedRoute isAllowed={!user} redirectPath="/admin/allUsers">
+                <ProtectedRoute isAllowed={!user} redirectPath="/admin/AdminUserME/">
                   <Login />
                 </ProtectedRoute>
               }
             />
-
+            <Route path="/register/employee/*" element={<AdminRegisterEmp />} />
             <Route
               path="/admin/allUsers"
               element={

@@ -63,6 +63,9 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
         {!isMobile ? (
           <aside className={`bg-light-blue h-screen w-64`}>
             <div className={`grid grid-cols-1 gap-2 p-2 text-dark-blue`}>
+              <Link to="/admin/register/employee/" className={`${linkStyle}`}>
+                Регистрация работника
+              </Link>
               <Link to="/admin/allUsers" className={`${linkStyle}`}>
                 Пользователи
               </Link>
@@ -92,7 +95,9 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
                     className="cursor-pointer"
                     onClick={() => setIsOpen(false)}
                   />
-
+                  <Link to="/admin/register/employee/" className={`${linkStyle}`}>
+                    Регистрация работника
+                  </Link>
                   <Link to="/admin/allUsers" className={`${linkStyle}`}>
                     Пользователи
                   </Link>

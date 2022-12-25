@@ -1,4 +1,5 @@
 export interface IUserFull {
+  
   id: number;
   phone: string;
   password: string;
@@ -20,9 +21,8 @@ export interface IUserFull {
   car: string;
   //id склада
   warehouseId: number;
-  //покупатель без регистрации
   shopkeeperPhone: string;
 }
 
-export type IUserFullCreate = Omit<IUserFull, 'created_date' | 'password' | 'id'>;
+export type IUserFullCreate = Omit<IUserFull, 'created_date' | 'password'>;
 //export type IIUserFullUpdate = Pick<IUserFull, 'firstname' | 'lastname'>;
