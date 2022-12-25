@@ -21,7 +21,7 @@ import AdminCategory from '@/pages/admin/AdminCategory';
 const Landing = lazy(() => import('@/pages/Landing'));
 const NoPage = lazy(() => import('@/pages/admin/NoPage'));
 
-const Login = lazy(() => import('@/pages/admin/Login'));
+const AdminLogin = lazy(() => import('@/pages/admin/AdminLogin'));
 const AdminRegisterEmp = lazy(() => import('@/pages/admin/AdminRegisterEmp'));
 
 const AdminAllUsers = lazy(() => import('@/pages/admin/AdminAllUsers'));
@@ -64,7 +64,7 @@ const AppRoutes = () => {
               path="/admin/login"
               element={
                 <ProtectedRoute isAllowed={!user} redirectPath="/admin/AdminUserME/">
-                  <Login />
+                  <AdminLogin />
                 </ProtectedRoute>
               }
             />

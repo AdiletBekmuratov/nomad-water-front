@@ -20,7 +20,7 @@ const initialValues: ILoginForm | string = {
   password: ''
 };
 
-const Login = () => {
+const AdminLogin = () => {
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
@@ -100,4 +100,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;
