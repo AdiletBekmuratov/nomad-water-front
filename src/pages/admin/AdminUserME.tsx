@@ -1,15 +1,17 @@
-import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
-//import { getMe } from '@/redux/slices/auth';
+
+import Loader from '@/components/Loader';
 
 const AdminUserME = () => {
   const { user, isLoading } = useAppSelector((state) => state.auth);
 
-  const dispatch = useAppDispatch();
+  if (isLoading) {
+    return <Loader />;
+  }
 
-  return <LayoutAdmin>{user?.role}</LayoutAdmin>;
+  return <LayoutAdmin>I am {user?.role}</LayoutAdmin>;
 };
 
 export default AdminUserME;

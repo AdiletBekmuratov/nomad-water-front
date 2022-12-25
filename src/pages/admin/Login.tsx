@@ -88,7 +88,7 @@ const Login = () => {
                     width="w-full"
                     type="password"
                   />
-                  <Button type="submit">Получить код</Button>
+                  <Button type="submit">Войти</Button>
                   {/* {props.values.password === '' && <Button>Получить код</Button>} */}
                 </Form>
               )}

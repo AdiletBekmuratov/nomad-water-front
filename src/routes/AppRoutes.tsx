@@ -16,7 +16,7 @@ import Loader from '@/components/Loader';
 
 import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminCategory from '@/pages/admin/AdminCategory';
-import AdminEmployee from '@/pages/admin/AdminEmployee';
+// import AdminEmployee from '@/pages/admin/AdminEmployee';
 
 const Landing = lazy(() => import('@/pages/Landing'));
 const NoPage = lazy(() => import('@/pages/admin/NoPage'));
@@ -25,7 +25,7 @@ const Login = lazy(() => import('@/pages/admin/Login'));
 const AdminRegisterEmp = lazy(() => import('@/pages/admin/AdminRegisterEmp'));
 
 const AdminAllUsers = lazy(() => import('@/pages/admin/AdminAllUsers'));
-const AdminCouriers = lazy(() => import('@/pages/admin/AdminCouriers'));
+// const AdminCouriers = lazy(() => import('@/pages/admin/AdminCouriers'));
 const AdminWarehouses = lazy(() => import('@/pages/admin/AdminWarehouses'));
 const AdminUserME = lazy(() => import('@/pages/admin/AdminUserME'));
 
@@ -68,9 +68,10 @@ const AppRoutes = () => {
                 </ProtectedRoute>
               }
             />
+            {/* страница регистрации по сгенерированным ссылкам */}
             <Route path="/register/employee/*" element={<AdminRegisterEmp />} />
-
-            <Route path="/admin/userME" element={<AdminUserME />} />
+            {/* личная страница пользователей админки  */}
+            <Route path="/admin/AdminUserME" element={<AdminUserME />} />
 
             <Route
               path="/admin/allUsers"
@@ -80,7 +81,7 @@ const AppRoutes = () => {
                 </ProtectedRoute>
               }
             />
-            <Route path="/admin/couriers" element={<AdminCouriers />} />
+            {/* <Route path="/admin/couriers" element={<AdminCouriers />} /> */}
 
             <Route
               path="/admin/warehouses"
@@ -107,9 +108,10 @@ const AppRoutes = () => {
               }
             />
 
-            <Route path="/admin/employee" element={<AdminEmployee />} />
+            {/* <Route path="/admin/employee" element={<AdminEmployee />} /> */}
 
             <Route path="/admin/*" element={<NoPage />} />
+
             <Route path="/myFavourite" element={<MyFavourite />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />
