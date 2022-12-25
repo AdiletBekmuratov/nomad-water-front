@@ -27,6 +27,7 @@ const AdminRegisterEmp = lazy(() => import('@/pages/admin/AdminRegisterEmp'));
 const AdminAllUsers = lazy(() => import('@/pages/admin/AdminAllUsers'));
 const AdminCouriers = lazy(() => import('@/pages/admin/AdminCouriers'));
 const AdminWarehouses = lazy(() => import('@/pages/admin/AdminWarehouses'));
+const AdminUserME = lazy(() => import('@/pages/admin/AdminUserME'));
 
 const Catalog = lazy(() => import('@/pages/catalog/Catalog'));
 const Orders = lazy(() => import('@/pages/Orders'));
@@ -68,10 +69,13 @@ const AppRoutes = () => {
               }
             />
             <Route path="/register/employee/*" element={<AdminRegisterEmp />} />
+
+            <Route path="/admin/userME" element={<AdminUserME />} />
+
             <Route
               path="/admin/allUsers"
               element={
-                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
+                <ProtectedRoute isAllowed={user?.role !== ''} redirectPath="/admin/login">
                   <AdminAllUsers />
                 </ProtectedRoute>
               }
@@ -81,7 +85,7 @@ const AppRoutes = () => {
             <Route
               path="/admin/warehouses"
               element={
-                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
+                <ProtectedRoute isAllowed={user?.role !== ''} redirectPath="/admin/login">
                   <AdminWarehouses />
                 </ProtectedRoute>
               }
@@ -89,7 +93,7 @@ const AppRoutes = () => {
             <Route
               path="/admin/products"
               element={
-                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
+                <ProtectedRoute isAllowed={user?.role !== ''} redirectPath="/admin/login">
                   <AdminProducts />
                 </ProtectedRoute>
               }
@@ -97,7 +101,7 @@ const AppRoutes = () => {
             <Route
               path="/admin/category"
               element={
-                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
+                <ProtectedRoute isAllowed={user?.role !== ''} redirectPath="/admin/login">
                   <AdminCategory />
                 </ProtectedRoute>
               }

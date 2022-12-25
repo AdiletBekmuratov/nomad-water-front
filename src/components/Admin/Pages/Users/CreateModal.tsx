@@ -52,7 +52,6 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
   const validation = yup.object().shape({
     role: yup.string().required('Это поле обязательное')
   });
-  console.log(response);
 
   return (
     <>

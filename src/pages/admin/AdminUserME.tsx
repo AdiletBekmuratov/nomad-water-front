@@ -1,31 +1,15 @@
-import LayoutAdmin from '@/components/Admin/LayoutAdmin';
-import { Button } from '@/components/Forms';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
-import React from 'react';
-import { logout } from '@/redux/slices/auth';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
+import { useAppSelector } from '@/hooks/useAppSelector';
 
-const navigate = useNavigate();
-const dispatch = useAppDispatch();
-const handleLogout = async () => {
-  toast
-    .promise(dispatch(logout()).unwrap(), {
-      success: 'Вышли из аккаунта',
-      loading: 'Загрузка...',
-      error: (err) => err.toString()
-    })
-    .then(() => {
-      navigate('/admin/login');
-    });
-};
+import LayoutAdmin from '@/components/Admin/LayoutAdmin';
+//import { getMe } from '@/redux/slices/auth';
+
 const AdminUserME = () => {
-  return (
-    <LayoutAdmin>
-      <h2>myPage</h2>
-      <Button onClick={handleLogout}>Выйти</Button>
-    </LayoutAdmin>
-  );
+  const { user, isLoading } = useAppSelector((state) => state.auth);
+
+  const dispatch = useAppDispatch();
+
+  return <LayoutAdmin>{user?.role}</LayoutAdmin>;
 };
 
 export default AdminUserME;

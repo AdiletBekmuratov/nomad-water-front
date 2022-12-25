@@ -2,10 +2,9 @@ import { Button, Input } from '@/components/Forms';
 // import { Modal } from '@/components/Layout/Modal';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { login } from '@/redux/slices/auth';
+import { getPassword, login } from '@/redux/slices/auth';
 import { ILoginForm } from '@/types';
 import { Form, Formik } from 'formik';
-import React from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -40,20 +39,17 @@ const Login = () => {
         error: (err) => err.toString()
       })
       .then(() => {
-        navigate('/admin/userME');
+        navigate('/admin/AdminUserME');
       });
   };
 
-  // const sendPhoneNumber = async (phone: string) => {
-  //   toast.promise(dispatch(getPassword(phone)).unwrap(), {
-  //     success: 'Все верно, ждите пароль',
+  // };
+  // const handleSubmit = async (values: string) => {
+  //   toast.promise(dispatch(getPassword(values)).unwrap(), {
+  //     success: 'Код вышлен, ждите пароль',
   //     loading: 'Загрузка',
   //     error: (err) => err.toString()
   //   });
-  // };
-  // const [value, setValue] = React.useState('');
-  // const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setValue(event.target.value);
   // };
 
   return (
@@ -74,7 +70,7 @@ const Login = () => {
             <div className="text-center">
               <h2 className="mt-6 text-3xl font-bold text-gray-900">Добро пожаловать!</h2>
               <p className="mt-2 text-sm text-gray-500">
-                Пожалуйста, введите нужные поля чтобы войти
+                Пожалуйста, введите номер телефона и в течении минуты вы получите код авторизации.
               </p>
             </div>
             <Formik
@@ -83,7 +79,7 @@ const Login = () => {
               validationSchema={SignInSchema}>
               {() => (
                 <Form className="mt-8 space-y-6">
-                  <Input inputType="formik" id="phone" name="phone" label="Login" width="w-full" />
+                  <Input inputType="formik" id="phone" name="phone" label="phone" width="w-full" />
                   <Input
                     inputType="formik"
                     id="password"
@@ -92,7 +88,8 @@ const Login = () => {
                     width="w-full"
                     type="password"
                   />
-                  <Button type="submit">Войти</Button>
+                  <Button type="submit">Получить код</Button>
+                  {/* {props.values.password === '' && <Button>Получить код</Button>} */}
                 </Form>
               )}
             </Formik>
