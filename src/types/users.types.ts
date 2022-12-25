@@ -1,5 +1,4 @@
 export interface IUserFull {
-  
   id: number;
   phone: string;
   password: string;

@@ -2,7 +2,7 @@ import { Button, Input } from '@/components/Forms';
 // import { Modal } from '@/components/Layout/Modal';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { getPassword, login } from '@/redux/slices/auth';
+import { login } from '@/redux/slices/auth';
 import { ILoginForm } from '@/types';
 import { Form, Formik } from 'formik';
 import { useEffect } from 'react';

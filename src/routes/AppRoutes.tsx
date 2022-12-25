@@ -16,6 +16,7 @@ import Loader from '@/components/Loader';
 
 import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminCategory from '@/pages/admin/AdminCategory';
+import LoginPage from '@/pages/LoginPage';
 // import AdminEmployee from '@/pages/admin/AdminEmployee';
 
 const Landing = lazy(() => import('@/pages/Landing'));
@@ -61,13 +62,15 @@ const AppRoutes = () => {
             <Route path="/" element={<Landing />} />
 
             <Route
-              path="/admin/login"
+              path="/login/user"
               element={
-                <ProtectedRoute isAllowed={!user} redirectPath="/admin/AdminUserME/">
-                  <Login />
-                </ProtectedRoute>
+                // <ProtectedRoute isAllowed={!user || user?.role !== 'ROLE_ADMIN'} redirectPath={'/'}>
+                <LoginPage />
+                // </ProtectedRoute>
               }
             />
+
+            <Route path="/admin/login" element={<Login />} />
             {/* страница регистрации по сгенерированным ссылкам */}
             <Route path="/register/employee/*" element={<AdminRegisterEmp />} />
             {/* личная страница пользователей админки  */}
@@ -76,7 +79,7 @@ const AppRoutes = () => {
             <Route
               path="/admin/allUsers"
               element={
-                <ProtectedRoute isAllowed={user?.role !== ''} redirectPath="/admin/login">
+                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
                   <AdminAllUsers />
                 </ProtectedRoute>
               }

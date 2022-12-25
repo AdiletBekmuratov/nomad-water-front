@@ -1,4 +1,4 @@
-import { IEmployeeCreate, IEmployeeResponse } from './../../types/employee.types';
+import { IEmployeeCreate } from './../../types/employee.types';
 // import { IWorker } from './../../types/warehouseWorker.types';
 // import { IEmployee } from './../../types/employee.types';
 // import { ICouriers, ICouriersCreate } from '@/types/couriers.types';
@@ -9,7 +9,8 @@ import {
   IProductCategoryCreate,
   IProductCreate,
   IWarehouse,
-  IWarehouseUpdate
+  IWarehouseUpdate,
+  IuserCreate
 } from '@/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '../http';
@@ -23,7 +24,16 @@ export const baseApi = createApi({
       return headers;
     }
   }),
-  tagTypes: ['Users', 'Warehouses', 'Couriers', 'Products', 'ProductCategory', 'Worker', 'Link'],
+  tagTypes: [
+    'Users',
+    'Warehouses',
+    'Couriers',
+    'Products',
+    'ProductCategory',
+    'Worker',
+    'Link',
+    'Phone'
+  ],
 
   endpoints: (builder) => ({
     //получение ссылок для реги
@@ -46,14 +56,14 @@ export const baseApi = createApi({
     //Users
     getAllUsers: builder.query<IUserFull[], void>({
       query: () => ({
-        url: `admin/user`
+        url: `/admin/user`
       }),
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     getUserID: builder.query<IUserFull, number>({
@@ -69,9 +79,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     createUser: builder.mutation<void, IUserFullCreate>({
@@ -106,9 +116,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Products', id } as const)),
-            { type: 'Products', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Products', id } as const)),
+              { type: 'Products', id: 'LIST' }
+            ]
           : [{ type: 'Products', id: 'LIST' }]
     }),
     createProduct: builder.mutation<IProduct, IProductCreate>({
@@ -151,9 +161,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
-            { type: 'ProductCategory', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+              { type: 'ProductCategory', id: 'LIST' }
+            ]
           : [{ type: 'ProductCategory', id: 'LIST' }]
     }),
     updateProductCategory: builder.mutation<void, IProductCategoryCreate>({
@@ -189,9 +199,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
-            { type: 'Warehouses', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+              { type: 'Warehouses', id: 'LIST' }
+            ]
           : [{ type: 'Warehouses', id: 'LIST' }]
     }),
     createWarehouse: builder.mutation<void, IWarehouseUpdate>({
@@ -286,9 +296,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Worker', id } as const)),
-            { type: 'Worker', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Worker', id } as const)),
+              { type: 'Worker', id: 'LIST' }
+            ]
           : [{ type: 'Worker', id: 'LIST' }]
     }),
     deleteWorker: builder.mutation<void, number>({
@@ -297,6 +307,25 @@ export const baseApi = createApi({
         method: 'DELETE'
       }),
       invalidatesTags: [{ type: 'Worker', id: 'LIST' }]
+    }),
+
+    //Получения кода для входа в аккаунт
+    getUserCode: builder.mutation<void, IuserCreate>({
+      query: (body) => ({
+        url: `/auth/generateCode`,
+        method: `POST`,
+        body
+      }),
+      invalidatesTags: [{ type: 'Phone', id: 'LIST' }]
+    }),
+    //Регистрация пользователя
+    createUserAccount: builder.mutation<void, IUserFull>({
+      query: (body) => ({
+        url: `/auth/register/user`,
+        method: `POST`,
+        body
+      }),
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
     })
   })
 });
@@ -311,7 +340,8 @@ export const {
   useCreateUserMutation,
   useDeleteUserMutation,
   useUpdateUserMutation,
-
+  useGetUserCodeMutation,
+  useCreateUserAccountMutation,
   // Warehouses
   useGetAllWarehousesQuery,
   useCreateWarehouseMutation,
