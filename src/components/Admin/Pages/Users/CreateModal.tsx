@@ -61,18 +61,29 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
             Отправьте эти ссылки доступа сотрудникам для заполнения анкеты:
           </h2>
           {response.map((str) => (
-            <ul key={str}>
+            <ul key={str} className={`grid grid-cols-1 `}>
               <div className={`flex`}>
-                <li className={`py-2 text-center cursor-text`} id="link">
+                <li className={`py-2 text-center cursor-text`}>
                   <p>{str}</p>
                 </li>
-                {/* <Button className={`w-56 my-2`} id="copy" onClick={(str) => copyText(str)}>
+                <Button
+                  className={`w-56 my-2`}
+                  id="copy"
+                  onClick={() => {
+                    navigator.clipboard.writeText(str);
+                  }}>
                   Copy
-                </Button> */}
+                </Button>
               </div>
             </ul>
           ))}
-          <Button onClick={() => setVisible(false)}>Закрыть</Button>
+          <Button
+            onClick={() => {
+              setVisible(false);
+              setResponse([]);
+            }}>
+            Закрыть
+          </Button>
         </Modal>
       ) : (
         <Modal isOpenModal={visible} setIsOpenModal={setVisible}>
