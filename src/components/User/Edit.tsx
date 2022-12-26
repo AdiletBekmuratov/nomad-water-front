@@ -1,7 +1,7 @@
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 
-import { useUpdateUserMutation } from '@/redux/services/user.service';
+import { useUpdateUserMeMutation } from '@/redux/services/user.service';
 import { IUserFull } from '@/types';
 import { Form, Formik } from 'formik';
 import { FC, Dispatch, SetStateAction } from 'react';
@@ -14,7 +14,7 @@ interface IEditModalProps {
 }
 
 export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
-  const [update, { isLoading }] = useUpdateUserMutation();
+  const [update, { isLoading }] = useUpdateUserMeMutation();
 
   const handleEdit = async (values: IUserFull) => {
     toast

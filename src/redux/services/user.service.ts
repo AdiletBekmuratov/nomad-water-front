@@ -12,7 +12,7 @@ export const userApi = createApi({
       return headers;
     }
   }),
-  tagTypes: ['Users', 'Link'],
+  tagTypes: ['Users', 'Link', 'User'],
 
   endpoints: (builder) => ({
     //получение всех пользоват
@@ -75,6 +75,13 @@ export const userApi = createApi({
               { type: 'Users', id: 'LIST' }
             ]
           : [{ type: 'Users', id: 'LIST' }]
+    }),
+    updateUserMe: builder.mutation<IUserFull, void>({
+      query: (body) => ({
+        url: `/user/me`,
+        method: `PUT`,
+        body
+      })
     })
   })
 });
@@ -85,7 +92,8 @@ export const {
   useGetUserIDQuery,
   useGetUserROLEQuery,
   useDeleteUserMutation,
-  useUpdateUserMutation
+  useUpdateUserMutation,
+  useUpdateUserMeMutation
 } = userApi;
 
 // createUser: builder.mutation<void, IUserFullCreate>({

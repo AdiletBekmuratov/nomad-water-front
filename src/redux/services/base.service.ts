@@ -5,6 +5,7 @@ import { IEmployeeCreate, IEmployeeCreateLink, IWorker } from './../../types/emp
 
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 import {
+  IOrder,
   IProduct,
   IProductCategoryCreate,
   IProductCreate,
@@ -30,7 +31,8 @@ export const baseApi = createApi({
     'ProductCategory',
     'Worker',
     'Link',
-    'Phone'
+    'Phone',
+    'Order'
   ],
 
   endpoints: (builder) => ({
@@ -324,11 +326,26 @@ export const baseApi = createApi({
         body
       }),
       invalidatesTags: [{ type: 'Users', id: 'LIST' }]
+    }),
+
+    // Order
+    getUserOrder: builder.query<IOrder[], void>({
+      query: () => ({
+        url: `order/user`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: 'Order', id } as const)),
+              { type: 'Order', id: 'LIST' }
+            ]
+          : [{ type: 'Order', id: 'LIST' }]
     })
   })
 });
 
 export const {
+  useGetUserOrderQuery,
   //users
   useCreateEmployeeLinkMutation,
   useCreateEmployeeMutation,

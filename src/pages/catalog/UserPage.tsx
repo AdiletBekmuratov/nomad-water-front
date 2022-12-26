@@ -1,23 +1,16 @@
 import { Layout } from '@/components/Layout';
 
-import { Button, Input } from '@/components/Forms';
+import { Button } from '@/components/Forms';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { useGetUserIDQuery } from '@/redux/services/base.service';
-import Loader from '@/components/Loader';
 import { Edit } from '@/components/User/Edit';
+import OrderHistory from '@/components/User/OrderHistory';
 
 const UserPage = () => {
   const { user } = useAppSelector((state) => state.auth);
-  const { data, isLoading } = useGetUserIDQuery(user?.id!);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-  console.log(data);
   return (
     <Layout>
       <div>
@@ -26,26 +19,27 @@ const UserPage = () => {
           <div className="flex justify-center">
             <p className="text-sm md:text-base">
               <strong>ФИО:</strong>
-              {` ${data?.firstname} ${data?.lastname} ${data?.middleName.substring(0, 1)}.`}
+              {` ${user?.firstname} ${user?.lastname} `}
             </p>
           </div>
           <div className="flex justify-center">
             <p className="text-sm md:text-base">
               <strong>Улица: </strong>
-              {`${data?.street} ${data?.houseNumber} квартира:  ${data?.flat}`}
+              {`${user?.street} ${user?.houseNumber} квартира:  ${user?.flat}`}
             </p>
           </div>
           <div className="col-span-2 mx-auto">
             <p className="text-sm md:text-base">
               <strong>Номер телефона: </strong>
-              {`${data?.phone}`}
+              {`${user?.phone}`}
             </p>
           </div>
         </div>
         <div className="mt-4 md:w-1/3 mx-auto">
           <Button onClick={() => setIsOpenEdit(true)}>Изменить данные</Button>
-          <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={data!} />
+          <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
         </div>
+        <OrderHistory />
       </div>
     </Layout>
   );

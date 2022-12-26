@@ -21,6 +21,12 @@ export interface IUser {
   enabled: boolean;
   createdAt: string;
   updatedAt: string;
+  flat: string;
+  houseNumber: string;
+  street: string;
+  firstname: string;
+  lastname: string;
+  phone: string;
 }
 
 export type IuserCreate = {
