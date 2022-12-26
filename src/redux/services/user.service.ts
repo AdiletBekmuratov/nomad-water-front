@@ -1,4 +1,4 @@
-import { IEmployeeCreateLink } from '@/types/employee.types';
+import { IEmployeeCreate, IEmployeeCreateLink } from '@/types/employee.types';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
@@ -12,7 +12,7 @@ export const userApi = createApi({
       return headers;
     }
   }),
-  tagTypes: ['Users', 'Link', 'User'],
+  tagTypes: ['Users', 'Link'],
 
   endpoints: (builder) => ({
     //получение всех пользоват
@@ -23,9 +23,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //получение ссылок для реги
@@ -62,7 +62,7 @@ export const userApi = createApi({
     ///api/user/favorite
     //api/user/favorite/{id}
     //api/user/favorite/{id}
-    //api/user/me Обновить текущего пользователя
+
     //api/user/me Получить текущего пользователя - находится в AUTH
     getUserROLE: builder.query<IUserFull[], string>({
       query: (role) => ({
@@ -71,9 +71,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     updateUserMe: builder.mutation<IUserFull, void>({
@@ -81,7 +81,26 @@ export const userApi = createApi({
         url: `/user/me`,
         method: `PUT`,
         body
-      })
+      }),
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
+    }),
+    //регистрация работников
+    createEmployee: builder.mutation<void, IEmployeeCreate>({
+      query: (body) => ({
+        url: `auth/register/employee/${body.token}`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: [{ type: 'Link', id: 'LIST' }]
+    }),
+    //Регистрация пользователя
+    createUserAccount: builder.mutation<void, IUserFull>({
+      query: (body) => ({
+        url: `/auth/register/user`,
+        method: `POST`,
+        body
+      }),
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
     })
   })
 });
@@ -93,7 +112,9 @@ export const {
   useGetUserROLEQuery,
   useDeleteUserMutation,
   useUpdateUserMutation,
-  useUpdateUserMeMutation
+  useUpdateUserMeMutation,
+  useCreateEmployeeMutation,
+  useCreateUserAccountMutation
 } = userApi;
 
 // createUser: builder.mutation<void, IUserFullCreate>({
