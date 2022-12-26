@@ -8,12 +8,16 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { Edit } from '@/components/User/Edit';
 import OrderHistory from '@/components/User/OrderHistory';
 import { useGetUserIDQuery } from '@/redux/services/base.service';
+import Loader from '@/components/Loader';
 
 const UserPage = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { data, isLoading } = useGetUserIDQuery(user?.id!);
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
 
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <Layout>
       <div>
