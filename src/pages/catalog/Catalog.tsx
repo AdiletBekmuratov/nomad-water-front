@@ -1,4 +1,3 @@
-import { dataBottle } from '@/assets/dataBottle';
 import { CardBottle } from '@/components/Catalog/CardBottle/CardBottle';
 import { FC, useState } from 'react';
 
@@ -8,17 +7,27 @@ import React from 'react';
 
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FiDelete } from 'react-icons/fi';
+import { useGetAllProductsQuery } from '@/redux/services/base.service';
+import { IProduct } from '@/types';
+import Loader from '@/components/Loader';
 
 const Catalog: FC = () => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
+  const { data: products = [], isLoading } = useGetAllProductsQuery();
+  const product = products.map((item: IProduct) => item);
+
   const [value, setValue] = useState('');
-  const searchArray = dataBottle.filter((items) =>
-    items.title.toLowerCase().includes(value.toLowerCase())
+  const searchArrName = products.filter((items: IProduct) =>
+    items.productName.toLowerCase().includes(value.toLowerCase())
   );
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
   const filterStyle = `flex items-center justify-center py-2 px-3 rounded-2xl bg-white cursor-pointer`;
+
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <Layout>
       <div className={`grid grid-cols-1 lg:grid-cols-2 gap-3 items-center `}>
@@ -99,18 +108,16 @@ const Catalog: FC = () => {
 
       <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-2 sm:grid-cols-1 `}>
         {value.length === 0
-          ? dataBottle
-              .slice(0, 4)
-              .map((items, id) => (
-                <CardBottle
-                  key={id}
-                  items={items}
-                  cardType="catalog"
-                  isFavourite={isFavourite}
-                  setIsFavourite={setIsFavourite}
-                />
-              ))
-          : searchArray.map((items, id) => (
+          ? product.map((items, id) => (
+              <CardBottle
+                key={id}
+                items={items}
+                cardType="catalog"
+                isFavourite={isFavourite}
+                setIsFavourite={setIsFavourite}
+              />
+            ))
+          : searchArrName.map((items, id) => (
               <CardBottle
                 key={id}
                 items={items}

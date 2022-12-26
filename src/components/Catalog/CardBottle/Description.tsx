@@ -1,7 +1,8 @@
-import { IBottle } from '@/assets/types/types';
+
+import { IProduct } from '@/types';
 import React, { FC } from 'react';
 
-export const Description: FC<IBottle> = ({
+export const Description: FC<IProduct> = ({
   title,
   description,
   availability,

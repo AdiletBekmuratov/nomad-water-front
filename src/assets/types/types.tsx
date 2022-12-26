@@ -1,3 +1,4 @@
+import { IProduct } from '@/types';
 import React, { ReactNode } from 'react';
 
 export interface IBottle {
@@ -16,7 +17,7 @@ export interface IBottle {
 }
 
 export interface ICard {
-  items: IBottle;
+  items: IProduct;
   children?: ReactNode;
   className?: string;
   deliveryStatus?: VariantStatus;

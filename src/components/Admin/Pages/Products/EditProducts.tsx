@@ -4,7 +4,7 @@ import {
   useUpdateProductMutation,
   useUploadProductImageMutation
 } from '@/redux/services/base.service';
-import { IProductCreate } from '@/types';
+import { IProduct, IProductCreate } from '@/types';
 import { Form, Formik } from 'formik';
 import { FC, Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
