@@ -1,5 +1,5 @@
 import { Layout } from '@/components/Layout';
-
+import React from 'react';
 import { Button, Input } from '@/components/Forms';
 
 import { Link } from 'react-router-dom';
@@ -12,7 +12,7 @@ import { Edit } from '@/components/User/Edit';
 const UserPage = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { data, isLoading } = useGetUserIDQuery(user?.id!);
-  const [isOpenEdit, setIsOpenEdit] = useState(false);
+  const [isOpenEdit, setIsOpenEdit] = React.useState(false);
 
   if (isLoading) {
     return <Loader />;
@@ -26,19 +26,23 @@ const UserPage = () => {
           <div className="flex justify-center">
             <p className="text-sm md:text-base">
               <strong>ФИО:</strong>
-              {` ${data?.firstname} ${data?.lastname} ${data?.middleName.substring(0, 1)}.`}
+              {` ${data?.firstname ? data?.firstname : ''} ${
+                data?.lastname ? data?.lastname : ''
+              } ${data?.middleName ? data?.middleName.substring(0, 1) : ''}.`}
             </p>
           </div>
           <div className="flex justify-center">
             <p className="text-sm md:text-base">
               <strong>Улица: </strong>
-              {`${data?.street} ${data?.houseNumber} квартира:  ${data?.flat}`}
+              {`${data?.street ? data?.street : ''} ${
+                data?.houseNumber ? data?.houseNumber : ''
+              } квартира:  ${data?.flat ? data?.flat : ''}`}
             </p>
           </div>
           <div className="col-span-2 mx-auto">
             <p className="text-sm md:text-base">
               <strong>Номер телефона: </strong>
-              {`${data?.phone}`}
+              {`${data?.phone ? data?.phone : ''}`}
             </p>
           </div>
         </div>
