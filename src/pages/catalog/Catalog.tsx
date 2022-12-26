@@ -7,15 +7,18 @@ import React from 'react';
 
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FiDelete } from 'react-icons/fi';
-import { useGetAllProductsQuery } from '@/redux/services/base.service';
+import { useGetAllProductsQuery, useGetProductCategoryQuery } from '@/redux/services/base.service';
 import { IProduct } from '@/types';
 import Loader from '@/components/Loader';
 
 const Catalog: FC = () => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
+  //категория товаров
+  const { data: categories = [] } = useGetProductCategoryQuery();
+  //все товары и услуги
   const { data: products = [], isLoading } = useGetAllProductsQuery();
   const product = products.map((item: IProduct) => item);
-
+  //поиск по названию
   const [value, setValue] = useState('');
   const searchArrName = products.filter((items: IProduct) =>
     items.productName.toLowerCase().includes(value.toLowerCase())
@@ -23,7 +26,14 @@ const Catalog: FC = () => {
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
-  const filterStyle = `flex items-center justify-center py-2 px-3 rounded-2xl bg-white cursor-pointer`;
+  const categoriesButStyle = `flex items-center justify-center py-2 px-3 rounded-2xl bg-white cursor-pointer`;
+
+  // //фильтрация каталога по кнопкам
+  // const [choice, setChoice] = useState('');
+  // const onChoiceButton = (value: string) => {
+  //   setChoice(value);
+  //   console.log(choice);
+  // };
 
   if (isLoading) {
     return <Loader />;
@@ -49,60 +59,31 @@ const Catalog: FC = () => {
         />
 
         <div className={`grid sm:grid-cols-3 gap-4 md:gap-4`}>
-          <div className={`${filterStyle}`}>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
-                fill="#023646"
-              />
-              <path
-                d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
-                fill="#023646"
-              />
-            </svg>
-            <span>Вода</span>
-          </div>
-          <div className={`opacity-50 ${filterStyle}`}>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
-                fill="#023646"
-              />
-              <path
-                d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
-                fill="#023646"
-              />
-            </svg>
-            <span>Оборудование</span>
-          </div>
-          <div className={`opacity-50 ${filterStyle}`}>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
-                fill="#023646"
-              />
-              <path
-                d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
-                fill="#023646"
-              />
-            </svg>
-            <span>Услуги</span>
-          </div>
+          {categories.map((item) => (
+            <button
+              value={item.name}
+              key={item.name}
+              className={`${categoriesButStyle}`}
+              // onClick={() => onChoiceButton(value)}
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M9.33 6H14.67C17.99 6 19.34 8.35 17.69 11.22L16.95 12.5C16.77 12.81 16.44 13 16.08 13H7.92C7.56 13 7.23 12.81 7.05 12.5L6.31 11.22C4.66 8.35 6.01 6 9.33 6Z"
+                  fill="#023646"
+                />
+                <path
+                  d="M8.79 14H15.22C15.61 14 15.85 14.42 15.65 14.75L15.01 15.85C13.36 18.72 10.64 18.72 8.99 15.85L8.35 14.75C8.16 14.42 8.4 14 8.79 14Z"
+                  fill="#023646"
+                />
+              </svg>
+              <span>{item.name}</span>
+            </button>
+          ))}
         </div>
       </div>
 

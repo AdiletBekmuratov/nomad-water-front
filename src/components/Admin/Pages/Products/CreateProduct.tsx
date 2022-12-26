@@ -2,7 +2,7 @@ import { Button, Input, TextArea } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 import {
   useCreateProductMutation,
-  useGetProductImageIDMutation,
+  // useGetProductImageIDMutation,
   useUploadProductImageMutation
 } from '@/redux/services/base.service';
 import { IProductCreate } from '@/types';

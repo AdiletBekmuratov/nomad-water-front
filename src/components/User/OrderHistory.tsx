@@ -6,9 +6,8 @@ import { useGetUserOrderQuery } from '@/redux/services/base.service';
 import Loader from '../Loader';
 
 const OrderHistory = () => {
-  const { data, isLoading } = useGetUserOrderQuery();
+  const { data = [], isLoading } = useGetUserOrderQuery();
 
-  console.log(data);
   const columns = useMemo<ColumnDef<IOrder, any>[]>(
     () => [
       {
