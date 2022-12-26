@@ -8,10 +8,7 @@ import { toast } from 'react-hot-toast';
 import { login } from '@/redux/slices/auth';
 
 import * as Yup from 'yup';
-import {
-  useCreateUserAccountMutation,
-  useGetUserCodeMutation
-} from '@/redux/services/base.service';
+import { useCreateUserAccountMutation } from '@/redux/services/base.service';
 import { useEffect, useState } from 'react';
 import { Modal } from '@/components/Layout/Modal';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
@@ -45,7 +42,6 @@ const initial: ILoginForm = {
 const LoginPage = () => {
   const [createAccount, { isLoading }] = useCreateUserAccountMutation();
   const navigate = useNavigate();
-  const [genCode, { isLoading: codeLoading }] = useGetUserCodeMutation();
 
   const { user } = useAppSelector((state) => state.auth);
 
@@ -62,14 +58,6 @@ const LoginPage = () => {
   }, [user]);
 
   const dispatch = useAppDispatch();
-  const generateCode = async (values) => {
-    console.log(values);
-    toast.promise(genCode(values).unwrap(), {
-      loading: 'Загрузка...',
-      success: 'Код успешно отправлен',
-      error: (error) => JSON.stringify(error.data, null, 2)
-    });
-  };
 
   const handleCreate = async (values: IUserFull) => {
     console.log(values);
@@ -120,10 +108,7 @@ const LoginPage = () => {
             <div className="text-center">
               <h2 className="mt-6 text-3xl font-bold text-gray-900">Добро пожаловать!</h2>
             </div>
-            <Checkbox
-              label="Зарегистрировать по номеру телефона"
-              onChange={() => setIsPhone(!isPhone)}
-            />
+            <Checkbox label="Уже есть аккаунт" onChange={() => setIsPhone(!isPhone)} />
             {!isPhone ? (
               <Formik initialValues={INIT} onSubmit={handleCreate} validationSchema={SignInSchema}>
                 {() => (
@@ -211,7 +196,7 @@ const LoginPage = () => {
               </Formik>
             ) : (
               <>
-                <Formik initialValues={{ phone: '' }} onSubmit={generateCode}>
+                <Formik initialValues={{ phone: '', password: '' }} onSubmit={handleSubmit}>
                   <Form>
                     <Input
                       inputType="formik"
@@ -220,10 +205,19 @@ const LoginPage = () => {
                       mask="+79999999999"
                       className="mb-2"
                       placeholder="+7 (999) 999 99 99"
+                      label="Номер телефона"
                     />
-                    <Button type="submit" loading={codeLoading}>
-                      Отправить код
-                    </Button>
+                    <div className="mb-2">
+                      <Input
+                        inputType="formik"
+                        name="password"
+                        id="password"
+                        className="mb-2"
+                        placeholder="Пароль"
+                        label="Пароль"
+                      />
+                    </div>
+                    <Button type="submit">Войти</Button>
                   </Form>
                 </Formik>
               </>
