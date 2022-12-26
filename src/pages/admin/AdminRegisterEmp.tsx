@@ -68,12 +68,12 @@ const AdminRegisterEmp: FC = () => {
   });
 
   return (
-    <div className={`layout py-5 md:py-10 bg-light-blue md:px-20`}>
-      <h2 className={`text-center font-semibold pb-3`}>Заполните поля</h2>
+    <div className={`py-5 md:py-10 h-screen bg-light-blue md:px-20`}>
+      <h2 className={`text-center font-semibold pb-3 md:pb-10`}>Заполните поля</h2>
 
       <Formik initialValues={INITIAL_VALUES} onSubmit={handleCreate} validationSchema={validation}>
         {(props) => (
-          <Form className={`flex flex-col gap-3 sm:space-y-4`}>
+          <Form className={`flex flex-col gap-3 sm:space-y-4 layout `}>
             <>
               <div className={`grid grid-cols-1 sm:grid-cols-2 gap-3 items-center`}>
                 <span>Role: {role}</span>

@@ -217,7 +217,7 @@ const LoginPage = () => {
                       inputType="formik"
                       name="phone"
                       id="phone"
-                      mask="+7 (999) 999 99 99"
+                      mask="+79999999999"
                       className="mb-2"
                       placeholder="+7 (999) 999 99 99"
                     />

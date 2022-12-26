@@ -1,4 +1,4 @@
-import { IEmployeeCreate } from './../../types/employee.types';
+import { IEmployeeCreate, IEmployeeCreateLink, IWorker } from './../../types/employee.types';
 // import { IWorker } from './../../types/warehouseWorker.types';
 // import { IEmployee } from './../../types/employee.types';
 // import { ICouriers, ICouriersCreate } from '@/types/couriers.types';
@@ -14,8 +14,6 @@ import {
 } from '@/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '../http';
-import { IEmployeeCreateLink, IWorker } from '@/types/employee.types';
-
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: API_URL,
@@ -39,7 +37,7 @@ export const baseApi = createApi({
     //получение ссылок для реги
     createEmployeeLink: builder.mutation<string[], IEmployeeCreateLink>({
       query: (body) => ({
-        url: `admin/user?quantity=${body.quantity}&role=${body.role}&warehouseId=${body.warehouseId}`,
+        url: `user?quantity=${body.quantity}&role=${body.role}&warehouseId=${body.warehouseId}`,
         method: 'POST'
       }),
       invalidatesTags: [{ type: 'Link', id: 'LIST' }]
@@ -56,7 +54,7 @@ export const baseApi = createApi({
     //Users
     getAllUsers: builder.query<IUserFull[], void>({
       query: () => ({
-        url: `/admin/user`
+        url: `user`
       }),
       providesTags: (result) =>
         result
@@ -68,13 +66,13 @@ export const baseApi = createApi({
     }),
     getUserID: builder.query<IUserFull, number>({
       query: (id) => ({
-        url: `/admin/user/${Number(id)}`
+        url: `user/${Number(id)}`
       }),
       providesTags: [{ type: 'Users' }]
     }),
     getUserROLE: builder.query<IUserFull[], string>({
       query: (role) => ({
-        url: `/admin/userWithRole/${role}`
+        url: `userWithRole/${role}`
       }),
       providesTags: (result) =>
         result
@@ -111,7 +109,7 @@ export const baseApi = createApi({
     //Products
     getAllProducts: builder.query<IProduct[], void>({
       query: () => ({
-        url: `/admin/product`
+        url: `product`
       }),
       providesTags: (result) =>
         result
@@ -123,7 +121,7 @@ export const baseApi = createApi({
     }),
     createProduct: builder.mutation<IProduct, IProductCreate>({
       query: (body) => ({
-        url: `/admin/product`,
+        url: `product`,
         method: 'POST',
         body
       }),
@@ -131,14 +129,14 @@ export const baseApi = createApi({
     }),
     deleteProduct: builder.mutation<void, number>({
       query: (id) => ({
-        url: `/admin/product/${Number(id)}`,
+        url: `product/${Number(id)}`,
         method: 'DELETE'
       }),
       invalidatesTags: [{ type: 'Products', id: 'LIST' }]
     }),
     updateProduct: builder.mutation<void, IProduct>({
       query: (body) => ({
-        url: `/admin/product/${Number(body.id)}`,
+        url: `product/${Number(body.id)}`,
         method: 'PUT',
         body
       }),
@@ -148,7 +146,7 @@ export const baseApi = createApi({
     // Product Category
     createProductCategory: builder.mutation<void, IProductCategoryCreate>({
       query: (body) => ({
-        url: `/admin/productCategory`,
+        url: `productCategory`,
         method: 'POST',
         body
       }),
@@ -156,7 +154,7 @@ export const baseApi = createApi({
     }),
     getProductCategory: builder.query<IProductCategoryCreate[], void>({
       query: () => ({
-        url: `/admin/productCategory`
+        url: `productCategory`
       }),
       providesTags: (result) =>
         result
@@ -168,7 +166,7 @@ export const baseApi = createApi({
     }),
     updateProductCategory: builder.mutation<void, IProductCategoryCreate>({
       query: (body) => ({
-        url: `/admin/productCategory/${Number(body.id)}`,
+        url: `productCategory/${Number(body.id)}`,
         method: 'PUT',
         body
       }),
@@ -176,7 +174,7 @@ export const baseApi = createApi({
     }),
     deleteProductCategory: builder.mutation<void, number>({
       query: (id) => ({
-        url: `/admin/productCategory/${Number(id)}`,
+        url: `productCategory/${Number(id)}`,
         method: 'DELETE'
       }),
       invalidatesTags: [{ type: 'ProductCategory', id: 'LIST' }]
@@ -184,7 +182,7 @@ export const baseApi = createApi({
     // Загрузка картинки на сервер с продуктами
     uploadProductImage: builder.mutation<void, { id: number; formData: FormData }>({
       query: (body) => ({
-        url: `/admin/product/${Number(body.id)}/image`,
+        url: `product/${Number(body.id)}/image`,
         method: 'PUT',
         body: body.formData
       }),
@@ -194,7 +192,7 @@ export const baseApi = createApi({
     // Warehouses
     getAllWarehouses: builder.query<IWarehouse[], void>({
       query: () => ({
-        url: `/admin/warehouse`
+        url: `warehouse`
       }),
       providesTags: (result) =>
         result
@@ -206,7 +204,7 @@ export const baseApi = createApi({
     }),
     createWarehouse: builder.mutation<void, IWarehouseUpdate>({
       query: (body) => ({
-        url: `/admin/warehouse`,
+        url: `warehouse`,
         method: 'POST',
         body
       }),
@@ -214,14 +212,14 @@ export const baseApi = createApi({
     }),
     deleteWarehouse: builder.mutation<void, number>({
       query: (id) => ({
-        url: `/admin/warehouse/${Number(id)}`,
+        url: `warehouse/${Number(id)}`,
         method: 'DELETE'
       }),
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
     }),
     updateWarehouse: builder.mutation<void, IWarehouseUpdate>({
       query: (body) => ({
-        url: `/admin/warehouse/${Number(body.id)}`,
+        url: `warehouse/${Number(body.id)}`,
         method: 'PUT',
         body
       }),
@@ -231,7 +229,7 @@ export const baseApi = createApi({
     // //Couriers
     // createCourier: builder.mutation<number, ICouriersCreate>({
     //   query: (body) => ({
-    //     url: `/admin/courier`,
+    //     url: `courier`,
     //     method: 'POST',
     //     body
     //   }),
@@ -239,7 +237,7 @@ export const baseApi = createApi({
     // }),
     // getAllCouriers: builder.query<ICouriers[], void>({
     //   query: () => ({
-    //     url: `/admin/courier`
+    //     url: `courier`
     //   }),
     //   providesTags: (result) =>
     //     result
@@ -251,21 +249,21 @@ export const baseApi = createApi({
     // }),
     // getCourier: builder.query<ICouriers[], number>({
     //   query: (id) => ({
-    //     url: `/admin/courier${Number(id)}`
+    //     url: `courier${Number(id)}`
     //   }),
     //   providesTags: [{ type: 'Couriers' }]
     // }),
 
     // deleteCourier: builder.mutation<void, number>({
     //   query: (id) => ({
-    //     url: `/admin/courier/${Number(id)}`,
+    //     url: `courier/${Number(id)}`,
     //     method: 'DELETE'
     //   }),
     //   invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
     // }),
     // updateCourier: builder.mutation<void, ICouriersCreate>({
     //   query: (body) => ({
-    //     url: `/admin/courier/${Number(body.car)}`,
+    //     url: `courier/${Number(body.car)}`,
     //     method: 'PUT',
     //     body
     //   }),
@@ -275,7 +273,7 @@ export const baseApi = createApi({
     // Warehouse keeper
     createWarehouseWorker: builder.mutation<void, IWorker>({
       query: (body) => ({
-        url: `/admin/warehouseWorker`,
+        url: `warehouseWorker`,
         method: 'POST',
         body
       }),
@@ -283,7 +281,7 @@ export const baseApi = createApi({
     }),
     updateWarehouseWorker: builder.mutation<void, IWorker>({
       query: (body) => ({
-        url: `/admin/warehouseWorker/${Number(body.id)}`,
+        url: `warehouseWorker/${Number(body.id)}`,
         method: 'PUT',
         body
       }),
@@ -291,7 +289,7 @@ export const baseApi = createApi({
     }),
     getAllWorker: builder.query<IWorker[], void>({
       query: () => ({
-        url: `/admin/warehouseWorker`
+        url: `warehouseWorker`
       }),
       providesTags: (result) =>
         result
@@ -303,7 +301,7 @@ export const baseApi = createApi({
     }),
     deleteWorker: builder.mutation<void, number>({
       query: (id) => ({
-        url: `/admin/warehouseWorker/${Number(id)}`,
+        url: `warehouseWorker/${Number(id)}`,
         method: 'DELETE'
       }),
       invalidatesTags: [{ type: 'Worker', id: 'LIST' }]

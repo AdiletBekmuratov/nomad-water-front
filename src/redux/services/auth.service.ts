@@ -2,7 +2,7 @@ import axiosInstance from '@/config/axios';
 import { ILoginForm } from '@/types';
 
 const getMe = async () => {
-  const response = await axiosInstance.get('/user/');
+  const response = await axiosInstance.get('/user/me');
   return response.data;
 };
 const getPassword = async (phone: string) => {
