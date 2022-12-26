@@ -23,9 +23,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //получение ссылок для реги
@@ -41,7 +41,7 @@ export const userApi = createApi({
       query: (id) => ({
         url: `user/${Number(id)}`
       }),
-      providesTags: [{ type: 'Users' }]
+      providesTags: [{ type: 'Users', id: 'LIST' }]
     }),
     updateUser: builder.mutation<void, IUserFullCreate>({
       query: (body) => ({
@@ -63,7 +63,7 @@ export const userApi = createApi({
     //api/user/favorite/{id}
     //api/user/favorite/{id}
     //api/user/me Обновить текущего пользователя
-    //api/user/me Получить текущего пользователя - находится в AUTH 
+    //api/user/me Получить текущего пользователя - находится в AUTH
     getUserROLE: builder.query<IUserFull[], string>({
       query: (role) => ({
         url: `userWithRole/${role}`
@@ -71,9 +71,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     })
   })
@@ -88,11 +88,11 @@ export const {
   useUpdateUserMutation
 } = userApi;
 
-  // createUser: builder.mutation<void, IUserFullCreate>({
-  //   query: (body) => ({
-    //     url: `user`,
-    //     method: 'POST',
-    //     body
-    //   }),
-    //   invalidatesTags: [{ type: 'Users', id: 'LIST' }]
-    // }),
+// createUser: builder.mutation<void, IUserFullCreate>({
+//   query: (body) => ({
+//     url: `user`,
+//     method: 'POST',
+//     body
+//   }),
+//   invalidatesTags: [{ type: 'Users', id: 'LIST' }]
+// }),

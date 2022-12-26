@@ -1,4 +1,5 @@
 import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { logout } from '@/redux/slices/auth';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const Dropdown = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
   const handleLogout = async () => {
     toast
       .promise(dispatch(logout()).unwrap(), {
@@ -14,7 +16,7 @@ const Dropdown = () => {
         error: (err) => err.toString()
       })
       .then(() => {
-        navigate('/admin/login');
+        navigate('/login/user');
       });
   };
 
@@ -26,6 +28,15 @@ const Dropdown = () => {
       aria-labelledby="menu-button"
       tabIndex={-1}>
       <div className="" role="none">
+        {user && (
+          <button
+            className="text-gray-700 px-4 py-2 text-sm w-full flex justify-start hover:bg-white hover:rounded-md"
+            role="menuitem"
+            tabIndex={-1}
+            onClick={() => navigate('/userPage')}>
+            Профиль
+          </button>
+        )}
         <button
           onClick={handleLogout}
           className="text-gray-700 px-4 py-2 text-sm w-full flex justify-start hover:bg-white hover:rounded-md "
