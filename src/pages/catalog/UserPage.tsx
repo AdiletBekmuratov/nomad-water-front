@@ -1,15 +1,18 @@
 import { Layout } from '@/components/Layout';
 
 import { Button } from '@/components/Forms';
-import { useState } from 'react';
+
+import React from 'react';
 
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { Edit } from '@/components/User/Edit';
 import OrderHistory from '@/components/User/OrderHistory';
+import { useGetUserIDQuery } from '@/redux/services/base.service';
 
 const UserPage = () => {
   const { user } = useAppSelector((state) => state.auth);
-  const [isOpenEdit, setIsOpenEdit] = useState(false);
+  const { data, isLoading } = useGetUserIDQuery(user?.id!);
+  const [isOpenEdit, setIsOpenEdit] = React.useState(false);
 
   return (
     <Layout>
@@ -19,13 +22,17 @@ const UserPage = () => {
           <div className="flex justify-center">
             <p className="text-sm md:text-base">
               <strong>ФИО:</strong>
-              {` ${user?.firstname} ${user?.lastname} `}
+              {` ${data?.firstname ? data?.firstname : ''} ${
+                data?.lastname ? data?.lastname : ''
+              } ${data?.middleName ? data?.middleName.substring(0, 1) : ''}.`}
             </p>
           </div>
           <div className="flex justify-center">
             <p className="text-sm md:text-base">
               <strong>Улица: </strong>
-              {`${user?.street} ${user?.houseNumber} квартира:  ${user?.flat}`}
+              {`${data?.street ? data?.street : ''} ${
+                data?.houseNumber ? data?.houseNumber : ''
+              } квартира:  ${data?.flat ? data?.flat : ''}`}
             </p>
           </div>
           <div className="col-span-2 mx-auto">

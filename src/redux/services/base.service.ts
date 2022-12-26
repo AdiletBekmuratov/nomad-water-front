@@ -84,14 +84,25 @@ export const baseApi = createApi({
             ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
-    createUser: builder.mutation<void, IUserFullCreate>({
+    // createUser: builder.mutation<void, IUserFullCreate>({
+    //   query: (body) => ({
+    //     url: `admin/user`,
+    //     method: 'POST',
+    //     body
+    //   }),
+    //   invalidatesTags: [{ type: 'Users', id: 'LIST' }]
+    // }),
+
+    //Обновить текущего пользователя
+    updateUserMe: builder.mutation<void, IUserFullCreate>({
       query: (body) => ({
-        url: `admin/user`,
-        method: 'POST',
+        url: `admin/user/`,
+        method: 'PUT',
         body
       }),
       invalidatesTags: [{ type: 'Users', id: 'LIST' }]
     }),
+    //обновить юзера по ID
     updateUser: builder.mutation<void, IUserFullCreate>({
       query: (body) => ({
         url: `admin/user/${Number(body.id)}`,
@@ -181,7 +192,16 @@ export const baseApi = createApi({
       }),
       invalidatesTags: [{ type: 'ProductCategory', id: 'LIST' }]
     }),
-    // Загрузка картинки на сервер с продуктами
+    //Получить изображение продукта по id
+    getProductImageID: builder.mutation<void, { id: number; formData: FormData }>({
+      query: (body) => ({
+        url: `product/${Number(body.id)}/image`,
+        method: 'GET',
+        body: body.formData
+      }),
+      invalidatesTags: [{ type: 'Products', id: 'LIST' }]
+    }),
+    // Загрузка картинки на сервер с продуктами product/{id}/image
     uploadProductImage: builder.mutation<void, { id: number; formData: FormData }>({
       query: (body) => ({
         url: `product/${Number(body.id)}/image`,
@@ -352,7 +372,8 @@ export const {
   useGetAllUsersQuery,
   useGetUserIDQuery,
   useGetUserROLEQuery,
-  useCreateUserMutation,
+  useUpdateUserMeMutation,
+  //useCreateUserMutation,
   useDeleteUserMutation,
   useUpdateUserMutation,
   useGetUserCodeMutation,
@@ -380,6 +401,7 @@ export const {
   useDeleteProductCategoryMutation,
   useGetProductCategoryQuery,
   useUpdateProductCategoryMutation,
+  useGetProductImageIDMutation,
   useUploadProductImageMutation,
 
   //Worker

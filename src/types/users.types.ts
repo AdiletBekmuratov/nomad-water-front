@@ -24,4 +24,6 @@ export interface IUserFull {
 }
 
 export type IUserFullCreate = Omit<IUserFull, 'created_date' | 'password'>;
-//export type IIUserFullUpdate = Pick<IUserFull, 'firstname' | 'lastname'>;
+export type IUserFullUpdateME = Omit<IUserFull, 'id' | 'role' |
+  'created_date' | 'bonuses' | 'courierDeliveringStatus' |
+  'successfulOrders' | 'car' | 'warehouseId' | 'shopkeeperPhone'>;

@@ -2,6 +2,7 @@ import { Button, Input, TextArea } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 import {
   useCreateProductMutation,
+  useGetProductImageIDMutation,
   useUploadProductImageMutation
 } from '@/redux/services/base.service';
 import { IProductCreate } from '@/types';
@@ -27,6 +28,7 @@ const INITIAL_VALUES: IProductCreate = {
 export const CreateProduct: FC<ICreateModalProps> = ({ setVisible, visible }) => {
   const [create, { isLoading }] = useCreateProductMutation();
   const [uploadImage, { isLoading: isLoadingImage }] = useUploadProductImageMutation();
+//   const [getImage, { isLoading: isLoadingGetImage }] = useGetProductImageIDMutation();
 
   const handleCreate = async (values: IProductCreate) => {
     console.log({ values });
