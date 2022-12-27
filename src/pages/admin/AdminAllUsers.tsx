@@ -41,11 +41,7 @@ const AdminAllUsers = () => {
     setRowData(row.original);
     setVisibleDelete(true);
   };
-  // const { data: user1 } = useGetUserROLEQuery('ROLE_COURIER');
-  // user1?.forEach((user) => {
-  //   console.log(user);
-  // });
-  // console.log(user1);
+
   const columns = useMemo<ColumnDef<IUserFull, any>[]>(
     () => [
       {

@@ -11,7 +11,7 @@ type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
 export const Address: FC<Props> = ({ setIsOpen, isOpen, setIsEdited }) => {
   return (
     <div className="bg-white mt-4 w-4/5 md:w-11/12 mx-auto flex flex-row justify-between items-start gap-2 h-13 rounded-2xl lg:w-full">
-      <h5 className="text-dark-blue font-montserrat font-semibold py-4 px-6">Адрес и Контакты</h5>
+      <h5 className="text-dark-blue font-montserrat font-semibold py-4 px-6">Адрес и Контакты / Если хотите изменить нажмите сюда -></h5>
       <button
         onClick={() => {
           setIsOpen(!isOpen);

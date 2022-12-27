@@ -8,7 +8,7 @@ export type IOrder = {
   userId: number;
   courierId: number;
   statusId: number;
-  productIds: IOrderQuality[];
+  orderProductsDto: IOrderQuality[];
   paymentMethod: number;
   deliveryDateTime: string;
   phone: string;
@@ -19,5 +19,6 @@ export type IOrder = {
   isSale: boolean;
 };
 
-export type IUsersOrder = Pick<IOrder, 'id' | 'productIds' | 'paymentMethod'
-  | 'phone' | 'address' | 'comment' | 'totalPrice' | 'isSale'>;
+export type IUsersOrder = Pick<IOrder, 'orderProductsDto' | 'paymentMethod'
+  | 'phone' | 'address' | 'comment' | 
+  'totalPrice' | 'isSale'>;

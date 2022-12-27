@@ -1,25 +1,18 @@
 import { FC, useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
+import React from 'react';
 import { Button } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';
 import { Footer, OrderAcordion, OrderCard, PaymentComponent, Total } from '@/components/Order';
 import EditCard from '@/components/Order/EditCard';
-import { IProduct } from '@/types';
-import { useAppSelector } from '@/hooks/useAppSelector';
+import { IOrderQuality, IProduct, IUsersOrder } from '@/types';
+import { toast } from 'react-hot-toast';
+import { useCreateOrderMutation } from '@/redux/services/base.service';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
-// const INITIAL_VALUES: IEmployeeCreateLink = {
-//   quantity: 1,
-//   role: 'ROLE_KEEPER',
-//   warehouseId: 0
-// };
-
-
 const OrderRegistration: FC = () => {
-  const { user } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
   const cartItems = localStorage.getItem(`cartItems`);
   const dataProduct: IProduct[] = cartItems ? JSON.parse(cartItems) : [];
@@ -42,7 +35,36 @@ const OrderRegistration: FC = () => {
     },
     [dataProduct]
   );
-
+  const [response, setResponse] = React.useState<string[]>([]);
+  const [create, { isLoading: isOrderLoad }] = useCreateOrderMutation();
+  const handleCreate = (values: IUsersOrder) => {
+    toast
+      .promise(
+        create(values)
+          .unwrap()
+          .then((resp) => {
+            setResponse(resp);
+          }),
+        {
+          loading: 'Загрузка...',
+          success: 'Получено',
+          error: (error) => JSON.stringify(error, null, 2)
+        }
+      )
+      .finally(() => {
+        //setVisible(false);
+      });
+  };
+  const productIds: IOrderQuality = { productId: 1, quantity: 1 };
+  const initial: IUsersOrder = {
+    address: '',
+    comment: '',
+    isSale: false,
+    paymentMethod: 1,
+    phone: '',
+    orderProductsDto: productIds,
+    totalPrice: total
+  };
   return (
     <Layout>
       {dataProduct.length > 0 ? (
@@ -100,7 +122,8 @@ const OrderRegistration: FC = () => {
               buttonColor="bg-dark-blue font-montserrat"
               disabled={!isValid}
               onClick={() => {
-                alert(JSON.stringify(address, null, 2));
+                handleCreate(initial);
+                //alert(JSON.stringify(address, null, 2));
                 navigate('/orderinfo');
               }}>
               Оформить заказ
