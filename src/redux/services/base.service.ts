@@ -373,6 +373,7 @@ export const baseApi = createApi({
 
 export const {
   useGetUserOrderQuery,
+  useCreateOrderMutation,
   //users
   useCreateEmployeeLinkMutation,
   useCreateEmployeeMutation,

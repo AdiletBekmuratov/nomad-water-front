@@ -17,7 +17,7 @@ export const Address: FC<Props> = ({ setIsOpen, isOpen, setIsEdited }) => {
           setIsOpen(!isOpen);
           isOpen === true && setIsEdited(false);
         }}>
-        {isOpen ? (
+        {!isOpen ? (
           <img className="-rotate-90 py-5 px-8" src={Arrow} alt="" />
         ) : (
           <img className="rotate-90 py-5 px-8" src={Arrow} alt="" />

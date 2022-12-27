@@ -7,15 +7,25 @@ import { Modal } from '@/components/Layout/Modal';
 import { Footer, OrderAcordion, OrderCard, PaymentComponent, Total } from '@/components/Order';
 import EditCard from '@/components/Order/EditCard';
 import { IProduct } from '@/types';
+import { useAppSelector } from '@/hooks/useAppSelector';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
+// const INITIAL_VALUES: IEmployeeCreateLink = {
+//   quantity: 1,
+//   role: 'ROLE_KEEPER',
+//   warehouseId: 0
+// };
+
+
 const OrderRegistration: FC = () => {
+  const { user } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
   const cartItems = localStorage.getItem(`cartItems`);
   const dataProduct: IProduct[] = cartItems ? JSON.parse(cartItems) : [];
   //const productPriceArr = dataProduct.map((item) => item.productPrice);
-  const [isOpen, setIsOpen] = useState(true);
+
+  const [isOpen, setIsOpen] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const [address, setAddress] = useState({});

@@ -21,7 +21,7 @@ const UserPage = () => {
           <div className="flex justify-center">
             <p className="text-sm md:text-base">
               <strong>ФИО:</strong>
-              {`${user?.firstname} ${user?.lastname}`}
+              {`${user?.firstname} ${user?.lastname} `}
             </p>
           </div>
           <div className="flex justify-center">
