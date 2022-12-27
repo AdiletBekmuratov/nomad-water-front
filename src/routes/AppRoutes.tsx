@@ -17,6 +17,7 @@ import Loader from '@/components/Loader';
 import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminCategory from '@/pages/admin/AdminCategory';
 import LoginPage from '@/pages/LoginPage';
+import Courier from '@/pages/Courier';
 // import AdminEmployee from '@/pages/admin/AdminEmployee';
 
 const Landing = lazy(() => import('@/pages/Landing'));
@@ -122,7 +123,7 @@ const AppRoutes = () => {
             <Route path="/order" element={<OrderRegistration />} />
             <Route path="/myOrders" element={<Orders />} />
             <Route path="/orderinfo" element={<OrderInfo />} />
-
+            <Route path="/courier" element={<Courier />} />
             <Route path="/users" element={<Users />} />
             <Route path="/userPage" element={<UserPage />} />
             <Route path="/requestsUser" element={<RequestsUser />} />
