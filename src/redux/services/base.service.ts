@@ -1,17 +1,17 @@
-import { IEmployeeCreate, IEmployeeCreateLink, IWorker } from './../../types/employee.types';
-// import { IWorker } from './../../types/warehouseWorker.types';
-// import { IEmployee } from './../../types/employee.types';
-// import { ICouriers, ICouriersCreate } from '@/types/couriers.types';
-
-import { IUserFull, IUserFullCreate } from '@/types/users.types';
 import {
+  IUserFullCreate,
+  IUserFull,
   IOrder,
+  IEmployeeCreate,
+  IEmployeeCreateLink,
+  IWorker,
   IProduct,
   IProductCategoryCreate,
   IProductCreate,
   IWarehouse,
   IWarehouseUpdate,
-  IuserCreate
+  IuserCreate,
+  IUsersOrder
 } from '@/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '../http';
@@ -53,6 +53,24 @@ export const baseApi = createApi({
       }),
       invalidatesTags: [{ type: 'Link', id: 'LIST' }]
     }),
+    //Получения кода для входа в аккаунт
+    getUserCode: builder.mutation<void, IuserCreate>({
+      query: (body) => ({
+        url: `/auth/generateCode`,
+        method: `POST`,
+        body
+      }),
+      invalidatesTags: [{ type: 'Phone', id: 'LIST' }]
+    }),
+    //Регистрация пользователя
+    createUserAccount: builder.mutation<void, IUserFull>({
+      query: (body) => ({
+        url: `/auth/register/user`,
+        method: `POST`,
+        body
+      }),
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
+    }),
     //Users
     getAllUsers: builder.query<IUserFull[], void>({
       query: () => ({
@@ -61,9 +79,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     getUserID: builder.query<IUserFull, number>({
@@ -79,9 +97,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     // createUser: builder.mutation<void, IUserFullCreate>({
@@ -127,9 +145,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Products', id } as const)),
-              { type: 'Products', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Products', id } as const)),
+            { type: 'Products', id: 'LIST' }
+          ]
           : [{ type: 'Products', id: 'LIST' }]
     }),
     createProduct: builder.mutation<IProduct, IProductCreate>({
@@ -155,43 +173,6 @@ export const baseApi = createApi({
       }),
       invalidatesTags: [{ type: 'Products', id: 'LIST' }]
     }),
-
-    // Product Category
-    createProductCategory: builder.mutation<void, IProductCategoryCreate>({
-      query: (body) => ({
-        url: `productCategory`,
-        method: 'POST',
-        body
-      }),
-      invalidatesTags: [{ type: 'ProductCategory', id: 'LIST' }]
-    }),
-    getProductCategory: builder.query<IProductCategoryCreate[], void>({
-      query: () => ({
-        url: `productCategory`
-      }),
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
-              { type: 'ProductCategory', id: 'LIST' }
-            ]
-          : [{ type: 'ProductCategory', id: 'LIST' }]
-    }),
-    updateProductCategory: builder.mutation<void, IProductCategoryCreate>({
-      query: (body) => ({
-        url: `productCategory/${Number(body.id)}`,
-        method: 'PUT',
-        body
-      }),
-      invalidatesTags: [{ type: 'ProductCategory', id: 'LIST' }]
-    }),
-    deleteProductCategory: builder.mutation<void, number>({
-      query: (id) => ({
-        url: `productCategory/${Number(id)}`,
-        method: 'DELETE'
-      }),
-      invalidatesTags: [{ type: 'ProductCategory', id: 'LIST' }]
-    }),
     //Получить изображение продукта по id
     getProductImageID: builder.mutation<void, { id: number; formData: FormData }>({
       query: (body) => ({
@@ -211,6 +192,43 @@ export const baseApi = createApi({
       invalidatesTags: [{ type: 'Products', id: 'LIST' }]
     }),
 
+    // Product Category
+    createProductCategory: builder.mutation<void, IProductCategoryCreate>({
+      query: (body) => ({
+        url: `productCategory`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: [{ type: 'ProductCategory', id: 'LIST' }]
+    }),
+    getProductCategory: builder.query<IProductCategoryCreate[], void>({
+      query: () => ({
+        url: `productCategory`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+            { type: 'ProductCategory', id: 'LIST' }
+          ]
+          : [{ type: 'ProductCategory', id: 'LIST' }]
+    }),
+    updateProductCategory: builder.mutation<void, IProductCategoryCreate>({
+      query: (body) => ({
+        url: `productCategory/${Number(body.id)}`,
+        method: 'PUT',
+        body
+      }),
+      invalidatesTags: [{ type: 'ProductCategory', id: 'LIST' }]
+    }),
+    deleteProductCategory: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `productCategory/${Number(id)}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: [{ type: 'ProductCategory', id: 'LIST' }]
+    }),
+
     // Warehouses
     getAllWarehouses: builder.query<IWarehouse[], void>({
       query: () => ({
@@ -219,9 +237,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
-              { type: 'Warehouses', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+            { type: 'Warehouses', id: 'LIST' }
+          ]
           : [{ type: 'Warehouses', id: 'LIST' }]
     }),
     createWarehouse: builder.mutation<void, IWarehouseUpdate>({
@@ -316,9 +334,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Worker', id } as const)),
-              { type: 'Worker', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Worker', id } as const)),
+            { type: 'Worker', id: 'LIST' }
+          ]
           : [{ type: 'Worker', id: 'LIST' }]
     }),
     deleteWorker: builder.mutation<void, number>({
@@ -329,26 +347,15 @@ export const baseApi = createApi({
       invalidatesTags: [{ type: 'Worker', id: 'LIST' }]
     }),
 
-    //Получения кода для входа в аккаунт
-    getUserCode: builder.mutation<void, IuserCreate>({
-      query: (body) => ({
-        url: `/auth/generateCode`,
-        method: `POST`,
-        body
-      }),
-      invalidatesTags: [{ type: 'Phone', id: 'LIST' }]
-    }),
-    //Регистрация пользователя
-    createUserAccount: builder.mutation<void, IUserFull>({
-      query: (body) => ({
-        url: `/auth/register/user`,
-        method: `POST`,
-        body
-      }),
-      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
-    }),
-
     // Order
+    createOrder: builder.mutation<void, IUsersOrder>({
+      query: (body) => ({
+        url: `/order`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: [{ type: 'Order', id: 'LIST' }]
+    }),
     getUserOrder: builder.query<IOrder[], void>({
       query: () => ({
         url: `order/user`
@@ -356,9 +363,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Order', id } as const)),
-              { type: 'Order', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Order', id } as const)),
+            { type: 'Order', id: 'LIST' }
+          ]
           : [{ type: 'Order', id: 'LIST' }]
     })
   })
@@ -395,14 +402,13 @@ export const {
   useCreateProductMutation,
   useDeleteProductMutation,
   useUpdateProductMutation,
-
+  useGetProductImageIDMutation,
+  useUploadProductImageMutation,
   // Product Category
   useCreateProductCategoryMutation,
   useDeleteProductCategoryMutation,
   useGetProductCategoryQuery,
   useUpdateProductCategoryMutation,
-  useGetProductImageIDMutation,
-  useUploadProductImageMutation,
 
   //Worker
   useGetAllWorkerQuery,

@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 
 const Dropdown = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
-  const handleLogout = async () => {
+  const dispatch = useAppDispatch();
+    const handleLogout = async () => {
     toast
       .promise(dispatch(logout()).unwrap(), {
         success: 'Вышли из аккаунта',

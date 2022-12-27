@@ -1,20 +1,20 @@
 export type IOrder = {
   id: number;
-  user: {
-    id: number;
-    phone: string;
-    firstname: string;
-    middleName: string;
-    lastname: string;
-    role: string;
-    birthday: string;
-    street: string;
-    houseNumber: string;
-    flat: string;
-    addressComment: string;
-    bonuses: number;
-    telegramAccount: string;
-    favorites: [];
-    active: true;
-  };
+  userId: number;
+  courierId: number;
+  status: number;
+  orderTypeId: number;
+  productIds: number[];
+  paymentMethodId: number;
+  deliveryDateTime: string;
+  phone: string;
+  address: string;
+  comment: string;
+  totalPrice: number;
+  paymentUrl: number;
+  isSale: boolean;
+  orderDateTime: string;
 };
+
+export type IUsersOrder = Pick<IOrder, 'id' | 'productIds' | 'paymentMethodId'
+  | 'phone' | 'address' | 'comment' | 'totalPrice' | 'isSale'>;

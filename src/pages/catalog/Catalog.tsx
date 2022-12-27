@@ -87,7 +87,7 @@ const Catalog: FC = () => {
         </div>
       </div>
 
-      <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-2 sm:grid-cols-1 `}>
+      <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-1 sm:grid-cols-2  `}>
         {value.length === 0
           ? product.map((items, id) => (
               <CardBottle
