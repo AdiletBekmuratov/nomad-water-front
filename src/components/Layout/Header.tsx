@@ -54,7 +54,6 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
             <AiOutlineHeart className="h-6 w-6" />
           </Link>
 
-          <AiOutlineShoppingCart className="h-6 w-6" />
           {/* {isDrop && <Dropdown />} */}
           {user?.role === 'ROLE_COURIER' ? (
             <Link to="/courier">
