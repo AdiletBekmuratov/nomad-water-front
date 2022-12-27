@@ -1,9 +1,11 @@
+import { IProduct } from '@/types';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Checkbox from '../Checkbox';
 import { Button } from '../Forms';
 
 type Props = {
+  data: IProduct[];
   pickup: boolean;
   delivery: boolean;
   setPickup: Function;
@@ -23,9 +25,12 @@ export const Total: FC<Props> = ({
   total,
   isValid,
   address,
-  handleTotal
+  handleTotal,
+  data
 }) => {
   const navigate = useNavigate();
+  const productPrice = data.map((items) => items.productPrice);
+  total = productPrice[0];
   return (
     <div className="lg:order-2 lg:bg-white lg:h-48 lg:mt-6 lg:rounded-2xl lg:row-start-1">
       <div className="h-6 w-3/4 mt-5 mx-auto gap-2.5 md:w-5/6">

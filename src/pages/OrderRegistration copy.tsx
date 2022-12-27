@@ -11,24 +11,34 @@ import { IProduct } from '@/types';
 const userStyle = 'font-montserrat text-dark-blue';
 
 const OrderRegistration: FC = () => {
-  const navigate = useNavigate();
-  const cartItems = localStorage.getItem(`cartItems`);
-  const dataProduct: IProduct[] = cartItems ? JSON.parse(cartItems) : [];
-  //const productPriceArr = dataProduct.map((item) => item.productPrice);
   const [isOpen, setIsOpen] = useState(true);
   const [isValid, setIsValid] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const [address, setAddress] = useState({});
   const [pickup, setPickup] = useState(false);
   const [delivery, setDelivery] = useState(false);
-
-  const [count, setCount] = useState(1);
-
   const [total, setTotal] = useState(0);
+  // let data = structuredClone(initialArray);
+
+  const navigate = useNavigate();
+  const cartItems = localStorage.getItem(`cartItems`);
+  const dataProduct: IProduct[] = cartItems ? JSON.parse(cartItems) : [];
+  const handeCounts = useCallback(
+    (count: number, index: number) => {
+      dataProduct[index].quantity = count;
+      let t: number = 0;
+      for (let i = 0; i < dataProduct.length; i++) {
+        t += dataProduct[i].productPrice * dataProduct[i].quantity!;
+      }
+      setTotal(t);
+    },
+    [dataProduct]
+  );
+
   const handleTotal = useCallback(
     (isDel: boolean = false) => {
       if (isDel) setTotal(total + 300);
-      else setTotal(total);
+      else setTotal(total - 300);
     },
     [dataProduct]
   );
@@ -38,15 +48,14 @@ const OrderRegistration: FC = () => {
       {dataProduct.length > 0 ? (
         <div className={`lg:grid lg:grid-cols-3 lg:grid-row-3 gap-6`}>
           <div className={`lg:col-span-2 lg:order-1 lg:col-start-1 lg:row-start-1`}>
-            {dataProduct.map((item: IProduct) => (
+            {dataProduct.map((item: IProduct, index: number) => (
               <OrderCard
                 // handeCounts={handeCounts}
-                id={item.id!}
+                id={index}
+                handeCounts={handeCounts}
                 data={{ ...item }}
                 key={item.productName}
-                count={count}
-                setCount={setCount}
-                setTotal={setTotal}
+                count={item.quantity}
               />
             ))}
           </div>
@@ -72,7 +81,6 @@ const OrderRegistration: FC = () => {
           </EditCard>
 
           <Total
-            data={dataProduct}
             delivery={delivery}
             pickup={pickup}
             setDelivery={setDelivery}

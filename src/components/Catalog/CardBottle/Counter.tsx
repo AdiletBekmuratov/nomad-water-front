@@ -7,7 +7,7 @@ export const Counter: FC<ICounter> = ({ counter = 1, setCounter }) => {
   const onMinusClick = () => setCounter(--counter);
 
   return (
-    <div className={`flex items-center justify-between gap-3 w-52 `}>
+    <div className={`flex items-center justify-between gap-3 w-40 lg:w-52 `}>
       <button onClick={onMinusClick}>
         <AiOutlineMinusCircle className={`w-8 h-8`} />
       </button>

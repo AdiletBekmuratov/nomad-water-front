@@ -5,31 +5,34 @@ import { AddFavourite } from './AddFavourite';
 import { ICard } from '@/assets/types/types';
 // import { Description } from './Description';
 import { OrderStatus } from '@/components/Catalog/OrderStatus';
-import { Counter } from './Counter';
+// import { Counter } from './Counter';
 import { Button } from '@/components/Forms';
 import { IProduct } from '@/types';
 
-export type IOrderItem = {
-  counter: number;
-  items: IProduct;
-};
-
 export const CardBottle: FC<ICard> = ({
-  isFavourite,
-  setIsFavourite,
   items,
+  isFavourite,
   cardType,
+  setIsFavourite,
   deliveryStatus
 }) => {
-  const initial: IOrderItem = {
-    counter: 1,
-    items: items
+  //let [counter, setCounter] = React.useState<number>(items.quantity ? items.quantity : 1);
+  const [cartItems, setCartItems] = React.useState<IProduct[]>([]);
+  const [isProductCart, setIsProductCart] = React.useState(false);
+  const addItemsCart = (items: IProduct) => {
+    setCartItems([...cartItems, items]);
+    console.log(cartItems);
   };
-  const [counter, setCounter] = React.useState<number>(1);
-  const [order, setOrder] = React.useState<IOrderItem>(initial);
-  const addItemsOrder = (items: IProduct, counter: number) => {
-    console.log(items, counter);
-  };
+  const isMounted = React.useRef(false);
+  React.useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(cartItems);
+      localStorage.setItem('cartItems', json);
+    }
+    isMounted.current = true;
+    setIsProductCart(true);
+  }, [cartItems]);
+
   return (
     <div
       className={`${
@@ -53,14 +56,24 @@ export const CardBottle: FC<ICard> = ({
           <h2 className={`sm:text-lg font-semibold sm:mt-0`}>{items.productPrice} T</h2>
           {cardType === 'order' && <OrderStatus variants={deliveryStatus} />}
 
-          <Counter counter={counter} setCounter={setCounter} />
-          <Button
-            className="w-40 h-10"
-            onClick={() => {
-              addItemsOrder(items, counter);
-            }}>
-            В корзину
-          </Button>
+          {/* <Counter counter={counter} setCounter={setCounter} /> */}
+          {isProductCart ? (
+            <Button
+              className="w-40 h-10"
+              onClick={() => {
+                addItemsCart(items);
+              }}>
+              В корзину
+            </Button>
+          ) : (
+            <Button
+              className="w-40 h-10 bg-blue-400"
+              onClick={() => {
+                addItemsCart(items);
+              }}>
+              В корзине
+            </Button>
+          )}
         </div>
       </div>
     </div>
