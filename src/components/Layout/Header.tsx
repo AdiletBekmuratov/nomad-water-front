@@ -49,10 +49,11 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
           </Link>
         </div>
 
-        <div className="flex items-center justify-end gap-2 md:gap-5 flex-1">
+        <div className={`flex items-center justify-end gap-2 md:gap-5 flex-1`}>
           <Link to="/myFavourite" className={`cursor-pointer`}>
             <AiOutlineHeart className="h-6 w-6" />
           </Link>
+
           <AiOutlineShoppingCart className="h-6 w-6" />
           {/* {isDrop && <Dropdown />} */}
           {user?.role === 'ROLE_COURIER' ? (
@@ -65,7 +66,11 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
             </Link>
           )}
 
-          <RxExit className="h-6 w-6" onClick={handleLogout} />
+          <Link to="/order">
+            <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
+          </Link>
+
+          <RxExit className="h-6 w-6 cursor-pointer" onClick={handleLogout} />
         </div>
       </div>
       {/* нужно будет подвинуть */}
