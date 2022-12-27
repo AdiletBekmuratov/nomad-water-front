@@ -9,12 +9,14 @@ import { RxExit } from 'react-icons/rx';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { toast } from 'react-hot-toast';
 import { logout } from '@/redux/slices/auth';
+import { useAppSelector } from '@/hooks/useAppSelector';
 interface IHeader {
   className?: string;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
+  const { user } = useAppSelector((state) => state.auth);
   const headerStyle = `flex items-center py-4 justify-between layout ${props.className}`;
   // const [isDrop, setIsDrop] = useState();
   const navigate = useNavigate();
@@ -51,12 +53,20 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
           <Link to="/myFavourite" className={`cursor-pointer`}>
             <AiOutlineHeart className="h-6 w-6" />
           </Link>
+
+          {/* {isDrop && <Dropdown />} */}
+          {user?.role === 'ROLE_COURIER' ? (
+            <Link to="/courier">
+              <img src={avatar} alt="avatar" className={`hidden lg:block cursor-pointer`} />
+            </Link>
+          ) : (
+            <Link to="/userPage">
+              <img src={avatar} alt="avatar" className={`hidden lg:block cursor-pointer`} />
+            </Link>
+          )}
+
           <Link to="/order">
             <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
-          </Link>
-
-          <Link to="/userPage">
-            <img src={avatar} alt="avatar" className={`hidden lg:block cursor-pointer`} />
           </Link>
 
           <RxExit className="h-6 w-6 cursor-pointer" onClick={handleLogout} />

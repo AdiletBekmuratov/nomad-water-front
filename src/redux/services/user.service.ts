@@ -23,9 +23,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //получение ссылок для реги
@@ -71,9 +71,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     updateUserMe: builder.mutation<IUserFull, void>({

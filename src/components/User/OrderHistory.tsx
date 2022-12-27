@@ -28,7 +28,7 @@ const OrderHistory = () => {
       },
       {
         header: 'Метод оплаты',
-        accessorKey: 'paymentMethod'
+        accessorKey: 'paymentMethod.name'
       },
       {
         header: 'Общая цена заказа',
