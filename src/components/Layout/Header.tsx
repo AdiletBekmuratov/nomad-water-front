@@ -47,17 +47,19 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
           </Link>
         </div>
 
-        <div className="flex items-center justify-end gap-2 md:gap-5 flex-1">
+        <div className={`flex items-center justify-end gap-2 md:gap-5 flex-1`}>
           <Link to="/myFavourite" className={`cursor-pointer`}>
             <AiOutlineHeart className="h-6 w-6" />
           </Link>
-          <AiOutlineShoppingCart className="h-6 w-6" />
-          {/* {isDrop && <Dropdown />} */}
+          <Link to="/order">
+            <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
+          </Link>
+
           <Link to="/userPage">
             <img src={avatar} alt="avatar" className={`hidden lg:block cursor-pointer`} />
           </Link>
 
-          <RxExit className="h-6 w-6" onClick={handleLogout} />
+          <RxExit className="h-6 w-6 cursor-pointer" onClick={handleLogout} />
         </div>
       </div>
       {/* нужно будет подвинуть */}

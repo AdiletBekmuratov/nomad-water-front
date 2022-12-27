@@ -1,10 +1,18 @@
 import { FC } from 'react';
 //import { Link } from 'react-router-dom';
+import React from 'react';
 import { AddFavourite } from './AddFavourite';
 import { ICard } from '@/assets/types/types';
 // import { Description } from './Description';
 import { OrderStatus } from '@/components/Catalog/OrderStatus';
+import { Counter } from './Counter';
 import { Button } from '@/components/Forms';
+import { IProduct } from '@/types';
+
+export type IOrderItem = {
+  counter: number;
+  items: IProduct;
+};
 
 export const CardBottle: FC<ICard> = ({
   isFavourite,
@@ -13,6 +21,15 @@ export const CardBottle: FC<ICard> = ({
   cardType,
   deliveryStatus
 }) => {
+  const initial: IOrderItem = {
+    counter: 1,
+    items: items
+  };
+  const [counter, setCounter] = React.useState<number>(1);
+  const [order, setOrder] = React.useState<IOrderItem>(initial);
+  const addItemsOrder = (items: IProduct, counter: number) => {
+    console.log(items, counter);
+  };
   return (
     <div
       className={`${
@@ -31,11 +48,19 @@ export const CardBottle: FC<ICard> = ({
         <div className={'bg-white rounded-3xl w-40 h-40 flex items-center justify-center p-2 '}>
           <img src={items.imageUrl} alt="bottle" className="object-contain" />
         </div>
-        <div className={`grid grid-cols-1 p-3`}>
+        <div className={`grid grid-cols-1 gap-1 p-1`}>
           {items.description}
           <h2 className={`sm:text-lg font-semibold sm:mt-0`}>{items.productPrice} T</h2>
           {cardType === 'order' && <OrderStatus variants={deliveryStatus} />}
-          <Button className={`w-40 h-12`}>В корзину</Button>
+
+          <Counter counter={counter} setCounter={setCounter} />
+          <Button
+            className="w-40 h-10"
+            onClick={() => {
+              addItemsOrder(items, counter);
+            }}>
+            В корзину
+          </Button>
         </div>
       </div>
     </div>
