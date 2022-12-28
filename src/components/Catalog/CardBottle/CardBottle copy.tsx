@@ -32,9 +32,7 @@ export const CardBottle: FC<ICard> = ({
     isMounted.current = true;
     setIsProductCart(true);
   }, [cartItems]);
-  const itemsInCart = JSON.parse(localStorage.getItem(`cartItems`));
 
- 
   return (
     <div
       className={`${
@@ -59,7 +57,7 @@ export const CardBottle: FC<ICard> = ({
           {cardType === 'order' && <OrderStatus variants={deliveryStatus} />}
 
           {/* <Counter counter={counter} setCounter={setCounter} /> */}
-          {!itemsInCart.includes(`id: ${items.id}`) ? (
+          {isProductCart ? (
             <Button
               className="w-40 h-10"
               onClick={() => {
@@ -73,7 +71,7 @@ export const CardBottle: FC<ICard> = ({
               onClick={() => {
                 addItemsCart(items);
               }}>
-              Товар в корзине
+              В корзине
             </Button>
           )}
         </div>
