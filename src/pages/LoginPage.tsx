@@ -75,15 +75,27 @@ const LoginPage = () => {
 
   const handleSubmit = async (values: ILoginForm) => {
     console.log(values);
-    toast
-      .promise(dispatch(login({ phone: values.phone, password: values.password })).unwrap(), {
-        success: 'Вход выполнен успешно!',
-        loading: 'Загрузка',
-        error: (err) => err.toString()
-      })
-      .then(() => {
-        navigate('/');
-      });
+    if (!isPhone) {
+      toast
+        .promise(dispatch(login({ phone: phoneNumb, password: values.password })).unwrap(), {
+          success: 'Вход выполнен успешно!',
+          loading: 'Загрузка',
+          error: (err) => err.toString()
+        })
+        .then(() => {
+          navigate('/');
+        });
+    } else {
+      toast
+        .promise(dispatch(login({ phone: values.phone, password: values.password })).unwrap(), {
+          success: 'Вход выполнен успешно!',
+          loading: 'Загрузка',
+          error: (err) => err.toString()
+        })
+        .then(() => {
+          navigate('/');
+        });
+    }
   };
 
   const validation = Yup.object().shape({
