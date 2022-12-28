@@ -15,6 +15,8 @@ type Props = {
   isValid: boolean;
   address: Object;
   handleTotal?: any;
+  buttonAction?: any;
+  initial?: any;
 };
 
 export const Total: FC<Props> = ({
@@ -26,7 +28,9 @@ export const Total: FC<Props> = ({
   isValid,
   address,
   handleTotal,
-  data
+  data,
+  buttonAction,
+  initial
 }) => {
   const navigate = useNavigate();
   const productPrice = data.map((items) => items.productPrice);
@@ -83,6 +87,7 @@ export const Total: FC<Props> = ({
           buttonColor="bg-dark-blue font-montserrat"
           disabled={!isValid}
           onClick={() => {
+            buttonAction(initial);
             alert(JSON.stringify(address, null, 2));
             navigate('/orderinfo'); // TODO: Когда будут данные с сервера то направить на order-id
           }}>

@@ -208,6 +208,8 @@ const OrderRegistration: FC = () => {
             isValid={isValid}
             address={address}
             handleTotal={handleTotal}
+            buttonAction={handleCreate}
+            initial={initial}
           />
 
           <Footer className={`items-center flex justify-center lg:hidden`}>
