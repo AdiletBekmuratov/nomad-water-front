@@ -76,7 +76,7 @@ const LoginPage = () => {
   const handleSubmit = async (values: ILoginForm) => {
     console.log(values);
     toast
-      .promise(dispatch(login({ phone: phoneNumb, password: values.password })).unwrap(), {
+      .promise(dispatch(login({ phone: values.phone, password: values.password })).unwrap(), {
         success: 'Вход выполнен успешно!',
         loading: 'Загрузка',
         error: (err) => err.toString()
