@@ -62,7 +62,7 @@ const OrderRegistration: FC = () => {
   const addressOrder = `${address.street},${address.houseNumber},${address['flat']}`;
 
   // const productIds: IOrderQuality = { productId: 1, quantity: 1 };
-  const productId = Number(dataProduct[0].id);
+  const productId = dataProduct.length ? dataProduct[0].id : 0;
   const quantity = count;
   const initial: IUsersOrder = {
     address: addressOrder,
