@@ -18,10 +18,10 @@ const OrderHistory = () => {
         header: 'Комментарий',
         accessorKey: 'comment'
       },
-      {
-        header: 'Имя курьера',
-        accessorKey: 'courier.user.firstname'
-      },
+      // {
+      //   header: 'Имя курьера',
+      //   accessorKey: 'courier.user.firstname'
+      // },
       {
         header: 'Время заказа',
         accessorKey: 'orderDateTime'
