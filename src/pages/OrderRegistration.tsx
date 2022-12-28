@@ -1,14 +1,16 @@
 import { FC, useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import React from 'react';
-import { Button } from '@/components/Forms';
+import { Button, FormContainer, Input } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';
 import { Footer, OrderAcordion, OrderCard, PaymentComponent, Total } from '@/components/Order';
 import EditCard from '@/components/Order/EditCard';
-import { IOrderQuality, IProduct, IUsersOrder } from '@/types';
+import { IProduct, IUsersOrder } from '@/types';
 import { toast } from 'react-hot-toast';
 import { useCreateOrderMutation } from '@/redux/services/base.service';
+import Checkbox from '@/components/Checkbox';
+import * as yup from 'yup';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
@@ -18,12 +20,13 @@ const OrderRegistration: FC = () => {
   const dataProduct: IProduct[] = cartItems ? JSON.parse(cartItems) : [];
   //const productPriceArr = dataProduct.map((item) => item.productPrice);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [isValid, setIsValid] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
-  const [address, setAddress] = useState({});
+  const [address, setAddress] = useState([]);
   const [pickup, setPickup] = useState(false);
   const [delivery, setDelivery] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('Наличными');
 
   const [count, setCount] = useState(1);
 
@@ -55,15 +58,40 @@ const OrderRegistration: FC = () => {
         //setVisible(false);
       });
   };
-  const productIds: IOrderQuality = { productId: 1, quantity: 1 };
+
+  const addressOrder = `${address.street},${address.houseNumber},${address['flat']}`;
+
+  // const productIds: IOrderQuality = { productId: 1, quantity: 1 };
+  const productId = Number(dataProduct[0].id);
+  const quantity = count;
   const initial: IUsersOrder = {
-    address: '',
-    comment: '',
+    address: addressOrder,
+    comment: address.addressComment,
     isSale: false,
-    paymentMethod: 1,
-    phone: '',
-    orderProductsDto: productIds,
+    paymentMethod: paymentMethod,
+    phone: address.phone,
+    orderProductsDto: [{ productId, quantity }],
     totalPrice: total
+  };
+  const paymentStyle = 'placeholder:text-gray-300 font-montserrat';
+  const validationSchema = yup.object().shape({
+    cardNumber: yup.string().required('Поле обязательное'),
+    validity: yup.string().required('Поле обязательное'),
+    cvc: yup.string().required('Поле обязательное').min(3, 'Должно быть 3').max(3),
+    nameOnCard: yup.string().required('Поле обязательное')
+  });
+  type initialValues = {
+    cardNumber: string;
+    validity: string;
+    cvc: string;
+    nameOnCard: string;
+  };
+
+  const initialVal: initialValues = {
+    cardNumber: '',
+    validity: '',
+    cvc: '',
+    nameOnCard: ''
   };
   return (
     <Layout>
@@ -92,15 +120,81 @@ const OrderRegistration: FC = () => {
             setIsValid={setIsValid}
           />
           <EditCard className={`lg:order-4 lg:col-span-2 lg:w-full lg:row-start-3`}>
-            <h3 className={`font-semibold text-sm ${userStyle}`}>Способ оплаты</h3>
+            <h3 className={`font-semibold text-sm ${userStyle}`}>
+              Способ оплаты - - - - - - - для смены нажмите кнопку
+            </h3>
+
             <button
+              className={`p-2 border border-dashed border-dark-blue rounded-xl`}
+              onClick={() => {
+                if (paymentMethod === 'Наличными') {
+                  setPaymentMethod('Картой');
+                } else {
+                  setPaymentMethod('Наличными');
+                }
+                return paymentMethod;
+              }}>
+              {paymentMethod}
+            </button>
+            {paymentMethod === 'Картой' && (
+              <div>
+                <FormContainer
+                  initialValues={initialVal}
+                  validationSchema={validationSchema}
+                  setIsValid={setIsValid}
+                  className="px-6">
+                  <div className="mb-2">
+                    <Input
+                      inputType="formik"
+                      name="cardNumber"
+                      id="cardNumber"
+                      label="Номер банковской карты"
+                      mask="9999 9999 9999 9999"
+                      placeholder="4444 0000 0000 0000"
+                      className={paymentStyle}
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 mb-2">
+                    <div className="mr-2">
+                      <Input
+                        inputType="formik"
+                        name="validity"
+                        id="validity"
+                        label="Срок действия"
+                        className={paymentStyle}
+                        placeholder="01/01"
+                        mask="99/99"
+                      />
+                    </div>
+                    <div className="ml-2">
+                      <Input name="cvc" id="cvc" inputType="formik" label="CVC" type="password" />
+                    </div>
+                  </div>
+                  <div className="mb-5">
+                    <Input
+                      inputType="formik"
+                      name="nameOnCard"
+                      id="nameOnCard"
+                      label="Имя и фамилия на карте"
+                      className={paymentStyle}
+                      placeholder="JOHN SMITH"
+                    />
+                  </div>
+                  <div className="border-b-2 mb-5">
+                    <Checkbox id="saveCard" name="saveCard" label="Сохранить карту" />
+                  </div>
+                </FormContainer>
+              </div>
+            )}
+
+            {/* <button
               className="text-blue-light font-montserrat font-semibold text-xs"
               onClick={() => {
                 setIsEdited(true);
               }}
               value="payment">
               Выберите способ оплаты
-            </button>
+            </button> */}
           </EditCard>
 
           <Total

@@ -185,7 +185,7 @@ const LoginPage = () => {
                         name="phone"
                         label="Номер телефона"
                         width="w-full"
-                        mask="+7 (999) 999 99 99"
+                        mask="+79999999999"
                       />
                     </div>
                     <Button type="submit" loading={isLoading} className="col-span-3">

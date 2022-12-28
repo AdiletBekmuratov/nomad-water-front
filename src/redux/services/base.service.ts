@@ -104,7 +104,7 @@ export const baseApi = createApi({
     }),
     // createUser: builder.mutation<void, IUserFullCreate>({
     //   query: (body) => ({
-    //     url: `admin/user`,
+    //     url: `user`,
     //     method: 'POST',
     //     body
     //   }),
@@ -114,7 +114,7 @@ export const baseApi = createApi({
     //Обновить текущего пользователя
     updateUserMe: builder.mutation<void, IUserFullCreate>({
       query: (body) => ({
-        url: `admin/user/`,
+        url: `user/`,
         method: 'PUT',
         body
       }),
@@ -123,7 +123,7 @@ export const baseApi = createApi({
     //обновить юзера по ID
     updateUser: builder.mutation<void, IUserFullCreate>({
       query: (body) => ({
-        url: `admin/user/${Number(body.id)}`,
+        url: `user/${Number(body.id)}`,
         method: 'PUT',
         body
       }),
@@ -131,7 +131,7 @@ export const baseApi = createApi({
     }),
     deleteUser: builder.mutation<void, number>({
       query: (id) => ({
-        url: `admin/user/${Number(id)}`,
+        url: `user/${Number(id)}`,
         method: 'DELETE'
       }),
       invalidatesTags: [{ type: 'Users', id: 'LIST' }]

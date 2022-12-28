@@ -14,14 +14,13 @@ import React from 'react';
 //   phone: string;
 // };
 type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
-  setIsValid?: Function;
+  setIsValid: Function;
   setIsEdited?: Function;
   isEdited?: boolean;
-  setAddress?: Function;
+  setAddress: Function;
 };
 
 export const Accordion: FC<Props> = (props) => {
-  const [isOpenEdit, setIsOpenEdit] = React.useState(false);
   const { user } = useAppSelector((state) => state.auth);
 
   const initialValues: IOrdersUser = {

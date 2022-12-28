@@ -6,7 +6,7 @@ type Props = DetailedHTMLProps<FormHTMLAttributes<HTMLFormElement>, HTMLFormElem
   children: ReactNode;
   initialValues: Object;
   validationSchema: Object;
-  buttonName: string;
+  buttonName?: string;
   setValues?: Function;
   setIsValid?: Function;
   buttonAction?: Function;
@@ -33,7 +33,7 @@ export const FormContainer: FC<Props> = (props) => {
               {props.setIsValid(isValid)}
             </>
           ) : (
-            <Button disabled={!isValid}>{props.buttonName}</Button>
+            <Button disabled={!isValid}>Сохранить</Button>
           )}
         </Form>
       )}
