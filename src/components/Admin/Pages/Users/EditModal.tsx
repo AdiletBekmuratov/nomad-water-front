@@ -1,12 +1,13 @@
 import { FC, Dispatch, SetStateAction } from 'react';
 
-import { useGetAllWarehousesQuery, useUpdateUserMutation } from '@/redux/services/base.service';
+import { useGetAllWarehousesQuery } from '@/redux/services/base.service';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 import { Form, Formik } from 'formik';
 import toast from 'react-hot-toast';
+import { useUpdateUserMutation } from '@/redux/services/user.service';
 
 interface IEditModalProps {
   visible: boolean;

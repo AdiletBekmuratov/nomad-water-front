@@ -88,7 +88,6 @@ export const userApi = createApi({
       }),
       invalidatesTags: [{ type: 'Users', id: 'LIST' }]
     }),
-    ///api/user/active/{isActive}
     ///api/user/favorite
     //api/user/favorite/{id}
     //api/user/favorite/{id}
