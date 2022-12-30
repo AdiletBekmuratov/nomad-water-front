@@ -8,7 +8,9 @@ import { OrderStatus } from '@/components/Catalog/OrderStatus';
 // import { Counter } from './Counter';
 import { Button } from '@/components/Forms';
 import { IProduct } from '@/types';
-import { useGetAllUsersQuery } from '@/redux/services/user.service';
+
+import { useLocalStorage } from '@/hooks';
+import { useAppSelector } from '@/hooks/useAppSelector';
 
 export const CardBottle: FC<ICard> = ({
   items,
@@ -17,24 +19,21 @@ export const CardBottle: FC<ICard> = ({
   setIsFavourite,
   deliveryStatus
 }) => {
-  const { data: users = [], isLoading } = useGetAllUsersQuery();
-  //let [counter, setCounter] = React.useState<number>(items.quantity ? items.quantity : 1);
+  // const { user, isLoading } = useAppSelector((state) => state.auth);
+  //const [counter, setCounter] = React.useState<number>(items.quantity ? items.quantity : 1);
   const [cartItems, setCartItems] = React.useState<IProduct[]>([]);
-  const [isProductCart, setIsProductCart] = React.useState(false);
+  const [cartItemsArr, setCartItemsArr] = React.useState<IProduct[]>([]);
   const addItemsCart = (items: IProduct) => {
+    //console.log(items);
     setCartItems([...cartItems, items]);
-    console.log(cartItems);
-  };
-  const isMounted = React.useRef(false);
-  React.useEffect(() => {
-    if (isMounted.current) {
-      const json = JSON.stringify(cartItems);
-      localStorage.setItem('cartItems', json);
+    for (let i = 1; i < cartItems.length; i++) {
+      if (items.id === cartItems[i].id) {
+        setCartItemsArr([...cartItemsArr, items]);
+      }
     }
-    isMounted.current = true;
-    setIsProductCart(true);
-  }, [cartItems]);
-  //const itemsInCart: string = JSON.parse(localStorage.getItem(`cartItems`));
+    console.log(cartItems);
+    // useLocalStorage('cartItems', cartItems);
+  };
 
   return (
     <div
