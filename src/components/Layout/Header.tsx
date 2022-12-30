@@ -8,14 +8,14 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 
 import { FaUserTie } from 'react-icons/fa';
 import logo from '@/assets/crm/logoHead.png';
+import { RxExit } from 'react-icons/rx';
 import {
   AiOutlineHeart,
   AiOutlineLogin,
   AiOutlineMenu,
   AiOutlineShoppingCart
 } from 'react-icons/ai';
-import { RxExit } from 'react-icons/rx';
-import { Button } from '../Forms';
+
 //import { useState } from 'react';
 
 interface IHeader {
@@ -88,17 +88,15 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
             />
           </div>
           <div className="flex justify-center items-center flex-1">
-            <Link to="/" className={``}>
+            <Link to="/" className={`mx-auto`}>
               <img src={logo} alt="nomadLogo" />
             </Link>
-            <div className={`flex items-center justify-end gap-2 md:gap-5 flex-1`}>
-              
-
-              <Link to="/login/user" className="flex items-center gap-1">
-                Войти
-                <AiOutlineLogin className={`h-6 w-6 cursor-pointer`} />
-              </Link>
-            </div>
+          </div>
+          <div className={`flex items-center justify-end gap-2 md:gap-5 flex-1`}>
+            <Link to="/login/user" className="flex items-center gap-1">
+              Войти
+              <AiOutlineLogin className={`h-6 w-6 cursor-pointer`} />
+            </Link>
           </div>
         </div>
       )}

@@ -17,8 +17,7 @@ const employRole = [
   { id: 1, role: 'ROLE_KEEPER', name: 'keeper' },
   { id: 2, role: 'ROLE_COURIER', name: 'courier' },
   { id: 3, role: 'ROLE_MASTER', name: 'master' },
-  { id: 4, role: 'ROLE_EMPLOYEE', name: 'employee' },
-  { id: 5, role: 'ROLE_ADMIN', name: 'admin' }
+  { id: 4, role: 'ROLE_EMPLOYEE', name: 'employee' }
 ];
 interface ICreateModalProps {
   visible: boolean;
@@ -114,7 +113,8 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
                       </option>
                     ))}
                   </Input>
-                  {props.values.role !== 'ROLE_ADMIN' && (
+                  {(props.values.role === 'ROLE_MASTER' ||
+                    props.values.role === 'ROLE_EMPLOYEE') && (
                     <Input
                       inputType="formik"
                       name="warehouseId"

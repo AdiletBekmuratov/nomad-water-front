@@ -8,6 +8,7 @@ import { OrderStatus } from '@/components/Catalog/OrderStatus';
 // import { Counter } from './Counter';
 import { Button } from '@/components/Forms';
 import { IProduct } from '@/types';
+import { useGetAllUsersQuery } from '@/redux/services/user.service';
 
 export const CardBottle: FC<ICard> = ({
   items,
@@ -16,6 +17,7 @@ export const CardBottle: FC<ICard> = ({
   setIsFavourite,
   deliveryStatus
 }) => {
+  const { data: users = [], isLoading } = useGetAllUsersQuery();
   //let [counter, setCounter] = React.useState<number>(items.quantity ? items.quantity : 1);
   const [cartItems, setCartItems] = React.useState<IProduct[]>([]);
   const [isProductCart, setIsProductCart] = React.useState(false);
@@ -32,9 +34,8 @@ export const CardBottle: FC<ICard> = ({
     isMounted.current = true;
     setIsProductCart(true);
   }, [cartItems]);
-  const itemsInCart = JSON.parse(localStorage.getItem(`cartItems`));
+  //const itemsInCart: string = JSON.parse(localStorage.getItem(`cartItems`));
 
- 
   return (
     <div
       className={`${
@@ -59,7 +60,8 @@ export const CardBottle: FC<ICard> = ({
           {cardType === 'order' && <OrderStatus variants={deliveryStatus} />}
 
           {/* <Counter counter={counter} setCounter={setCounter} /> */}
-          {!itemsInCart.includes(`id: ${items.id}`) ? (
+          {/* {users.length> && ( */}
+          <div>
             <Button
               className="w-40 h-10"
               onClick={() => {
@@ -67,15 +69,15 @@ export const CardBottle: FC<ICard> = ({
               }}>
               В корзину
             </Button>
-          ) : (
-            <Button
-              className="w-40 h-10 bg-blue-400"
-              onClick={() => {
-                addItemsCart(items);
-              }}>
-              Товар в корзине
-            </Button>
-          )}
+            {/* // ) : (
+            //   <Button
+            //     className="w-40 h-10 bg-blue-400"
+            //     onClick={() => {
+            //       addItemsCart(items);
+            //     }}>
+            //     Товар в корзине
+            //   </Button>)} */}
+          </div>
         </div>
       </div>
     </div>

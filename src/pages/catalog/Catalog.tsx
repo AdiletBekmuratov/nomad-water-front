@@ -28,7 +28,7 @@ const Catalog: FC = () => {
   };
   const categoriesButStyle = `flex items-center justify-center py-2 px-3 rounded-2xl bg-white cursor-pointer`;
 
-  // //фильтрация каталога по кнопкам
+  //фильтрация каталога по кнопкам
   // const [choice, setChoice] = useState('');
   // const onChoiceButton = (value: string) => {
   //   setChoice(value);
