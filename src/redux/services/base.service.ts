@@ -1,16 +1,11 @@
 import {
-  IUserFullCreate,
-  IUserFull,
   IOrder,
-  IEmployeeCreate,
-  IEmployeeCreateLink,
   IWorker,
   IProduct,
   IProductCategoryCreate,
   IProductCreate,
   IWarehouse,
   IWarehouseUpdate,
-  IuserCreate,
   IUsersOrder
 } from '@/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
@@ -23,9 +18,7 @@ export const baseApi = createApi({
       return headers;
     }
   }),
-  tagTypes: ['Products', 'ProductCategory',
-    'Warehouses', 'Worker', 'Order'
-  ],
+  tagTypes: ['Products', 'ProductCategory', 'Warehouses', 'Worker', 'Order'],
 
   endpoints: (builder) => ({
     //Products
@@ -36,9 +29,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Products', id } as const)),
-            { type: 'Products', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Products', id } as const)),
+              { type: 'Products', id: 'LIST' }
+            ]
           : [{ type: 'Products', id: 'LIST' }]
     }),
     createProduct: builder.mutation<IProduct, IProductCreate>({
@@ -99,9 +92,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
-            { type: 'ProductCategory', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+              { type: 'ProductCategory', id: 'LIST' }
+            ]
           : [{ type: 'ProductCategory', id: 'LIST' }]
     }),
     updateProductCategory: builder.mutation<void, IProductCategoryCreate>({
@@ -128,9 +121,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
-            { type: 'Warehouses', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+              { type: 'Warehouses', id: 'LIST' }
+            ]
           : [{ type: 'Warehouses', id: 'LIST' }]
     }),
     createWarehouse: builder.mutation<void, IWarehouseUpdate>({
@@ -157,50 +150,6 @@ export const baseApi = createApi({
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
     }),
 
-    // //Couriers
-    // createCourier: builder.mutation<number, ICouriersCreate>({
-    //   query: (body) => ({
-    //     url: `courier`,
-    //     method: 'POST',
-    //     body
-    //   }),
-    //   invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
-    // }),
-    // getAllCouriers: builder.query<ICouriers[], void>({
-    //   query: () => ({
-    //     url: `courier`
-    //   }),
-    //   providesTags: (result) =>
-    //     result
-    //       ? [
-    //           ...result.map(({ id }) => ({ type: 'Couriers', id } as const)),
-    //           { type: 'Couriers', id: 'LIST' }
-    //         ]
-    //       : [{ type: 'Couriers', id: 'LIST' }]
-    // }),
-    // getCourier: builder.query<ICouriers[], number>({
-    //   query: (id) => ({
-    //     url: `courier${Number(id)}`
-    //   }),
-    //   providesTags: [{ type: 'Couriers' }]
-    // }),
-
-    // deleteCourier: builder.mutation<void, number>({
-    //   query: (id) => ({
-    //     url: `courier/${Number(id)}`,
-    //     method: 'DELETE'
-    //   }),
-    //   invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
-    // }),
-    // updateCourier: builder.mutation<void, ICouriersCreate>({
-    //   query: (body) => ({
-    //     url: `courier/${Number(body.car)}`,
-    //     method: 'PUT',
-    //     body
-    //   }),
-    //   invalidatesTags: [{ type: 'Couriers', id: 'LIST' }]
-    // }),
-
     // Warehouse keeper
     createWarehouseWorker: builder.mutation<void, IWorker>({
       query: (body) => ({
@@ -225,9 +174,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Worker', id } as const)),
-            { type: 'Worker', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Worker', id } as const)),
+              { type: 'Worker', id: 'LIST' }
+            ]
           : [{ type: 'Worker', id: 'LIST' }]
     }),
     deleteWorker: builder.mutation<void, number>({
@@ -254,21 +203,15 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Order', id } as const)),
-            { type: 'Order', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Order', id } as const)),
+              { type: 'Order', id: 'LIST' }
+            ]
           : [{ type: 'Order', id: 'LIST' }]
     })
   })
 });
 
 export const {
-  //Couriers
-  // useGetAllCouriersQuery,
-  // useCreateCourierMutation,
-  // useDeleteCourierMutation,
-  // useUpdateCourierMutation,
-
   // Products
   useGetAllProductsQuery,
   useCreateProductMutation,
