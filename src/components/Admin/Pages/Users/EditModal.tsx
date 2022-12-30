@@ -46,9 +46,9 @@ export const EditModal: FC<IEditModalProps> = ({ visible, setVisible, data }) =>
             <>
               <Input inputType="formik" name="id" id="id" label="ID" disabled />
               <div className={`grid grid-cols-1 sm:grid-cols-3 items-center`}>
-                <Input inputType="formik" name="firstname" id="firstname" label="Фамилия" />
-                <Input inputType="formik" name="middleName" id="middleName" label="Имя" />
-                <Input inputType="formik" name="lastname" id="lastname" label="Отчество" />
+                <Input inputType="formik" name="lastname" id="lastname" label="Фамилия" />
+                <Input inputType="formik" name="firstname" id="firstname" label="Имя" />
+                <Input inputType="formik" name="middleName" id="middleName" label="Отчество" />
               </div>
 
               <div className={`flex flex-1 flex-col md:flex`}>
@@ -60,7 +60,7 @@ export const EditModal: FC<IEditModalProps> = ({ visible, setVisible, data }) =>
                     inputType="formik"
                     name="addressComment"
                     id="addressComment"
-                    label="Этаж"
+                    label="Коментарий"
                   />
                 </div>
               </div>

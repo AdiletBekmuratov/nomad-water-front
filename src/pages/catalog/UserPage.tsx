@@ -21,7 +21,7 @@ const UserPage = () => {
           <div className="flex justify-center">
             <p className="text-sm md:text-base">
               <strong>ФИО:</strong>
-              {`${user?.firstname} ${user?.lastname} `}
+              {` ${user?.lastname} ${user?.firstname}`}
             </p>
           </div>
           <div className="flex justify-center">
@@ -39,11 +39,14 @@ const UserPage = () => {
             </p>
           </div>
         </div>
-        <div className="mt-4 md:w-1/3 mx-auto">
+        <div className={`mt-4 md:w-1/3 mx-auto`}>
           <Button onClick={() => setIsOpenEdit(true)}>Изменить данные</Button>
           <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
         </div>
-        <OrderHistory />
+        <div className={`mt-4 mx-auto`}>
+          <h2 className={`text-center font-semibold text-2xl`}>Заказы</h2>
+          <OrderHistory />
+        </div>
       </div>
     </Layout>
   );

@@ -1,15 +1,23 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import avatar from '@/assets/crm/avatar.png';
-import logo from '@/assets/crm/logoHead.png';
-import { AiOutlineHeart, AiOutlineMenu, AiOutlineShoppingCart } from 'react-icons/ai';
-import { RxExit } from 'react-icons/rx';
-//import { useState } from 'react';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { toast } from 'react-hot-toast';
 import { logout } from '@/redux/slices/auth';
 import { useAppSelector } from '@/hooks/useAppSelector';
+
+import { FaUserTie } from 'react-icons/fa';
+import logo from '@/assets/crm/logoHead.png';
+import {
+  AiOutlineHeart,
+  AiOutlineLogin,
+  AiOutlineMenu,
+  AiOutlineShoppingCart
+} from 'react-icons/ai';
+import { RxExit } from 'react-icons/rx';
+import { Button } from '../Forms';
+//import { useState } from 'react';
+
 interface IHeader {
   className?: string;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -35,44 +43,65 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
 
   return (
     <div className="bg-white">
-      <div className={`${headerStyle}`}>
-        <div className="flex-1">
-          <AiOutlineMenu
-            onClick={() => setIsOpen((prev) => !prev)}
-            className={`hidden lg:block cursor-pointer w-6 h-6`}
-          />
-        </div>
+      {user ? (
+        <div className={`${headerStyle}`}>
+          <div className="flex-1">
+            <AiOutlineMenu
+              onClick={() => setIsOpen((prev) => !prev)}
+              className={`hidden lg:block cursor-pointer w-6 h-6`}
+            />
+          </div>
 
-        <div className="flex justify-center items-center flex-1">
-          <Link to="/" className={``}>
-            <img src={logo} alt="nomadLogo" />
-          </Link>
-        </div>
-
-        <div className={`flex items-center justify-end gap-2 md:gap-5 flex-1`}>
-          <Link to="/myFavourite" className={`cursor-pointer`}>
-            <AiOutlineHeart className="h-6 w-6" />
-          </Link>
-
-          {/* {isDrop && <Dropdown />} */}
-          {user?.role === 'ROLE_COURIER' ? (
-            <Link to="/courier">
-              <img src={avatar} alt="avatar" className={`hidden lg:block cursor-pointer`} />
+          <div className="flex justify-center items-center flex-1">
+            <Link to="/" className={``}>
+              <img src={logo} alt="nomadLogo" />
             </Link>
-          ) : (
-            <Link to="/userPage">
-              <img src={avatar} alt="avatar" className={`hidden lg:block cursor-pointer`} />
+          </div>
+
+          <div className={`flex items-center justify-end gap-2 md:gap-5 flex-1`}>
+            <Link to="/myFavourite" className={`cursor-pointer`}>
+              <AiOutlineHeart className="h-6 w-6" />
             </Link>
-          )}
+            <Link to="/order">
+              <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
+            </Link>
+            {/* {isDrop && <Dropdown />} */}
+            {user?.role === 'ROLE_COURIER' ? (
+              <Link to="/courier">
+                <FaUserTie className="h-6 w-6" />
+              </Link>
+            ) : (
+              <Link to="/userPage">
+                <FaUserTie className="h-6 w-6" />
+              </Link>
+            )}
 
-          <Link to="/order">
-            <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
-          </Link>
-
-          <RxExit className="h-6 w-6 cursor-pointer" onClick={handleLogout} />
+            <RxExit className="h-6 w-6 cursor-pointer" onClick={handleLogout} />
+          </div>
         </div>
-      </div>
-      {/* нужно будет подвинуть */}
+      ) : (
+        <div className={`${headerStyle}`}>
+          <div className="flex-1">
+            <AiOutlineMenu
+              onClick={() => setIsOpen((prev) => !prev)}
+              className={`hidden lg:block cursor-pointer w-6 h-6`}
+            />
+          </div>
+          <div className="flex justify-center items-center flex-1">
+            <Link to="/" className={``}>
+              <img src={logo} alt="nomadLogo" />
+            </Link>
+            <div className={`flex items-center justify-end gap-2 md:gap-5 flex-1`}>
+              
+
+              <Link to="/login/user" className="flex items-center gap-1">
+                Войти
+                <AiOutlineLogin className={`h-6 w-6 cursor-pointer`} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

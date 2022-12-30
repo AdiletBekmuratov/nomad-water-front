@@ -49,15 +49,15 @@ const AdminAllUsers = () => {
         accessorKey: 'id'
       },
       {
-        header: 'Фамилия',
+        header: 'Имя',
         accessorKey: 'firstname'
       },
       {
-        header: 'Имя',
+        header: 'Отчество',
         accessorKey: 'middleName'
       },
       {
-        header: 'Отчество',
+        header: 'Фамилия',
         accessorKey: 'lastname'
       },
       {

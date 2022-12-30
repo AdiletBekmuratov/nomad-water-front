@@ -26,7 +26,7 @@ const OrderRegistration: FC = () => {
   const [address, setAddress] = useState([]);
   const [pickup, setPickup] = useState(false);
   const [delivery, setDelivery] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('Наличными');
+  const [paymentMethod, setPaymentMethod] = useState('Картой');
 
   const [count, setCount] = useState(1);
 

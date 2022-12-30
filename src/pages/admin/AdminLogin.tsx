@@ -29,19 +29,20 @@ const AdminLogin = () => {
   useEffect(() => {
     if (!user) {
       navigate('/admin/login');
+    } else {
+      navigate('/admin/allUsers');
     }
   }, [user]);
 
   const handleSubmit = async (values: ILoginForm) => {
-    toast
-      .promise(dispatch(login(values)).unwrap(), {
-        success: 'Вход выполнен успешно!',
-        loading: 'Загрузка',
-        error: (err) => err.toString()
-      })
-      .then(() => {
-        navigate('/admin/allUsers');
-      });
+    toast.promise(dispatch(login(values)).unwrap(), {
+      success: 'Вход выполнен успешно!',
+      loading: 'Загрузка',
+      error: (err) => err.toString()
+    });
+    // .finally(() => {
+    //   navigate('/admin/allUsers');
+    // });
   };
 
   // };

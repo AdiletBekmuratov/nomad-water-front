@@ -39,10 +39,10 @@ const Users = lazy(() => import('@/pages/catalog/Users'));
 const UserPage = lazy(() => import('@/pages/catalog/UserPage'));
 const MyFavourite = lazy(() => import('@/pages/catalog/MyFavourite'));
 
+
 const AppRoutes = () => {
   const { user, isLoading } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     const getUser = async () => {
       await dispatch(getMe());

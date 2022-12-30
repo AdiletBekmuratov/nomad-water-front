@@ -107,9 +107,9 @@ export const baseApi = createApi({
     //     url: `user`,
     //     method: 'POST',
     //     body
-    //   }),
-    //   invalidatesTags: [{ type: 'Users', id: 'LIST' }]
+    //   }),atesTags: [{ type: 'Users', id: 'LIST' }]
     // }),
+    //   invalid
 
     //Обновить текущего пользователя
     updateUserMe: builder.mutation<void, IUserFullCreate>({
