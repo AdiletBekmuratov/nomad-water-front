@@ -25,9 +25,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //Получить всех пользователей по активности /active/{isActive}
@@ -38,9 +38,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //получить юзера по роли
@@ -51,9 +51,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //юзер по ID
@@ -100,10 +100,19 @@ export const userApi = createApi({
       }),
       invalidatesTags: [{ type: 'Link', id: 'LIST' }]
     }),
-    //регистрация работников
+    //регистрация курьеров
     createEmployee: builder.mutation<void, IEmployeeCreate>({
       query: (body) => ({
-        url: `auth/register/employee/${body.token}`,
+        url: `auth/register/courier/${body.token}`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: [{ type: 'Link', id: 'LIST' }]
+    }),
+    //регистрация рабочего склада
+    createWorker: builder.mutation<void, IEmployeeCreate>({
+      query: (body) => ({
+        url: `auth/register/warehouseWorker/${body.token}`,
         method: 'POST',
         body
       }),
@@ -124,8 +133,7 @@ export const userApi = createApi({
         url: `/auth/generateCode`,
         method: `POST`,
         body
-      }),
-      invalidatesTags: [{ type: 'Phone', id: 'LIST' }]
+      })
     })
   })
 });
@@ -143,5 +151,6 @@ export const {
   useCreateEmployeeMutation,
   useCreateUserAccountMutation,
   useCreateEmployeeLinkMutation,
-  useGetUserCodeMutation
+  useGetUserCodeMutation,
+  useCreateWorkerMutation
 } = userApi;

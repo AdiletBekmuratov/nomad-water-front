@@ -8,13 +8,12 @@ import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 
 import { Link } from 'react-router-dom';
-import { useCreateEmployeeMutation } from '@/redux/services/user.service';
+import { useCreateEmployeeMutation, useCreateWorkerMutation } from '@/redux/services/user.service';
 
 const params = new URLSearchParams(location.search);
 const token = params.get('token');
 const role = params.get('role');
 const warehouseId = params.get('warehouseId');
-
 const INITIAL_VALUES: IEmployeeCreate = {
   token: token,
   role: role,
@@ -40,21 +39,31 @@ const INITIAL_VALUES: IEmployeeCreate = {
 };
 
 const AdminRegisterEmp: FC = () => {
-  // const [visibleCreate, setVisibleCreate] = React.useState(false);
-  //  const [response, setResponse] = React.useState<string[]>([]);
-
   const [visible, setVisible] = React.useState(false);
   const [create, { isLoading }] = useCreateEmployeeMutation();
+  const [createWorker, { isLoading: isL }] = useCreateWorkerMutation();
   const handleCreate = (values: IEmployeeCreate) => {
-    toast
-      .promise(create(values).unwrap(), {
-        loading: 'Загрузка...',
-        success: 'Получено',
-        error: (error) => JSON.stringify(error, null, 2)
-      })
-      .finally(() => {
-        // setVisibleCreate(false);
-      });
+    if (role === 'ROLE_COURIER') {
+      toast
+        .promise(create(values).unwrap(), {
+          loading: 'Загрузка...',
+          success: 'Получено',
+          error: (error) => JSON.stringify(error, null, 2)
+        })
+        .finally(() => {
+          // setVisibleCreate(false);
+        });
+    } else {
+      toast
+        .promise(createWorker(values).unwrap(), {
+          loading: 'Загрузка...',
+          success: 'Получено',
+          error: (error) => JSON.stringify(error, null, 2)
+        })
+        .finally(() => {
+          // setVisibleCreate(false);
+        });
+    }
   };
   const validation = yup.object().shape({
     phone: yup.string().required('Это поле обязательное')
@@ -138,11 +147,29 @@ const AdminRegisterEmp: FC = () => {
                     </div>
                   )}
                 </>
+                <Input
+                  inputType="formik"
+                  type="password"
+                  name="password"
+                  id="password"
+                  label="Пароль"
+                />
+                {role !== 'ROLE_COURIER' && (
+                  <>
+                    <Input
+                      inputType="formik"
+                      type="text"
+                      name="shopkeeperPhone"
+                      id="shopkeeperPhone"
+                      label="Номер владельца склада"
+                    />
+                  </>
+                )}
               </div>
             </>
 
             <div className="modal-action">
-              <Button type="submit" loading={isLoading} onClick={() => setVisible(true)}>
+              <Button type="submit" loading={isLoading || isL} onClick={() => setVisible(true)}>
                 Зарегистрироваться
               </Button>
               <Modal isOpenModal={visible} setIsOpenModal={setVisible}>

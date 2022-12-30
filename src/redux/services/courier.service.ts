@@ -27,7 +27,7 @@ export const courierApi = createApi({
     }),
     confirmOrder: builder.mutation<void, number>({
       query: (id) => ({
-        url: `/order/${Number(id)}`,
+        url: `/order/accept/${Number(id)}`,
         method: `PUT`
       }),
       invalidatesTags: [{ type: 'COrder', id: 'LIST' }]
