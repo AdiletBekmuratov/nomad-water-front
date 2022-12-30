@@ -4,7 +4,8 @@ import {
   useGetAllWarehousesQuery,
   useUpdateWarehouseWorkerMutation
 } from '@/redux/services/base.service';
-import { IWorker } from '@/types/warehouseWorker.types';
+import { IWorker } from '@/types';
+
 import { Form, Formik } from 'formik';
 import { FC, Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';

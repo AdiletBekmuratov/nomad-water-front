@@ -5,10 +5,8 @@ import * as yup from 'yup';
 import { IEmployeeCreateLink } from '@/types/employee.types';
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
-import {
-  useCreateEmployeeLinkMutation,
-  useGetAllWarehousesQuery
-} from '@/redux/services/base.service';
+import { useGetAllWarehousesQuery } from '@/redux/services/base.service';
+import { useCreateEmployeeLinkMutation } from '@/redux/services/user.service';
 
 const INITIAL_VALUES: IEmployeeCreateLink = {
   quantity: 1,

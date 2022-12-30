@@ -23,120 +23,11 @@ export const baseApi = createApi({
       return headers;
     }
   }),
-  tagTypes: [
-    'Users',
-    'Warehouses',
-    'Couriers',
-    'Products',
-    'ProductCategory',
-    'Worker',
-    'Link',
-    'Phone',
-    'Order'
+  tagTypes: ['Products', 'ProductCategory',
+    'Warehouses', 'Worker', 'Order'
   ],
 
   endpoints: (builder) => ({
-    //получение ссылок для реги
-    createEmployeeLink: builder.mutation<string[], IEmployeeCreateLink>({
-      query: (body) => ({
-        url: `user?quantity=${body.quantity}&role=${body.role}&warehouseId=${body.warehouseId}`,
-        method: 'POST'
-      }),
-      invalidatesTags: [{ type: 'Link', id: 'LIST' }]
-    }),
-    //регистрация работников
-    createEmployee: builder.mutation<void, IEmployeeCreate>({
-      query: (body) => ({
-        url: `auth/register/employee/${body.token}`,
-        method: 'POST',
-        body
-      }),
-      invalidatesTags: [{ type: 'Link', id: 'LIST' }]
-    }),
-    //Получения кода для входа в аккаунт
-    getUserCode: builder.mutation<void, IuserCreate>({
-      query: (body) => ({
-        url: `/auth/generateCode`,
-        method: `POST`,
-        body
-      }),
-      invalidatesTags: [{ type: 'Phone', id: 'LIST' }]
-    }),
-    //Регистрация пользователя
-    createUserAccount: builder.mutation<void, IUserFull>({
-      query: (body) => ({
-        url: `/auth/register/user`,
-        method: `POST`,
-        body
-      }),
-      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
-    }),
-    //Users
-    getAllUsers: builder.query<IUserFull[], void>({
-      query: () => ({
-        url: `user`
-      }),
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
-          : [{ type: 'Users', id: 'LIST' }]
-    }),
-    getUserID: builder.query<IUserFull, number>({
-      query: (id) => ({
-        url: `user/${Number(id)}`
-      }),
-      providesTags: [{ type: 'Users' }]
-    }),
-    getUserROLE: builder.query<IUserFull[], string>({
-      query: (role) => ({
-        url: `userWithRole/${role}`
-      }),
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
-          : [{ type: 'Users', id: 'LIST' }]
-    }),
-    // createUser: builder.mutation<void, IUserFullCreate>({
-    //   query: (body) => ({
-    //     url: `user`,
-    //     method: 'POST',
-    //     body
-    //   }),atesTags: [{ type: 'Users', id: 'LIST' }]
-    // }),
-    //   invalid
-
-    //Обновить текущего пользователя
-    updateUserMe: builder.mutation<void, IUserFullCreate>({
-      query: (body) => ({
-        url: `user/`,
-        method: 'PUT',
-        body
-      }),
-      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
-    }),
-    //обновить юзера по ID
-    updateUser: builder.mutation<void, IUserFullCreate>({
-      query: (body) => ({
-        url: `user/${Number(body.id)}`,
-        method: 'PUT',
-        body
-      }),
-      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
-    }),
-    deleteUser: builder.mutation<void, number>({
-      query: (id) => ({
-        url: `user/${Number(id)}`,
-        method: 'DELETE'
-      }),
-      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
-    }),
-
     //Products
     getAllProducts: builder.query<IProduct[], void>({
       query: () => ({
@@ -145,9 +36,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Products', id } as const)),
-              { type: 'Products', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Products', id } as const)),
+            { type: 'Products', id: 'LIST' }
+          ]
           : [{ type: 'Products', id: 'LIST' }]
     }),
     createProduct: builder.mutation<IProduct, IProductCreate>({
@@ -208,9 +99,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
-              { type: 'ProductCategory', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+            { type: 'ProductCategory', id: 'LIST' }
+          ]
           : [{ type: 'ProductCategory', id: 'LIST' }]
     }),
     updateProductCategory: builder.mutation<void, IProductCategoryCreate>({
@@ -237,9 +128,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
-              { type: 'Warehouses', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+            { type: 'Warehouses', id: 'LIST' }
+          ]
           : [{ type: 'Warehouses', id: 'LIST' }]
     }),
     createWarehouse: builder.mutation<void, IWarehouseUpdate>({
@@ -334,9 +225,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Worker', id } as const)),
-              { type: 'Worker', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Worker', id } as const)),
+            { type: 'Worker', id: 'LIST' }
+          ]
           : [{ type: 'Worker', id: 'LIST' }]
     }),
     deleteWorker: builder.mutation<void, number>({
@@ -363,35 +254,15 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Order', id } as const)),
-              { type: 'Order', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Order', id } as const)),
+            { type: 'Order', id: 'LIST' }
+          ]
           : [{ type: 'Order', id: 'LIST' }]
     })
   })
 });
 
 export const {
-  useGetUserOrderQuery,
-  useCreateOrderMutation,
-  //users
-  useCreateEmployeeLinkMutation,
-  useCreateEmployeeMutation,
-  useGetAllUsersQuery,
-  useGetUserIDQuery,
-  useGetUserROLEQuery,
-  useUpdateUserMeMutation,
-  //useCreateUserMutation,
-  useDeleteUserMutation,
-  useUpdateUserMutation,
-  useGetUserCodeMutation,
-  useCreateUserAccountMutation,
-  // Warehouses
-  useGetAllWarehousesQuery,
-  useCreateWarehouseMutation,
-  useDeleteWarehouseMutation,
-  useUpdateWarehouseMutation,
-
   //Couriers
   // useGetAllCouriersQuery,
   // useCreateCourierMutation,
@@ -410,6 +281,15 @@ export const {
   useDeleteProductCategoryMutation,
   useGetProductCategoryQuery,
   useUpdateProductCategoryMutation,
+  // Warehouses
+  useGetAllWarehousesQuery,
+  useCreateWarehouseMutation,
+  useDeleteWarehouseMutation,
+  useUpdateWarehouseMutation,
+
+  //orders
+  useGetUserOrderQuery,
+  useCreateOrderMutation,
 
   //Worker
   useGetAllWorkerQuery,

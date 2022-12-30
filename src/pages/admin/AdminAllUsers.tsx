@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import { useGetAllUsersQuery, useDeleteUserMutation } from '@/redux/services/base.service';
 
 import { CreateModal, EditModal } from '@/components/Admin/Pages/Couriers';
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
@@ -9,6 +8,7 @@ import { toast } from 'react-hot-toast';
 import { ColumnDef, Row } from '@tanstack/react-table';
 import { ActionButtons, DeleteModal, Table } from '@/components/Table';
 import { IUserFull } from '@/types';
+import { useDeleteUserMutation, useGetAllUsersQuery } from '@/redux/services/user.service';
 
 const AdminAllUsers = () => {
   const { data: users = [], isLoading } = useGetAllUsersQuery();

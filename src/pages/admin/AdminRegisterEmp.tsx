@@ -6,8 +6,9 @@ import * as yup from 'yup';
 import { IEmployeeCreate } from '@/types/employee.types';
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
-import { useCreateEmployeeMutation } from '@/redux/services/base.service';
+
 import { Link } from 'react-router-dom';
+import { useCreateEmployeeMutation } from '@/redux/services/user.service';
 
 const params = new URLSearchParams(location.search);
 const token = params.get('token');

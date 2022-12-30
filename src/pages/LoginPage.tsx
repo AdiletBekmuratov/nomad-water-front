@@ -8,13 +8,14 @@ import { toast } from 'react-hot-toast';
 import { login } from '@/redux/slices/auth';
 
 import * as Yup from 'yup';
-import { useCreateUserAccountMutation } from '@/redux/services/base.service';
+
 import { useEffect, useState } from 'react';
 import { Modal } from '@/components/Layout/Modal';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useNavigate } from 'react-router-dom';
 import Checkbox from '@/components/Checkbox';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { useCreateUserAccountMutation } from '@/redux/services/user.service';
 
 const SignInSchema = Yup.object().shape({
   phone: Yup.string().required('Обязательное поле для заполнения')

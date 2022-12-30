@@ -1,9 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import {
-  useDeleteCourierMutation,
-  // useGetAllCouriersQuery,
-  useGetUserROLEQuery
-} from '@/redux/services/base.service';
+
 import { ICouriers } from '@/types';
 
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
@@ -14,6 +10,7 @@ import { ColumnDef, Row } from '@tanstack/react-table';
 import { ActionButtons, DeleteModal, Table } from '@/components/Table';
 import { CreateModal } from '@/components/Admin/Pages/Couriers/CreateModal';
 import { EditModal } from '@/components/Admin/Pages/Couriers/EditModal';
+import { useGetUserROLEQuery } from '@/redux/services/user.service';
 
 const AdminCouriers = () => {
   //const { data: couriers = [], isLoading } = useGetAllCouriersQuery();

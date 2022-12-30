@@ -29,6 +29,6 @@ export interface IUser {
   phone: string;
 }
 
-export type IuserCreate = {
+export type IUserCreate = {
   phone: string;
 };

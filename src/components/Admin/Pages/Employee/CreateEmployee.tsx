@@ -2,10 +2,11 @@ import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 import {
   useCreateWarehouseWorkerMutation,
-  useGetAllWarehousesQuery,
-  useGetUserROLEQuery
+  useGetAllWarehousesQuery
 } from '@/redux/services/base.service';
-import { IWorker } from '@/types/warehouseWorker.types';
+import { useGetUserROLEQuery } from '@/redux/services/user.service';
+import { IWorker } from '@/types';
+
 import { Form, Formik } from 'formik';
 import { Dispatch, FC, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
