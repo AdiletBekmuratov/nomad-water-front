@@ -6,7 +6,10 @@ import { baseApi } from './services/base.service';
 import authReducer from './slices/auth';
 import { userApi } from './services/user.service';
 
+import cartSlice from './slices/cartSlice';
+
 const rootReducer = combineReducers({
+  cart: cartSlice,
   auth: authReducer,
   [baseApi.reducerPath]: baseApi.reducer,
   [userApi.reducerPath]: userApi.reducer,

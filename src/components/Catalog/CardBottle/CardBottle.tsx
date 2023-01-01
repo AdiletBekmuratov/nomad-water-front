@@ -1,16 +1,16 @@
 import { FC } from 'react';
-//import { Link } from 'react-router-dom';
+
 import React from 'react';
 import { AddFavourite } from './AddFavourite';
 import { ICard } from '@/assets/types/types';
-// import { Description } from './Description';
-import { OrderStatus } from '@/components/Catalog/OrderStatus';
-// import { Counter } from './Counter';
-import { Button } from '@/components/Forms';
-import { IProduct } from '@/types';
 
-import { useLocalStorage } from '@/hooks';
-import { useAppSelector } from '@/hooks/useAppSelector';
+import { OrderStatus } from '@/components/Catalog/OrderStatus';
+
+import { Button } from '@/components/Forms';
+
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+
+import { addItem, deleteItem } from '@/redux/slices/cartSlice';
 
 export const CardBottle: FC<ICard> = ({
   items,
@@ -19,20 +19,17 @@ export const CardBottle: FC<ICard> = ({
   setIsFavourite,
   deliveryStatus
 }) => {
-  // const { user, isLoading } = useAppSelector((state) => state.auth);
-  //const [counter, setCounter] = React.useState<number>(items.quantity ? items.quantity : 1);
-  const [cartItems, setCartItems] = React.useState<IProduct[]>([]);
-  const [cartItemsArr, setCartItemsArr] = React.useState<IProduct[]>([]);
-  const addItemsCart = (items: IProduct) => {
-    //console.log(items);
-    setCartItems([...cartItems, items]);
-    for (let i = 1; i < cartItems.length; i++) {
-      if (items.id === cartItems[i].id) {
-        setCartItemsArr([...cartItemsArr, items]);
-      }
-    }
-    console.log(cartItems);
-    // useLocalStorage('cartItems', cartItems);
+  //const cartItems = useAppSelector((state) => state.cart.cartItems);
+
+  const [isChoice, setIsChoice] = React.useState(false);
+  const dispatch = useAppDispatch();
+  const onClickAdd = () => {
+    dispatch(addItem(items));
+    setIsChoice(true);
+  };
+  const onDeleteItem = (id: number) => {
+    dispatch(deleteItem(id));
+    setIsChoice(false);
   };
 
   return (
@@ -59,23 +56,21 @@ export const CardBottle: FC<ICard> = ({
           {cardType === 'order' && <OrderStatus variants={deliveryStatus} />}
 
           {/* <Counter counter={counter} setCounter={setCounter} /> */}
-          {/* {users.length> && ( */}
+
           <div>
-            <Button
-              className="w-40 h-10"
-              onClick={() => {
-                addItemsCart(items);
-              }}>
-              В корзину
-            </Button>
-            {/* // ) : (
-            //   <Button
-            //     className="w-40 h-10 bg-blue-400"
-            //     onClick={() => {
-            //       addItemsCart(items);
-            //     }}>
-            //     Товар в корзине
-            //   </Button>)} */}
+            {isChoice ? (
+              <Button
+                className="w-40 h-10 bg-blue-400 text-sm"
+                onClick={() => {
+                  onDeleteItem(items.id);
+                }}>
+                Убрать из корзины
+              </Button>
+            ) : (
+              <Button className="w-40 h-10 text-sm" onClick={onClickAdd}>
+                В корзину
+              </Button>
+            )}
           </div>
         </div>
       </div>

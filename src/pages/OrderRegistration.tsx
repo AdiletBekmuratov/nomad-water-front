@@ -11,14 +11,15 @@ import { toast } from 'react-hot-toast';
 import { useCreateOrderMutation } from '@/redux/services/base.service';
 import Checkbox from '@/components/Checkbox';
 import * as yup from 'yup';
+import { useAppSelector } from '@/hooks/useAppSelector';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
 const OrderRegistration: FC = () => {
   const navigate = useNavigate();
-  const cartItems = localStorage.getItem(`cartItems`);
-  const dataProduct: IProduct[] = cartItems ? JSON.parse(cartItems) : [];
-  //const productPriceArr = dataProduct.map((item) => item.productPrice);
+
+  const [response, setResponse] = React.useState<string[]>([]);
+  const [create, { isLoading: isOrderLoad }] = useCreateOrderMutation();
 
   const [isOpen, setIsOpen] = useState(true);
   const [isValid, setIsValid] = useState(false);
@@ -29,17 +30,22 @@ const OrderRegistration: FC = () => {
   const [paymentMethod, setPaymentMethod] = useState('Картой');
 
   const [count, setCount] = useState(1);
+  const cartItems = useAppSelector((state) => state.cart.cartItems);
 
   const [total, setTotal] = useState(0);
+  const initialTotal = cartItems.reduce((total, obj) => total + obj.productPrice, 0);
+  React.useEffect(() => {
+    setTotal(initialTotal);
+  }, [count]);
+
   const handleTotal = useCallback(
     (isDel: boolean = false) => {
       if (isDel) setTotal(total + 300);
       else setTotal(total);
     },
-    [dataProduct]
+    [cartItems]
   );
-  const [response, setResponse] = React.useState<string[]>([]);
-  const [create, { isLoading: isOrderLoad }] = useCreateOrderMutation();
+
   const handleCreate = (values: IUsersOrder) => {
     toast
       .promise(
@@ -61,8 +67,7 @@ const OrderRegistration: FC = () => {
 
   const addressOrder = `${address.street},${address.houseNumber},${address['flat']}`;
 
-  // const productIds: IOrderQuality = { productId: 1, quantity: 1 };
-  const productId = dataProduct.length ? dataProduct[0].id : 0;
+  const productId = cartItems.length ? cartItems[0].id : 0;
   const quantity = count;
   const initial: IUsersOrder = {
     address: addressOrder,
@@ -73,7 +78,7 @@ const OrderRegistration: FC = () => {
     orderProductsDto: [{ productId, quantity }],
     totalPrice: total
   };
-  const paymentStyle = 'placeholder:text-gray-300 font-montserrat';
+
   const validationSchema = yup.object().shape({
     cardNumber: yup.string().required('Поле обязательное'),
     validity: yup.string().required('Поле обязательное'),
@@ -93,12 +98,13 @@ const OrderRegistration: FC = () => {
     cvc: '',
     nameOnCard: ''
   };
+  const paymentStyle = 'placeholder:text-gray-300 font-montserrat';
   return (
     <Layout>
-      {dataProduct.length > 0 ? (
+      {cartItems.length > 0 ? (
         <div className={`lg:grid lg:grid-cols-3 lg:grid-row-3 gap-6`}>
-          <div className={`lg:col-span-2 lg:order-1 lg:col-start-1 lg:row-start-1`}>
-            {dataProduct.map((item: IProduct) => (
+          <div className={`lg:col-span-2 lg:order-1 lg:col-start-1 lg:row-start-1 grid gap-4`}>
+            {cartItems.map((item: IProduct) => (
               <OrderCard
                 // handeCounts={handeCounts}
                 id={item.id!}
@@ -106,7 +112,9 @@ const OrderRegistration: FC = () => {
                 key={item.productName}
                 count={count}
                 setCount={setCount}
+                total={total}
                 setTotal={setTotal}
+                initialTotal={initialTotal}
               />
             ))}
           </div>
@@ -120,22 +128,26 @@ const OrderRegistration: FC = () => {
             setIsValid={setIsValid}
           />
           <EditCard className={`lg:order-4 lg:col-span-2 lg:w-full lg:row-start-3`}>
-            <h3 className={`font-semibold text-sm ${userStyle}`}>
-              Способ оплаты - - - - - - - для смены нажмите кнопку
-            </h3>
+            <div className="flex gap-3 items-center">
+              <h3 className={`font-semibold text-sm ${userStyle}`}>Способ оплаты</h3>
 
-            <button
-              className={`p-2 border border-dashed border-dark-blue rounded-xl`}
-              onClick={() => {
-                if (paymentMethod === 'Наличными') {
-                  setPaymentMethod('Картой');
-                } else {
-                  setPaymentMethod('Наличными');
-                }
-                return paymentMethod;
-              }}>
-              {paymentMethod}
-            </button>
+              <button
+                className={`p-2 border border-dashed border-dark-blue rounded-xl`}
+                onClick={() => {
+                  if (paymentMethod === 'Наличными') {
+                    setPaymentMethod('Картой');
+                  } else {
+                    setPaymentMethod('Наличными');
+                  }
+                  return paymentMethod;
+                }}>
+                {paymentMethod}
+              </button>
+              <h3 className={`font-semibold opacity-75 text-sm ${userStyle}`}>
+                (для смены нажмите кнопку)
+              </h3>
+            </div>
+
             {paymentMethod === 'Картой' && (
               <div>
                 <FormContainer
@@ -198,7 +210,6 @@ const OrderRegistration: FC = () => {
           </EditCard>
 
           <Total
-            data={dataProduct}
             delivery={delivery}
             pickup={pickup}
             setDelivery={setDelivery}

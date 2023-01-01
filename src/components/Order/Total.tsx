@@ -5,7 +5,6 @@ import Checkbox from '../Checkbox';
 import { Button } from '../Forms';
 
 type Props = {
-  data: IProduct[];
   pickup: boolean;
   delivery: boolean;
   setPickup: Function;
@@ -28,15 +27,13 @@ export const Total: FC<Props> = ({
   isValid,
   address,
   handleTotal,
-  data,
   buttonAction,
   initial
 }) => {
   const navigate = useNavigate();
-  const productPrice = data.map((items) => items.productPrice);
-  total = productPrice[0];
+
   return (
-    <div className="lg:order-2 lg:bg-white lg:h-48 lg:mt-6 lg:rounded-2xl lg:row-start-1">
+    <div className="lg:order-2 lg:bg-white lg:h-48  lg:rounded-2xl lg:row-start-1">
       <div className="h-6 w-3/4 mt-5 mx-auto gap-2.5 md:w-5/6">
         <div className="flex items-center w-full">
           <Checkbox
