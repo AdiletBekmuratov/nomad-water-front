@@ -184,6 +184,7 @@ const LoginPage = () => {
                     <div className="mb-2">
                       <Input
                         inputType="formik"
+                        type="password"
                         name="password"
                         id="password"
                         className="mb-2"

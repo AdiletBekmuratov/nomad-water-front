@@ -82,7 +82,7 @@ export const Accordion: FC<Props> = (props) => {
                   name="addressComment"
                   id="addressComment"
                   inputType="formik"
-                  label="Этаж/наличие лифта"
+                  label="Комментарий к заказу"
                   className={`${styleInput}`}
                 />
               </div>

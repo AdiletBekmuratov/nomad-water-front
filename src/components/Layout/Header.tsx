@@ -9,6 +9,7 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { FaUserTie } from 'react-icons/fa';
 import logo from '@/assets/crm/logoHead.png';
 import { RxExit } from 'react-icons/rx';
+import { BsFillCartFill } from 'react-icons/bs';
 import {
   AiOutlineHeart,
   AiOutlineLogin,
@@ -24,6 +25,8 @@ interface IHeader {
 }
 
 export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
+  const { cartItems = [] } = useAppSelector((state) => state.cart);
+
   const { user } = useAppSelector((state) => state.auth);
   const headerStyle = `flex items-center py-4 justify-between layout ${props.className}`;
   // const [isDrop, setIsDrop] = useState();
@@ -37,7 +40,7 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
         error: (err) => err.toString()
       })
       .then(() => {
-        navigate('/login/user');
+        navigate('/catalog');
       });
   };
 
@@ -58,27 +61,34 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
             </Link>
           </div>
 
-          <div className={`flex items-center justify-end gap-2 md:gap-5 flex-1`}>
+          <div className={`flex items-center justify-end gap-4 md:gap-4 flex-1`}>
             <Link to="/myFavourite" className={`cursor-pointer`}>
               <AiOutlineHeart className="h-6 w-6" />
             </Link>
-            <Link to="/order">
-              <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
-            </Link>
-            {/* {isDrop && <Dropdown />} */}
-            {user?.role === 'ROLE_COURIER' ? (
-              <Link to="/courier">
-                <FaUserTie className="h-6 w-6" />
+            <div className={`hidden md:flex gap-4`}>
+              <Link to="/order">
+                {cartItems.length === 0 ? (
+                  <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
+                ) : (
+                  <BsFillCartFill className="h-6 w-6 cursor-pointer" />
+                )}
               </Link>
-            ) : user?.role === 'ROLE_EMPLOYEE' ? (
-              <Link to="/employee">
-                <FaUserTie className="h-6 w-6" />
-              </Link>
-            ) : (
-              <Link to="/userPage">
-                <FaUserTie className="h-6 w-6" />
-              </Link>
-            )}
+
+              {/* {isDrop && <Dropdown />} */}
+              {user?.role === 'ROLE_COURIER' ? (
+                <Link to="/courier">
+                  <FaUserTie className="h-6 w-6" />
+                </Link>
+              ) : user?.role === 'ROLE_EMPLOYEE' ? (
+                <Link to="/employee">
+                  <FaUserTie className="h-6 w-6" />
+                </Link>
+              ) : (
+                <Link to="/userPage">
+                  <FaUserTie className="h-6 w-6" />
+                </Link>
+              )}
+            </div>
 
             <RxExit className="h-6 w-6 cursor-pointer" onClick={handleLogout} />
           </div>

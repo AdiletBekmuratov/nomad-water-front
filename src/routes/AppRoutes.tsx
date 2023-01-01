@@ -61,22 +61,18 @@ const AppRoutes = () => {
         <ScrollToTop>
           <Routes>
             <Route path="/" element={<Landing />} />
-
-            <Route
-              path="/login/user"
-              element={
-                // <ProtectedRoute isAllowed={!user || user?.role !== 'ROLE_ADMIN'} redirectPath={'/'}>
-                <LoginPage />
-                // </ProtectedRoute>
-              }
-            />
-
+            {/*вход юзер */}
+            <Route path="/login/user" element={<LoginPage />} />
+            {/*вход админ */}
             <Route path="/admin/login" element={<AdminLogin />} />
             {/* страница регистрации по сгенерированным ссылкам */}
             <Route path="/register/employee/*" element={<AdminRegisterEmp />} />
             {/* личная страница пользователей админки  */}
             <Route path="/admin/AdminUserME" element={<AdminUserME />} />
-
+            {/* личная страница юзера */}
+            <Route path="/userPage" element={<UserPage />} />
+            {/* личная страница курьера */}
+            <Route path="/courier" element={<Courier />} />
             <Route
               path="/admin/allUsers"
               element={
@@ -133,9 +129,9 @@ const AppRoutes = () => {
             <Route path="/order" element={<OrderRegistration />} />
             <Route path="/myOrders" element={<Orders />} />
             <Route path="/orderinfo" element={<OrderInfo />} />
-            <Route path="/courier" element={<Courier />} />
+
             <Route path="/users" element={<Users />} />
-            <Route path="/userPage" element={<UserPage />} />
+
             <Route path="/requestsUser" element={<RequestsUser />} />
 
             <Route path="/appeal" element={<UserAppeal />} />
