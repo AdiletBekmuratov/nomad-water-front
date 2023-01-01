@@ -18,6 +18,7 @@ import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminCategory from '@/pages/admin/AdminCategory';
 import LoginPage from '@/pages/LoginPage';
 import Courier from '@/pages/Courier';
+import Employee from '@/pages/Employee';
 // import AdminEmployee from '@/pages/admin/AdminEmployee';
 
 const Landing = lazy(() => import('@/pages/Landing'));
@@ -86,6 +87,16 @@ const AppRoutes = () => {
             />
             {/* <Route path="/admin/couriers" element={<AdminCouriers />} /> */}
 
+            <Route
+              path="/employee"
+              element={
+                <ProtectedRoute
+                  isAllowed={user?.role === 'ROLE_EMPLOYEE'}
+                  redirectPath="/login/user">
+                  <Employee />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/admin/warehouses"
               element={

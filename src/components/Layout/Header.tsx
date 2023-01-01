@@ -70,6 +70,10 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
               <Link to="/courier">
                 <FaUserTie className="h-6 w-6" />
               </Link>
+            ) : user?.role === 'ROLE_EMPLOYEE' ? (
+              <Link to="/employee">
+                <FaUserTie className="h-6 w-6" />
+              </Link>
             ) : (
               <Link to="/userPage">
                 <FaUserTie className="h-6 w-6" />
