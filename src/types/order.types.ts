@@ -8,7 +8,8 @@ export type IOrder = {
   userId: number;
   courierId: number;
   statusId: number;
-  orderProductsDto: [{ productId: number; quantity: number }];
+  //orderProductsDto: [{ productId: number; quantity: number }];
+  orderProductsDto: IOrderQuality[];
   paymentMethod: string;
   deliveryDateTime: string;
   phone: string;

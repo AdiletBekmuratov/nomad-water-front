@@ -34,9 +34,9 @@ const OrderRegistration: FC = () => {
 
   const [total, setTotal] = useState(0);
   const initialTotal = cartItems.reduce((total, obj) => total + obj.productPrice, 0);
-  React.useEffect(() => {
-    setTotal(initialTotal);
-  }, [count]);
+  // React.useEffect(() => {
+  //   setTotal(initialTotal);
+  // }, [count]);
 
   const handleTotal = useCallback(
     (isDel: boolean = false) => {

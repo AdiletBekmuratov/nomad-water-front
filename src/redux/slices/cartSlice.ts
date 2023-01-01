@@ -1,13 +1,15 @@
-import { IProduct } from '@/types';
+import { IOrderQuality, IProduct } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CartSliceState {
    cartItems: IProduct[];
    total: number;
+   orderProductsDto: IOrderQuality[];
 };
 const initialState: CartSliceState = {
    cartItems: [],
-   total: 0,
+   orderProductsDto: [],
+   total: 0
 };
 
 const cartSlice = createSlice({
@@ -16,6 +18,7 @@ const cartSlice = createSlice({
    reducers: {
       addItem(state, action: PayloadAction<IProduct>) {
          state.cartItems.push(action.payload);
+         state.orderProductsDto = [...state.orderProductsDto, action.payload];
          //  state.items = state.items + state.items.find(obj => obj.id !== action.payload.id)
          //state.items.push(action.payload);
       },
@@ -25,7 +28,8 @@ const cartSlice = createSlice({
       clearItems(state) {
          state.cartItems = [];
       },
-      // changeTotal(state, action) { state.total}
+
+      // changeTotal(state, action) { state.total = state.total}
    }
 });
 // export const selectCart = (state: RootState) => state.cartSlice
