@@ -73,9 +73,14 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
                   <BsFillCartFill className="h-6 w-6 cursor-pointer" />
                 )}
               </Link>
+
               {/* {isDrop && <Dropdown />} */}
               {user?.role === 'ROLE_COURIER' ? (
                 <Link to="/courier">
+                  <FaUserTie className="h-6 w-6" />
+                </Link>
+              ) : user?.role === 'ROLE_EMPLOYEE' ? (
+                <Link to="/employee">
                   <FaUserTie className="h-6 w-6" />
                 </Link>
               ) : (

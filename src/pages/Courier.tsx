@@ -59,6 +59,7 @@ const Courier = () => {
     return <Loader />;
   }
   console.log(data);
+
   return (
     <Layout>
       <div className="flex justify-center">
@@ -67,9 +68,7 @@ const Courier = () => {
         </div>
       </div>
       <div className="mt-2">
-        <p className="text-dark-blue text-xl text-center font-montserrat font-medium">
-          История заказов
-        </p>
+        <p className="text-dark-blue text-xl text-center font-montserrat font-medium">Заказы</p>
         <Button onClick={() => setIsOpenEdit(true)}>Изменить данные</Button>
         <Table columns={columns} id="ProductsTable" data={data!} />
       </div>
