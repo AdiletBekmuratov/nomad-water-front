@@ -18,7 +18,7 @@ const cartSlice = createSlice({
    reducers: {
       addItem(state, action: PayloadAction<IProduct>) {
          state.cartItems.push(action.payload);
-         state.orderProductsDto = [...state.orderProductsDto, action.payload];
+         //state.orderProductsDto = [...state.orderProductsDto, action.payload];
          //  state.items = state.items + state.items.find(obj => obj.id !== action.payload.id)
          //state.items.push(action.payload);
       },
