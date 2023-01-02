@@ -12,10 +12,14 @@ import { Modal } from '../Layout/Modal';
 import { Button } from '../Forms';
 
 export const ConfirmOrder = () => {
-  const { data, isLoading } = useGetAllConfirmedOrdersQuery();
+  const { data, isLoading, refetch } = useGetAllConfirmedOrdersQuery();
   const [confirm] = useConfirmOrderMutation();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [rowData, setRowData] = useState();
+
+  setTimeout(() => {
+    refetch();
+  }, 10000);
 
   const handleConfirm = async (id: number) => {
     await toast.promise(confirm(Number(id)).unwrap(), {
