@@ -1,37 +1,46 @@
 import { useAppDispatch } from '@/hooks/useAppDispatch';
-import { deleteItem } from '@/redux/slices/cartSlice';
-import { IProduct } from '@/types';
-import React, { FC, useEffect, useState } from 'react';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { deleteItem, getOrderDto, getTotal } from '@/redux/slices/cartSlice';
+import { IOrderQuality, IProduct } from '@/types';
+import React, { FC, useState } from 'react';
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { Card } from '../Forms';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   data: IProduct;
-  count: number;
-  initialTotal: number;
-  setCount: React.Dispatch<React.SetStateAction<number>>;
-  setTotal: React.Dispatch<React.SetStateAction<number>>;
+  productsDto: IOrderQuality[];
+  setProductsDto: React.Dispatch<React.SetStateAction<IOrderQuality[]>>;
 };
-
 const mdStyles = 'md:flex md:h-16 md:w-full md:items-end';
 
 const infoClass = 'font-montserrat font-normal text-xs text-dark-blue';
-const imgStyle =
-  'absolute top-2 sm:top-5 right-2 sm:right-5 lg:top-5 lg:right-5 w-8 h-8 cursor-pointer opacity-50 hover:opacity-100';
+const imgStyle = `absolute top-2 sm:top-5 right-2 sm:right-5 lg:top-5 lg:right-5 
+  w-8 h-8 cursor-pointer opacity-50 hover:opacity-100`;
 
-export const OrderCard: FC<Props> = ({ data, setCount, setTotal }) => {
+export const OrderCard: FC<Props> = ({ data }) => {
   const dispatch = useAppDispatch();
+  // const addProductDto = (quantity: number, productId: number) => {
+  //   const productsDto: IOrderQuality = [quantity, productId];
+  //   dispatch(addOrderDto(productsDto));
+  // };
   const onDeleteItem = (id: number) => {
     dispatch(deleteItem(id));
   };
 
   let [localCount, setLocalCount] = useState(1);
   const [localSum, setLocalSum] = useState(data.productPrice * localCount);
-  useEffect(() => {
-    setTotal(localSum);
-  }, [localCount]);
 
+  let productId = Number(data.id);
+  let quantity = localCount;
+  const products = { productId, quantity };
+  dispatch(getTotal(localSum));
+  React.useMemo(() => dispatch(getOrderDto(products)), [localCount]);
+  // dispatch(getOrderDto(products));
+
+  // React.useEffect(() => {
+  //   setProductsDto(products);
+  // }, []);
   return (
     <div>
       <Card className={`pr-10 md:col-span-3`}>
@@ -63,9 +72,7 @@ export const OrderCard: FC<Props> = ({ data, setCount, setTotal }) => {
                   disabled={localCount < 2}
                   onClick={() => {
                     setLocalCount(--localCount);
-                    setCount(localCount);
                     setLocalSum(data.productPrice * localCount);
-                    setTotal(localSum);
                   }}>
                   <AiOutlineMinusCircle className={`w-7 h-7 ${localCount < 2 && 'opacity-40'}`} />
                 </button>
@@ -73,9 +80,7 @@ export const OrderCard: FC<Props> = ({ data, setCount, setTotal }) => {
                 <button
                   onClick={() => {
                     setLocalCount(++localCount);
-                    setCount(localCount);
                     setLocalSum(data.productPrice * localCount);
-                    setTotal(localSum);
                   }}>
                   <AiOutlinePlusCircle className={`w-7 h-7`} />
                 </button>

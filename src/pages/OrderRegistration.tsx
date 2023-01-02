@@ -6,12 +6,14 @@ import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';
 import { Footer, OrderAcordion, OrderCard, PaymentComponent, Total } from '@/components/Order';
 import EditCard from '@/components/Order/EditCard';
-import { IProduct, IUsersOrder } from '@/types';
+import { IOrderQuality, IProduct, IUsersOrder } from '@/types';
 import { toast } from 'react-hot-toast';
 import { useCreateOrderMutation } from '@/redux/services/base.service';
 import Checkbox from '@/components/Checkbox';
 import * as yup from 'yup';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { changeTotal } from '@/redux/slices/cartSlice';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
@@ -29,22 +31,19 @@ const OrderRegistration: FC = () => {
   const [delivery, setDelivery] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('Картой');
 
-  const [count, setCount] = useState(1);
   const cartItems = useAppSelector((state) => state.cart.cartItems);
-
-  const [total, setTotal] = useState(0);
-  const initialTotal = cartItems.reduce((total, obj) => total + obj.productPrice, 0);
-  // React.useEffect(() => {
-  //   setTotal(initialTotal);
-  // }, [count]);
-
-  const handleTotal = useCallback(
-    (isDel: boolean = false) => {
-      if (isDel) setTotal(total + 300);
-      else setTotal(total);
-    },
-    [cartItems]
-  );
+  // const [count, setCount] = useState(1);
+  const initialTotal = cartItems.reduce((sum, obj) => sum + obj.productPrice, 0);
+  const orderDto = useAppSelector((state) => state.cart.orderDto);
+  //const quantity = useAppSelector((state) => state.cart.quantity);
+  //console.log(quantity);
+  // const handleTotal = useCallback(
+  //   (isDel: boolean = false) => {
+  //     if (isDel) setTotal(total + 300);
+  //     else setTotal(total);
+  //   },
+  //   [cartItems]
+  // );
 
   const handleCreate = (values: IUsersOrder) => {
     toast
@@ -66,19 +65,19 @@ const OrderRegistration: FC = () => {
   };
 
   const addressOrder = `${address.street},${address.houseNumber},${address['flat']}`;
-
-  const productId = cartItems.length ? cartItems[0].id : 0;
-  const quantity = count;
+  // [{ productId, quantity }]
+  // const productId = cartItems.length ? cartItems[0].id : 0;
+  // const quantity = count;
   const initial: IUsersOrder = {
     address: addressOrder,
     comment: address.addressComment,
     isSale: false,
     paymentMethod: paymentMethod,
     phone: address.phone,
-    orderProductsDto: [{ productId, quantity }],
-    totalPrice: total
+    orderProductsDto: orderDto,
+    totalPrice: initialTotal
   };
-
+  console.log(orderDto);
   const validationSchema = yup.object().shape({
     cardNumber: yup.string().required('Поле обязательное'),
     validity: yup.string().required('Поле обязательное'),
@@ -105,17 +104,7 @@ const OrderRegistration: FC = () => {
         <div className={`lg:grid lg:grid-cols-3 lg:grid-row-3 gap-6`}>
           <div className={`lg:col-span-2 lg:order-1 lg:col-start-1 lg:row-start-1 grid gap-4`}>
             {cartItems.map((item: IProduct) => (
-              <OrderCard
-                // handeCounts={handeCounts}
-                id={item.id!}
-                data={{ ...item }}
-                key={item.productName}
-                count={count}
-                setCount={setCount}
-                total={total}
-                setTotal={setTotal}
-                initialTotal={initialTotal}
-              />
+              <OrderCard id={item.id} data={{ ...item }} key={item.id} />
             ))}
           </div>
 
@@ -214,13 +203,11 @@ const OrderRegistration: FC = () => {
             pickup={pickup}
             setDelivery={setDelivery}
             setPickup={setPickup}
-            setTotal={setTotal}
-            total={total}
             isValid={isValid}
             address={address}
-            handleTotal={handleTotal}
             buttonAction={handleCreate}
             initial={initial}
+            initialTotal={initialTotal}
           />
 
           <Footer className={`items-center flex justify-center lg:hidden`}>

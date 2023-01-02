@@ -74,10 +74,6 @@ const AdminProducts = () => {
         accessorKey: 'productPrice'
       },
       {
-        header: 'Urgency Price',
-        accessorKey: 'urgencyPrice'
-      },
-      {
         header: 'Created Date',
         accessorKey: 'createdDate'
       },
