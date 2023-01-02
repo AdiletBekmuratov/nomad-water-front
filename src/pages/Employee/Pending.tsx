@@ -12,10 +12,15 @@ import { Modal } from '@/components/Layout/Modal';
 import { Button } from '@/components/Forms';
 
 const Pending = () => {
-  const { data, isLoading } = useGetPendingOrdersQuery();
+  const { data, isLoading, refetch } = useGetPendingOrdersQuery();
   const [accept] = useAcceptOrdersMutation();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [rowData, setRowData] = useState();
+
+  setInterval(() => {
+    refetch();
+  }, 5000);
+
   const handleAccept = async (id: number) => {
     await toast.promise(accept(Number(id)).unwrap(), {
       loading: 'Загрузка...',

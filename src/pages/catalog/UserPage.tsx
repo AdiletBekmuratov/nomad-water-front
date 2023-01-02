@@ -11,7 +11,6 @@ import OrderHistory from '@/components/User/OrderHistory';
 const UserPage = () => {
   const { user } = useAppSelector((state) => state.auth);
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
-  console.log(user);
 
   return (
     <Layout>
