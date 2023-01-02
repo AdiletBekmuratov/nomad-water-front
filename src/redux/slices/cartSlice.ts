@@ -32,6 +32,7 @@ const cartSlice = createSlice({
       },
       deleteItem(state, action: PayloadAction<number>) {
          state.cartItems = state.cartItems.filter((obj) => obj.id !== action.payload);
+         state.orderDto = state.orderDto.filter((obj) => obj.productId !== action.payload);
       },
       clearItems(state) {
          state.cartItems = [];
@@ -40,7 +41,7 @@ const cartSlice = createSlice({
          const findItem = state.orderDto.find((obj) => obj.productId === action.payload.productId);
          if (findItem) {
             const changeQiantity = state.orderDto.find(
-               (obj) => obj.quantity === action.payload.quantity
+               (obj) => obj.quantity !== action.payload.quantity
             );
 
             if (changeQiantity) {
@@ -48,7 +49,7 @@ const cartSlice = createSlice({
             }
          } else {
             state.orderDto.push(action.payload);
-          }
+         }
 
 
          //state.orderDto = state.orderDto.filter((obj) => obj.productId === action.payload.productId);
