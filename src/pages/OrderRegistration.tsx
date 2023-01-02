@@ -32,15 +32,9 @@ const OrderRegistration: FC = () => {
   const [paymentMethod, setPaymentMethod] = useState('Картой');
 
   const cartItems = useAppSelector((state) => state.cart.cartItems);
-  // const [count, setCount] = useState(1);
+  const orderDto = useAppSelector((state) => state.cart.orderDto);
   const initialTotal = cartItems.reduce((sum, obj) => sum + obj.productPrice, 0);
-  //const orderDto = useAppSelector((state) => state.cart.orderDto);
-  const dispatch = useAppDispatch();
-  // let productId = Number(data.id);
-  // let quantity = localCount;
-  // const products = { productId, quantity };
 
-  // React.useMemo(() => dispatch(getOrderDto(products)), [localCount]);
   //const quantity = useAppSelector((state) => state.cart.quantity);
   //console.log(quantity);
   // const handleTotal = useCallback(
@@ -76,16 +70,13 @@ const OrderRegistration: FC = () => {
   };
 
   const addressOrder = `${address.street},${address.houseNumber},${address['flat']}`;
-  // [{ productId, quantity }]
-  // const productId = cartItems.length ? cartItems[0].id : 0;
-  // const quantity = count;
   const initial: IUsersOrder = {
     address: addressOrder,
     comment: address.addressComment,
     isSale: false,
     paymentMethod: paymentMethod,
     phone: address.phone,
-    orderProductsDto: initialProductDto,
+    orderProductsDto: orderDto ? orderDto : initialProductDto,
     totalPrice: initialTotal
   };
   // console.log(orderDto);
