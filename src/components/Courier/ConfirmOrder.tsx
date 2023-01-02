@@ -1,6 +1,6 @@
 import { ICourierOrder } from '@/types/courier.types';
 import { ColumnDef } from '@tanstack/react-table';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { ActionButtons, Table } from '../Table';
 import {
   useGetAllConfirmedOrdersQuery,
@@ -8,12 +8,16 @@ import {
 } from '@/redux/services/courier.service';
 import Loader from '../Loader';
 import { toast } from 'react-hot-toast';
+import { Modal } from '../Layout/Modal';
+import { Button } from '../Forms';
 
 export const ConfirmOrder = () => {
   const { data, isLoading } = useGetAllConfirmedOrdersQuery();
   const [confirm] = useConfirmOrderMutation();
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [rowData, setRowData] = useState();
+
   const handleConfirm = async (id: number) => {
-    console.log(id);
     await toast.promise(confirm(Number(id)).unwrap(), {
       loading: 'Загрузка...',
       success: 'Подтвержден',
@@ -42,7 +46,12 @@ export const ConfirmOrder = () => {
       {
         header: 'Действия',
         cell: ({ row }) => (
-          <ActionButtons handleEditClick={() => handleConfirm(Number(row.original.id))} />
+          <ActionButtons
+            handleConfirmClick={() => {
+              setRowData(row.original);
+              setIsOpenModal(true);
+            }}
+          />
         )
       }
     ],
@@ -54,6 +63,24 @@ export const ConfirmOrder = () => {
   return (
     <div>
       <Table id="ProductsTable" columns={columns} data={data!} />
+      <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
+        <div className="font-montserrat text-dark-blue">
+          <p>Вы действительно хотите взять данный заказ?</p>
+        </div>
+        <div className="grid grid-cols-2 mt-2 gap-3">
+          <Button
+            buttonColor="bg-green-700"
+            onClick={() => {
+              handleConfirm(rowData?.id);
+              setIsOpenModal(false);
+            }}>
+            Да
+          </Button>
+          <Button buttonColor="bg-gray-500" onClick={() => setIsOpenModal(false)}>
+            Нет
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 };
