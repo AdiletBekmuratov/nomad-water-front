@@ -17,7 +17,14 @@ const cartSlice = createSlice({
    initialState,
    reducers: {
       addItem(state, action: PayloadAction<IProduct>) {
-         state.cartItems.push(action.payload);
+         const findItem = state.cartItems.find((obj) => obj.id === action.payload.id);
+         if (findItem) {
+            state.total = state.total + action.payload.productPrice;
+         } else {
+            state.cartItems.push({ ...action.payload });
+            state.total = state.total + action.payload.productPrice;
+         }
+
          // state.total = action.payload;
          //state.orderProductsDto = [...state.orderProductsDto, action.payload];
          //  state.items = state.items + state.items.find(obj => obj.id !== action.payload.id)
@@ -30,7 +37,20 @@ const cartSlice = createSlice({
          state.cartItems = [];
       },
       getOrderDto(state, action: PayloadAction<IOrderQuality>) {
-         state.orderDto.push(action.payload);
+         const findItem = state.orderDto.find((obj) => obj.productId === action.payload.productId);
+         if (findItem) {
+            const changeQiantity = state.orderDto.find(
+               (obj) => obj.quantity === action.payload.quantity
+            );
+
+            if (changeQiantity) {
+               state.orderDto.map((obj) => (obj.quantity = action.payload.quantity));
+            }
+         } else {
+            state.orderDto.push(action.payload);
+          }
+
+
          //state.orderDto = state.orderDto.filter((obj) => obj.productId === action.payload.productId);
       },
       getTotal(state, action: PayloadAction<number>) {

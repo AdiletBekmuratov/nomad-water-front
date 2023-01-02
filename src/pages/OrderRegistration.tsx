@@ -13,7 +13,7 @@ import Checkbox from '@/components/Checkbox';
 import * as yup from 'yup';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
-import { changeTotal } from '@/redux/slices/cartSlice';
+import { getOrderDto } from '@/redux/slices/cartSlice';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
@@ -34,7 +34,13 @@ const OrderRegistration: FC = () => {
   const cartItems = useAppSelector((state) => state.cart.cartItems);
   // const [count, setCount] = useState(1);
   const initialTotal = cartItems.reduce((sum, obj) => sum + obj.productPrice, 0);
-  const orderDto = useAppSelector((state) => state.cart.orderDto);
+  //const orderDto = useAppSelector((state) => state.cart.orderDto);
+  const dispatch = useAppDispatch();
+  // let productId = Number(data.id);
+  // let quantity = localCount;
+  // const products = { productId, quantity };
+
+  // React.useMemo(() => dispatch(getOrderDto(products)), [localCount]);
   //const quantity = useAppSelector((state) => state.cart.quantity);
   //console.log(quantity);
   // const handleTotal = useCallback(
@@ -44,7 +50,12 @@ const OrderRegistration: FC = () => {
   //   },
   //   [cartItems]
   // );
-
+  const initialProductDto = [
+    {
+      productId: 1,
+      quantity: 1
+    }
+  ];
   const handleCreate = (values: IUsersOrder) => {
     toast
       .promise(
@@ -74,10 +85,10 @@ const OrderRegistration: FC = () => {
     isSale: false,
     paymentMethod: paymentMethod,
     phone: address.phone,
-    orderProductsDto: orderDto,
+    orderProductsDto: initialProductDto,
     totalPrice: initialTotal
   };
-  console.log(orderDto);
+  // console.log(orderDto);
   const validationSchema = yup.object().shape({
     cardNumber: yup.string().required('Поле обязательное'),
     validity: yup.string().required('Поле обязательное'),

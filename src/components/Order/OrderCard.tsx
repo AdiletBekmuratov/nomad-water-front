@@ -34,10 +34,10 @@ export const OrderCard: FC<Props> = ({ data }) => {
   let productId = Number(data.id);
   let quantity = localCount;
   const products = { productId, quantity };
-  dispatch(getTotal(localSum));
+
   React.useMemo(() => dispatch(getOrderDto(products)), [localCount]);
   // dispatch(getOrderDto(products));
-
+  //dispatch(getTotal(localSum));
   // React.useEffect(() => {
   //   setProductsDto(products);
   // }, []);
