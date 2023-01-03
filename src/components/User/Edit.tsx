@@ -10,7 +10,7 @@ import toast from 'react-hot-toast';
 interface IEditModalProps {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
-  data: IUserFull | null;
+  data: IUserFull;
 }
 
 export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {

@@ -20,14 +20,14 @@ const Courier = () => {
         header: 'Адрес доставки',
         accessorKey: 'address'
       },
-      {
-        header: 'Номер дома',
-        accessorKey: 'user.houseNumber'
-      },
-      {
-        header: 'Квартира',
-        accessorKey: 'user.flat'
-      },
+      // {
+      //   header: 'Номер дома',
+      //   accessorKey: 'user.houseNumber'
+      // },
+      // {
+      //   header: 'Квартира',
+      //   accessorKey: 'user.flat'
+      // },
       {
         header: 'Комментарий',
         accessorKey: 'comment'

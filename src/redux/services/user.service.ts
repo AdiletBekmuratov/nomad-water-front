@@ -1,3 +1,4 @@
+import { ICourierUpdate } from './../../types/courier.types';
 import { IUserCreate } from '@/types';
 import { IEmployeeCreate, IEmployeeCreateLink } from '@/types/employee.types';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
@@ -25,9 +26,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //Получить всех пользователей по активности /active/{isActive}
@@ -38,9 +39,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //получить юзера по роли
@@ -51,9 +52,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //юзер по ID
@@ -109,6 +110,14 @@ export const userApi = createApi({
       }),
       invalidatesTags: [{ type: 'Link', id: 'LIST' }]
     }),
+    updateCourier: builder.mutation<void, ICourierUpdate>({
+      query: (body) => ({
+        url: `user/courier/${Number(body.id)}`,
+        method: 'PUT',
+        body
+      }),
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
+    }),
     //регистрация рабочего склада
     createWorker: builder.mutation<void, IEmployeeCreate>({
       query: (body) => ({
@@ -118,6 +127,15 @@ export const userApi = createApi({
       }),
       invalidatesTags: [{ type: 'Link', id: 'LIST' }]
     }),
+    updateWorker: builder.mutation<void, IUserFullCreate>({
+      query: (body) => ({
+        url: `user/warehouseWorker/${Number(body.id)}`,
+        method: 'PUT',
+        body
+      }),
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
+    }),
+
     //Регистрация пользователя
     createUserAccount: builder.mutation<void, IUserFull>({
       query: (body) => ({
@@ -152,5 +170,7 @@ export const {
   useCreateUserAccountMutation,
   useCreateEmployeeLinkMutation,
   useGetUserCodeMutation,
+  useUpdateCourierMutation,
+  useUpdateWorkerMutation,
   useCreateWorkerMutation
 } = userApi;

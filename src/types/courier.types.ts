@@ -45,3 +45,22 @@ export type ICourierOrder = {
   changedDateTime: string;
   sale: true;
 };
+export type ICourierUpdate = {
+  id: number;
+  phone: string;
+  password: string;
+  firstname: string;
+  middleName: string;
+  lastname: string;
+  role: string;
+  birthday: string;
+  street: string;
+  houseNumber: string;
+  flat: string;
+  addressComment: string;
+  bonuses: number;
+  telegramAccount: string;
+  courierDeliveringStatus: number;
+  successfulOrders: number;
+  car: string;
+};
