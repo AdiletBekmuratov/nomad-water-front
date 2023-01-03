@@ -12,13 +12,13 @@ import WarehouseAppeal from '@/pages/WarehouseAppeal';
 import Warehouses from '@/pages/Warehouses';
 import { getMe } from '@/redux/slices/auth';
 import ProtectedRoute from './ProtectedRoute';
-import Loader from '@/components/Loader';
+import Loader from '@/components/Landing/Loader';
 
 import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminCategory from '@/pages/admin/AdminCategory';
 import LoginPage from '@/pages/LoginPage';
-import Courier from '@/pages/Courier';
-import Employee from '@/pages/Employee';
+import Courier from '@/pages/Couriers/Courier';
+
 // import AdminEmployee from '@/pages/admin/AdminEmployee';
 
 const Landing = lazy(() => import('@/pages/Landing'));
@@ -33,11 +33,13 @@ const AdminWarehouses = lazy(() => import('@/pages/admin/AdminWarehouses'));
 const AdminUserME = lazy(() => import('@/pages/admin/AdminUserME'));
 
 const Catalog = lazy(() => import('@/pages/catalog/Catalog'));
-const Orders = lazy(() => import('@/pages/Orders'));
+const Orders = lazy(() => import('@/pages/User/Orders'));
+const Employee = lazy(() => import('@/pages/Employee/Employee'));
+
 const BottlePage = lazy(() => import('@/pages/catalog/BottlePage'));
 const RequestsUser = lazy(() => import('@/pages/catalog/RequestsUser'));
-const Users = lazy(() => import('@/pages/catalog/Users'));
-const UserPage = lazy(() => import('@/pages/catalog/UserPage'));
+//const Users = lazy(() => import('@/pages/catalog/Users'));
+const UserPage = lazy(() => import('@/pages/User/UserPage'));
 const MyFavourite = lazy(() => import('@/pages/catalog/MyFavourite'));
 
 const AppRoutes = () => {
@@ -130,7 +132,7 @@ const AppRoutes = () => {
             <Route path="/myOrders" element={<Orders />} />
             <Route path="/orderinfo" element={<OrderInfo />} />
 
-            <Route path="/users" element={<Users />} />
+            {/* <Route path="/users" element={<Users />} /> */}
 
             <Route path="/requestsUser" element={<RequestsUser />} />
 

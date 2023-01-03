@@ -1,7 +1,7 @@
 import { Button, Input } from '@/components/Forms';
 import React from 'react';
 
-import { RegByPhone } from '@/components/regByPhone';
+import { RegByPhone } from '@/components/NOuseFile/regByPhone';
 
 import googleplay from '@/assets/crm/GooglePlay_en.png';
 import appstore from '@/assets/crm/AppStore_en.png';

@@ -1,14 +1,14 @@
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
-import Loader from '@/components/Loader';
+import Loader from '@/components/Landing/Loader';
 import { ActionButtons, DeleteModal, Table } from '@/components/Table';
 import React, { useMemo, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { ColumnDef, Row } from '@tanstack/react-table';
 import { useDeleteWorkerMutation, useGetAllWorkerQuery } from '@/redux/services/base.service';
-import { CreateEmployee } from '@/components/Admin/Pages/Employee';
+import { CreateEmployee } from '@/pages/Employee';
 import { IWorker } from '@/types/warehouseWorker.types';
-import { EditWorker } from '@/components/Admin/Pages/Employee/EditEmployee';
+import { EditWorker } from '@/pages/Employee/EditEmployee';
 
 const AdminEmployee = () => {
   const { data, isLoading } = useGetAllWorkerQuery();

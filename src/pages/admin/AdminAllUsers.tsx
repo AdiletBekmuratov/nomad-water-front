@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
 
-import { CreateModal, EditModal } from '@/components/Admin/Pages/Couriers';
+import { CreateModal, EditModal } from '@/pages/Couriers';
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
-import Loader from '@/components/Loader';
+import Loader from '@/components/Landing/Loader';
 
 import { toast } from 'react-hot-toast';
 import { ColumnDef, Row } from '@tanstack/react-table';

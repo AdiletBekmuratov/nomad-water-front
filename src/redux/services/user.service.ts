@@ -66,7 +66,7 @@ export const userApi = createApi({
     }),
 
     //api/user/me Получить текущего пользователя - находится в AUTH
-    updateUserMe: builder.mutation<IUserFull, void>({
+    updateUserMe: builder.mutation<IUserFull, IUserFull>({
       query: (body) => ({
         url: `/user/me`,
         method: `PUT`,

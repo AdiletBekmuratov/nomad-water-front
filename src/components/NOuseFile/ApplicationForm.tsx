@@ -1,4 +1,4 @@
-import FormComponent from '@/components/FormComponent';
+import FormComponent from '@/components/Landing/FormComponent';
 import { Button, Input, TextArea } from '@/components/Forms';
 import * as yup from 'yup';
 

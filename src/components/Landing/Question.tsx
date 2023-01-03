@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import FaqComp from '../FaqComp';
+import FaqComp from './FaqComp';
 
 export const Question = () => {
   return (

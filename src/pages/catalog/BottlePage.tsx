@@ -8,7 +8,7 @@ import { Layout } from '@/components/Layout';
 
 import { useGetAllProductsQuery } from '@/redux/services/base.service';
 import { IProduct } from '@/types';
-import Loader from '@/components/Loader';
+import Loader from '@/components/Landing/Loader';
 
 const BottlePage = () => {
   const { id } = useParams();

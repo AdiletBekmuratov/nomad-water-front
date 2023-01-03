@@ -1,15 +1,15 @@
 import { ICourierOrder } from '@/types/courier.types';
 import { ColumnDef } from '@tanstack/react-table';
 import React, { useMemo, useState } from 'react';
-import { ActionButtons, Table } from '../Table';
+import { ActionButtons, Table } from '../../components/Table';
 import {
   useGetAllConfirmedOrdersQuery,
   useConfirmOrderMutation
 } from '@/redux/services/courier.service';
-import Loader from '../Loader';
+import Loader from '../../components/Landing/Loader';
 import { toast } from 'react-hot-toast';
-import { Modal } from '../Layout/Modal';
-import { Button } from '../Forms';
+import { Modal } from '../../components/Layout/Modal';
+import { Button } from '../../components/Forms';
 
 export const ConfirmOrder = () => {
   const { data, isLoading, refetch } = useGetAllConfirmedOrdersQuery();

@@ -9,7 +9,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { FiDelete } from 'react-icons/fi';
 import { useGetAllProductsQuery, useGetProductCategoryQuery } from '@/redux/services/base.service';
 import { IProduct } from '@/types';
-import Loader from '@/components/Loader';
+import Loader from '@/components/Landing/Loader';
 
 const Catalog: FC = () => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);

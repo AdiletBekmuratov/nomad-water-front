@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
-import Loader from '@/components/Loader';
+import Loader from '@/components/Landing/Loader';
 import { ActionButtons, DeleteModal, Table } from '@/components/Table';
 
 import { IProductCategoryCreate } from '@/types/products.type';

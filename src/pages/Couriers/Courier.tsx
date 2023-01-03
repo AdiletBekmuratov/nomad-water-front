@@ -2,11 +2,11 @@ import { ICourierOrder } from '@/types/courier.types';
 import { ColumnDef } from '@tanstack/react-table';
 import React, { useMemo, useState } from 'react';
 import { useGetCourierOrderQuery } from '@/redux/services/courier.service';
-import Loader from '@/components/Loader';
+import Loader from '@/components/Landing/Loader';
 import { Layout } from '@/components/Layout';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { Table } from '@/components/Table';
-import { Edit } from '@/components/User/Edit';
+import { Edit } from '@/pages/User/Edit';
 import { Button } from '@/components/Forms';
 import { ConfirmOrder } from '@/components/Courier';
 

@@ -5,8 +5,8 @@ import { Button } from '@/components/Forms';
 import React from 'react';
 
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { Edit } from '@/components/User/Edit';
-import OrderHistory from '@/components/User/OrderHistory';
+import { Edit } from '@/pages/User/Edit';
+import OrderHistory from '@/pages/User/OrderHistory';
 
 const UserPage = () => {
   const { user } = useAppSelector((state) => state.auth);

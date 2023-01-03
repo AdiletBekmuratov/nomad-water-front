@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
-import { Table } from '../Table';
+import { Table } from '../../components/Table';
 import { IOrder } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { useGetUserOrderQuery } from '@/redux/services/base.service';
-import Loader from '../Loader';
+import Loader from '../../components/Landing/Loader';
 
 const OrderHistory = () => {
   const { data = [], isLoading } = useGetUserOrderQuery();

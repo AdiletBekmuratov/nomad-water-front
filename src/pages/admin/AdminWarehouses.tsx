@@ -1,6 +1,6 @@
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
 import { CreateModal, EditModal } from '@/components/Admin/Pages/Warehouses';
-import Loader from '@/components/Loader';
+import Loader from '@/components/Landing/Loader';
 import { ActionButtons, DeleteModal, Table } from '@/components/Table';
 
 import {

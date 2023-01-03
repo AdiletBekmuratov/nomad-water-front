@@ -3,13 +3,13 @@ import React, { useMemo, useState } from 'react';
 import { ICouriers } from '@/types';
 
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
-import Loader from '@/components/Loader';
+import Loader from '@/components/Landing/Loader';
 
 import { toast } from 'react-hot-toast';
 import { ColumnDef, Row } from '@tanstack/react-table';
 import { ActionButtons, DeleteModal, Table } from '@/components/Table';
-import { CreateModal } from '@/components/Admin/Pages/Couriers/CreateModal';
-import { EditModal } from '@/components/Admin/Pages/Couriers/EditModal';
+import { CreateModal } from '@/pages/Couriers/CreateModal';
+import { EditModal } from '@/pages/Couriers/EditModal';
 import { useGetUserROLEQuery } from '@/redux/services/user.service';
 
 const AdminCouriers = () => {

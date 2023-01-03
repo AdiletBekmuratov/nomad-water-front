@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { Layout } from '@/components/Layout';
-import Pending from './Employee/Pending';
+import Pending from './Pending';
 
 const Employee = () => {
   const { user } = useAppSelector((state) => state.auth);
