@@ -1,14 +1,15 @@
 import React, { useMemo, useState } from 'react';
-
-import { CreateModal, EditModal } from '@/pages/Couriers';
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
-import Loader from '@/components/Landing/Loader';
 
 import { toast } from 'react-hot-toast';
 import { ColumnDef, Row } from '@tanstack/react-table';
 import { ActionButtons, DeleteModal, Table } from '@/components/Table';
 import { IUserFull } from '@/types';
 import { useDeleteUserMutation, useGetAllUsersQuery } from '@/redux/services/user.service';
+import { CreateModal, EditModalUser } from '@/components/Admin/Pages/AllUsers';
+import Loader from '@/components/Landing/Loader';
+import { EditModalCourier } from '../Couriers';
+import { EditEmployee } from '../../components/Admin/Pages/AllUsers/EditEmployee';
 
 const AdminAllUsers = () => {
   const { data: users = [], isLoading } = useGetAllUsersQuery();
@@ -19,6 +20,7 @@ const AdminAllUsers = () => {
   const [visibleCreate, setVisibleCreate] = useState(false);
   const [visibleDelete, setVisibleDelete] = useState(false);
   const [visibleEdit, setVisibleEdit] = useState(false);
+  const [role, setRole] = useState('');
 
   const handleDelete = async () => {
     toast
@@ -35,6 +37,7 @@ const AdminAllUsers = () => {
   const handleEditRowClick = (row: Row<IUserFull>) => {
     setRowData(row.original);
     setVisibleEdit(true);
+    setRole(row.original.role);
   };
 
   const handleDeleteRowClick = (row: Row<IUserFull>) => {
@@ -84,10 +87,7 @@ const AdminAllUsers = () => {
         header: 'Кв.',
         accessorKey: 'flat'
       },
-      {
-        header: 'Этаж',
-        accessorKey: 'addressComment'
-      },
+
       {
         header: 'telegram',
         accessorKey: 'telegramAccount'
@@ -116,7 +116,18 @@ const AdminAllUsers = () => {
         onAddClick={() => setVisibleCreate(true)}
       />
       <CreateModal visible={visibleCreate} setVisible={setVisibleCreate} />
-      <EditModal data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} />
+      <>
+        {role === 'ROLE_USER' ? (
+          <EditModalUser data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} />
+        ) : role === 'ROLE_COURIER' ? (
+          <EditModalCourier data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} />
+        ) : role === 'ROLE_MASTER' || role === 'ROLE_KEEPER' ? (
+          <EditEmployee data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} />
+        ) : (
+          ''
+        )}
+      </>
+
       <DeleteModal
         loading={isLoadingDelete}
         handleDelete={handleDelete}

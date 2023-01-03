@@ -8,7 +8,7 @@ import { ColumnDef, Row } from '@tanstack/react-table';
 import { useDeleteWorkerMutation, useGetAllWorkerQuery } from '@/redux/services/base.service';
 import { CreateEmployee } from '@/pages/Employee';
 import { IWorker } from '@/types/warehouseWorker.types';
-import { EditWorker } from '@/pages/Employee/EditEmployee';
+import { EditWorker } from '@/components/Admin/Pages/AllUsers/EditEmployee';
 
 const AdminEmployee = () => {
   const { data, isLoading } = useGetAllWorkerQuery();

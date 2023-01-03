@@ -73,8 +73,11 @@ export const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
         <div className="flex space-x-4">
           {onAddClick && (
             <div data-tip="Create" className="tooltip">
-              <Button onClick={onAddClick} className={`bg-medium-blue !rounded-full p-2`}>
-                <HiPlus />
+              <Button
+                onClick={onAddClick}
+                className={`bg-medium-blue hover:bg-gray-700 !rounded-full p-2`}>
+                <HiPlus className={`w-5 h-5`} />
+                Добавить нового работника
               </Button>
             </div>
           )}

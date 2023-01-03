@@ -34,7 +34,7 @@ export const userApi = createApi({
     //Получить всех пользователей по активности /active/{isActive}
     getActiveUser: builder.query<IUserFull[], boolean>({
       query: (isActive) => ({
-        url: `userWithRole/${isActive}`
+        url: `user/active/${isActive}`
       }),
       providesTags: (result) =>
         result
@@ -47,7 +47,7 @@ export const userApi = createApi({
     //получить юзера по роли
     getUserROLE: builder.query<IUserFull[], string>({
       query: (role) => ({
-        url: `userWithRole/${role}`
+        url: `user/role/${role}`
       }),
       providesTags: (result) =>
         result
@@ -110,7 +110,7 @@ export const userApi = createApi({
       }),
       invalidatesTags: [{ type: 'Link', id: 'LIST' }]
     }),
-    updateCourier: builder.mutation<void, ICourierUpdate>({
+    updateCourier: builder.mutation<void, IUserFull>({
       query: (body) => ({
         url: `user/courier/${Number(body.id)}`,
         method: 'PUT',
@@ -127,7 +127,7 @@ export const userApi = createApi({
       }),
       invalidatesTags: [{ type: 'Link', id: 'LIST' }]
     }),
-    updateWorker: builder.mutation<void, IUserFullCreate>({
+    updateWorker: builder.mutation<void, IUserFull>({
       query: (body) => ({
         url: `user/warehouseWorker/${Number(body.id)}`,
         method: 'PUT',
@@ -169,8 +169,10 @@ export const {
   useCreateEmployeeMutation,
   useCreateUserAccountMutation,
   useCreateEmployeeLinkMutation,
+  useCreateWorkerMutation,
+
   useGetUserCodeMutation,
+
   useUpdateCourierMutation,
-  useUpdateWorkerMutation,
-  useCreateWorkerMutation
+  useUpdateWorkerMutation
 } = userApi;

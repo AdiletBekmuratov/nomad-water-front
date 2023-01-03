@@ -1,3 +1,2 @@
-export * from './CreateModal';
-export * from './EditModal';
+export * from '../../components/Admin/Pages/AllUsers/EditModalCourier';
 export * from './ConfirmOrder';

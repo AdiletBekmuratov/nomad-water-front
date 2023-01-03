@@ -3,8 +3,8 @@ import { ColumnDef } from '@tanstack/react-table';
 import React, { useMemo, useState } from 'react';
 import { ActionButtons, Table } from '../../components/Table';
 import {
-  useGetAllConfirmedOrdersQuery,
-  useConfirmOrderMutation
+  useConfirmOrderMutation,
+  useGetAllConfirmedOrdersQuery
 } from '@/redux/services/courier.service';
 import Loader from '../../components/Landing/Loader';
 import { toast } from 'react-hot-toast';

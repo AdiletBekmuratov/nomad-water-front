@@ -6,9 +6,10 @@ import Loader from '@/components/Landing/Loader';
 import { Layout } from '@/components/Layout';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { Table } from '@/components/Table';
-import { Edit } from '@/pages/User/Edit';
+
 import { Button } from '@/components/Forms';
-import { ConfirmOrder } from '@/components/Courier';
+import { ConfirmOrder } from './ConfirmOrder';
+import { EditModalCourier } from '../../components/Admin/Pages/AllUsers/EditModalCourier';
 
 const Courier = () => {
   const { data, isLoading } = useGetCourierOrderQuery();
@@ -78,7 +79,7 @@ const Courier = () => {
         </p>
         <ConfirmOrder />
       </div>
-      <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
+      <EditModalCourier setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
     </Layout>
   );
 };

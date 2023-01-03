@@ -159,14 +159,14 @@ export const baseApi = createApi({
       }),
       invalidatesTags: [{ type: 'Worker', id: 'LIST' }]
     }),
-    updateWarehouseWorker: builder.mutation<void, IWorker>({
-      query: (body) => ({
-        url: `warehouseWorker/${Number(body.id)}`,
-        method: 'PUT',
-        body
-      }),
-      invalidatesTags: [{ type: 'Worker', id: 'LIST' }]
-    }),
+    // updateWarehouseWorker: builder.mutation<void, IWorker>({
+    //   query: (body) => ({
+    //     url: `warehouseWorker/${Number(body.id)}`,
+    //     method: 'PUT',
+    //     body
+    //   }),
+    //   invalidatesTags: [{ type: 'Worker', id: 'LIST' }]
+    // }),
     getAllWorker: builder.query<IWorker[], void>({
       query: () => ({
         url: `warehouseWorker`
@@ -237,6 +237,6 @@ export const {
   //Worker
   useGetAllWorkerQuery,
   useCreateWarehouseWorkerMutation,
-  useUpdateWarehouseWorkerMutation,
+  // useUpdateWarehouseWorkerMutation,
   useDeleteWorkerMutation
 } = baseApi;

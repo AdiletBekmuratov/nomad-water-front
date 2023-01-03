@@ -25,7 +25,7 @@ const Landing = lazy(() => import('@/pages/Landing'));
 const NoPage = lazy(() => import('@/pages/admin/NoPage'));
 
 const AdminLogin = lazy(() => import('@/pages/admin/AdminLogin'));
-const AdminRegisterEmp = lazy(() => import('@/pages/admin/AdminRegisterEmp'));
+const RegisterForLink = lazy(() => import('@/pages/RegisterForLink'));
 
 const AdminAllUsers = lazy(() => import('@/pages/admin/AdminAllUsers'));
 // const AdminCouriers = lazy(() => import('@/pages/admin/AdminCouriers'));
@@ -68,7 +68,7 @@ const AppRoutes = () => {
             {/*вход админ */}
             <Route path="/admin/login" element={<AdminLogin />} />
             {/* страница регистрации по сгенерированным ссылкам */}
-            <Route path="/register/employee/*" element={<AdminRegisterEmp />} />
+            <Route path="/register/employee/*" element={<RegisterForLink />} />
             {/* личная страница пользователей админки  */}
             <Route path="/admin/AdminUserME" element={<AdminUserME />} />
             {/* личная страница юзера */}

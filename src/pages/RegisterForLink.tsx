@@ -38,7 +38,7 @@ const INITIAL_VALUES: IEmployeeCreate = {
   shopkeeperPhone: ''
 };
 
-const AdminRegisterEmp: FC = () => {
+const RegisterForLink: FC = () => {
   const [visible, setVisible] = React.useState(false);
   const [create, { isLoading }] = useCreateEmployeeMutation();
   const [createWorker, { isLoading: isL }] = useCreateWorkerMutation();
@@ -98,9 +98,9 @@ const AdminRegisterEmp: FC = () => {
                   /> */}
               </div>
               <div className={`grid grid-cols-1 sm:grid-cols-3 gap-3 items-center`}>
-                <Input inputType="formik" name="firstname" id="firstname" label="Фамилия" />
-                <Input inputType="formik" name="middleName" id="middleName" label="Имя" />
-                <Input inputType="formik" name="lastname" id="lastname" label="Отчество" />
+                <Input inputType="formik" name="firstname" id="firstname" label="Имя" />
+                <Input inputType="formik" name="middleName" id="middleName" label="Отчество" />
+                <Input inputType="formik" name="lastname" id="lastname" label="Фамилия" />
               </div>
 
               <div className={`grid grid-cols-1 md:grid-col-2 gap-2`}>
@@ -177,7 +177,7 @@ const AdminRegisterEmp: FC = () => {
                   <h2 className={`text-lg font-semibold`}>Ваши данные сохранены!</h2>
                   <span>В течении минуты на {props.values.phone} придет смс код.</span>{' '}
                   <p>Используйте его вместо пароля для входа в систему</p>
-                  <Link to="/admin/login">
+                  <Link to="/login/user">
                     <Button>Войти</Button>
                   </Link>
                 </div>
@@ -189,4 +189,4 @@ const AdminRegisterEmp: FC = () => {
     </div>
   );
 };
-export default AdminRegisterEmp;
+export default RegisterForLink;
