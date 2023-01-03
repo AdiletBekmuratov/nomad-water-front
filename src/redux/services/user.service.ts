@@ -1,5 +1,5 @@
-import { ICourierUpdate } from './../../types/courier.types';
-import { IUserCreate } from '@/types';
+
+import { IUser, IUserCreate } from '@/types';
 import { IEmployeeCreate, IEmployeeCreateLink } from '@/types/employee.types';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 
@@ -66,7 +66,7 @@ export const userApi = createApi({
     }),
 
     //api/user/me Получить текущего пользователя - находится в AUTH
-    updateUserMe: builder.mutation<IUserFull, IUserFull>({
+    updateUserMe: builder.mutation<IUser, IUser>({
       query: (body) => ({
         url: `/user/me`,
         method: `PUT`,

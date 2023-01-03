@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { HiPencil, HiTrash } from 'react-icons/hi';
 import { Button } from '../Forms';
 import { AiFillFileImage } from 'react-icons/ai';
-import { GiConfirmed } from 'react-icons/gi';
+
 interface IActionButtonsProps {
   handleEditClick?: Function;
   handleDeleteClick?: Function;
@@ -39,15 +39,17 @@ export const ActionButtons: FC<IActionButtonsProps> = ({
         )}
         {handleImageClick && (
           <div data-tip="Delete" className="tooltip">
-            <Button onClick={() => handleImageClick()} className="!rounded-full p-2">
+            <Button onClick={() => handleImageClick()} className="!rounded-full p-2 bg-medium-blue">
               <AiFillFileImage />
             </Button>
           </div>
         )}
         {handleConfirmClick && (
           <div data-tip="Delete" className="tooltip">
-            <Button onClick={() => handleConfirmClick()} className="!rounded-full p-2">
-              <GiConfirmed />
+            <Button
+              onClick={() => handleConfirmClick()}
+              className="!rounded-full p-3 bg-medium-blue">
+              Принять
             </Button>
           </div>
         )}

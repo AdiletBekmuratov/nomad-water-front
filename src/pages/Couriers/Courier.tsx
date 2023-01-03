@@ -9,7 +9,8 @@ import { Table } from '@/components/Table';
 
 import { Button } from '@/components/Forms';
 import { ConfirmOrder } from './ConfirmOrder';
-import { EditModalCourier } from '../../components/Admin/Pages/AllUsers/EditModalCourier';
+
+import { Edit } from '../User/Edit';
 
 const Courier = () => {
   const { data, isLoading } = useGetCourierOrderQuery();
@@ -21,14 +22,7 @@ const Courier = () => {
         header: 'Адрес доставки',
         accessorKey: 'address'
       },
-      // {
-      //   header: 'Номер дома',
-      //   accessorKey: 'user.houseNumber'
-      // },
-      // {
-      //   header: 'Квартира',
-      //   accessorKey: 'user.flat'
-      // },
+
       {
         header: 'Комментарий',
         accessorKey: 'comment'
@@ -42,16 +36,17 @@ const Courier = () => {
         accessorKey: 'orderDateTime'
       },
       {
-        header: 'Статус доставки',
-        accessorKey: 'statusId'
-      },
-      {
         header: 'Метод оплаты',
         accessorKey: 'paymentMethod.name'
       },
       {
         header: 'Общая цена заказа с доставкой',
         accessorKey: 'totalPrice'
+      },
+      {
+        header: 'Статус доставки',
+        //accessorKey: 'statusId'
+        cell: ({ row }) => (row.original.statusId === 2 ? 'Товар в пути' : '')
       }
     ],
     []
@@ -59,27 +54,30 @@ const Courier = () => {
   if (isLoading) {
     return <Loader />;
   }
-  console.log(data);
 
   return (
     <Layout>
-      <div className="flex justify-center">
+      <div className="flex flex-col items-start">
         <div className="text-dark-blue font-montserrat">
-          <strong>Профиль курьера:</strong> {user?.firstname} {user?.lastname}
+          <strong>Профиль курьера:</strong>
+          <p>
+            {user?.firstname} {user?.lastname}
+          </p>
         </div>
+        <Button className={`w-48 bg-medium-blue`} onClick={() => setIsOpenEdit(true)}>
+          Изменить данные
+        </Button>
       </div>
+      <div className={`border-b-2 border-dotted border-gray-700 py-2`}></div>
       <div className="mt-2">
-        <p className="text-dark-blue text-xl text-center font-montserrat font-medium">Заказы</p>
-        <Button onClick={() => setIsOpenEdit(true)}>Изменить данные</Button>
-        <Table columns={columns} id="ProductsTable" data={data!} />
+        {/* <p className="text-dark-blue text-xl text-center font-montserrat font-medium">Заказы</p> */}
+        <Table columns={columns} id="ProductsTable" data={data!} title="Принятые заказы" />
       </div>
+      <div className={`border-t-2 border-dotted border-gray-700 py-2`}></div>
       <div>
-        <p className="text-dark-blue font-montserrat mb-2 text-xl text-center font-medium">
-          Не принятые заказы:
-        </p>
         <ConfirmOrder />
       </div>
-      <EditModalCourier setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
+      <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
     </Layout>
   );
 };

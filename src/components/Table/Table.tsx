@@ -30,9 +30,10 @@ interface ITableProps {
   columns: any;
   data: any;
   onAddClick?: MouseEventHandler<HTMLButtonElement> | undefined;
+  title?: string;
 }
 
-export const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
+export const Table: FC<ITableProps> = ({ columns, data, onAddClick, id, title }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
   const [compact, setCompact] = useLocalStorage(id, false);
@@ -70,6 +71,10 @@ export const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
           onChange={handleCompactToogle}
           value={compact}
         />
+        <div className="flex items-center">
+          <span className="text-lg">{title}</span>
+        </div>
+
         <div className="flex space-x-4">
           {onAddClick && (
             <div data-tip="Create" className="tooltip">

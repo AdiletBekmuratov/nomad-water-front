@@ -40,6 +40,10 @@ export const ConfirmOrder = () => {
         accessorKey: 'address'
       },
       {
+        header: 'Комментарий',
+        accessorKey: 'comment'
+      },
+      {
         header: 'Метод оплаты',
         accessorKey: 'paymentMethod.name'
       },
@@ -66,14 +70,14 @@ export const ConfirmOrder = () => {
   }
   return (
     <div>
-      <Table id="ProductsTable" columns={columns} data={data!} />
+      <Table id="ProductsTable" columns={columns} data={data!} title="Активные заказы"/>
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
         <div className="font-montserrat text-dark-blue">
           <p>Вы действительно хотите взять данный заказ?</p>
         </div>
         <div className="grid grid-cols-2 mt-2 gap-3">
           <Button
-            buttonColor="bg-green-700"
+            buttonColor="bg-green-700 "
             onClick={() => {
               handleConfirm(rowData?.id);
               setIsOpenModal(false);

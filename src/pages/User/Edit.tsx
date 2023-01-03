@@ -2,7 +2,7 @@ import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 
 import { useUpdateUserMeMutation } from '@/redux/services/user.service';
-import { IUserFull } from '@/types';
+import { IUser } from '@/types';
 import { Form, Formik } from 'formik';
 import { FC, Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
@@ -10,13 +10,13 @@ import toast from 'react-hot-toast';
 interface IEditModalProps {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
-  data: IUserFull;
+  data: IUser;
 }
 
 export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
   const [update, { isLoading }] = useUpdateUserMeMutation();
 
-  const handleEdit = async (values: IUserFull) => {
+  const handleEdit = async (values: IUser) => {
     toast
       .promise(update(values).unwrap(), {
         loading: 'Загрузка',
