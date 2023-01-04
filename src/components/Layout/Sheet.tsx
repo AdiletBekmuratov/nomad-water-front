@@ -3,6 +3,9 @@ import { Dispatch, FC, ReactNode, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
+import { FaFacebook, FaInstagram, FaTelegramPlane, FaWhatsapp } from 'react-icons/fa';
+import { FiTwitter } from 'react-icons/fi';
+
 interface ISheetProps {
   children: ReactNode;
   isOpen: boolean;
@@ -17,7 +20,7 @@ const itemVariants = {
 };
 
 export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
-  <div className=" text-dark-blue">
+  <div className=" text-dark-blue h-full">
     <AnimatePresence>
       {isOpen && (
         <>
@@ -39,26 +42,39 @@ export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
               <AiOutlineCloseCircle className="cursor-pointer" onClick={() => setIsOpen(false)} />
             </motion.div>
             <motion.div
-              className={`container px-5 xl:px-10 pt-10 mb-5`}
+              className={`container px-5 xl:px-10 pt-7 mb-5`}
               initial="closed"
               animate="open"
               exit="closed"
               variants={itemVariants}>
-              <div className={`grid grid-cols-1 gap-2 mb-16 xl:mb-36`}>
+              <div className={`grid grid-cols-1 gap-2 `}>
+                <Link to="/catalog">Акции</Link>
                 <Link to="/catalog">Каталог</Link>
-                <Link to="/userPage">Мой аккаунт</Link>
                 <Link to="/myOrders">Мои заказы</Link>
+                <Link to="/userPage">Мой аккаунт</Link>
                 <Link to="/myFavourite">Избранное</Link>
-                <Link to="/catalog">Обратная связь</Link>
+
+                <div className={`border-b-2 border-solid border-gray-500 my-2 lg:my-3`}></div>
+
+                <Link to="/">Партнерам</Link>
+                <Link to="/">FAQ</Link>
+                <Link to="/">Политика приватности</Link>
+                <Link to="/">Обратная связь</Link>
                 <Link to="/">На главную</Link>
-                <div className={`border-b-2 border-solid border-gray-500 my-5`}></div>
-                <Link to="/requestsUser">Панель управления</Link>
-                <Link to="/users">Пользователи</Link>
-                <Link to="/users">Курьеры</Link>
-                <Link to="/warehouse">Склады</Link>
-                <Link to="/catalog">Оборудование</Link>
-                <div className={`border-b-2 border-solid border-gray-500 w-52 my-5`}></div>
-                <Link to="/admin/allUsers">Admin</Link>
+                <div className={`border-b-2 border-solid border-gray-500 my-2 lg:my-3`}></div>
+                <div className={`grid gap-3`}>
+                  <h2>Наши контакты:</h2>
+                  <a href="tel:+77777777777">+7 (777)777-77-77</a>
+                  <a href="tel:+77212777777">+7 (721)277-77-77</a>
+                  <a href="mailto:someone@example.com">someone@example.com</a>
+                  <div className="flex gap-3 pt-3">
+                    <FaTelegramPlane className={`w-6 h-6 cursor-pointer`} />
+                    <FaWhatsapp className={`w-6 h-6 cursor-pointer`} />
+                    <FaInstagram className={`w-6 h-6 cursor-pointer`} />
+                    <FaFacebook className={`w-6 h-6 cursor-pointer`} />
+                    <FiTwitter className={`w-6 h-6 cursor-pointer`} />
+                  </div>
+                </div>
               </div>
             </motion.div>
           </motion.aside>

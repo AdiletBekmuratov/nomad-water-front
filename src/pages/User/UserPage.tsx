@@ -14,7 +14,7 @@ const UserPage = () => {
 
   return (
     <Layout>
-      <div>
+      <div className="h-screen">
         <h1 className="text-center font-montserrat text-xl font-medium text-dark-blue">Профиль</h1>
         <div className="font-montserrat text-dark-blue grid grid-cols-2 mt-2 gap-2">
           <div className="flex justify-center">

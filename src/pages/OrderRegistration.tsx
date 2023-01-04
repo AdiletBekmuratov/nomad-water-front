@@ -103,7 +103,7 @@ const OrderRegistration: FC = () => {
   return (
     <Layout>
       {cartItems.length > 0 ? (
-        <div className={`lg:grid lg:grid-cols-3 lg:grid-row-3 gap-6`}>
+        <div className={`lg:grid lg:grid-cols-3 lg:grid-row-3 gap-6  h-screen`}>
           <div className={`lg:col-span-2 lg:order-1 lg:col-start-1 lg:row-start-1 grid gap-4`}>
             {cartItems.map((item: IProduct) => (
               <OrderCard id={item.id} data={{ ...item }} key={item.id} />
@@ -234,7 +234,7 @@ const OrderRegistration: FC = () => {
           )}
         </div>
       ) : (
-        <div className={` flex flex-col gap-5 items-center`}>
+        <div className={` flex flex-col gap-5 items-center h-screen`}>
           <h2>
             Корзина пустая <span>😕</span>
           </h2>

@@ -10,7 +10,7 @@ const MyFavourite = () => {
     setValue(event.target.value);
   };
   return (
-    <Layout className={`text-xs`}>
+    <Layout className={`text-xs h-screen `}>
       <Input
         id="search"
         name="search"

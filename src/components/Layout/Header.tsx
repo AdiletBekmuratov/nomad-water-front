@@ -51,7 +51,7 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
           <div className="flex-1">
             <AiOutlineMenu
               onClick={() => setIsOpen((prev) => !prev)}
-              className={`hidden lg:block cursor-pointer w-6 h-6`}
+              className={`hidden md:block cursor-pointer w-6 h-6`}
             />
           </div>
 
