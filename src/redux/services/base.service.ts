@@ -29,9 +29,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Products', id } as const)),
-              { type: 'Products', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Products', id } as const)),
+            { type: 'Products', id: 'LIST' }
+          ]
           : [{ type: 'Products', id: 'LIST' }]
     }),
     createProduct: builder.mutation<IProduct, IProductCreate>({
@@ -92,9 +92,21 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
-              { type: 'ProductCategory', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+            { type: 'ProductCategory', id: 'LIST' }
+          ]
+          : [{ type: 'ProductCategory', id: 'LIST' }]
+    }),
+    getProductCategoryID: builder.query<IProductCategoryCreate[], number>({
+      query: (id) => ({
+        url: `productCategory/${Number(id)}`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+            { type: 'ProductCategory', id: 'LIST' }
+          ]
           : [{ type: 'ProductCategory', id: 'LIST' }]
     }),
     updateProductCategory: builder.mutation<void, IProductCategoryCreate>({
@@ -121,9 +133,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
-              { type: 'Warehouses', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+            { type: 'Warehouses', id: 'LIST' }
+          ]
           : [{ type: 'Warehouses', id: 'LIST' }]
     }),
     createWarehouse: builder.mutation<void, IWarehouseUpdate>({
@@ -174,9 +186,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Worker', id } as const)),
-              { type: 'Worker', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Worker', id } as const)),
+            { type: 'Worker', id: 'LIST' }
+          ]
           : [{ type: 'Worker', id: 'LIST' }]
     }),
     deleteWorker: builder.mutation<void, number>({
@@ -203,9 +215,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Order', id } as const)),
-              { type: 'Order', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Order', id } as const)),
+            { type: 'Order', id: 'LIST' }
+          ]
           : [{ type: 'Order', id: 'LIST' }]
     })
   })
@@ -222,6 +234,7 @@ export const {
   // Product Category
   useCreateProductCategoryMutation,
   useDeleteProductCategoryMutation,
+  useGetProductCategoryIDQuery,
   useGetProductCategoryQuery,
   useUpdateProductCategoryMutation,
   // Warehouses

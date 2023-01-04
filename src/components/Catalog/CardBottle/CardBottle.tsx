@@ -67,7 +67,7 @@ export const CardBottle: FC<ICard> = ({
                 Убрать из корзины
               </Button>
             ) : (
-              <Button className="w-40 h-10 text-sm" onClick={onClickAdd}>
+              <Button className="w-40 h-10 text-sm bg-medium-blue" onClick={onClickAdd}>
                 В корзину
               </Button>
             )}

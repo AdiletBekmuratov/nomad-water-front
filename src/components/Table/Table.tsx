@@ -82,7 +82,7 @@ export const Table: FC<ITableProps> = ({ columns, data, onAddClick, id, title })
                 onClick={onAddClick}
                 className={`bg-medium-blue hover:bg-gray-700 !rounded-full p-2`}>
                 <HiPlus className={`w-5 h-5`} />
-                Добавить нового работника
+                Добавить
               </Button>
             </div>
           )}

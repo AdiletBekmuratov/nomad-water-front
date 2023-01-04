@@ -1,15 +1,15 @@
 import { CardBottle } from '@/components/Catalog/CardBottle/CardBottle';
 import { FC, useState } from 'react';
 
-import { Input } from '@/components/Forms';
-import { Layout } from '@/components/Layout';
 import React from 'react';
-
-import { AiOutlineSearch } from 'react-icons/ai';
-import { FiDelete } from 'react-icons/fi';
 import { useGetAllProductsQuery, useGetProductCategoryQuery } from '@/redux/services/base.service';
 import { IProduct } from '@/types';
 import Loader from '@/components/Landing/Loader';
+import { Input } from '@/components/Forms';
+import { Layout } from '@/components/Layout';
+
+import { AiOutlineSearch } from 'react-icons/ai';
+import { FiDelete } from 'react-icons/fi';
 
 const Catalog: FC = () => {
   const [isFavourite, setIsFavourite] = useState<boolean>(false);
@@ -18,6 +18,9 @@ const Catalog: FC = () => {
   //все товары и услуги
   const { data: products = [], isLoading } = useGetAllProductsQuery();
   const product = products.map((item: IProduct) => item);
+  //получить товары по категории
+  // const [categoriesId, setCategoriesId] = useState(0);
+
   //поиск по названию
   const [value, setValue] = useState('');
   const searchArrName = products.filter((items: IProduct) =>

@@ -11,7 +11,7 @@ export type IProduct = {
 export type IProductCreate = Omit<IProduct, 'image'> & { imageFile?: File | null };
 
 export type IProductCategoryCreate = {
-  id?: number;
+  id: number;
   name: string;
 };
 
