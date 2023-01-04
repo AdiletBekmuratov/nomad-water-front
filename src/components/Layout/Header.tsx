@@ -28,7 +28,7 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
   const { cartItems = [] } = useAppSelector((state) => state.cart);
 
   const { user } = useAppSelector((state) => state.auth);
-  const headerStyle = `flex items-center py-4 justify-between layout ${props.className}`;
+  const headerStyle = `flex items-center py-3 justify-between layout ${props.className}`;
   // const [isDrop, setIsDrop] = useState();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

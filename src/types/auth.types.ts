@@ -1,3 +1,4 @@
+import { IProduct } from '@/types';
 export interface IAuthState {
   user: IUser | null | undefined;
   isError: boolean;
@@ -15,18 +16,26 @@ export interface IUsersState {
 }
 export interface IUser {
   id: number;
-  email: string;
-  username: string;
-  role: string;
-  enabled: boolean;
-  createdAt: string;
-  updatedAt: string;
-  flat: string;
-  houseNumber: string;
-  street: string;
+  phone: string;
   firstname: string;
   lastname: string;
-  phone: string;
+  middleName: string;
+  role: string;
+  birthday: string;
+  email: string;
+  username: string;
+  houseNumber: string;
+  street: string;
+  flat: string;
+  addressComment: string;
+  bonuses: number;
+  telegramAccount: string;
+  favorites: IProduct[];
+  createdDate: string;
+  updatedDate: string;
+  active: boolean;
+  chatId: number;
+
 }
 
 export type IUserCreate = {

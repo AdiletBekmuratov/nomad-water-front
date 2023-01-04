@@ -33,7 +33,7 @@ export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
       <Formik initialValues={data} onSubmit={handleEdit}>
         {() => (
           <Form className="flex flex-col space-y-4">
-            <h2 className={`text-center`}>Изменение мои данные</h2>
+            <h2 className={`text-center`}>Изменить мои данные</h2>
             <Input inputType="formik" name="firstname" id="firstname" label="Имя" />
             <Input inputType="formik" name="lastname" id="lastname" label="Фамилия" />
             <Input inputType="formik" name="middleName" id="middlename" label="Отчество" />

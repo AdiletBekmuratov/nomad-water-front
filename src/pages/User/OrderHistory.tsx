@@ -10,18 +10,15 @@ const OrderHistory = () => {
 
   const columns = useMemo<ColumnDef<IOrder, any>[]>(
     () => [
-      {
-        header: 'Адрес',
-        accessorKey: 'address'
-      },
-      {
-        header: 'Комментарий',
-        accessorKey: 'comment'
-      },
       // {
       //   header: 'Имя курьера',
       //   accessorKey: 'courier.user.firstname'
       // },
+      {
+        header: 'Статус доставки',
+        //accessorKey: 'statusId'
+        cell: ({ row }) => (row.original.statusId === 2 ? 'Товар в пути' : '')
+      },
       {
         header: 'Время заказа',
         accessorKey: 'orderDateTime'
@@ -33,6 +30,14 @@ const OrderHistory = () => {
       {
         header: 'Общая цена заказа',
         accessorKey: 'totalPrice'
+      },
+      {
+        header: 'Адрес',
+        accessorKey: 'address'
+      },
+      {
+        header: 'Комментарий',
+        accessorKey: 'comment'
       }
     ],
     []
