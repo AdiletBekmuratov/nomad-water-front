@@ -57,27 +57,29 @@ const Courier = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col items-start">
-        <div className="text-dark-blue font-montserrat">
-          <strong>Профиль курьера:</strong>
-          <p>
-            {user?.firstname} {user?.lastname}
-          </p>
+      <div className={`h-screen`}>
+        <div className="flex flex-col items-start ">
+          <div className="text-dark-blue font-montserrat">
+            <strong>Профиль курьера:</strong>
+            <p>
+              {user?.firstname} {user?.lastname}
+            </p>
+          </div>
+          <Button className={`w-48 bg-medium-blue`} onClick={() => setIsOpenEdit(true)}>
+            Изменить данные
+          </Button>
         </div>
-        <Button className={`w-48 bg-medium-blue`} onClick={() => setIsOpenEdit(true)}>
-          Изменить данные
-        </Button>
+        <div className={`border-b-2 border-dotted border-gray-700 py-2`}></div>
+        <div className="mt-2">
+          {/* <p className="text-dark-blue text-xl text-center font-montserrat font-medium">Заказы</p> */}
+          <Table columns={columns} id="ProductsTable" data={data!} title="Принятые заказы" />
+        </div>
+        <div className={`border-t-2 border-dotted border-gray-700 py-2`}></div>
+        <div>
+          <ConfirmOrder />
+        </div>
+        <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
       </div>
-      <div className={`border-b-2 border-dotted border-gray-700 py-2`}></div>
-      <div className="mt-2">
-        {/* <p className="text-dark-blue text-xl text-center font-montserrat font-medium">Заказы</p> */}
-        <Table columns={columns} id="ProductsTable" data={data!} title="Принятые заказы" />
-      </div>
-      <div className={`border-t-2 border-dotted border-gray-700 py-2`}></div>
-      <div>
-        <ConfirmOrder />
-      </div>
-      <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
     </Layout>
   );
 };

@@ -57,7 +57,7 @@ export const EditEmployee: FC<IEditModalProps> = ({ visible, setVisible, data })
                 name="phone"
                 id="phone"
                 label="Телефон"
-                mask="+7 (999) 999 9999"
+                mask="+7 9999999999"
                 placeholder="+7 (999) 999 9999"
               />
               <Input

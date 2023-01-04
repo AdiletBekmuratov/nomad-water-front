@@ -28,40 +28,41 @@ const UserPage = () => {
               <strong>Имя: </strong> {` ${user?.firstname} `}
             </p>
             <p className={`${styleP}`}>
-              <strong>Отчество: </strong> {` ${user?.middleName} `}
+              <strong>Отчество: </strong>{' '}
+              {` ${user?.middleName ? user?.middleName : 'Не заполнено'} `}
             </p>
           </div>
           <div className="grid gap-2 ">
             <p className={`${styleP}`}>
-              <strong>Улица: </strong> <span>{` ${user?.street ? user?.street : ''} `}</span>
+              <strong>День рождения: </strong> {` ${user?.birthday ? user?.birthday : ''}`}
             </p>
-            <p className={`${styleP}`}>
-              <strong>Дом: </strong> {` ${user?.houseNumber ? user?.houseNumber : ''} `}
-            </p>
-            <p className={`${styleP}`}>
-              <strong>Квартира: </strong> {` ${user?.flat ? user?.flat : ''} `}
-            </p>
-          </div>
-          <div className="grid gap-2 ">
             <p className={`${styleP}`}>
               <strong>Телефон: </strong> <span>{` ${user?.phone} `}</span>
             </p>
             <p className={`${styleP}`}>
               <strong>Telegram: </strong>{' '}
-              {` ${user?.telegramAccount ? user?.telegramAccount : ''} `}
+              {` ${user?.telegramAccount ? user?.telegramAccount : 'Не заполнено'} `}
+            </p>
+            {/* <p className={`${styleP}`}>
+              <strong>Почта: </strong> {` ${user?.email ? user?.email : 'Не заполнено'} `}
+            </p> */}
+          </div>
+          <div className="grid gap-2 ">
+            <p className={`${styleP}`}>
+              <strong>Улица: </strong>{' '}
+              <span>{` ${user?.street ? user?.street : 'Не заполнено'} `}</span>
             </p>
             <p className={`${styleP}`}>
-              <strong>Почта: </strong> {` ${user?.email ? user?.email : 'Не заполнено'} `}
+              <strong>Дом: </strong> {` ${user?.houseNumber ? user?.houseNumber : 'Не заполнено'} `}
+            </p>
+            <p className={`${styleP}`}>
+              <strong>Квартира: </strong> {` ${user?.flat ? user?.flat : 'Не заполнено'} `}
             </p>
           </div>
         </div>
         <div className={`grid gap-1 lg:gap-2 grid-cols-1 lg:grid-cols-3 py-2`}>
           <p className={`${styleP}`}>
-            <strong>День рождения: </strong> {` ${user?.birthday ? user?.birthday : ''}`}
-          </p>
-          <p></p>
-          <p className={`${styleP}`}>
-            <strong>Бонусы: </strong> {` ${user?.bonuses ? user?.bonuses : ''}`}
+            <strong>Мои бонусы: </strong> {` ${user?.bonuses ? user?.bonuses : '0'}`}
           </p>
         </div>
         <div className={`flex justify-center py-2`}>
