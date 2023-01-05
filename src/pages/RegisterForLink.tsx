@@ -8,7 +8,11 @@ import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 
 import { Link } from 'react-router-dom';
-import { useCreateEmployeeMutation, useCreateWorkerMutation } from '@/redux/services/user.service';
+import {
+  useCreateEmployeeMutation,
+  useCreateUserAccountMutation,
+  useCreateWorkerMutation
+} from '@/redux/services/user.service';
 
 const params = new URLSearchParams(location.search);
 const token = params.get('token');
@@ -19,7 +23,7 @@ const INITIAL_VALUES: IEmployeeCreate = {
   role: role,
   warehouseId: warehouseId,
   phone: '',
-  password: '',
+
   firstname: '',
   middleName: '',
   lastname: '',
@@ -40,19 +44,30 @@ const INITIAL_VALUES: IEmployeeCreate = {
 
 const RegisterForLink: FC = () => {
   const [visible, setVisible] = React.useState(false);
-  const [create, { isLoading }] = useCreateEmployeeMutation();
+  // const [createEMPLOYEE, { isLoading }] = useCreateUserAccountMutation();
+  const [createCourier, { isLoading }] = useCreateEmployeeMutation();
   const [createWorker, { isLoading: isL }] = useCreateWorkerMutation();
   const handleCreate = (values: IEmployeeCreate) => {
     if (role === 'ROLE_COURIER') {
       toast
-        .promise(create(values).unwrap(), {
+        .promise(createCourier(values).unwrap(), {
           loading: 'Загрузка...',
           success: 'Получено',
           error: (error) => JSON.stringify(error, null, 2)
         })
         .finally(() => {
-          // setVisibleCreate(false);
+          //setVisibleCreate(false);
         });
+      // } else if (role === 'ROLE_EMPLOYEE') {
+      //   toast
+      //     .promise(createEMPLOYEE(values).unwrap(), {
+      //       loading: 'Загрузка...',
+      //       success: 'Получено',
+      //       error: (error) => JSON.stringify(error, null, 2)
+      //     })
+      //     .finally(() => {
+      //       // setVisibleCreate(false);
+      //     });
     } else {
       toast
         .promise(createWorker(values).unwrap(), {
@@ -66,10 +81,9 @@ const RegisterForLink: FC = () => {
     }
   };
   const validation = yup.object().shape({
-    phone: yup.string().required('Это поле обязательное')
-    // firstname: yup.string().required('Это поле обязательное'),
-    // middleName: yup.string().required('Это поле обязательное'),
-    // lastname: yup.string().required('Это поле обязательное'),
+    phone: yup.string().required('Это поле обязательное'),
+    firstname: yup.string().required('Это поле обязательное'),
+    lastname: yup.string().required('Это поле обязательное')
     // street: yup.string().required('Это поле обязательное'),
     // houseNumber: yup.string().required('Это поле обязательное'),
     // flat: yup.string().required('Это поле обязательное'),
@@ -108,12 +122,6 @@ const RegisterForLink: FC = () => {
                 <div className={`grid grid-cols-3 gap-3 text-center`}>
                   <Input inputType="formik" name="houseNumber" id="houseNumber" label="Дом" />
                   <Input inputType="formik" name="flat" id="flat" label="Квартира" />
-                  <Input
-                    inputType="formik"
-                    name="addressComment"
-                    id="addressComment"
-                    label="Этаж"
-                  />
                 </div>
               </div>
               <div className={`grid grid-cols-1 sm:grid-cols-3 gap-3 items-center`}>
@@ -147,14 +155,8 @@ const RegisterForLink: FC = () => {
                     </div>
                   )}
                 </>
-                <Input
-                  inputType="formik"
-                  type="password"
-                  name="password"
-                  id="password"
-                  label="Пароль"
-                />
-                {role !== 'ROLE_COURIER' && (
+
+                {(role === 'ROLE_MASTER' || role === 'ROLE_KEEPER') && (
                   <>
                     <Input
                       inputType="formik"

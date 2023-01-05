@@ -7,7 +7,7 @@ export type IEmployeeCreate = {
   token?: string;
   id?: number;
   phone: string;
-  password: string;
+  password?: string;
   firstname: string;
   middleName: string;
   lastname: string;

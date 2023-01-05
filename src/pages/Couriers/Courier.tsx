@@ -1,21 +1,36 @@
 import { ICourierOrder } from '@/types/courier.types';
 import { ColumnDef } from '@tanstack/react-table';
 import React, { useMemo, useState } from 'react';
-import { useGetCourierOrderQuery } from '@/redux/services/courier.service';
+import {
+  useCompleteOrderMutation,
+  useGetCourierOrderQuery
+} from '@/redux/services/courier.service';
 import Loader from '@/components/Landing/Loader';
 import { Layout } from '@/components/Layout';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { Table } from '@/components/Table';
+import { ActionButtons, Table } from '@/components/Table';
 
 import { Button } from '@/components/Forms';
 import { ConfirmOrder } from './ConfirmOrder';
 
 import { Edit } from '../User/Edit';
+import { Modal } from '@/components/Layout/Modal';
+import { toast } from 'react-hot-toast';
 
 const Courier = () => {
   const { data, isLoading } = useGetCourierOrderQuery();
+  const [complete] = useCompleteOrderMutation();
   const { user } = useAppSelector((state) => state.auth);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [rowData, setRowData] = useState();
+  const handleComplete = async (id: number) => {
+    await toast.promise(complete(Number(id)).unwrap(), {
+      loading: 'Загрузка...',
+      success: 'Подтвержден',
+      error: (error) => JSON.stringify(error, null, 2)
+    });
+  };
   const columns = useMemo<ColumnDef<ICourierOrder, any>[]>(
     () => [
       {
@@ -40,13 +55,24 @@ const Courier = () => {
         accessorKey: 'paymentMethod.name'
       },
       {
-        header: 'Общая цена заказа с доставкой',
+        header: 'Сумма',
         accessorKey: 'totalPrice'
       },
       {
         header: 'Статус доставки',
         //accessorKey: 'statusId'
         cell: ({ row }) => (row.original.statusId === 2 ? 'Товар в пути' : '')
+      },
+      {
+        header: 'Подтверждение доставки',
+        cell: ({ row }) => (
+          <ActionButtons
+            handleCompleteClick={() => {
+              setRowData(row.original);
+              setIsOpenModal(true);
+            }}
+          />
+        )
       }
     ],
     []
@@ -80,6 +106,24 @@ const Courier = () => {
         </div>
         <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
       </div>
+      <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
+        <div className="font-montserrat text-dark-blue">
+          <p>Вы действительно хотите взять данный заказ?</p>
+        </div>
+        <div className="grid grid-cols-2 mt-2 gap-3">
+          <Button
+            buttonColor="bg-green-700 "
+            onClick={() => {
+              handleComplete(rowData?.id);
+              setIsOpenModal(false);
+            }}>
+            Да
+          </Button>
+          <Button buttonColor="bg-gray-500" onClick={() => setIsOpenModal(false)}>
+            Нет
+          </Button>
+        </div>
+      </Modal>
     </Layout>
   );
 };

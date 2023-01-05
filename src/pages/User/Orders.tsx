@@ -3,8 +3,11 @@ import React from 'react';
 import { dataBottle } from '@/assets/dataBottle';
 import { Layout } from '@/components/Layout';
 import { CardBottle } from '@/components/Catalog/CardBottle/CardBottle';
+import { useGetUserOrderQuery } from '@/redux/services/base.service';
 
 const Orders = () => {
+  const { data: orders = [], isLoading } = useGetUserOrderQuery();
+  console.log(orders);
   const [orderCount, setOrderCount] = React.useState(1);
   return (
     <Layout className={`text-left`}>

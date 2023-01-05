@@ -14,7 +14,7 @@ export const employeeApi = createApi({
   tagTypes: ['Accept'],
 
   endpoints: (builder) => ({
-    acceptOrders: builder.mutation({
+    confirmOrders: builder.mutation({
       query: (id: number) => ({
         url: `/order/confirm/${Number(id)}`,
         method: `PUT`
@@ -36,4 +36,4 @@ export const employeeApi = createApi({
   })
 });
 
-export const { useAcceptOrdersMutation, useGetPendingOrdersQuery } = employeeApi;
+export const { useConfirmOrdersMutation, useGetPendingOrdersQuery } = employeeApi;

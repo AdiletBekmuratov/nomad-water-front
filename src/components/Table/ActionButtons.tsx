@@ -8,13 +8,15 @@ interface IActionButtonsProps {
   handleDeleteClick?: Function;
   handleImageClick?: Function;
   handleConfirmClick?: Function;
+  handleCompleteClick?: Function;
 }
 
 export const ActionButtons: FC<IActionButtonsProps> = ({
   handleDeleteClick,
   handleEditClick,
   handleImageClick,
-  handleConfirmClick
+  handleConfirmClick,
+  handleCompleteClick
 }) => {
   return (
     <>
@@ -39,7 +41,9 @@ export const ActionButtons: FC<IActionButtonsProps> = ({
         )}
         {handleImageClick && (
           <div data-tip="Delete" className="tooltip">
-            <Button onClick={() => handleImageClick()} className="!rounded-full p-2 bg-medium-blue">
+            <Button
+              onClick={() => handleImageClick()}
+              className={`!rounded-full p-2 bg-medium-blue`}>
               <AiFillFileImage />
             </Button>
           </div>
@@ -48,8 +52,17 @@ export const ActionButtons: FC<IActionButtonsProps> = ({
           <div data-tip="Delete" className="tooltip">
             <Button
               onClick={() => handleConfirmClick()}
-              className="!rounded-full p-3 bg-medium-blue">
+              className={`!rounded-full p-3 bg-medium-blue`}>
               Принять
+            </Button>
+          </div>
+        )}
+        {handleCompleteClick && (
+          <div data-tip="Delete" className="tooltip">
+            <Button
+              onClick={() => handleCompleteClick()}
+              className={`!rounded-full p-3 bg-medium-blue`}>
+              Подтвердить
             </Button>
           </div>
         )}

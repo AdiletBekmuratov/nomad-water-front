@@ -20,14 +20,22 @@ export const courierApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'COrder', id } as const)),
-              { type: 'COrder', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'COrder', id } as const)),
+            { type: 'COrder', id: 'LIST' }
+          ]
           : [{ type: 'COrder', id: 'LIST' }]
     }),
-    confirmOrder: builder.mutation<void, number>({
+    acceptOrder: builder.mutation<void, number>({
       query: (id) => ({
         url: `/order/accept/${Number(id)}`,
+        method: `PUT`
+      }),
+      invalidatesTags: [{ type: 'COrder', id: 'LIST' }]
+    }),
+
+    completeOrder: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `/order/complete/${Number(id)}`,
         method: `PUT`
       }),
       invalidatesTags: [{ type: 'COrder', id: 'LIST' }]
@@ -39,13 +47,17 @@ export const courierApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'COrder', id } as const)),
-              { type: 'COrder', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'COrder', id } as const)),
+            { type: 'COrder', id: 'LIST' }
+          ]
           : [{ type: 'COrder', id: 'LIST' }]
     })
   })
 });
 
-export const { useGetCourierOrderQuery, useConfirmOrderMutation, useGetAllConfirmedOrdersQuery } =
-  courierApi;
+export const {
+  useGetCourierOrderQuery,
+  useAcceptOrderMutation,
+  useCompleteOrderMutation,
+  useGetAllConfirmedOrdersQuery
+} = courierApi;

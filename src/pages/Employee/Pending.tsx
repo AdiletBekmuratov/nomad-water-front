@@ -2,7 +2,7 @@ import { ICourierOrder } from '@/types/courier.types';
 import React, { useMemo, useState } from 'react';
 import { ActionButtons, Table } from '@/components/Table';
 import {
-  useAcceptOrdersMutation,
+  useConfirmOrdersMutation,
   useGetPendingOrdersQuery
 } from '@/redux/services/employee.service';
 import Loader from '@/components/Landing/Loader';
@@ -13,7 +13,7 @@ import { Button } from '@/components/Forms';
 
 const Pending = () => {
   const { data, isLoading, refetch } = useGetPendingOrdersQuery();
-  const [accept] = useAcceptOrdersMutation();
+  const [accept] = useConfirmOrdersMutation();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [rowData, setRowData] = useState();
 

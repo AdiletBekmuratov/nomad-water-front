@@ -15,9 +15,18 @@ const OrderHistory = () => {
       //   accessorKey: 'courier.user.firstname'
       // },
       {
-        header: 'Статус доставки',
+        header: 'Статус заказа',
         //accessorKey: 'statusId'
-        cell: ({ row }) => (row.original.statusId === 2 ? 'Товар в пути' : '')
+        cell: ({ row }) =>
+          row.original.statusId === 2
+            ? 'заказ в пути'
+            : row.original.statusId === 0
+            ? 'В ожидании'
+            : row.original.statusId === 1
+            ? 'заказ собирается'
+            : row.original.statusId === 3
+            ? 'заказ доставлен'
+            : 'заказ отменен'
       },
       {
         header: 'Время заказа',

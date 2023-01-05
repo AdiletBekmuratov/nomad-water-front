@@ -3,7 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import React, { useMemo, useState } from 'react';
 import { ActionButtons, Table } from '../../components/Table';
 import {
-  useConfirmOrderMutation,
+  useAcceptOrderMutation,
   useGetAllConfirmedOrdersQuery
 } from '@/redux/services/courier.service';
 import Loader from '../../components/Landing/Loader';
@@ -13,7 +13,7 @@ import { Button } from '../../components/Forms';
 
 export const ConfirmOrder = () => {
   const { data, isLoading, refetch } = useGetAllConfirmedOrdersQuery();
-  const [confirm] = useConfirmOrderMutation();
+  const [confirm] = useAcceptOrderMutation();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [rowData, setRowData] = useState();
 
@@ -70,7 +70,7 @@ export const ConfirmOrder = () => {
   }
   return (
     <div>
-      <Table id="ProductsTable" columns={columns} data={data!} title="Активные заказы"/>
+      <Table id="ProductsTable" columns={columns} data={data!} title="Доступные заказы" />
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
         <div className="font-montserrat text-dark-blue">
           <p>Вы действительно хотите взять данный заказ?</p>
