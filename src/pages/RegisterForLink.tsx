@@ -8,11 +8,7 @@ import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 
 import { Link } from 'react-router-dom';
-import {
-  useCreateEmployeeMutation,
-  useCreateUserAccountMutation,
-  useCreateWorkerMutation
-} from '@/redux/services/user.service';
+import { useCreateEmployeeMutation, useCreateWorkerMutation } from '@/redux/services/user.service';
 
 const params = new URLSearchParams(location.search);
 const token = params.get('token');

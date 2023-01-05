@@ -6,14 +6,14 @@ import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';
 import { Footer, OrderAcordion, OrderCard, PaymentComponent, Total } from '@/components/Order';
 import EditCard from '@/components/Order/EditCard';
-import { IOrderQuality, IProduct, IUsersOrder } from '@/types';
+import { IProduct, IUsersOrder } from '@/types';
 import { toast } from 'react-hot-toast';
 import { useCreateOrderMutation } from '@/redux/services/base.service';
 import Checkbox from '@/components/Checkbox';
 import * as yup from 'yup';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { useAppDispatch } from '@/hooks/useAppDispatch';
-import { getOrderDto } from '@/redux/slices/cartSlice';
+// import { useAppDispatch } from '@/hooks/useAppDispatch';
+// import { getOrderDto } from '@/redux/slices/cartSlice';
 
 const userStyle = 'font-montserrat text-dark-blue';
 

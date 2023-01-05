@@ -12,7 +12,7 @@ import { ColumnDef, Row } from '@tanstack/react-table';
 import { toast } from 'react-hot-toast';
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
 
-import { CreateProduct, EditProducts } from '@/components/Admin/Pages/Products';
+import { CreateProduct, EditProducts } from '@/components/Admin/Products';
 
 const AdminProducts = () => {
   const { data, isLoading } = useGetAllProductsQuery();

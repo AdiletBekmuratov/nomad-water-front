@@ -9,7 +9,7 @@ import { toast } from 'react-hot-toast';
 import { ColumnDef, Row } from '@tanstack/react-table';
 import { ActionButtons, DeleteModal, Table } from '@/components/Table';
 import { CreateModal } from '@/components/NOuseFile/CreateModal';
-import { EditModal } from '@/components/Admin/Pages/AllUsers/EditModalCourier';
+import { EditModal } from '@/components/Admin/AllUsers/EditModalCourier';
 import { useGetUserROLEQuery } from '@/redux/services/user.service';
 
 const AdminCouriers = () => {

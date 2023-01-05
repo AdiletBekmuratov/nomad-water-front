@@ -6,10 +6,10 @@ import { ColumnDef, Row } from '@tanstack/react-table';
 import { ActionButtons, DeleteModal, Table } from '@/components/Table';
 import { IUserFull } from '@/types';
 import { useDeleteUserMutation, useGetAllUsersQuery } from '@/redux/services/user.service';
-import { CreateModal, EditModalUser } from '@/components/Admin/Pages/AllUsers';
+import { CreateModal, EditModalUser } from '@/components/Admin/AllUsers';
 import Loader from '@/components/Landing/Loader';
 import { EditModalCourier } from '../Couriers';
-import { EditEmployee } from '../../components/Admin/Pages/AllUsers/EditEmployee';
+import { EditEmployee } from '../../components/Admin/AllUsers/EditEmployee';
 
 const AdminAllUsers = () => {
   const { data: users = [], isLoading } = useGetAllUsersQuery();

@@ -12,7 +12,7 @@ import {
   useGetProductCategoryQuery
 } from '../../redux/services/base.service';
 
-import { CreateCategory, EditCategory } from '@/components/Admin/Pages/Category';
+import { CreateCategory, EditCategory } from '@/components/Admin/Category';
 
 const AdminCategory = () => {
   const { data, isLoading } = useGetProductCategoryQuery();
