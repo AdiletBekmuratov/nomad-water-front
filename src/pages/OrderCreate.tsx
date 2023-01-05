@@ -17,7 +17,7 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
-const OrderRegistration: FC = () => {
+const OrderCreate: FC = () => {
   const navigate = useNavigate();
 
   const [response, setResponse] = React.useState<string[]>([]);
@@ -234,7 +234,7 @@ const OrderRegistration: FC = () => {
           )}
         </div>
       ) : (
-        <div className={` flex flex-col gap-5 items-center `}>
+        <div className={` flex flex-col gap-5 items-center h-screen`}>
           <h2>
             Корзина пустая <span>😕</span>
           </h2>
@@ -247,4 +247,4 @@ const OrderRegistration: FC = () => {
   );
 };
 
-export default OrderRegistration;
+export default OrderCreate;

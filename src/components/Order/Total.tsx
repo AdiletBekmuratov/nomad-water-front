@@ -92,7 +92,7 @@ export const Total: FC<Props> = ({
           disabled={!isValid}
           onClick={() => {
             buttonAction(initial);
-            alert(JSON.stringify(address, null, 2));
+            // alert(JSON.stringify(address, null, 2));
             navigate('/userPage'); // TODO: Когда будут данные с сервера то направить на order-id
           }}>
           Оформить заказ

@@ -101,8 +101,17 @@ export const userApi = createApi({
       }),
       invalidatesTags: [{ type: 'Link', id: 'LIST' }]
     }),
+
     //регистрация курьеров
     createEmployee: builder.mutation<void, IEmployeeCreate>({
+      query: (body) => ({
+        url: `auth/register/employee/${body.token}`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: [{ type: 'Link', id: 'LIST' }]
+    }),
+    createCourier: builder.mutation<void, IEmployeeCreate>({
       query: (body) => ({
         url: `auth/register/courier/${body.token}`,
         method: 'POST',
@@ -165,7 +174,7 @@ export const {
   useUpdateUserMeMutation,
   useDeleteUserMutation,
   useUpdateUserMutation,
-
+  useCreateCourierMutation,
   useCreateEmployeeMutation,
   useCreateUserAccountMutation,
   useCreateEmployeeLinkMutation,

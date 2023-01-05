@@ -54,7 +54,7 @@ const Pending = () => {
         header: 'Действия',
         cell: ({ row }) => (
           <ActionButtons
-            handleConfirmClick={() => {
+            handleCompleteClick={() => {
               setRowData(row.original);
               setIsOpenModal(true);
             }}
@@ -71,7 +71,7 @@ const Pending = () => {
 
   return (
     <div>
-      <Table data={data!} columns={columns} id="ProductsTable" />
+      <Table data={data!} columns={columns} id="ProductsTable" title="Не подтвержденные заказы" />
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
         <div className="font-montserrat text-dark-blue">
           <p>Вы действительно хотите подтвердить данный заказ?</p>

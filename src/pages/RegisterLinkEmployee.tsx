@@ -3,18 +3,24 @@ import { Form, Formik } from 'formik';
 import { FC } from 'react';
 import { toast } from 'react-hot-toast';
 import * as yup from 'yup';
-import { IEmployeeCreate } from '@/types/employee.types';
+
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 
 import { Link } from 'react-router-dom';
-import { useCreateEmployeeMutation, useCreateWorkerMutation } from '@/redux/services/user.service';
+import {
+  useCreateCourierMutation,
+  useCreateEmployeeMutation,
+  useCreateUserAccountMutation,
+  useCreateWorkerMutation
+} from '@/redux/services/user.service';
+import { IUserFull } from '@/types';
 
 const params = new URLSearchParams(location.search);
 const token = params.get('token');
 const role = params.get('role');
 const warehouseId = params.get('warehouseId');
-const INITIAL_VALUES: IEmployeeCreate = {
+const INITIAL_VALUES: IUserFull = {
   token: token,
   role: role,
   warehouseId: warehouseId,
@@ -38,12 +44,12 @@ const INITIAL_VALUES: IEmployeeCreate = {
   shopkeeperPhone: ''
 };
 
-const RegisterForLink: FC = () => {
+const RegisterLinkEmployee: FC = () => {
   const [visible, setVisible] = React.useState(false);
-  // const [createEMPLOYEE, { isLoading }] = useCreateUserAccountMutation();
-  const [createCourier, { isLoading }] = useCreateEmployeeMutation();
+  const [createEMPLOYEE, { isLoading: employeeLoad }] = useCreateEmployeeMutation();
+  const [createCourier, { isLoading }] = useCreateCourierMutation();
   const [createWorker, { isLoading: isL }] = useCreateWorkerMutation();
-  const handleCreate = (values: IEmployeeCreate) => {
+  const handleCreate = (values: IUserFull) => {
     if (role === 'ROLE_COURIER') {
       toast
         .promise(createCourier(values).unwrap(), {
@@ -54,16 +60,16 @@ const RegisterForLink: FC = () => {
         .finally(() => {
           //setVisibleCreate(false);
         });
-      // } else if (role === 'ROLE_EMPLOYEE') {
-      //   toast
-      //     .promise(createEMPLOYEE(values).unwrap(), {
-      //       loading: 'Загрузка...',
-      //       success: 'Получено',
-      //       error: (error) => JSON.stringify(error, null, 2)
-      //     })
-      //     .finally(() => {
-      //       // setVisibleCreate(false);
-      //     });
+    } else if (role === 'ROLE_EMPLOYEE') {
+      toast
+        .promise(createEMPLOYEE(values).unwrap(), {
+          loading: 'Загрузка...',
+          success: 'Получено',
+          error: (error) => JSON.stringify(error, null, 2)
+        })
+        .finally(() => {
+          // setVisibleCreate(false);
+        });
     } else {
       toast
         .promise(createWorker(values).unwrap(), {
@@ -88,7 +94,7 @@ const RegisterForLink: FC = () => {
   });
 
   return (
-    <div className={`py-5 md:py-10 h-screen bg-light-blue md:px-20`}>
+    <div className={`py-5 md:py-10 h-screen  bg-light-blue md:px-20`}>
       <h2 className={`text-center font-semibold pb-3 md:pb-10`}>Заполните поля</h2>
 
       <Formik initialValues={INITIAL_VALUES} onSubmit={handleCreate} validationSchema={validation}>
@@ -96,8 +102,19 @@ const RegisterForLink: FC = () => {
           <Form className={`flex flex-col gap-3 sm:space-y-4 layout `}>
             <>
               <div className={`grid grid-cols-1 sm:grid-cols-2 gap-3 items-center`}>
-                <span>Role: {role}</span>
-                <span>Номер склада: {warehouseId}</span>
+                <span>
+                  Вы:{' '}
+                  {role === 'ROLE_COURIER'
+                    ? 'Курьер'
+                    : role === 'ROLE_MASTER'
+                    ? 'Мастер'
+                    : role === 'ROLE_KEEPER'
+                    ? 'Работник'
+                    : role === 'ROLE_EMPLOYEE' && 'Диспечер'}
+                </span>
+                {role === 'ROLE_MASTER' ||
+                  (role === 'ROLE_KEEPER' && <span>Номер склада: {warehouseId}</span>)}
+
                 {/* <Input inputType="formik" name="role" id="role" label="role" disabled />
                   <Input
                     inputType="formik"
@@ -109,8 +126,8 @@ const RegisterForLink: FC = () => {
               </div>
               <div className={`grid grid-cols-1 sm:grid-cols-3 gap-3 items-center`}>
                 <Input inputType="formik" name="firstname" id="firstname" label="Имя" />
-                <Input inputType="formik" name="middleName" id="middleName" label="Отчество" />
                 <Input inputType="formik" name="lastname" id="lastname" label="Фамилия" />
+                <Input inputType="formik" name="middleName" id="middleName" label="Отчество" />
               </div>
 
               <div className={`grid grid-cols-1 md:grid-col-2 gap-2`}>
@@ -187,4 +204,4 @@ const RegisterForLink: FC = () => {
     </div>
   );
 };
-export default RegisterForLink;
+export default RegisterLinkEmployee;

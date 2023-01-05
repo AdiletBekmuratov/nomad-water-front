@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import OrderInfo from '@/pages/OrderInfo';
-import OrderRegistration from '@/pages/OrderRegistration';
+import OrderCreate from '@/pages/OrderCreate';
 import UserAppeal from '@/pages/UserAppeal';
 import WarehouseAppeal from '@/pages/WarehouseAppeal';
 import Warehouses from '@/pages/Warehouses';
@@ -25,7 +25,7 @@ const Landing = lazy(() => import('@/pages/Landing'));
 const NoPage = lazy(() => import('@/pages/admin/NoPage'));
 
 const AdminLogin = lazy(() => import('@/pages/admin/AdminLogin'));
-const RegisterForLink = lazy(() => import('@/pages/RegisterForLink'));
+const RegisterLinkEmployee = lazy(() => import('@/pages/RegisterLinkEmployee'));
 
 const AdminAllUsers = lazy(() => import('@/pages/admin/AdminAllUsers'));
 // const AdminCouriers = lazy(() => import('@/pages/admin/AdminCouriers'));
@@ -68,7 +68,7 @@ const AppRoutes = () => {
             {/*вход админ */}
             <Route path="/admin/login" element={<AdminLogin />} />
             {/* страница регистрации по сгенерированным ссылкам */}
-            <Route path="/register/employee/*" element={<RegisterForLink />} />
+            <Route path="/register/employee/*" element={<RegisterLinkEmployee />} />
             {/* личная страница пользователей админки  */}
             <Route path="/admin/AdminUserME" element={<AdminUserME />} />
             {/* личная страница юзера */}
@@ -128,7 +128,7 @@ const AppRoutes = () => {
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />
 
-            <Route path="/order" element={<OrderRegistration />} />
+            <Route path="/order" element={<OrderCreate />} />
             <Route path="/myOrders" element={<Orders />} />
             <Route path="/orderinfo" element={<OrderInfo />} />
 
