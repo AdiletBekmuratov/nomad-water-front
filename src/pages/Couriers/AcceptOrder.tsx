@@ -2,7 +2,7 @@ import { ICourierOrder } from '@/types/courier.types';
 import { ColumnDef } from '@tanstack/react-table';
 import React, { FC, useMemo, useState } from 'react';
 import { ActionButtons, Table } from '../../components/Table';
-import { useAcceptOrderMutation, useCompleteOrderMutation } from '@/redux/services/courier.service';
+import { useCompleteOrderMutation } from '@/redux/services/courier.service';
 import Loader from '../../components/Landing/Loader';
 import { toast } from 'react-hot-toast';
 import { Modal } from '../../components/Layout/Modal';
@@ -82,8 +82,16 @@ export const AcceptOrder: FC<IProps> = ({ data }) => {
     ],
     []
   );
+
   if (data.length === 0) {
-    return <Loader />;
+    return (
+      <div>
+        <h2 className={`text-lg font-bold text-center mb-4`}>Принятые заказы:</h2>
+        <p className={`text-base font-semibold text-center mb-4 text-red-600`}>
+          У вас нет принятых к доставке заказов!
+        </p>
+      </div>
+    );
   }
   return (
     <div>

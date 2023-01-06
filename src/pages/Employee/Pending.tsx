@@ -12,7 +12,7 @@ import { Modal } from '@/components/Layout/Modal';
 import { Button } from '@/components/Forms';
 
 const Pending = () => {
-  const { data, isLoading, refetch } = useGetPendingOrdersQuery();
+  const { data = [], isLoading, refetch } = useGetPendingOrdersQuery();
   const [accept] = useConfirmOrdersMutation();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [rowData, setRowData] = useState();
@@ -67,10 +67,17 @@ const Pending = () => {
   if (isLoading) {
     return <Loader />;
   }
-  console.log(data);
+  if (data?.length === 0) {
+    return (
+      <div>
+        <h2 className={`text-lg font-bold text-center mb-4`}>Заказы:</h2>
+        <p className={`text-base font-semibold text-center mb-4 text-red-600`}>Новых заказов нет</p>
+      </div>
+    );
+  }
 
   return (
-    <div className='py-3'>
+    <div className="py-3">
       <Table data={data!} columns={columns} id="ProductsTable" title="Не подтвержденные заказы" />
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
         <div className="font-montserrat text-dark-blue">

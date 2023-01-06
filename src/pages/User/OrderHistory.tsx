@@ -6,7 +6,8 @@ import { useGetUserOrderQuery } from '@/redux/services/base.service';
 import Loader from '../../components/Landing/Loader';
 
 const OrderHistory = () => {
-  const { data = [], isLoading } = useGetUserOrderQuery();
+  const { data: allOrders = [], isLoading } = useGetUserOrderQuery();
+  const completeOrders = allOrders.filter((order) => order.statusId === 3);
 
   const columns = useMemo<ColumnDef<IOrder, any>[]>(
     () => [
@@ -58,7 +59,7 @@ const OrderHistory = () => {
   }
   return (
     <div>
-      <Table id="ProductsTable" data={data} columns={columns} />
+      <Table id="ProductsTable" data={completeOrders} columns={columns} title="История заказов" />
     </div>
   );
 };

@@ -9,6 +9,7 @@ import { Button } from '@/components/Forms';
 
 const UserPage = () => {
   const { user } = useAppSelector((state) => state.auth);
+  
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
   const styleP = `text-sm md:text-base bg-white rounded-md px-3 grid grid-cols-2`;
   return (
@@ -72,7 +73,7 @@ const UserPage = () => {
         </div>
         <div className={`border-b-2 border-dotted border-gray-700 py-2`}></div>
         <div className={`mt-4 mx-auto`}>
-          <h2 className={`text-center font-semibold text-2xl`}>Мои заказы</h2>
+          {/* <h2 className={`text-center font-semibold text-2xl`}>История заказов</h2> */}
           <OrderHistory />
         </div>
       </div>

@@ -8,15 +8,16 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { Table } from '@/components/Table';
 
 import { Button } from '@/components/Forms';
-import { ConfirmOrder } from './ConfirmOrder';
-
+// import { ConfirmOrder } from './ConfirmOrder';
+// import { AcceptOrder } from './AcceptOrder';
 import { Edit } from '../User/Edit';
 
-import { AcceptOrder } from './AcceptOrder';
+
 
 const Courier = () => {
   const { data: allOrders = [], isLoading, refetch } = useGetCourierOrderQuery();
-  const acceptOrders = allOrders.filter((order) => order.statusId === 2);
+ // const acceptOrders = allOrders.filter((order) => order.statusId === 2);
+  const completeOrders = allOrders.filter((order) => order.statusId === 3);
   setTimeout(() => {
     refetch();
   }, 10000);
@@ -132,16 +133,21 @@ const Courier = () => {
           </div>
         </div>
         <div className={`border-b-2 border-dotted border-gray-700 py-2`}></div>
-        <div className="mt-2">
+        {/* <div className="mt-2">
           <AcceptOrder data={acceptOrders} />
         </div>
         <div className={`border-t-2 border-dotted border-gray-700 py-2`}></div>
         <div>
           <ConfirmOrder />
         </div>
-        <div className={`border-b-2 border-dotted border-gray-700 py-2`}></div>
+        <div className={`border-b-2 border-dotted border-gray-700 py-2`}></div> */}
         <div className="mt-2">
-          <Table columns={columns} id="ProductsTable" data={allOrders!} title="Мои заказы" />
+          <Table
+            columns={columns}
+            id="ProductsTable"
+            data={completeOrders!}
+            title="Выполненные заказы"
+          />
         </div>
         <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
       </div>

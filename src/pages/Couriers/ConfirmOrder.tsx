@@ -12,7 +12,7 @@ import { Modal } from '../../components/Layout/Modal';
 import { Button } from '../../components/Forms';
 
 export const ConfirmOrder = () => {
-  const { data, isLoading, refetch } = useGetAllConfirmedOrdersQuery();
+  const { data = [], isLoading, refetch } = useGetAllConfirmedOrdersQuery();
   const [confirm] = useAcceptOrderMutation();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [rowData, setRowData] = useState();
@@ -83,6 +83,16 @@ export const ConfirmOrder = () => {
   );
   if (isLoading) {
     return <Loader />;
+  }
+  if (data.length === 0) {
+    return (
+      <div>
+        <h2 className={`text-lg font-bold text-center mb-4`}>Доступные заказы:</h2>
+        <p className={`text-base font-semibold text-center mb-4 text-red-600`}>
+          Нет доступных к доставке заказов!
+        </p>
+      </div>
+    );
   }
   return (
     <div>
