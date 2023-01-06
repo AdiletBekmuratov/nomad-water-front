@@ -74,7 +74,15 @@ const AppRoutes = () => {
             {/* личная страница юзера */}
             <Route path="/userPage" element={<UserPage />} />
             {/* личная страница курьера */}
-            <Route path="/courier" element={<Courier />} />
+            <Route
+              path="/courier"
+              element={
+                <ProtectedRoute isAllowed={user?.role === 'ROLE_COURIER'} redirectPath="/catalog">
+                  <Courier />
+                </ProtectedRoute>
+              }
+            />
+
             <Route
               path="/admin/allUsers"
               element={
