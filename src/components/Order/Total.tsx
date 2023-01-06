@@ -93,7 +93,7 @@ export const Total: FC<Props> = ({
           onClick={() => {
             buttonAction(initial);
             // alert(JSON.stringify(address, null, 2));
-            navigate('/userPage'); // TODO: Когда будут данные с сервера то направить на order-id
+            navigate('/myOrders'); // TODO: Когда будут данные с сервера то направить на order-id
           }}>
           Оформить заказ
         </Button>

@@ -220,7 +220,7 @@ const OrderCreate: FC = () => {
               onClick={() => {
                 handleCreate(initial);
                 //alert(JSON.stringify(address, null, 2));
-                navigate('/userPage');
+                navigate('/myOrders');
               }}>
               Оформить заказ
             </Button>
