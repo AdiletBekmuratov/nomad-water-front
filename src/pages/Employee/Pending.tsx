@@ -70,7 +70,7 @@ const Pending = () => {
   console.log(data);
 
   return (
-    <div>
+    <div className='py-3'>
       <Table data={data!} columns={columns} id="ProductsTable" title="Не подтвержденные заказы" />
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
         <div className="font-montserrat text-dark-blue">

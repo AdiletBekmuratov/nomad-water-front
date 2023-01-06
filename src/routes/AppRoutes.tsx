@@ -33,7 +33,7 @@ const AdminWarehouses = lazy(() => import('@/pages/admin/AdminWarehouses'));
 const AdminUserME = lazy(() => import('@/pages/admin/AdminUserME'));
 
 const Catalog = lazy(() => import('@/pages/catalog/Catalog'));
-const Orders = lazy(() => import('@/pages/User/Orders'));
+const Orders = lazy(() => import('@/pages/Orders'));
 const Employee = lazy(() => import('@/pages/Employee/Employee'));
 
 const BottlePage = lazy(() => import('@/pages/catalog/BottlePage'));

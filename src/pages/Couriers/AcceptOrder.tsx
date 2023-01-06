@@ -1,28 +1,29 @@
 import { ICourierOrder } from '@/types/courier.types';
 import { ColumnDef } from '@tanstack/react-table';
-import React, { useMemo, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import { ActionButtons, Table } from '../../components/Table';
-import {
-  useAcceptOrderMutation,
-  useGetAllConfirmedOrdersQuery
-} from '@/redux/services/courier.service';
+import { useAcceptOrderMutation, useCompleteOrderMutation } from '@/redux/services/courier.service';
 import Loader from '../../components/Landing/Loader';
 import { toast } from 'react-hot-toast';
 import { Modal } from '../../components/Layout/Modal';
 import { Button } from '../../components/Forms';
 
-export const ConfirmOrder = () => {
-  const { data, isLoading, refetch } = useGetAllConfirmedOrdersQuery();
-  const [confirm] = useAcceptOrderMutation();
+interface IProps {
+  data: ICourierOrder[];
+}
+export const AcceptOrder: FC<IProps> = ({ data }) => {
+  //const { data, isLoading, refetch } = useGetAllConfirmedOrdersQuery();
+
+  const [complete] = useCompleteOrderMutation();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [rowData, setRowData] = useState();
 
-  setTimeout(() => {
-    refetch();
-  }, 10000);
+  // setTimeout(() => {
+  //   refetch();
+  // }, 10000);
 
-  const handleConfirm = async (id: number) => {
-    await toast.promise(confirm(Number(id)).unwrap(), {
+  const handleComplete = async (id: number) => {
+    await toast.promise(complete(Number(id)).unwrap(), {
       loading: 'Загрузка...',
       success: 'Подтвержден',
       error: (error) => JSON.stringify(error, null, 2)
@@ -68,10 +69,10 @@ export const ConfirmOrder = () => {
           )
       },
       {
-        header: 'Действия',
+        header: 'Подтверждение доставки',
         cell: ({ row }) => (
           <ActionButtons
-            handleConfirmClick={() => {
+            handleCompleteClick={() => {
               setRowData(row.original);
               setIsOpenModal(true);
             }}
@@ -81,12 +82,12 @@ export const ConfirmOrder = () => {
     ],
     []
   );
-  if (isLoading) {
+  if (data.length === 0) {
     return <Loader />;
   }
   return (
     <div>
-      <Table id="ProductsTable" columns={columns} data={data!} title="Доступные заказы" />
+      <Table id="ProductsTable" columns={columns} data={data!} title="Принятые заказы" />
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
         <div className="font-montserrat text-dark-blue">
           <p>Вы действительно хотите взять данный заказ?</p>
@@ -95,7 +96,7 @@ export const ConfirmOrder = () => {
           <Button
             buttonColor="bg-green-700 "
             onClick={() => {
-              handleConfirm(rowData?.id);
+              handleComplete(rowData?.id);
               setIsOpenModal(false);
             }}>
             Да

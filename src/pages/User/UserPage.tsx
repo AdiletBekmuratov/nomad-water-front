@@ -1,12 +1,11 @@
-import { Layout } from '@/components/Layout';
-
-import { Button } from '@/components/Forms';
-
 import React from 'react';
 
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { Edit } from '@/pages/User/Edit';
 import OrderHistory from '@/pages/User/OrderHistory';
+
+import { Layout } from '@/components/Layout';
+import { Button } from '@/components/Forms';
 
 const UserPage = () => {
   const { user } = useAppSelector((state) => state.auth);

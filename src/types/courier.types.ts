@@ -14,8 +14,8 @@ export type ICourierOrder = {
   };
   courier: {
     id: number;
-    courierDeliveringStatus: null;
-    successfulOrders: null;
+    courierDeliveringStatus: string;
+    successfulOrders: string;
     car: string;
     user: {
       id: number;
@@ -30,11 +30,11 @@ export type ICourierOrder = {
       active: true;
     };
   };
-  statusId: null;
-  orderType: null;
-  paymentMethod: null;
+  statusId: number;
+  orderType: string;
+  paymentMethod: string;
   products: [];
-  deliveryDateTime: null;
+  deliveryDateTime: string;
   phone: string;
   address: string;
   comment: string;
