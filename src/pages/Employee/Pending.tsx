@@ -39,6 +39,10 @@ const Pending = () => {
         accessorKey: 'address'
       },
       {
+        header: 'Комментарий',
+        accessorKey: 'comment'
+      },
+      {
         header: 'Метод оплаты',
         accessorKey: 'paymentMethod.name'
       },
