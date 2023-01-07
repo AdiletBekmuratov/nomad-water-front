@@ -10,12 +10,12 @@ interface ILayoutProps extends HTMLAttributes<HTMLDivElement> {
 export const Layout: FC<ILayoutProps> = ({ children, ...props }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="max-h-screen h-screen min-h-screen overflow-y-hidden">
+    <div className="max-h-screen h-screen min-h-screen ">
       <Sheet isOpen={isOpen} setIsOpen={setIsOpen}>
         <Header setIsOpen={setIsOpen} />
         <div
           {...props}
-          className={`layout py-4 md:py-8 mb-20 md:mb-0 w-full h-screen ${props.className}`}>
+          className={`layout py-4 md:py-8 mb-20 md:mb-0 w-full min-h-screen ${props.className}`}>
           {children}
         </div>
         <MenuBottom />
