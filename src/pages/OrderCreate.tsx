@@ -234,7 +234,7 @@ const OrderCreate: FC = () => {
           )}
         </div>
       ) : (
-        <div className={` flex flex-col gap-5 items-center h-screen`}>
+        <div className={` flex flex-col gap-5 items-center`}>
           <h2>
             Корзина пустая <span>😕</span>
           </h2>

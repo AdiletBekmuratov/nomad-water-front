@@ -78,7 +78,7 @@ const Orders = () => {
           <OrderHistory />
         </div>
       ) : user?.role === 'ROLE_COURIER' ? (
-        <div className="h-screen">
+        <div className="">
           <div className="mt-2">
             <AcceptOrder data={acceptOrders} />
           </div>
@@ -88,7 +88,7 @@ const Orders = () => {
           </div>
         </div>
       ) : (
-        <div className="h-screen text-center">
+        <div className=" text-center">
           <h1>У вас нет доступа к заказам, обратитесь к администратору</h1>
         </div>
       )}

@@ -14,7 +14,7 @@ const UserPage = () => {
   const styleP = `text-sm md:text-base bg-white rounded-md px-3 grid grid-cols-2`;
   return (
     <Layout>
-      <div className="h-screen">
+      <div className="">
         <h1 className="font-montserrat text-xl font-semibold text-center text-dark-blue">
           Мои данные
         </h1>

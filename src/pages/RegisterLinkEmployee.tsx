@@ -94,7 +94,7 @@ const RegisterLinkEmployee: FC = () => {
   });
 
   return (
-    <div className={`py-5 md:py-10 h-screen  bg-light-blue md:px-20`}>
+    <div className={`py-5 md:py-10  bg-light-blue md:px-20`}>
       <h2 className={`text-center font-semibold pb-3 md:pb-10`}>Заполните поля</h2>
 
       <Formik initialValues={INITIAL_VALUES} onSubmit={handleCreate} validationSchema={validation}>
