@@ -16,9 +16,8 @@ import { Modal } from '@/components/Layout/Modal';
 export const CardBottle: FC<ICard> = ({
   items,
   isFavourite,
-  cardType,
-  setIsFavourite,
-  deliveryStatus
+
+  setIsFavourite
 }) => {
   //const cartItems = useAppSelector((state) => state.cart.cartItems);
   const [openModal, setOpenModal] = React.useState(false);
@@ -49,7 +48,7 @@ export const CardBottle: FC<ICard> = ({
           <div className={`grid grid-cols-1 gap-1 p-1`}>
             {items.productName}
             <h2 className={`sm:text-lg font-semibold sm:mt-0`}>{items.productPrice} T</h2>
-            {cardType === 'order' && <OrderStatus variants={deliveryStatus} />}
+            {/* {cardType === 'order' && <OrderStatus variants={deliveryStatus} />} */}
 
             <div>
               {isChoice ? (
@@ -69,8 +68,9 @@ export const CardBottle: FC<ICard> = ({
           </div>
         </div>
       </div>
-      <Modal isOpenModal={openModal} setIsOpenModal={setOpenModal} className={`bg-light-blue `}>
-        <div className={`grid grid-cols-2 gap-1`}>
+      <Modal isOpenModal={openModal} setIsOpenModal={setOpenModal} className={`bg-gray-100 `}>
+        <h2 className={`font-semibold text-center pb-3`}>{items?.productName}</h2>
+        <div className={`grid grid-cols-2 gap-3`}>
           <div>
             <img src={items?.imageUrl} alt="bottleXs" className={``} />
             <div className={`mt-5 flex flex-col items-start sm:bg-white sm:p-5 sm:rounded-2xl`}>

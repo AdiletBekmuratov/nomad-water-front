@@ -28,7 +28,7 @@ const INITIAL_VALUES: IProductCreate = {
 export const CreateProduct: FC<ICreateModalProps> = ({ setVisible, visible }) => {
   const [create, { isLoading }] = useCreateProductMutation();
   const [uploadImage, { isLoading: isLoadingImage }] = useUploadProductImageMutation();
-//   const [getImage, { isLoading: isLoadingGetImage }] = useGetProductImageIDMutation();
+  //   const [getImage, { isLoading: isLoadingGetImage }] = useGetProductImageIDMutation();
 
   const handleCreate = async (values: IProductCreate) => {
     console.log({ values });
@@ -79,15 +79,6 @@ export const CreateProduct: FC<ICreateModalProps> = ({ setVisible, visible }) =>
               label="Цена продукта"
               placeholder="Цена продукта"
             />
-            <Input
-              inputType="formik"
-              name="urgencyPrice"
-              id="urgencyPrice"
-              type="number"
-              label="Цена срочности"
-              placeholder="Цена срочности"
-            />
-
             <Categories />
             <TextArea name="description" id="description" placeholder="Описание" />
             <div className="modal-action">

@@ -96,7 +96,6 @@ const Catalog: FC = () => {
               <CardBottle
                 key={id}
                 items={items}
-                cardType="catalog"
                 isFavourite={isFavourite}
                 setIsFavourite={setIsFavourite}
               />
@@ -105,7 +104,6 @@ const Catalog: FC = () => {
               <CardBottle
                 key={id}
                 items={items}
-                cardType="catalog"
                 isFavourite={isFavourite}
                 setIsFavourite={setIsFavourite}
               />
