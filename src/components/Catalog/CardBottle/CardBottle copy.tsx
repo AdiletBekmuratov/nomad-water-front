@@ -37,12 +37,22 @@ export const CardBottle: FC<ICard> = ({
     <>
       <div
         className={`bg-white rounded-3xl relative p-1 shadow-xl cursor-pointer`}
-        onClick={() => setOpenModal(true)}>
+        onClick={() => setOpenModal(true)}
+        // className={`${
+        //   cardType === 'order' ? 'bg-white' : ''
+        // } `}
+      >
         <AddFavourite isFavourite={isFavourite} setIsFavourite={setIsFavourite} />
-
+        {/* {cardType === 'catalog' && (
+          <AddFavourite isFavourite={isFavourite} setIsFavourite={setIsFavourite} />
+        )} */}
+        {/* <Link
+        to={`${cardType === 'catalog' ? `/catalog/${items.id}` : '/orderinfo'}`}
+        className={`flex ${cardType === 'order' ? 'flex-row' : 'flex-col'} sm:flex-row `}></Link> */}
         <div
           className={`flex gap-3 md:gap-5 text-left p-5
           text-sm sm:text-base lg:text-lg leading-4 font-medium pt-2`}>
+          {/* <Description {...items} isOrders={cardType === 'order'} /> */}
           <div className={'bg-white rounded-3xl w-40 h-40 flex items-center justify-center p-2 '}>
             <img src={items.imageUrl} alt="bottle" className="object-contain" />
           </div>
@@ -50,6 +60,8 @@ export const CardBottle: FC<ICard> = ({
             {items.productName}
             <h2 className={`sm:text-lg font-semibold sm:mt-0`}>{items.productPrice} T</h2>
             {cardType === 'order' && <OrderStatus variants={deliveryStatus} />}
+
+            {/* <Counter counter={counter} setCounter={setCounter} /> */}
 
             <div>
               {isChoice ? (
@@ -69,8 +81,11 @@ export const CardBottle: FC<ICard> = ({
           </div>
         </div>
       </div>
-      <Modal isOpenModal={openModal} setIsOpenModal={setOpenModal} className={`bg-light-blue `}>
-        <div className={`grid grid-cols-2 gap-1`}>
+      <Modal
+        isOpenModal={openModal}
+        setIsOpenModal={setOpenModal}
+        className={`bg-light-blue z-20 h-96`}>
+        <div className={`flex flex-col md:flex-row gap-4`}>
           <div>
             <img src={items?.imageUrl} alt="bottleXs" className={``} />
             <div className={`mt-5 flex flex-col items-start sm:bg-white sm:p-5 sm:rounded-2xl`}>
@@ -78,10 +93,11 @@ export const CardBottle: FC<ICard> = ({
                 <span>Доставка:</span>
                 <p className={`opacity-60`}>Сегодня до 20:00</p>
               </div>
-              <div>
-                <span>Наличие товара:</span>
-                <p className={`text-base text-green-color font-semibold `}>В наличии</p>
-              </div>
+              {/* {product?.availability ? ( */}
+              <span className={`text-base text-green-color font-semibold `}>В наличии</span>
+              {/* ) : (
+              <span className={`text-base text-red-600 font-semibold `}>Нет в наличии</span>
+            )} */}
             </div>
           </div>
 
@@ -91,8 +107,24 @@ export const CardBottle: FC<ICard> = ({
             <span className={`text-left text-sm font-semibold opacity-50 block mb-2`}>
               {items.description}
             </span>
+            {/* <div className={`flex items-center justify-between mb-2`}>
+              <h2 className={`text-lg font-semibold`}>{items?.productPrice} T</h2>
+              <Counter counter={counter} setCounter={setCounter} />
+            </div> */}
+            {/* <Link to="/order">
+              <Button className={`py-3 :block`}>Заказать</Button>
+            </Link> */}
           </div>
         </div>
+
+        {/* <div className={`text-lg`}>
+          <h2>Рекомендации</h2>
+           <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-2 sm:grid-cols-1 `}>
+            {data!.slice(0, 3).map((items, id) => (
+              <CardBottle cardType="catalog" key={id} items={items} />
+            ))}
+          </div> 
+        </div>*/}
       </Modal>
     </>
   );

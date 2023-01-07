@@ -59,7 +59,7 @@ export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
                 inputType="formik"
                 name="telegramAccount"
                 id="telegramAccount"
-                label="Telegtam"
+                label="Telegram"
               />
               {/* <Input inputType="formik" name="email" id="email" label="email" /> */}
               <Input

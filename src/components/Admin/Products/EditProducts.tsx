@@ -22,7 +22,6 @@ export const EditProducts: FC<IEditModalProps> = ({ visible, setVisible, data })
   const [uploadImage, { isLoading: isLoadingImage }] = useUploadProductImageMutation();
 
   const handleEdit = async (values: IProductCreate) => {
-    console.log({ values });
     const formData = new FormData();
     formData.append('image', values.imageFile as unknown as Blob);
     delete values.imageFile;
@@ -60,12 +59,7 @@ export const EditProducts: FC<IEditModalProps> = ({ visible, setVisible, data })
               }}
             />
             <Input inputType="formik" name="productPrice" id="productPrice" label="Цена продукта" />
-            <Input
-              inputType="formik"
-              name="urgencyPrice"
-              id="urgencyPrice"
-              label="Цена срочности"
-            />
+
             <TextArea id="description" name="description" />
             <div className="modal-action">
               <Button type="submit" loading={isLoadingUpdate || isLoadingImage}>

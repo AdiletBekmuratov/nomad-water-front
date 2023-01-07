@@ -28,6 +28,7 @@ const MyFavourite = () => {
           />
         }
       />
+      <div></div>
     </Layout>
   );
 };
