@@ -6,9 +6,10 @@ type Props = DetailedHTMLProps<FormHTMLAttributes<HTMLFormElement>, HTMLFormElem
   children: ReactNode;
   initialValues: Object;
   validationSchema: Object;
-  buttonName: string;
+  buttonName?: string;
   setValues?: Function;
   setIsValid?: Function;
+  buttonAction?: Function;
 };
 
 export const FormContainer: FC<Props> = (props) => {
@@ -16,7 +17,13 @@ export const FormContainer: FC<Props> = (props) => {
     <Formik
       initialValues={props.initialValues}
       validationSchema={props.validationSchema}
-      onSubmit={(values) => alert(JSON.stringify(values, null, 2))}>
+      onSubmit={(values) => {
+        if (props.buttonAction) {
+          props.buttonAction();
+        } else {
+          alert(JSON.stringify(values, null, 2));
+        }
+      }}>
       {({ isValid, values }) => (
         <Form className={props.className}>
           {props.children}
@@ -26,7 +33,7 @@ export const FormContainer: FC<Props> = (props) => {
               {props.setIsValid(isValid)}
             </>
           ) : (
-            <Button disabled={!isValid}>{props.buttonName}</Button>
+            <Button disabled={!isValid}>Сохранить</Button>
           )}
         </Form>
       )}

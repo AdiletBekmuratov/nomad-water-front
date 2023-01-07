@@ -2,7 +2,7 @@ import { HeaderLend, First, About, Question, Second } from '@/components/Landing
 
 const Landing = () => {
   return (
-    <div className={`bg-light-blue relative w-full scroll-smooth`}>
+    <div className={`bg-light-blue w-full relative scroll-smooth`}>
       <HeaderLend />
       <First />
       <Second />

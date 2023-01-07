@@ -2,7 +2,12 @@ import axiosInstance from '@/config/axios';
 import { ILoginForm } from '@/types';
 
 const getMe = async () => {
-  const response = await axiosInstance.get('/user/');
+  const response = await axiosInstance.get('/user/me');
+  return response.data;
+};
+const getPassword = async (phone: string) => {
+  const response = await axiosInstance.post('/auth/generateCode', phone);
+  console.log(phone);
   return response.data;
 };
 
@@ -21,7 +26,8 @@ const logout = async () => {
 const authService = {
   getMe,
   logout,
-  login
+  login,
+  getPassword
 };
 
 export default authService;
