@@ -1,4 +1,4 @@
-import { CardBottle } from '@/components/Catalog/CardBottle/CardBottle';
+import { CardBottle } from '@/pages/catalog/CardBottle';
 import { FC, useState } from 'react';
 
 import React from 'react';
@@ -12,7 +12,6 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { FiDelete } from 'react-icons/fi';
 
 const Catalog: FC = () => {
-  const [isFavourite, setIsFavourite] = useState<boolean>(false);
   //категория товаров
   const { data: categories = [] } = useGetProductCategoryQuery();
   //все товары и услуги
@@ -92,22 +91,8 @@ const Catalog: FC = () => {
 
       <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-1 sm:grid-cols-2  `}>
         {value.length === 0
-          ? product.map((items, id) => (
-              <CardBottle
-                key={id}
-                items={items}
-                isFavourite={isFavourite}
-                setIsFavourite={setIsFavourite}
-              />
-            ))
-          : searchArrName.map((items, id) => (
-              <CardBottle
-                key={id}
-                items={items}
-                isFavourite={isFavourite}
-                setIsFavourite={setIsFavourite}
-              />
-            ))}
+          ? product.map((items, id) => <CardBottle key={id} items={items} />)
+          : searchArrName.map((items, id) => <CardBottle key={id} items={items} />)}
       </div>
       <div className={`border-b border-solid border-gray-300 mt-8 mb-4 md:border-none`}></div>
     </Layout>

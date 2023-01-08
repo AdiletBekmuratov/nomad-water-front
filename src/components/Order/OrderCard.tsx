@@ -44,19 +44,18 @@ export const OrderCard: FC<Props> = ({ data }) => {
   return (
     <div>
       <Card className={`pr-10 md:col-span-3`}>
-        <div className={`grid grid-cols-3 md:grid-cols-4 `}>
+        <div className={`grid grid-cols-3 md:grid-cols-4 gap-2 `}>
           <TiDeleteOutline
             className={`${imgStyle}`}
             onClick={() => {
               onDeleteItem(data.id);
             }}
           />
-          <div
-            className={`w-24 h-16 md:h-32 md:w-40 mx-auto bg-pseudo-white rounded-2xl flex col-span-1`}>
+          <div className={` bg-white flex items-center`}>
             <img className="justify-center" src={data.imageUrl} alt={``} />
           </div>
           <div className={`col-span-2 ml-4 md:col-span-3 `}>
-            {data.description}
+            {data.productName}
             <h2 className={`sm:text-lg font-semibold sm:mt-0`}>{data.productPrice} T</h2>
             <h6 className={`${infoClass}`}>
               Количество: <span className={`md:font-semibold`}>{localCount}</span>

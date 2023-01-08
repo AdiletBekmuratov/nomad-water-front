@@ -64,7 +64,7 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
                   <p>{str}</p>
                 </li>
                 <Button
-                  className={`w-56 my-2`}
+                  className={`w-56 my-2 cursor-copy`}
                   id="copy"
                   onClick={() => {
                     navigator.clipboard.writeText(str);

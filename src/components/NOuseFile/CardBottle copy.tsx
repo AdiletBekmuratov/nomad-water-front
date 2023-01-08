@@ -4,7 +4,7 @@ import React from 'react';
 import { AddFavourite } from './AddFavourite';
 import { ICard } from '@/assets/types/types';
 
-import { OrderStatus } from '@/components/Catalog/OrderStatus';
+import { OrderStatus } from '@/components/NOuseFile/OrderStatus';
 
 import { Button } from '@/components/Forms';
 

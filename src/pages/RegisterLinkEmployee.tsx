@@ -94,7 +94,7 @@ const RegisterLinkEmployee: FC = () => {
   });
 
   return (
-    <div className={`py-5 md:py-10  bg-light-blue md:px-20`}>
+    <div className={`py-5 md:py-10  bg-light-blue md:px-20 h-screen`}>
       <h2 className={`text-center font-semibold pb-3 md:pb-10`}>Заполните поля</h2>
 
       <Formik initialValues={INITIAL_VALUES} onSubmit={handleCreate} validationSchema={validation}>
@@ -127,7 +127,14 @@ const RegisterLinkEmployee: FC = () => {
               <div className={`grid grid-cols-1 sm:grid-cols-3 gap-3 items-center`}>
                 <Input inputType="formik" name="firstname" id="firstname" label="Имя" />
                 <Input inputType="formik" name="lastname" id="lastname" label="Фамилия" />
-                <Input inputType="formik" name="middleName" id="middleName" label="Отчество" />
+                <Input
+                  inputType="formik"
+                  name="phone"
+                  id="phone"
+                  label="Телефон"
+                  mask="+79999999999"
+                  placeholder="+7 (999) 999 9999"
+                />
               </div>
 
               <div className={`grid grid-cols-1 md:grid-col-2 gap-2`}>
@@ -140,17 +147,9 @@ const RegisterLinkEmployee: FC = () => {
               <div className={`grid grid-cols-1 sm:grid-cols-3 gap-3 items-center`}>
                 <Input
                   inputType="formik"
-                  name="phone"
-                  id="phone"
-                  label="Телефон"
-                  mask="+79999999999"
-                  placeholder="+7 (999) 999 9999"
-                />
-                <Input
-                  inputType="formik"
                   name="telegramAccount"
                   id="telegramAccount"
-                  label="Telegtam"
+                  label="Telegram"
                 />
                 <Input
                   inputType="formik"

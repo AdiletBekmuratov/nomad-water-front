@@ -2,7 +2,7 @@ import React from 'react';
 
 import { dataBottle } from '@/assets/dataBottle';
 import { Layout } from '@/components/Layout';
-import { CardBottle } from '@/components/Catalog/CardBottle/CardBottle';
+import { CardBottle } from '@/pages/catalog/CardBottle';
 import { useGetUserOrderQuery } from '@/redux/services/base.service';
 
 const Orders = () => {

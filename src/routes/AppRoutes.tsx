@@ -5,8 +5,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import OrderInfo from '@/pages/OrderInfo';
-import OrderCreate from '@/pages/OrderCreate';
+import OrderInfo from '@/pages/OrderPages/OrderInfo';
+import OrderCreate from '@/pages/OrderPages/OrderCreate';
 import UserAppeal from '@/pages/UserAppeal';
 import WarehouseAppeal from '@/pages/WarehouseAppeal';
 import Warehouses from '@/pages/Warehouses';
@@ -33,7 +33,7 @@ const AdminWarehouses = lazy(() => import('@/pages/admin/AdminWarehouses'));
 const AdminUserME = lazy(() => import('@/pages/admin/AdminUserME'));
 
 const Catalog = lazy(() => import('@/pages/catalog/Catalog'));
-const Orders = lazy(() => import('@/pages/Orders'));
+const Orders = lazy(() => import('@/pages/OrderPages/Orders'));
 const Employee = lazy(() => import('@/pages/Employee/Employee'));
 
 const BottlePage = lazy(() => import('@/pages/catalog/BottlePage'));

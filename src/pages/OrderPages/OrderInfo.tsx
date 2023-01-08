@@ -3,11 +3,11 @@ import { FC, useEffect, useState } from 'react';
 import Checkbox from '@/components/Checkbox';
 import { Button, Card } from '@/components/Forms';
 
-import checkmark from '../assets/checkmark.svg';
-import dot from '../assets/dot.svg';
+import checkmark from '@/assets/checkmark.svg';
+import dot from '@/assets/dot.svg';
 
-import order from '../components/Order/Order.json';
-import user from '../components/Order/UserData.json';
+import order from '@/components/Order/Order.json';
+import user from '@/components/Order/UserData.json';
 
 import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';

@@ -7,9 +7,9 @@ import { useGetUserOrderQuery } from '@/redux/services/base.service';
 import { Table } from '@/components/Table';
 import { ColumnDef } from '@tanstack/react-table';
 import { IOrder } from '@/types';
-import OrderHistory from './User/OrderHistory';
-import { AcceptOrder } from './Couriers/AcceptOrder';
-import { ConfirmOrder } from './Couriers';
+import OrderHistory from '../User/OrderHistory';
+import { AcceptOrder } from '../Couriers/AcceptOrder';
+import { ConfirmOrder } from '../Couriers';
 import { useGetCourierOrderQuery } from '@/redux/services/courier.service';
 
 const Orders = () => {
