@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import {
   useCreateCourierMutation,
   useCreateEmployeeMutation,
-  useCreateUserAccountMutation,
   useCreateWorkerMutation
 } from '@/redux/services/user.service';
 import { IUserFull } from '@/types';
@@ -46,7 +45,7 @@ const INITIAL_VALUES: IUserFull = {
 
 const RegisterLinkEmployee: FC = () => {
   const [visible, setVisible] = React.useState(false);
-  const [createEMPLOYEE, { isLoading: employeeLoad }] = useCreateEmployeeMutation();
+  const [createEMPLOYEE] = useCreateEmployeeMutation();
   const [createCourier, { isLoading }] = useCreateCourierMutation();
   const [createWorker, { isLoading: isL }] = useCreateWorkerMutation();
   const handleCreate = (values: IUserFull) => {

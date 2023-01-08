@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Checkbox from '../Checkbox';
@@ -12,7 +12,7 @@ type Props = {
   setDelivery: Function;
 
   isValid: boolean;
-  address: Object;
+
   initialTotal: number;
   buttonAction?: any;
   initial?: any;
@@ -30,15 +30,14 @@ export const Total: FC<Props> = ({
   delivery,
   setPickup,
   setDelivery,
-
   isValid,
-  address,
-
+  initialTotal,
   buttonAction,
   initial
 }) => {
   const navigate = useNavigate();
-  const total = useAppSelector((state) => state.cart.total);
+  // const total = useAppSelector((state) => state.cart.total);
+
   return (
     <div className="lg:order-2 lg:bg-white lg:h-48  lg:rounded-2xl lg:row-start-1">
       <div className="h-6 w-3/4 mt-5 mx-auto gap-2.5 md:w-5/6">
@@ -81,7 +80,7 @@ export const Total: FC<Props> = ({
         </div>
         <div className="flex w-full border-t-2 border-dashed border-gray-500 lg:border-gray-300 mt-2">
           <h3 className="font-bold mt-4 font-montserrat text-lg text-dark-blue">
-            Итого: {total} Т
+            Итого: {initialTotal} Т
           </h3>
         </div>
       </div>

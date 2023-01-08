@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import React from 'react';
-import { AddFavourite } from './AddFavourite';
+import { AddFavorite } from './AddFavorite';
 import { ICard } from '@/assets/types/types';
 
 import { OrderStatus } from '@/components/NOuseFile/OrderStatus';
@@ -15,9 +15,9 @@ import { Modal } from '@/components/Layout/Modal';
 
 export const CardBottle: FC<ICard> = ({
   items,
-  isFavourite,
+  isFavorite,
   cardType,
-  setIsFavourite,
+  setIsFavorite,
   deliveryStatus
 }) => {
   //const cartItems = useAppSelector((state) => state.cart.cartItems);
@@ -42,9 +42,9 @@ export const CardBottle: FC<ICard> = ({
         //   cardType === 'order' ? 'bg-white' : ''
         // } `}
       >
-        <AddFavourite isFavourite={isFavourite} setIsFavourite={setIsFavourite} />
+        <AddFavorite isFavorite={isFavorite} setIsFavorite={setIsFavorite} />
         {/* {cardType === 'catalog' && (
-          <AddFavourite isFavourite={isFavourite} setIsFavourite={setIsFavourite} />
+          <AddFavorite isFavorite={isFavorite} setIsFavorite={setIsFavorite} />
         )} */}
         {/* <Link
         to={`${cardType === 'catalog' ? `/catalog/${items.id}` : '/orderinfo'}`}

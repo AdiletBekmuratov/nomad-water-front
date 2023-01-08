@@ -5,7 +5,7 @@ import React from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FiDelete } from 'react-icons/fi';
 
-const MyFavourite = () => {
+const MyFavorite = () => {
   const [value, setValue] = React.useState('');
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -32,4 +32,4 @@ const MyFavourite = () => {
     </Layout>
   );
 };
-export default MyFavourite;
+export default MyFavorite;

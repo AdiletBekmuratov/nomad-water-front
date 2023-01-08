@@ -1,5 +1,4 @@
-
-import { IUser, IUserCreate } from '@/types';
+import { IUser, IUserCreate, IProduct } from '@/types';
 import { IEmployeeCreate, IEmployeeCreateLink } from '@/types/employee.types';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 
@@ -89,9 +88,6 @@ export const userApi = createApi({
       }),
       invalidatesTags: [{ type: 'Users', id: 'LIST' }]
     }),
-    ///api/user/favorite
-    //api/user/favorite/{id}
-    //api/user/favorite/{id}
 
     //получение ссылок для реги
     createEmployeeLink: builder.mutation<string[], IEmployeeCreateLink>({
@@ -161,7 +157,36 @@ export const userApi = createApi({
         method: `POST`,
         body
       })
+    }),
+    getUserFavorite: builder.query<IProduct[], void>({
+      query: () => ({
+        url: `/user/favorite/`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
+          : [{ type: 'Users', id: 'LIST' }]
+    }),
+    addFavorite: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `/user/favorite/${Number(id)}`,
+        method: `PUT`
+      }),
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
+    }),
+    deleteFavorite: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `/user/favorite/${Number(id)}`,
+        method: `DELETE`
+      }),
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }]
     })
+
+    //api/user/favorite/{id}
+    //api/user/favorite/{id}
   })
 });
 
@@ -183,5 +208,9 @@ export const {
   useGetUserCodeMutation,
 
   useUpdateCourierMutation,
-  useUpdateWorkerMutation
+  useUpdateWorkerMutation,
+
+  useGetUserFavoriteQuery,
+  useAddFavoriteMutation,
+  useDeleteFavoriteMutation
 } = userApi;

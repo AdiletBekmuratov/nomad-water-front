@@ -11,11 +11,13 @@ import logo from '@/assets/crm/logoHead.png';
 import { RxExit } from 'react-icons/rx';
 import { BsFillCartFill } from 'react-icons/bs';
 import {
+  AiFillHeart,
   AiOutlineHeart,
   AiOutlineLogin,
   AiOutlineMenu,
   AiOutlineShoppingCart
 } from 'react-icons/ai';
+import { useGetUserFavoriteQuery } from '@/redux/services/user.service';
 
 //import { useState } from 'react';
 
@@ -29,6 +31,7 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
 
   const { user } = useAppSelector((state) => state.auth);
   const headerStyle = `flex items-center py-3 justify-between layout ${props.className}`;
+  const { data: favorites = [] } = useGetUserFavoriteQuery();
   // const [isDrop, setIsDrop] = useState();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -62,9 +65,16 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
           </div>
 
           <div className={`flex items-center justify-end gap-4 md:gap-4 flex-1`}>
-            <Link to="/myFavourite" className={`cursor-pointer`}>
-              <AiOutlineHeart className="h-6 w-6" />
-            </Link>
+            {favorites.length > 0 ? (
+              <Link to="/myFavorite" className={`cursor-pointer`}>
+                <AiFillHeart className="h-6 w-6" />
+              </Link>
+            ) : (
+              <Link to="/myFavorite" className={`cursor-pointer`}>
+                <AiOutlineHeart className="h-6 w-6" />
+              </Link>
+            )}
+
             <div className={`hidden md:flex gap-4`}>
               <Link to="/order">
                 {cartItems.length === 0 ? (

@@ -40,7 +40,7 @@ const BottlePage = lazy(() => import('@/pages/catalog/BottlePage'));
 const RequestsUser = lazy(() => import('@/pages/catalog/RequestsUser'));
 //const Users = lazy(() => import('@/pages/catalog/Users'));
 const UserPage = lazy(() => import('@/pages/User/UserPage'));
-const MyFavourite = lazy(() => import('@/pages/catalog/MyFavourite'));
+const MyFavorite = lazy(() => import('@/pages/catalog/MyFavorite'));
 
 const AppRoutes = () => {
   const { user, isLoading } = useAppSelector((state) => state.auth);
@@ -132,7 +132,7 @@ const AppRoutes = () => {
 
             <Route path="/admin/*" element={<NoPage />} />
 
-            <Route path="/myFavourite" element={<MyFavourite />} />
+            <Route path="/myFavorite" element={<MyFavorite />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />
 

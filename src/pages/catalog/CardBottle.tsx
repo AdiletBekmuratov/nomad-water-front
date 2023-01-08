@@ -8,13 +8,25 @@ import { ICard } from '@/assets/types/types';
 
 import { Button } from '@/components/Forms';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import {
+  useAddFavoriteMutation,
+  useDeleteFavoriteMutation,
+  useGetUserFavoriteQuery
+} from '@/redux/services/user.service';
+import { toast } from 'react-hot-toast';
 
 export const CardBottle: FC<ICard> = ({ items }) => {
   //const cartItems = useAppSelector((state) => state.cart.cartItems);
+  const { data: favorites = [] } = useGetUserFavoriteQuery();
+  const favoriteProductsId = favorites.map((obj) => obj.id);
+  const isFavor = favoriteProductsId.includes(items.id);
 
-  const [isChoice, setIsChoice] = React.useState(false);
-  const [isFavorite, setIsFavorite] = React.useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const [isChoice, setIsChoice] = React.useState(false);
+  const [isFavorite, setIsFavorite] = React.useState<boolean>(isFavor);
+  const [addFavorite] = useAddFavoriteMutation();
+  const [deleteFavorite] = useDeleteFavoriteMutation();
+
   const onClickAdd = () => {
     dispatch(addItem(items));
     setIsChoice(true);
@@ -22,6 +34,22 @@ export const CardBottle: FC<ICard> = ({ items }) => {
   const onDeleteItem = (id: number) => {
     dispatch(deleteItem(id));
     setIsChoice(false);
+  };
+  const onClickAddFavorite = async (id: number) => {
+    setIsFavorite(true);
+    await toast.promise(addFavorite(Number(id)).unwrap(), {
+      loading: 'Загрузка...',
+      success: 'Добавлен',
+      error: (error) => JSON.stringify(error, null, 2)
+    });
+  };
+  const onDeleteFavorite = async (id: number) => {
+    setIsFavorite(false);
+    await toast.promise(deleteFavorite(Number(id)).unwrap(), {
+      loading: 'Загрузка...',
+      success: 'Удален',
+      error: (error) => JSON.stringify(error, null, 2)
+    });
   };
 
   return (
@@ -43,14 +71,16 @@ export const CardBottle: FC<ICard> = ({ items }) => {
             <>
               {isChoice ? (
                 <Button
-                  className="w-40 h-10 bg-blue-400 text-sm"
+                  className={`w-40 h-10 bg-blue-400 text-sm hover:bg-blue-900`}
                   onClick={() => {
                     onDeleteItem(items.id);
                   }}>
                   Убрать из корзины
                 </Button>
               ) : (
-                <Button className={`w-28 md:w-40 h-10 text-sm `} onClick={onClickAdd}>
+                <Button
+                  className={`w-28 md:w-40 h-10 text-sm hover:bg-blue-900`}
+                  onClick={onClickAdd}>
                   В корзину
                 </Button>
               )}
@@ -58,12 +88,12 @@ export const CardBottle: FC<ICard> = ({ items }) => {
           </div>
           <div>
             {isFavorite ? (
-              <button onClick={() => setIsFavorite(false)}>
-                <AiFillHeart className={`w-6  h-6 m-2  cursor-pointer`} />
+              <button onClick={() => onDeleteFavorite(items.id)}>
+                <AiFillHeart className={`w-6  h-6 m-2 text-red-600 cursor-pointer`} />
               </button>
             ) : (
-              <button onClick={() => setIsFavorite(true)}>
-                <AiOutlineHeart className={`w-6  h-6 m-2  cursor-pointer`} />
+              <button onClick={() => onClickAddFavorite(items.id)}>
+                <AiOutlineHeart className={`w-6  h-6 m-2 text-red-600 cursor-pointer`} />
               </button>
             )}
           </div>

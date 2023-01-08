@@ -6,13 +6,13 @@ export interface ICard {
   children?: ReactNode;
   className?: string;
 
-  isFavourite?: boolean;
-  setIsFavourite?: React.Dispatch<React.SetStateAction<boolean>>;
+  isFavorite?: boolean;
+  setIsFavorite?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export interface IFavourite {
-  isFavourite?: boolean;
-  setIsFavourite?: React.Dispatch<React.SetStateAction<boolean>>;
+export interface IFavorite {
+  isFavorite?: boolean;
+  setIsFavorite?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export interface ICounter {
   counter: number;

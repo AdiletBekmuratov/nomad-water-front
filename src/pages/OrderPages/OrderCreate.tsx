@@ -33,6 +33,7 @@ const OrderCreate: FC = () => {
 
   const cartItems = useAppSelector((state) => state.cart.cartItems);
   const orderDto = useAppSelector((state) => state.cart.orderDto);
+  const total = useAppSelector((state) => state.cart.total);
   const initialTotal = cartItems.reduce((sum, obj) => sum + obj.productPrice, 0);
 
   //const quantity = useAppSelector((state) => state.cart.quantity);
@@ -206,10 +207,9 @@ const OrderCreate: FC = () => {
             setDelivery={setDelivery}
             setPickup={setPickup}
             isValid={isValid}
-            address={address}
             buttonAction={handleCreate}
             initial={initial}
-            initialTotal={initialTotal}
+            initialTotal={total}
           />
 
           <Footer className={`items-center flex justify-center lg:hidden`}>
