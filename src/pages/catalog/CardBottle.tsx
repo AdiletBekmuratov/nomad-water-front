@@ -15,11 +15,11 @@ import {
 } from '@/redux/services/user.service';
 import { toast } from 'react-hot-toast';
 
-export const CardBottle: FC<ICard> = ({ items }) => {
+export const CardBottle: FC<ICard> = ({ items, isFavor }) => {
   //const cartItems = useAppSelector((state) => state.cart.cartItems);
   const { data: favorites = [] } = useGetUserFavoriteQuery();
-  const favoriteProductsId = favorites.map((obj) => obj.id);
-  const isFavor = favoriteProductsId.includes(items.id);
+  // const favoriteProductsId = favorites.map((obj) => obj.id);
+  // const isFavor = favoriteProductsId.includes(items.id);
 
   const dispatch = useAppDispatch();
   const [isChoice, setIsChoice] = React.useState(false);

@@ -10,6 +10,7 @@ import { Layout } from '@/components/Layout';
 
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FiDelete } from 'react-icons/fi';
+import { useGetUserFavoriteQuery } from '@/redux/services/user.service';
 
 const Catalog: FC = () => {
   //категория товаров
@@ -29,14 +30,9 @@ const Catalog: FC = () => {
     setValue(event.target.value);
   };
   const categoriesButStyle = `flex items-center justify-center py-2 px-3 rounded-2xl bg-white cursor-pointer`;
-
-  //фильтрация каталога по кнопкам
-  // const [choice, setChoice] = useState('');
-  // const onChoiceButton = (value: string) => {
-  //   setChoice(value);
-  //   console.log(choice);
-  // };
-
+  const { data: favorites = [] } = useGetUserFavoriteQuery();
+  const favoriteProductsId = favorites.map((obj) => obj.id);
+  let isFavor: boolean = false;
   if (isLoading) {
     return <Loader />;
   }
@@ -91,8 +87,15 @@ const Catalog: FC = () => {
 
       <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-1 sm:grid-cols-2  `}>
         {value.length === 0
-          ? product.map((items, id) => <CardBottle key={id} items={items} />)
-          : searchArrName.map((items, id) => <CardBottle key={id} items={items} />)}
+          ? product.map((items, id) => (
+              <>
+                <>{(isFavor = favoriteProductsId.includes(items.id))}</>
+                <CardBottle key={id} items={items} isFavor={isFavor} />
+              </>
+            ))
+          : searchArrName.map((items, id) => (
+              <CardBottle key={id} items={items} isFavor={isFavor} />
+            ))}
       </div>
       <div className={`border-b border-solid border-gray-300 mt-8 mb-4 md:border-none`}></div>
     </Layout>
