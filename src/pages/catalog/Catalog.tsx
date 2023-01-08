@@ -18,9 +18,11 @@ const Catalog: FC = () => {
   //все товары и услуги
   const { data: products = [], isLoading } = useGetAllProductsQuery();
   const product = products.map((item: IProduct) => item);
+  //получение всех избранных и их массив
+  const { data: favorites = [] } = useGetUserFavoriteQuery();
+  const favoriteProductsId = favorites.map((obj) => obj.id);
+  let isFavor: boolean = false;
   //получить товары по категории
-  // const [categoriesId, setCategoriesId] = useState(0);
-
   //поиск по названию
   const [value, setValue] = useState('');
   const searchArrName = products.filter((items: IProduct) =>
@@ -30,9 +32,7 @@ const Catalog: FC = () => {
     setValue(event.target.value);
   };
   const categoriesButStyle = `flex items-center justify-center py-2 px-3 rounded-2xl bg-white cursor-pointer`;
-  const { data: favorites = [] } = useGetUserFavoriteQuery();
-  const favoriteProductsId = favorites.map((obj) => obj.id);
-  let isFavor: boolean = false;
+
   if (isLoading) {
     return <Loader />;
   }

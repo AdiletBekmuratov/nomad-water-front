@@ -12,7 +12,8 @@ import { Link } from 'react-router-dom';
 
 const MyFavorite = () => {
   const { data: favorites = [], isLoading } = useGetUserFavoriteQuery();
-
+  const favoriteProductsId = favorites.map((obj) => obj.id);
+  let isFavor: boolean = false;
   if (isLoading) {
     return <Loader />;
   }
@@ -36,7 +37,10 @@ const MyFavorite = () => {
           <>
             <div className={`grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-5 sm:py-5`}>
               {favorites.map((items, id) => (
-                <CardBottle key={id} items={items} />
+                <>
+                  <>{(isFavor = favoriteProductsId.includes(items.id))}</>
+                  <CardBottle key={id} items={items} isFavor={isFavor} />
+                </>
               ))}
             </div>
           </>
