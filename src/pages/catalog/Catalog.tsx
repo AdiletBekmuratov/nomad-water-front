@@ -94,7 +94,10 @@ const Catalog: FC = () => {
               </>
             ))
           : searchArrName.map((items, id) => (
-              <CardBottle key={id} items={items} isFavor={isFavor} />
+              <>
+                <>{(isFavor = favoriteProductsId.includes(items.id))}</>
+                <CardBottle key={id} items={items} isFavor={isFavor} />
+              </>
             ))}
       </div>
       <div className={`border-b border-solid border-gray-300 mt-8 mb-4 md:border-none`}></div>
