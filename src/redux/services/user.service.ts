@@ -1,5 +1,5 @@
 import { IUser, IUserCreate, IProduct } from '@/types';
-import { IEmployeeCreate, IEmployeeCreateLink } from '@/types/employee.types';
+import { ICouriers, IEmployeeCreate, IEmployeeCreateLink } from '@/types/employee.types';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
@@ -44,7 +44,7 @@ export const userApi = createApi({
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //получить юзера по роли
-    getUserROLE: builder.query<IUserFull[], string>({
+    getUserROLE: builder.query<IEmployeeCreate[], string>({
       query: (role) => ({
         url: `user/role/${role}`
       }),
@@ -132,7 +132,7 @@ export const userApi = createApi({
       }),
       invalidatesTags: [{ type: 'Link', id: 'LIST' }]
     }),
-    updateWorker: builder.mutation<void, IUserFull>({
+    updateWorker: builder.mutation<void, IEmployeeCreate>({
       query: (body) => ({
         url: `user/warehouseWorker/${Number(body.id)}`,
         method: 'PUT',

@@ -9,7 +9,7 @@ import { useDeleteUserMutation, useGetAllUsersQuery } from '@/redux/services/use
 import { CreateModal, EditModalUser } from '@/components/Admin/AllUsers';
 import Loader from '@/components/Landing/Loader';
 import { EditModalCourier } from '../Couriers';
-import { EditEmployee } from '../../components/Admin/AllUsers/EditEmployee';
+import { EditWorker } from '../../components/Admin/AllUsers/EditWorker';
 
 const AdminAllUsers = () => {
   const { data: users = [], isLoading } = useGetAllUsersQuery();
@@ -51,17 +51,19 @@ const AdminAllUsers = () => {
         header: 'ID',
         accessorKey: 'id'
       },
+
+      {
+        header: 'Фамилия',
+        accessorKey: 'lastname'
+      },
       {
         header: 'Имя',
         accessorKey: 'firstname'
       },
+
       {
         header: 'Отчество',
         accessorKey: 'middleName'
-      },
-      {
-        header: 'Фамилия',
-        accessorKey: 'lastname'
       },
       {
         header: 'Статус',
@@ -122,7 +124,7 @@ const AdminAllUsers = () => {
         ) : role === 'ROLE_COURIER' ? (
           <EditModalCourier data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} />
         ) : role === 'ROLE_MASTER' || role === 'ROLE_KEEPER' ? (
-          <EditEmployee data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} />
+          <EditWorker data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} />
         ) : (
           ''
         )}

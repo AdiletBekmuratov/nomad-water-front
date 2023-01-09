@@ -1,6 +1,5 @@
 import { useAppDispatch } from '@/hooks/useAppDispatch';
-import { useAppSelector } from '@/hooks/useAppSelector';
-import { deleteItem, getOrderDto, getTotal } from '@/redux/slices/cartSlice';
+import { deleteItem, getOrderDto } from '@/redux/slices/cartSlice';
 import { IOrderQuality, IProduct } from '@/types';
 import React, { FC, useState } from 'react';
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from 'react-icons/ai';
@@ -36,11 +35,7 @@ export const OrderCard: FC<Props> = ({ data }) => {
   const products = { productId, quantity };
 
   React.useMemo(() => dispatch(getOrderDto(products)), [localCount]);
-  // dispatch(getOrderDto(products));
-  //dispatch(getTotal(localSum));
-  // React.useEffect(() => {
-  //   setProductsDto(products);
-  // }, []);
+
   return (
     <div>
       <Card className={`pr-10 md:col-span-3`}>

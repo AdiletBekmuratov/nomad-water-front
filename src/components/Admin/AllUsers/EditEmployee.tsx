@@ -2,7 +2,7 @@ import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 import { useGetAllWarehousesQuery } from '@/redux/services/base.service';
 import { useUpdateWorkerMutation } from '@/redux/services/user.service';
-import { IUserFull } from '@/types';
+import { IEmployeeCreate } from '@/types';
 
 import { Form, Formik } from 'formik';
 import { FC, Dispatch, SetStateAction } from 'react';
@@ -11,15 +11,14 @@ import toast from 'react-hot-toast';
 interface IEditModalProps {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
-  data: IUserFull;
+  data: IEmployeeCreate;
 }
 
-export const EditEmployee: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
+export const EditWorker: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
   const [update, { isLoading: isLoadingUpdate }] = useUpdateWorkerMutation();
   const { data: warehouses, isLoading: isLoad } = useGetAllWarehousesQuery();
-  // const { data: employees, isLoading: isE } = useGetUserROLEQuery('ROLE_EMPLOYEE');
 
-  const handleEdit = (values: IUserFull) => {
+  const handleEdit = (values: IEmployeeCreate) => {
     console.log(values);
     toast
       .promise(update(values).unwrap(), {
