@@ -2,7 +2,11 @@ import { CardBottle } from '@/pages/catalog/CardBottle';
 import { FC, useState } from 'react';
 
 import React from 'react';
-import { useGetAllProductsQuery, useGetProductCategoryQuery } from '@/redux/services/base.service';
+import {
+  useGetAllProductsQuery,
+  useGetProductCategoryIDQuery,
+  useGetProductCategoryQuery
+} from '@/redux/services/base.service';
 import { IProduct } from '@/types';
 import Loader from '@/components/Landing/Loader';
 import { Input } from '@/components/Forms';
@@ -18,11 +22,30 @@ const Catalog: FC = () => {
   //все товары и услуги
   const { data: products = [], isLoading } = useGetAllProductsQuery();
   const product = products.map((item: IProduct) => item);
+  //получить товары по категории
+
+  const categoryProducts = (id: number) => {
+    let i = 0;
+    let arrProductCat = [];
+    while (i < product.length) {
+      if (product[i].productCategoryId === id) {
+        arrProductCat.push(product);
+      }
+      i++;
+    }
+    return arrProductCat;
+  };
+  const onChoiceButton = (id: number) => {
+    const arr = categoryProducts(id);
+    console.log(arr);
+  };
+  //const isIdCategory = product.map((item) => categoryId.includes(item.productCategoryId));
+
   //получение всех избранных и их массив
   const { data: favorites = [] } = useGetUserFavoriteQuery();
   const favoriteProductsId = favorites.map((obj) => obj.id);
   let isFavor: boolean = false;
-  //получить товары по категории
+
   //поиск по названию
   const [value, setValue] = useState('');
   const searchArrName = products.filter((items: IProduct) =>
@@ -62,8 +85,7 @@ const Catalog: FC = () => {
               value={item.name}
               key={item.name}
               className={`${categoriesButStyle}`}
-              // onClick={() => onChoiceButton(value)}
-            >
+              onClick={() => onChoiceButton(item.id)}>
               <svg
                 width="24"
                 height="24"
@@ -87,10 +109,10 @@ const Catalog: FC = () => {
 
       <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-1 sm:grid-cols-2  `}>
         {value.length === 0
-          ? product.map((items, id) => (
+          ? product.map((items) => (
               <>
                 <>{(isFavor = favoriteProductsId.includes(items.id))}</>
-                <CardBottle key={id} items={items} isFavor={isFavor} />
+                <CardBottle key={items.id} items={items} isFavor={isFavor} />
               </>
             ))
           : searchArrName.map((items, id) => (

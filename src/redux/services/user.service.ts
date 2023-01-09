@@ -160,7 +160,7 @@ export const userApi = createApi({
     }),
     getUserFavorite: builder.query<IProduct[], void>({
       query: () => ({
-        url: `/user/favorite/`
+        url: `/user/favorite`
       }),
       providesTags: (result) =>
         result

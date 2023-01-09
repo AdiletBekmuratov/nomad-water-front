@@ -28,7 +28,7 @@ const AdminLogin = lazy(() => import('@/pages/admin/AdminLogin'));
 const RegisterLinkEmployee = lazy(() => import('@/pages/RegisterLinkEmployee'));
 
 const AdminAllUsers = lazy(() => import('@/pages/admin/AdminAllUsers'));
-// const AdminCouriers = lazy(() => import('@/pages/admin/AdminCouriers'));
+const AdminCouriers = lazy(() => import('@/pages/admin/AdminCouriers'));
 const AdminWarehouses = lazy(() => import('@/pages/admin/AdminWarehouses'));
 const AdminUserME = lazy(() => import('@/pages/admin/AdminUserME'));
 
@@ -91,18 +91,9 @@ const AppRoutes = () => {
                 </ProtectedRoute>
               }
             />
-            {/* <Route path="/admin/couriers" element={<AdminCouriers />} /> */}
+            <Route path="/admin/couriers" element={<AdminCouriers />} />
 
-            <Route
-              path="/employee"
-              element={
-                <ProtectedRoute
-                  isAllowed={user?.role === 'ROLE_EMPLOYEE'}
-                  redirectPath="/login/user">
-                  <Employee />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/warehousesWorkers" element={<Employee />} />
             <Route
               path="/admin/warehouses"
               element={
