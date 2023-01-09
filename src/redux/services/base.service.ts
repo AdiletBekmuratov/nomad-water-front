@@ -34,6 +34,20 @@ export const baseApi = createApi({
           ]
           : [{ type: 'Products', id: 'LIST' }]
     }),
+    // /product/productCategory/{productCategoryId}
+    //получение продуктов по id категории
+    getProductsCategId: builder.query<IProduct[], number>({
+      query: (id) => ({
+        url: `/product/productCategory/${id}`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+            ...result.map(({ id }) => ({ type: 'Products', id } as const)),
+            { type: 'Products', id: 'LIST' }
+          ]
+          : [{ type: 'Products', id: 'LIST' }]
+    }),
     createProduct: builder.mutation<IProduct, IProductCreate>({
       query: (body) => ({
         url: `product`,
@@ -226,6 +240,7 @@ export const baseApi = createApi({
 export const {
   // Products
   useGetAllProductsQuery,
+  useGetProductsCategIdQuery,
   useCreateProductMutation,
   useDeleteProductMutation,
   useUpdateProductMutation,

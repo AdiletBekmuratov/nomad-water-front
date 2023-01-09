@@ -4,8 +4,8 @@ import { FC, useState } from 'react';
 import React from 'react';
 import {
   useGetAllProductsQuery,
-  useGetProductCategoryIDQuery,
-  useGetProductCategoryQuery
+  useGetProductCategoryQuery,
+  useGetProductsCategIdQuery
 } from '@/redux/services/base.service';
 import { IProduct } from '@/types';
 import Loader from '@/components/Landing/Loader';
@@ -19,28 +19,17 @@ import { useGetUserFavoriteQuery } from '@/redux/services/user.service';
 const Catalog: FC = () => {
   //категория товаров
   const { data: categories = [] } = useGetProductCategoryQuery();
+
   //все товары и услуги
   const { data: products = [], isLoading } = useGetAllProductsQuery();
   const product = products.map((item: IProduct) => item);
   //получить товары по категории
+  const [categoryId, setCategoryId] = useState('');
+  const { data: productCategArr = [] } = useGetProductsCategIdQuery(Number(categoryId));
 
-  const categoryProducts = (id: number) => {
-    let i = 0;
-    let arrProductCat = [];
-    while (i < product.length) {
-      if (product[i].productCategoryId === id) {
-        arrProductCat.push(product);
-      }
-      i++;
-    }
-    return arrProductCat;
+  const onChoiceButton = (id: string) => {
+    setCategoryId(id);
   };
-  const onChoiceButton = (id: number) => {
-    const arr = categoryProducts(id);
-    console.log(arr);
-  };
-  //const isIdCategory = product.map((item) => categoryId.includes(item.productCategoryId));
-
   //получение всех избранных и их массив
   const { data: favorites = [] } = useGetUserFavoriteQuery();
   const favoriteProductsId = favorites.map((obj) => obj.id);
@@ -54,6 +43,7 @@ const Catalog: FC = () => {
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
+  // стиль кнопок категорий
   const categoriesButStyle = `flex items-center justify-center py-2 px-3 rounded-2xl bg-white cursor-pointer`;
 
   if (isLoading) {
@@ -62,6 +52,7 @@ const Catalog: FC = () => {
   return (
     <Layout>
       <div className={`grid grid-cols-1 lg:grid-cols-2 gap-3 items-center `}>
+        {/* поиск */}
         <Input
           id="search"
           name="search"
@@ -78,14 +69,14 @@ const Catalog: FC = () => {
             />
           }
         />
-
+        {/* кнопки для сортировки по категориям */}
         <div className={`grid sm:grid-cols-3 gap-4 md:gap-4`}>
           {categories.map((item) => (
             <button
               value={item.name}
               key={item.name}
               className={`${categoriesButStyle}`}
-              onClick={() => onChoiceButton(item.id)}>
+              onClick={() => onChoiceButton(item.id.toString())}>
               <svg
                 width="24"
                 height="24"
@@ -106,21 +97,33 @@ const Catalog: FC = () => {
           ))}
         </div>
       </div>
-
       <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-1 sm:grid-cols-2  `}>
-        {value.length === 0
-          ? product.map((items) => (
+        {categoryId === '' ? (
+          <>
+            {value.length === 0
+              ? product.map((items) => (
+                  <>
+                    <>{(isFavor = favoriteProductsId.includes(items.id))}</>
+                    <CardBottle key={items.id} items={items} isFavor={isFavor} />
+                  </>
+                ))
+              : searchArrName.map((items, id) => (
+                  <>
+                    <>{(isFavor = favoriteProductsId.includes(items.id))}</>
+                    <CardBottle key={id} items={items} isFavor={isFavor} />
+                  </>
+                ))}
+          </>
+        ) : (
+          <>
+            {productCategArr.map((items) => (
               <>
                 <>{(isFavor = favoriteProductsId.includes(items.id))}</>
                 <CardBottle key={items.id} items={items} isFavor={isFavor} />
               </>
-            ))
-          : searchArrName.map((items, id) => (
-              <>
-                <>{(isFavor = favoriteProductsId.includes(items.id))}</>
-                <CardBottle key={id} items={items} isFavor={isFavor} />
-              </>
             ))}
+          </>
+        )}
       </div>
       <div className={`border-b border-solid border-gray-300 mt-8 mb-4 md:border-none`}></div>
     </Layout>
