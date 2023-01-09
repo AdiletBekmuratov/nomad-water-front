@@ -1,20 +1,43 @@
-import { CardBottle } from '@/pages/catalog/CardBottle';
-import { FC, useState } from 'react';
-
-import React from 'react';
+import React, { FC, useState } from 'react';
 import {
   useGetAllProductsQuery,
   useGetProductCategoryQuery,
   useGetProductsCategIdQuery
 } from '@/redux/services/base.service';
 import { IProduct } from '@/types';
+import { useGetUserFavoriteQuery } from '@/redux/services/user.service';
+
 import Loader from '@/components/Landing/Loader';
 import { Input } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
+import { CardBottle } from '@/pages/catalog/CardBottle';
 
+import { motion } from 'framer-motion';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FiDelete } from 'react-icons/fi';
-import { useGetUserFavoriteQuery } from '@/redux/services/user.service';
+
+const cartAnimation = {
+  hidden: {
+    y: 100,
+    opacity: 0
+  },
+  visible: (custom: any) => ({
+    transition: { duration: 1.5, delay: custom * 0.1 },
+    y: 0,
+    opacity: 1
+  })
+};
+const butAnimation = {
+  hidden: {
+    x: 200,
+    opacity: 0
+  },
+  visible: {
+    transition: { duration: 1.5, delay: 0.1 },
+    x: 0,
+    opacity: 1
+  }
+};
 
 const Catalog: FC = () => {
   //категория товаров
@@ -70,7 +93,13 @@ const Catalog: FC = () => {
           }
         />
         {/* кнопки для сортировки по категориям */}
-        <div className={`grid sm:grid-cols-3 gap-4 md:gap-4`}>
+        <motion.div
+          className={`grid sm:grid-cols-3 gap-4 md:gap-4`}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ amount: 0.2, once: true }}
+          variants={butAnimation}
+          custom={2}>
           {categories.map((item) => (
             <button
               value={item.name}
@@ -95,9 +124,15 @@ const Catalog: FC = () => {
               <span>{item.name}</span>
             </button>
           ))}
-        </div>
+        </motion.div>
       </div>
-      <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-1 sm:grid-cols-2  `}>
+      <motion.div
+        className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-1 sm:grid-cols-2  `}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.2, once: true }}
+        variants={cartAnimation}
+        custom={1}>
         {categoryId === '' ? (
           <>
             {value.length === 0
@@ -124,7 +159,7 @@ const Catalog: FC = () => {
             ))}
           </>
         )}
-      </div>
+      </motion.div>
       <div className={`border-b border-solid border-gray-300 mt-8 mb-4 md:border-none`}></div>
     </Layout>
   );
