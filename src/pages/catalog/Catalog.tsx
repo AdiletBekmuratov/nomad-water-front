@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, Fragment, useState } from 'react';
 import {
   useGetAllProductsQuery,
   useGetProductCategoryQuery,
@@ -137,25 +137,25 @@ const Catalog: FC = () => {
           <>
             {value.length === 0
               ? product.map((items) => (
-                  <>
+                  <Fragment key={items.id}>
                     <>{(isFavor = favoriteProductsId.includes(items.id))}</>
                     <CardBottle key={items.id} items={items} isFavor={isFavor} />
-                  </>
+                  </Fragment>
                 ))
               : searchArrName.map((items, id) => (
-                  <>
+                  <Fragment key={`search-${items.id}`}>
                     <>{(isFavor = favoriteProductsId.includes(items.id))}</>
                     <CardBottle key={id} items={items} isFavor={isFavor} />
-                  </>
+                  </Fragment>
                 ))}
           </>
         ) : (
           <>
             {productCategArr.map((items) => (
-              <>
+              <Fragment key={`cat-${items.id}`}>
                 <>{(isFavor = favoriteProductsId.includes(items.id))}</>
                 <CardBottle key={items.id} items={items} isFavor={isFavor} />
-              </>
+              </Fragment>
             ))}
           </>
         )}
