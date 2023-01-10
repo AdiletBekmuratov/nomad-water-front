@@ -21,9 +21,8 @@ export const CardBottle: FC<ICard> = ({ items, isFavor }) => {
 
   const dispatch = useAppDispatch();
   const [cart, setCart] = useLocalStorage<ICart>('cart', { products: [], total: 0 });
-  const [isChoice, setIsChoice] = React.useState(
-    cart.products.some((item) => item.id === items.id)
-  );
+  const choice = cart.products ? cart.products.some((item) => item.id === items.id) : false;
+  const [isChoice, setIsChoice] = React.useState(choice);
   const [isFavorite, setIsFavorite] = React.useState<boolean>(isFavor);
   const [addFavorite] = useAddFavoriteMutation();
   const [deleteFavorite] = useDeleteFavoriteMutation();
