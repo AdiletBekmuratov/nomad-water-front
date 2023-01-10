@@ -1,9 +1,9 @@
-import React, { useMemo, useState } from 'react';
 import { useGetUserROLEQuery } from '@/redux/services/user.service';
 import { IEmployeeCreate } from '@/types';
+import { useMemo, useState } from 'react';
 
-import { EditWorker } from '@/components/Admin/AllUsers/EditEmployee';
 import { CreateModal } from '@/components/Admin/AllUsers';
+import { EditWorker } from '@/components/Admin/AllUsers/EditWorker';
 
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
 import Loader from '@/components/Landing/Loader';

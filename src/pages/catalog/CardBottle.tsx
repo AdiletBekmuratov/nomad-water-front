@@ -10,6 +10,8 @@ import { Button } from '@/components/Forms';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { useAddFavoriteMutation, useDeleteFavoriteMutation } from '@/redux/services/user.service';
 import { toast } from 'react-hot-toast';
+import { useLocalStorage, useReadLocalStorage } from '@/hooks';
+import { ICart } from '@/types';
 
 export const CardBottle: FC<ICard> = ({ items, isFavor }) => {
   //const cartItems = useAppSelector((state) => state.cart.cartItems);
@@ -18,17 +20,22 @@ export const CardBottle: FC<ICard> = ({ items, isFavor }) => {
   // const isFavor = favoriteProductsId.includes(items.id);
 
   const dispatch = useAppDispatch();
-  const [isChoice, setIsChoice] = React.useState(false);
+  const [cart, setCart] = useLocalStorage<ICart>('cart', { products: [], total: 0 });
+  const [isChoice, setIsChoice] = React.useState(
+    cart.products.some((item) => item.id === items.id)
+  );
   const [isFavorite, setIsFavorite] = React.useState<boolean>(isFavor);
   const [addFavorite] = useAddFavoriteMutation();
   const [deleteFavorite] = useDeleteFavoriteMutation();
 
   const onClickAdd = () => {
-    dispatch(addItem(items));
+    let tempCart: ICart = JSON.parse(JSON.stringify(cart));
+    tempCart.products.push({ ...items, quantity: 1 });
+    dispatch(addItem({ ...items, quantity: 1 }));
     setIsChoice(true);
   };
-  const onDeleteItem = (id: number) => {
-    dispatch(deleteItem(id));
+  const onDeleteItem = () => {
+    dispatch(deleteItem(items.id));
     setIsChoice(false);
   };
   const onClickAddFavorite = async (id: number) => {
@@ -68,9 +75,7 @@ export const CardBottle: FC<ICard> = ({ items, isFavor }) => {
               {isChoice ? (
                 <Button
                   className={`w-40 h-10 bg-blue-400 text-sm hover:bg-blue-900`}
-                  onClick={() => {
-                    onDeleteItem(items.id);
-                  }}>
+                  onClick={onDeleteItem}>
                   Убрать из корзины
                 </Button>
               ) : (

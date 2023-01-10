@@ -66,8 +66,8 @@ const AdminProducts = () => {
       },
       {
         header: 'Description',
-        accessorKey: 'description'
-        //columns: rowData?.description.slice(0, 20)
+        accessorKey: 'description',
+        cell: ({ getValue }) => <>{getValue().slice(0, 20)}...</>
       },
 
       {

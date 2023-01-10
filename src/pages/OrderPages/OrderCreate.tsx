@@ -1,21 +1,28 @@
-import { FC, useCallback, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import React from 'react';
+import Checkbox from '@/components/Checkbox';
 import { Button, FormContainer, Input } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';
 import { Footer, OrderAcordion, OrderCard, PaymentComponent, Total } from '@/components/Order';
 import EditCard from '@/components/Order/EditCard';
-import { IProduct, IUsersOrder } from '@/types';
-import { toast } from 'react-hot-toast';
-import { useCreateOrderMutation } from '@/redux/services/base.service';
-import Checkbox from '@/components/Checkbox';
-import * as yup from 'yup';
 import { useAppSelector } from '@/hooks/useAppSelector';
-// import { useAppDispatch } from '@/hooks/useAppDispatch';
-// import { getOrderDto } from '@/redux/slices/cartSlice';
+import { useCreateOrderMutation } from '@/redux/services/base.service';
+import { IProduct, IUsersOrder } from '@/types';
+import React, { FC, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
+import * as yup from 'yup';
 
 const userStyle = 'font-montserrat text-dark-blue';
+
+const initial: IUsersOrder = {
+  address: '',
+  comment: '',
+  isSale: false,
+  paymentMethod: 'Наличными',
+  phone: '',
+  orderProductsDto: [],
+  totalPrice: 0
+};
 
 const OrderCreate: FC = () => {
   const navigate = useNavigate();
@@ -31,26 +38,9 @@ const OrderCreate: FC = () => {
   const [delivery, setDelivery] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('Картой');
 
-  const cartItems = useAppSelector((state) => state.cart.cartItems);
-  const orderDto = useAppSelector((state) => state.cart.orderDto);
-  const total = useAppSelector((state) => state.cart.total);
-  const initialTotal = cartItems.reduce((sum, obj) => sum + obj.productPrice, 0);
+  const { products, total } = useAppSelector((state) => state.cart);
+  const user = useAppSelector((state) => state.auth.user);
 
-  //const quantity = useAppSelector((state) => state.cart.quantity);
-  //console.log(quantity);
-  // const handleTotal = useCallback(
-  //   (isDel: boolean = false) => {
-  //     if (isDel) setTotal(total + 300);
-  //     else setTotal(total);
-  //   },
-  //   [cartItems]
-  // );
-  const initialProductDto = [
-    {
-      productId: 1,
-      quantity: 1
-    }
-  ];
   const handleCreate = (values: IUsersOrder) => {
     toast
       .promise(
@@ -70,44 +60,36 @@ const OrderCreate: FC = () => {
       });
   };
 
-  const addressOrder = `${address.street},${address.houseNumber},${address['flat']}`;
-  const initial: IUsersOrder = {
-    address: addressOrder,
-    comment: address.addressComment,
-    isSale: false,
-    paymentMethod: paymentMethod,
-    phone: address.phone,
-    orderProductsDto: orderDto ? orderDto : initialProductDto,
-    totalPrice: initialTotal
-  };
-  // console.log(orderDto);
-  const validationSchema = yup.object().shape({
-    cardNumber: yup.string().required('Поле обязательное'),
-    validity: yup.string().required('Поле обязательное'),
-    cvc: yup.string().required('Поле обязательное').min(3, 'Должно быть 3').max(3),
-    nameOnCard: yup.string().required('Поле обязательное')
-  });
-  type initialValues = {
-    cardNumber: string;
-    validity: string;
-    cvc: string;
-    nameOnCard: string;
-  };
+  const addressOrder = `${user?.street}, ${user?.houseNumber}, ${user?.flat}`;
 
-  const initialVal: initialValues = {
-    cardNumber: '',
-    validity: '',
-    cvc: '',
-    nameOnCard: ''
-  };
+  // console.log(orderDto);
+  // const validationSchema = yup.object().shape({
+  //   cardNumber: yup.string().required('Поле обязательное'),
+  //   validity: yup.string().required('Поле обязательное'),
+  //   cvc: yup.string().required('Поле обязательное').min(3, 'Должно быть 3').max(3),
+  //   nameOnCard: yup.string().required('Поле обязательное')
+  // });
+  // type initialValues = {
+  //   cardNumber: string;
+  //   validity: string;
+  //   cvc: string;
+  //   nameOnCard: string;
+  // };
+
+  // const initialVal: initialValues = {
+  //   cardNumber: '',
+  //   validity: '',
+  //   cvc: '',
+  //   nameOnCard: ''
+  // };
   const paymentStyle = 'placeholder:text-gray-300 font-montserrat';
   return (
     <Layout>
-      {cartItems.length > 0 ? (
+      {products.length > 0 ? (
         <div className={`lg:grid lg:grid-cols-3 lg:grid-row-3 gap-6  `}>
           <div className={`lg:col-span-2 lg:order-1 lg:col-start-1 lg:row-start-1 grid gap-4`}>
-            {cartItems.map((item: IProduct) => (
-              <OrderCard id={item.id} data={{ ...item }} key={item.id} />
+            {products.map((item: IProduct & { quantity: number }) => (
+              <OrderCard data={{ ...item }} key={item.id} />
             ))}
           </div>
 
@@ -140,7 +122,7 @@ const OrderCreate: FC = () => {
               </h3>
             </div>
 
-            {paymentMethod === 'Картой' && (
+            {/* {paymentMethod === 'Картой' && (
               <div>
                 <FormContainer
                   initialValues={initialVal}
@@ -189,7 +171,7 @@ const OrderCreate: FC = () => {
                   </div>
                 </FormContainer>
               </div>
-            )}
+            )} */}
 
             {/* <button
               className="text-blue-light font-montserrat font-semibold text-xs"
@@ -228,7 +210,7 @@ const OrderCreate: FC = () => {
           {isEdited && (
             <>
               <Modal isOpenModal={isOpen} setIsOpenModal={setIsEdited}>
-                <PaymentComponent buttonName="Продолжить" name={user.username} />
+                <PaymentComponent buttonName="Продолжить" name={user?.username ?? ''} />
               </Modal>
             </>
           )}
