@@ -10,15 +10,10 @@ import { Button } from '@/components/Forms';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { useAddFavoriteMutation, useDeleteFavoriteMutation } from '@/redux/services/user.service';
 import { toast } from 'react-hot-toast';
-import { useLocalStorage, useReadLocalStorage } from '@/hooks';
+import { useLocalStorage } from '@/hooks';
 import { ICart } from '@/types';
 
 export const CardBottle: FC<ICard> = ({ items, isFavor }) => {
-  //const cartItems = useAppSelector((state) => state.cart.cartItems);
-  //const { data: favorites = [] } = useGetUserFavoriteQuery();
-  // const favoriteProductsId = favorites.map((obj) => obj.id);
-  // const isFavor = favoriteProductsId.includes(items.id);
-
   const dispatch = useAppDispatch();
   const [cart, setCart] = useLocalStorage<ICart>('cart', { products: [], total: 0 });
   const choice = cart.products ? cart.products.some((item) => item.id === items.id) : false;
@@ -29,7 +24,7 @@ export const CardBottle: FC<ICard> = ({ items, isFavor }) => {
 
   const onClickAdd = () => {
     let tempCart: ICart = JSON.parse(JSON.stringify(cart));
-    tempCart.products.push({ ...items, quantity: 1 });
+    tempCart.products ? tempCart.products.push({ ...items, quantity: 1 }) : [];
     dispatch(addItem({ ...items, quantity: 1 }));
     setIsChoice(true);
   };
