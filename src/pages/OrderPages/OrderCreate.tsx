@@ -41,12 +41,40 @@ const OrderCreate: FC = () => {
   const { products, total } = useAppSelector((state) => state.cart);
   const user = useAppSelector((state) => state.auth.user);
 
-  const handleCreate = (values: IUsersOrder) => {
+  //@ts-ignore
+  const addressOrder = `${address?.street} ${address?.houseNumber}, квартира: ${address?.flat}`;
+
+  const handleCreate = () => {
+    const product = products.map((product) => {
+      return {
+        productId: product.id,
+        quantity: product.quantity
+      };
+    });
+    console.log(product);
+
+    const value: IUsersOrder = {
+      address: addressOrder,
+      //@ts-ignore
+      comment: address.addressComment,
+      //@ts-ignore
+      phone: address.phone,
+      totalPrice: total,
+      paymentMethod,
+      //@ts-ignore
+      orderProductsDto:
+        //@ts-ignore
+        product,
+      isSale: true
+    };
+
+    console.log(value);
     toast
       .promise(
-        create(values)
+        create(value)
           .unwrap()
           .then((resp) => {
+            //@ts-ignore
             setResponse(resp);
           }),
         {
@@ -59,8 +87,6 @@ const OrderCreate: FC = () => {
         //setVisible(false);
       });
   };
-
-  const addressOrder = `${user?.street}, ${user?.houseNumber}, ${user?.flat}`;
 
   // console.log(orderDto);
   // const validationSchema = yup.object().shape({
@@ -100,6 +126,7 @@ const OrderCreate: FC = () => {
             setIsEdited={setIsEdited}
             setIsOpen={setIsOpen}
             setIsValid={setIsValid}
+            initial={initial}
           />
           <EditCard className={`lg:order-4 lg:col-span-2 lg:w-full lg:row-start-3`}>
             <div className="flex gap-3 items-center">
@@ -200,7 +227,7 @@ const OrderCreate: FC = () => {
               buttonColor="bg-dark-blue font-montserrat"
               disabled={!isValid}
               onClick={() => {
-                handleCreate(initial);
+                handleCreate();
                 //alert(JSON.stringify(address, null, 2));
                 navigate('/myOrders');
               }}>

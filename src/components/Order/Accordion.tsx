@@ -3,7 +3,7 @@ import { Form, Formik } from 'formik';
 import { Input } from '../Forms';
 import * as yup from 'yup';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { IOrdersUser, IUserFull } from '@/types';
+import { IOrdersUser, IUserFull, IUsersOrder } from '@/types';
 import React from 'react';
 
 // type initialValues = {
@@ -18,6 +18,7 @@ type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
   setIsEdited?: Function;
   isEdited?: boolean;
   setAddress: Function;
+  initial?: IUsersOrder;
 };
 
 export const Accordion: FC<Props> = (props) => {
@@ -36,7 +37,6 @@ export const Accordion: FC<Props> = (props) => {
     firstname: yup.string().required('Поле обязательное'),
     phone: yup.string().required('Поле обязательное'),
     street: yup.string().required('Поле обязательное'),
-    addressComment: yup.string().required('Поле обязательное'),
     houseNumber: yup.string().required('Поле обязательное'),
     flat: yup.string().required('Поле обязательное')
   });

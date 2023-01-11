@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import { Accordion, Address } from './index';
+import { IUsersOrder } from '@/types';
 
 type Props = {
   setIsOpen: Function;
@@ -9,6 +10,7 @@ type Props = {
   setIsValid: Function;
   isEdited: boolean;
   setAddress: Function;
+  initial?: IUsersOrder;
 };
 
 export const OrderAcordion: FC<Props> = ({
@@ -17,7 +19,8 @@ export const OrderAcordion: FC<Props> = ({
   setIsEdited,
   setIsValid,
   isEdited,
-  setAddress
+  setAddress,
+  initial
 }) => {
   return (
     <div className="lg:order-3 col-span-2 lg:row-start-2">
@@ -34,6 +37,7 @@ export const OrderAcordion: FC<Props> = ({
           setIsEdited={setIsEdited}
           isEdited={isEdited}
           setAddress={setAddress}
+          initial={initial}
         />
       )}
     </div>
