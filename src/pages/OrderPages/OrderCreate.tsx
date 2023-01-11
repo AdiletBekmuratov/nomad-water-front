@@ -4,13 +4,14 @@ import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';
 import { Footer, OrderAcordion, OrderCard, PaymentComponent, Total } from '@/components/Order';
 import EditCard from '@/components/Order/EditCard';
+import { useAppDispatch } from '@/hooks';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useCreateOrderMutation } from '@/redux/services/base.service';
 import { IProduct, IUsersOrder } from '@/types';
-import React, { FC, useState } from 'react';
-import { toast } from 'react-hot-toast';
+import React, { FC, useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
+import { clearItems } from '@/redux/slices/cartSlice';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
@@ -26,9 +27,7 @@ const initial: IUsersOrder = {
 
 const OrderCreate: FC = () => {
   const navigate = useNavigate();
-
-  const [response, setResponse] = React.useState<string[]>([]);
-  const [create, { isLoading: isOrderLoad }] = useCreateOrderMutation();
+  const dispatch = useAppDispatch();
 
   const [isOpen, setIsOpen] = useState(true);
   const [isValid, setIsValid] = useState(false);
@@ -44,15 +43,19 @@ const OrderCreate: FC = () => {
   //@ts-ignore
   const addressOrder = `${address?.street} ${address?.houseNumber}, квартира: ${address?.flat}`;
 
-  const handleCreate = () => {
+  const clientRef = useRef<WebSocket | null>(null);
+  const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
+
+  const handleSendOrder = () => {
     const product = products.map((product) => {
       return {
         productId: product.id,
         quantity: product.quantity
       };
     });
-    console.log(product);
-
+    // console.log(product);
+    //@ts-ignore
     const value: IUsersOrder = {
       address: addressOrder,
       //@ts-ignore
@@ -64,29 +67,53 @@ const OrderCreate: FC = () => {
       //@ts-ignore
       orderProductsDto:
         //@ts-ignore
-        product,
-      isSale: true
+        product
     };
 
-    console.log(value);
-    toast
-      .promise(
-        create(value)
-          .unwrap()
-          .then((resp) => {
-            //@ts-ignore
-            setResponse(resp);
-          }),
-        {
-          loading: 'Загрузка...',
-          success: 'Получено',
-          error: (error) => JSON.stringify(error, null, 2)
-        }
-      )
-      .finally(() => {
-        //setVisible(false);
-      });
+    clientRef.current?.send(JSON.stringify(value));
+    dispatch(clearItems());
+    // console.log(value);
   };
+
+  useEffect(() => {
+    if (waitingToReconnect) {
+      return;
+    }
+
+    if (!clientRef.current) {
+      const client = new WebSocket('ws://localhost:8080/order/create');
+      clientRef.current = client;
+
+      client.onerror = (err) => {
+        console.error(err);
+      };
+
+      client.onopen = () => {
+        setIsConnected(true);
+        console.log('connected');
+      };
+
+      client.onclose = () => {
+        if (clientRef.current) {
+          console.log('connection was closed');
+        } else {
+          console.log('connection closed by app component unmount');
+        }
+        if (waitingToReconnect) {
+          return;
+        }
+        setIsConnected(false);
+        console.log('connection closed');
+        setWaitingToReconnect(true);
+
+        setTimeout(() => setWaitingToReconnect(null), 5000);
+      };
+
+      client.onmessage = (data) => {
+        console.log(data.data);
+      };
+    }
+  }, [waitingToReconnect]);
 
   // console.log(orderDto);
   // const validationSchema = yup.object().shape({
@@ -216,7 +243,7 @@ const OrderCreate: FC = () => {
             setDelivery={setDelivery}
             setPickup={setPickup}
             isValid={isValid}
-            buttonAction={handleCreate}
+            buttonAction={handleSendOrder}
             initial={initial}
             initialTotal={total}
           />
@@ -227,7 +254,7 @@ const OrderCreate: FC = () => {
               buttonColor="bg-dark-blue font-montserrat"
               disabled={!isValid}
               onClick={() => {
-                handleCreate();
+                handleSendOrder();
                 //alert(JSON.stringify(address, null, 2));
                 navigate('/myOrders');
               }}>

@@ -20,9 +20,9 @@ export const courierApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'COrder', id } as const)),
-            { type: 'COrder', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'COrder', id } as const)),
+              { type: 'COrder', id: 'LIST' }
+            ]
           : [{ type: 'COrder', id: 'LIST' }]
     }),
     acceptOrder: builder.mutation<void, number>({
@@ -47,9 +47,9 @@ export const courierApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'COrder', id } as const)),
-            { type: 'COrder', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'COrder', id } as const)),
+              { type: 'COrder', id: 'LIST' }
+            ]
           : [{ type: 'COrder', id: 'LIST' }]
     })
   })
@@ -59,5 +59,7 @@ export const {
   useGetCourierOrderQuery,
   useAcceptOrderMutation,
   useCompleteOrderMutation,
-  useGetAllConfirmedOrdersQuery
+  useGetAllConfirmedOrdersQuery,
+  useLazyGetAllConfirmedOrdersQuery,
+  useLazyGetCourierOrderQuery
 } = courierApi;

@@ -17,9 +17,7 @@ const Orders = () => {
   const { data: allOrders = [], refetch } = useGetUserOrderQuery();
   const { data: allOrdersCourier = [], isLoading: courierLoad } = useGetCourierOrderQuery();
   const acceptOrders = allOrdersCourier.filter((order) => order.statusId === 2);
-  setTimeout(() => {
-    refetch();
-  }, 10000);
+
   const orders = allOrders.filter((order) => order.statusId !== 3);
   const columnsUser = React.useMemo<ColumnDef<IOrder, any>[]>(
     () => [

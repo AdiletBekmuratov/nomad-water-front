@@ -12,15 +12,10 @@ import { Button } from '@/components/Forms';
 // import { AcceptOrder } from './AcceptOrder';
 import { Edit } from '../User/Edit';
 
-
-
 const Courier = () => {
   const { data: allOrders = [], isLoading, refetch } = useGetCourierOrderQuery();
- // const acceptOrders = allOrders.filter((order) => order.statusId === 2);
+  // const acceptOrders = allOrders.filter((order) => order.statusId === 2);
   const completeOrders = allOrders.filter((order) => order.statusId === 3);
-  setTimeout(() => {
-    refetch();
-  }, 10000);
 
   const { user } = useAppSelector((state) => state.auth);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
