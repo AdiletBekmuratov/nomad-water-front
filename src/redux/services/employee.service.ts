@@ -36,4 +36,5 @@ export const employeeApi = createApi({
   })
 });
 
-export const { useConfirmOrdersMutation, useGetPendingOrdersQuery } = employeeApi;
+export const { useConfirmOrdersMutation, useGetPendingOrdersQuery, useLazyGetPendingOrdersQuery } =
+  employeeApi;

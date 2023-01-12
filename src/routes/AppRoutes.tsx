@@ -15,6 +15,8 @@ import WarehouseAppeal from '@/pages/WarehouseAppeal';
 import Warehouses from '@/pages/Warehouses';
 import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminCategory from '@/pages/admin/AdminCategory';
+import { AcceptOrder } from '@/pages/Couriers/AcceptOrder';
+import { AcceptedOrders } from '@/pages/Couriers/AcceptedOrders';
 
 const Landing = lazy(() => import('@/pages/Landing'));
 
@@ -65,13 +67,20 @@ const AppRoutes = () => {
             {/* личная страница юзера */}
             <Route path="/userPage" element={<UserPage />} />
             {/* личная страница диспечера*/}
-            <Route path="/employee" element={<Employee />} />
+            <Route
+              path="/employee"
+              element={
+                <ProtectedRoute isAllowed={user?.role === 'ROLE_EMPLOYEE'} redirectPath="/catalog">
+                  <Employee />
+                </ProtectedRoute>
+              }
+            />
             {/* личная страница курьера */}
             <Route
               path="/courier"
               element={
                 <ProtectedRoute isAllowed={user?.role === 'ROLE_COURIER'} redirectPath="/catalog">
-                  <Courier />
+                  <AcceptedOrders />
                 </ProtectedRoute>
               }
             />
@@ -81,6 +90,15 @@ const AppRoutes = () => {
             <Route path="/myOrders" element={<Orders />} />
             <Route path="/order" element={<OrderCreate />} />
             <Route path="/orderinfo" element={<OrderInfo />} />
+
+            <Route
+              path="/courier/orders"
+              element={
+                <ProtectedRoute isAllowed={user?.role === 'ROLE_COURIER'} redirectPath="/catalog">
+                  <Courier />
+                </ProtectedRoute>
+              }
+            />
 
             {/**************************************************************************************** */}
             {/*вход админ */}

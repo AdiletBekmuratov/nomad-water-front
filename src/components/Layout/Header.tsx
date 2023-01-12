@@ -27,6 +27,7 @@ interface IHeader {
 }
 
 export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
+  //@ts-ignore
   const { cartItems = [] } = useAppSelector((state) => state.cart);
 
   const { user } = useAppSelector((state) => state.auth);

@@ -18,20 +18,24 @@ export const ConfirmOrder = () => {
   const [rowData, setRowData] = useState<ICourierOrder[] | undefined>();
 
   const [data, setData] = useState<ICourierOrder>();
-  const confirmOrder = async (id: number) => {};
-
-  const handleConfirm = async (id: number) => {
-    await toast.promise(confirm(Number(id)).unwrap(), {
-      loading: 'Загрузка...',
-      success: 'Подтвержден',
-      error: (error) => JSON.stringify(error, null, 2)
-    });
-  };
 
   const clientRef = useRef<WebSocket | null>(null);
   const courierRef = useRef<WebSocket | null>(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+
+  const confirmOrder = async (id: number) => {
+    console.log(id);
+    courierRef.current?.send(
+      JSON.stringify({
+        id
+      })
+    );
+    //@ts-ignore
+    const newData = data?.filter((item) => item.id !== id);
+    setData(newData);
+    toast.success('Заказ принят, все принятые заказы можно увидеть в профиле');
+  };
 
   useEffect(() => {
     //@ts-ignore
@@ -43,15 +47,40 @@ export const ConfirmOrder = () => {
 
     if (!clientRef.current) {
       const client = new WebSocket('ws://localhost:8080/order/create');
+      const courier = new WebSocket('ws://localhost:8080/order/accept');
+
       clientRef.current = client;
+      courierRef.current = courier;
 
       client.onerror = (err) => {
         console.error(err);
       };
 
+      courier.onopen = () => {
+        setIsConnected(true);
+        console.log('Функции курьера подключены');
+      };
+
+      courier.onerror = (err) => {
+        console.error(err);
+      };
+
       client.onopen = () => {
         setIsConnected(true);
-        console.log('connected');
+        console.log('Курьер подключен');
+      };
+
+      courier.onclose = () => {
+        if (courierRef.current) {
+          console.log('Функции курьера отключены');
+        } else {
+          console.log('Функции курьера отключены по причине бездействия');
+        }
+      };
+
+      courier.onmessage = (message) => {
+        const newData = JSON.parse(message.data);
+        console.log(newData);
       };
 
       client.onclose = () => {
@@ -74,10 +103,10 @@ export const ConfirmOrder = () => {
         const newData = JSON.parse(message.data);
         console.log(newData);
         //@ts-ignore
-        fetchOrders().then((res) => setData(res.data));
+        setData((prevData) => [newData, ...prevData]);
       };
     }
-  }, [waitingToReconnect, data]);
+  }, [waitingToReconnect]);
 
   const columns = useMemo<ColumnDef<ICourierOrder, any>[]>(
     () => [
@@ -159,7 +188,7 @@ export const ConfirmOrder = () => {
             buttonColor="bg-green-700 "
             onClick={() => {
               //@ts-ignore
-              handleConfirm(rowData?.id);
+              confirmOrder(rowData?.id);
               setIsOpenModal(false);
             }}>
             Да

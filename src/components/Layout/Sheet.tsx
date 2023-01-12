@@ -5,7 +5,6 @@ import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 import { FaFacebook, FaInstagram, FaTelegramPlane, FaWhatsapp } from 'react-icons/fa';
 import { FiTwitter } from 'react-icons/fi';
-
 interface ISheetProps {
   children: ReactNode;
   isOpen: boolean;
@@ -50,6 +49,7 @@ export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
               <div className={`grid grid-cols-1 gap-2 `}>
                 <Link to="/catalog">Акции</Link>
                 <Link to="/catalog">Каталог</Link>
+
                 <Link to="/myOrders">Мои заказы</Link>
                 {/* <Link to="/userPage">Мой аккаунт</Link> */}
                 <Link to="/myFavorite">Избранные</Link>
