@@ -19,7 +19,7 @@ const Orders = () => {
   useEffect(() => {
     //@ts-ignore
     fetchOrders().then((res) => setAllOrders(res.data));
-  }, []);
+  }, [allOrders]);
 
   const navigate = useNavigate();
 
