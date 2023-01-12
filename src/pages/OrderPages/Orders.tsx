@@ -74,9 +74,6 @@ const Orders = () => {
   //@ts-ignore
   const orders = allOrders.filter((order) => order.statusId !== 3);
 
-  if (user?.role === 'ROLE_COURIER') {
-    navigate('/courier/orders');
-  }
   return (
     <Layout className={``}>
       <div>

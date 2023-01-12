@@ -21,6 +21,8 @@ export const ConfirmOrder = () => {
 
   const clientRef = useRef<WebSocket | null>(null);
   const courierRef = useRef<WebSocket | null>(null);
+  const confirmedRef = useRef<WebSocket | null>(null);
+
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
@@ -48,9 +50,11 @@ export const ConfirmOrder = () => {
     if (!clientRef.current) {
       const client = new WebSocket('ws://localhost:8080/order/create');
       const courier = new WebSocket('ws://localhost:8080/order/accept');
+      const confirmed = new WebSocket('ws://localhost:8080/order/confirm');
 
       clientRef.current = client;
       courierRef.current = courier;
+      confirmedRef.current = confirmed;
 
       client.onerror = (err) => {
         console.error(err);
@@ -59,6 +63,14 @@ export const ConfirmOrder = () => {
       courier.onopen = () => {
         setIsConnected(true);
         console.log('Функции курьера подключены');
+      };
+
+      confirmed.onerror = (err) => {
+        console.error(err);
+      };
+
+      confirmed.onopen = () => {
+        console.log('Связь между диспетчером подключена');
       };
 
       courier.onerror = (err) => {
@@ -76,6 +88,21 @@ export const ConfirmOrder = () => {
         } else {
           console.log('Функции курьера отключены по причине бездействия');
         }
+      };
+
+      confirmed.onclose = () => {
+        if (confirmedRef.current) {
+          console.log('Функции курьера отключены');
+        } else {
+          console.log('Функции курьера отключены по причине бездействия');
+        }
+      };
+
+      confirmed.onmessage = (message) => {
+        const newData = JSON.parse(message.data);
+        console.log(newData);
+        //@ts-ignore
+        setData((prevData) => [newData, ...prevData]);
       };
 
       courier.onmessage = (message) => {

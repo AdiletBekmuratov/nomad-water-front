@@ -87,7 +87,16 @@ const AppRoutes = () => {
             <Route path="/myFavorite" element={<MyFavorite />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />
-            <Route path="/myOrders" element={<Orders />} />
+            <Route
+              path="/myOrders"
+              element={
+                <ProtectedRoute
+                  isAllowed={user?.role === 'ROLE_USER'}
+                  redirectPath="/courier/orders">
+                  <Orders />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/order" element={<OrderCreate />} />
             <Route path="/orderinfo" element={<OrderInfo />} />
 
