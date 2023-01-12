@@ -27,8 +27,7 @@ interface IHeader {
 }
 
 export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
-  //@ts-ignore
-  const { cartItems = [] } = useAppSelector((state) => state.cart);
+  const { products = [] } = useAppSelector((state) => state.cart);
 
   const { user } = useAppSelector((state) => state.auth);
   const headerStyle = `flex items-center py-3 justify-between layout ${props.className}`;
@@ -78,7 +77,7 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
 
             <div className={`hidden md:flex gap-4`}>
               <Link to="/order">
-                {cartItems.length === 0 ? (
+                {products.length === 0 ? (
                   <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
                 ) : (
                   <BsFillCartFill className="h-6 w-6 cursor-pointer" />

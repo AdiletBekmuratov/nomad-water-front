@@ -1,8 +1,8 @@
 import { useAppSelector } from '@/hooks';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { decrementQuantity, deleteItem, incrementQuantity } from '@/redux/slices/cartSlice';
-import { IOrderQuality, IProduct } from '@/types';
-import React, { FC, useState } from 'react';
+import { IProduct } from '@/types';
+import React, { FC } from 'react';
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { Card } from '../Forms';
