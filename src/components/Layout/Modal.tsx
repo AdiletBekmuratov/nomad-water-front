@@ -18,19 +18,19 @@ export const Modal: FC<Props> = ({ children, isOpenModal, setIsOpenModal, classN
     setIsOpenModal(false);
   };
 
-  const handleOpen = async () => {
-    await controls.start('visible');
-    setIsOpenModal(true);
-  };
+  // const handleOpen = async () => {
+  //   await controls.start('visible');
+  //   setIsOpenModal(true);
+  // };
 
-  const onDragEnd = async (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    const shouldClose = info.velocity.y > 20 || (info.velocity.y >= 0 && info.point.y > 45);
-    if (shouldClose) {
-      handleClose();
-    } else {
-      handleOpen();
-    }
-  };
+  // const onDragEnd = async (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+  //   const shouldClose = info.velocity.y > 20 || (info.velocity.y >= 0 && info.point.y > 45);
+  //   if (shouldClose) {
+  //     handleClose();
+  //   } else {
+  //     handleOpen();
+  //   }
+  // };
 
   useEffect(() => {
     if (prevIsOpen && !isOpenModal) {
@@ -58,7 +58,7 @@ export const Modal: FC<Props> = ({ children, isOpenModal, setIsOpenModal, classN
       <motion.div
         ref={nodeRef}
         drag="y"
-        onDragEnd={onDragEnd}
+        //onDragEnd={onDragEnd}
         initial="hidden"
         animate={controls}
         transition={{

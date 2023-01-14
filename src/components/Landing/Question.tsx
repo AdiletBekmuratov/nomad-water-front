@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import FaqComp from '../FaqComp';
+import FaqComp from './FaqComp';
 
 export const Question = () => {
   return (
@@ -19,7 +19,7 @@ export const Question = () => {
           <a href="/">Пункты приема</a>
           <a href="/">Новости</a>
           <a href="/">Партнерам</a>
-          <a href="/">Карьера</a>
+          <a href="/">Карьерам</a>
           <a href="/">FAQ</a>
           <a href="/">Политика приватности</a>
         </div>
@@ -28,7 +28,8 @@ export const Question = () => {
           <div
             className={`flex justify-between lg:flex-col my-1 lg:my-4  leading-6 tracking-widest`}>
             <a href="tel:+77777777777">+7 (777)777-77-77</a>
-            <a href="tel:+77212777777">+7 (7212) 77-77-77</a>
+            <a href="tel:+77212777777">+7 (721)277-77-77</a>
+            
           </div>
           <div className={`flex justify-between mx-4 lg:mx-0`}>
             <a href="/">

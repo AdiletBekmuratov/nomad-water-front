@@ -30,9 +30,10 @@ interface ITableProps {
   columns: any;
   data: any;
   onAddClick?: MouseEventHandler<HTMLButtonElement> | undefined;
+  title?: string;
 }
 
-const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
+export const Table: FC<ITableProps> = ({ columns, data, onAddClick, id, title }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
   const [compact, setCompact] = useLocalStorage(id, false);
@@ -70,11 +71,18 @@ const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
           onChange={handleCompactToogle}
           value={compact}
         />
+        <div className="flex items-center">
+          <span className="text-lg">{title}</span>
+        </div>
+
         <div className="flex space-x-4">
           {onAddClick && (
             <div data-tip="Create" className="tooltip">
-              <Button onClick={onAddClick} className="!rounded-full p-2">
-                <HiPlus />
+              <Button
+                onClick={onAddClick}
+                className={`bg-medium-blue hover:bg-gray-700 !rounded-full p-2`}>
+                <HiPlus className={`w-5 h-5`} />
+                Добавить
               </Button>
             </div>
           )}
@@ -83,9 +91,9 @@ const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
 
       <div className="overflow-x-auto mt-4 rounded">
         <table
-          className={`w-full table relative text-sm text-left text-gray-500 dark:text-gray-400`}>
+          className={`w-full table relative text-sm text-left text-dark-blue dark:text-dark-blue`}>
           <thead
-            className={`text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400`}>
+            className={`text-xs text-gray-700 uppercase bg-gray-50 dark:bg-light-blue dark:text-gray-400`}>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -124,7 +132,7 @@ const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
               return (
                 <tr
                   key={row.id}
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  className="bg-white border-b dark:bg-light-blue-800 dark:border-gray-300">
                   {row.getVisibleCells().map((cell) => {
                     return (
                       <td
@@ -164,12 +172,12 @@ const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
           </div>
 
           <div className="flex items-center">
-            <div className="mr-8 flex-shrink-0 hidden md:block">
+            <div className={`mr-8 flex-shrink-0 hidden md:block`}>
               Страница{' '}
               <span className="font-bold">{table.getState().pagination.pageIndex + 1}</span> из{' '}
               <span className="font-bold">{table.getPageCount()}</span>
             </div>
-            <div className="flex-shrink-0 hidden lg:block mr-2">Перейти на:</div>
+            <div className={`flex-shrink-0 hidden lg:block mr-2`}>Перейти на:</div>
             <Input
               id="go-to-input"
               inputType="default"
@@ -220,5 +228,3 @@ const Table: FC<ITableProps> = ({ columns, data, onAddClick, id }) => {
     </div>
   );
 };
-
-export default Table;

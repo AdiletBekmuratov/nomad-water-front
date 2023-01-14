@@ -1,8 +1,8 @@
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
-import { CreateModal, EditModal } from '@/components/Admin/Pages/Warehouses';
-import Loader from '@/components/Loader';
-import { ActionButtons, DeleteModal } from '@/components/Table';
-import Table from '@/components/Table/Table';
+import { CreateModal, EditModal } from '@/components/Admin/Warehouses';
+import Loader from '@/components/Landing/Loader';
+import { ActionButtons, DeleteModal, Table } from '@/components/Table';
+
 import {
   useDeleteWarehouseMutation,
   useGetAllWarehousesQuery
@@ -59,11 +59,11 @@ const AdminWarehouses = () => {
         accessorKey: 'warehouseAddress'
       },
       {
-        header: 'createdDate',
+        header: 'Created Date',
         accessorKey: 'createdDate'
       },
       {
-        header: 'updatedDate',
+        header: 'Updated Date',
         accessorKey: 'updatedDate'
       },
       {

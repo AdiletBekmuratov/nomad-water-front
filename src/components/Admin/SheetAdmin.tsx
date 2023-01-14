@@ -56,37 +56,31 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
       setIsOpen(false);
     }
   }, [width]);
-
+  const linkStyle = `hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all`;
   return (
     <div className={`h-screen flex w-full`}>
       <AnimatePresence>
         {!isMobile ? (
           <aside className={`bg-light-blue h-screen w-64`}>
             <div className={`grid grid-cols-1 gap-2 p-2 text-dark-blue`}>
-              <Link
-                to="/requestsUser"
-                className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
-                Панель управления
-              </Link>
-              <Link
-                to="/users"
-                className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
+              <Link to="/admin/allUsers" className={`${linkStyle}`}>
                 Пользователи
               </Link>
-              <Link
-                to="/couriers"
-                className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
+              <Link to="/admin/couriers" className={`${linkStyle}`}>
                 Курьеры
               </Link>
-              <Link
-                to="/admin/warehouses"
-                className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
+              <Link to="/admin/workers" className={`${linkStyle}`}>
+                Работники склада
+              </Link>
+              <Link to="/admin/warehouses" className={`${linkStyle}`}>
                 Склады
               </Link>
-              <Link
-                to="/hardware"
-                className="hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all">
-                Оборудование
+
+              <Link to="/admin/products" className={`${linkStyle}`}>
+                Продукты
+              </Link>
+              <Link to="/admin/category" className={`${linkStyle}`}>
+                Категории
               </Link>
             </div>
           </aside>
@@ -104,11 +98,26 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
                     className="cursor-pointer"
                     onClick={() => setIsOpen(false)}
                   />
-                  <Link to="/requestsUser">Панель управления</Link>
-                  <Link to="/users">Пользователи</Link>
-                  <Link to="/couriers">Курьеры</Link>
-                  <Link to="/admin/warehouse">Склады</Link>
-                  <Link to="/hardware">Оборудование</Link>
+
+                  <Link to="/admin/allUsers" className={`${linkStyle}`}>
+                    Пользователи
+                  </Link>
+                  <Link to="/admin/couriers" className={`${linkStyle}`}>
+                    Курьеры
+                  </Link>
+                  <Link to="/admin/workers" className={`${linkStyle}`}>
+                    Работники склада
+                  </Link>
+                  <Link to="/admin/warehouses" className={`${linkStyle}`}>
+                    Склады
+                  </Link>
+
+                  <Link to="/admin/products" className={`${linkStyle}`}>
+                    Продукты
+                  </Link>
+                  <Link to="/admin/category" className={`${linkStyle}`}>
+                    Категории
+                  </Link>
                 </motion.div>
               </motion.aside>
               <div

@@ -1,5 +1,7 @@
-import { FC } from 'react';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import Checkbox from '../Checkbox';
 import { Button } from '../Forms';
 
@@ -8,26 +10,36 @@ type Props = {
   delivery: boolean;
   setPickup: Function;
   setDelivery: Function;
-  setTotal: Function;
-  total: number;
+
   isValid: boolean;
-  address: Object;
-  handleTotal?: any;
+
+  initialTotal: number;
+  buttonAction?: any;
+  initial?: any;
 };
 
+// const handleTotal = useCallback(
+//   (isDel: boolean = false) => {
+//     if (isDel) setTotal(total + 300);
+//     else setTotal(total);
+//   },
+//   [cartItems]
+// );
 export const Total: FC<Props> = ({
   pickup,
   delivery,
   setPickup,
   setDelivery,
-  total,
   isValid,
-  address,
-  handleTotal
+  initialTotal,
+  buttonAction,
+  initial
 }) => {
   const navigate = useNavigate();
+  // const total = useAppSelector((state) => state.cart.total);
+
   return (
-    <div className="lg:order-2 lg:bg-white lg:h-48 lg:mt-6 lg:rounded-2xl lg:row-start-1">
+    <div className="lg:order-2 lg:bg-white lg:h-48  lg:rounded-2xl lg:row-start-1">
       <div className="h-6 w-3/4 mt-5 mx-auto gap-2.5 md:w-5/6">
         <div className="flex items-center w-full">
           <Checkbox
@@ -36,7 +48,7 @@ export const Total: FC<Props> = ({
             checked={pickup}
             id="deliver"
             name="deliver"
-            onChange={() => handleTotal(false)}
+            // onChange={() => handleTotal(false)}
             onClick={() => {
               if (delivery) {
                 setDelivery(false);
@@ -53,9 +65,9 @@ export const Total: FC<Props> = ({
             checked={delivery}
             id="delivery"
             name="delivery"
-            onChange={(e) => {
-              handleTotal(e.target.checked);
-            }}
+            // onChange={(e) => {
+            //   handleTotal(e.target.checked);
+            // }}
             onClick={() => {
               if (pickup) {
                 setPickup(false);
@@ -68,7 +80,7 @@ export const Total: FC<Props> = ({
         </div>
         <div className="flex w-full border-t-2 border-dashed border-gray-500 lg:border-gray-300 mt-2">
           <h3 className="font-bold mt-4 font-montserrat text-lg text-dark-blue">
-            Итого: {total} Т
+            Итого: {initialTotal} Т
           </h3>
         </div>
       </div>
@@ -78,8 +90,9 @@ export const Total: FC<Props> = ({
           buttonColor="bg-dark-blue font-montserrat"
           disabled={!isValid}
           onClick={() => {
-            alert(JSON.stringify(address, null, 2));
-            navigate('/orderinfo'); // TODO: Когда будут данные с сервера то направить на order-id
+            buttonAction(initial);
+            // alert(JSON.stringify(address, null, 2));
+            navigate('/myOrders'); // TODO: Когда будут данные с сервера то направить на order-id
           }}>
           Оформить заказ
         </Button>
