@@ -9,7 +9,7 @@ const mediumScreen = '';
 export const Footer: FC<Props> = ({ children, className }) => {
   return (
     <footer
-      className={`w-full ${mediumScreen} bg-white fixed left-0 bottom-0 border-2 border-lighter shadow-sm ${className}`}>
+      className={`w-full ${mediumScreen} fixed left-0 bottom-20 shadow-sm ${className}`}>
       {children}
     </footer>
   );

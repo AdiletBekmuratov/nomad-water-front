@@ -11,12 +11,20 @@ export const MenuBottom = () => {
       <Link to="/catalog" className={`cursor-pointer`}>
         <AiOutlineHome className={`w-6 h-6 text-dark-blue`} />
       </Link>
-      <Link to="/myOrders" className={`cursor-pointer `}>
+      <Link
+        to={`${
+          user?.role === 'ROLE_USER' || user?.role === 'ROLE_EMPLOYEE'
+            ? '/order'
+            : user?.role === 'ROLE_COURIER'
+            ? '/courier/orders'
+            : '/catalog'
+        }`}
+        className={`cursor-pointer `}>
         <AiOutlineShoppingCart className={`w-6 h-6 text-dark-blue`} />
       </Link>
       <Link
         to={`${
-          user?.role === 'ROLE_USER'
+          user?.role === 'ROLE_USER' || user?.role === 'ROLE_EMPLOYEE'
             ? '/userPage'
             : user?.role === 'ROLE_COURIER'
             ? '/courier'

@@ -1,36 +1,115 @@
 import { ICourierOrder } from '@/types/courier.types';
 import { ColumnDef } from '@tanstack/react-table';
-import React, { FC, useMemo, useState, useEffect, useRef } from 'react';
+import { useMemo, useState, useRef, useEffect } from 'react';
 import { ActionButtons, Table } from '../../components/Table';
-import {
-  useCompleteOrderMutation,
-  useGetCourierOrderQuery
-} from '@/redux/services/courier.service';
+import { useLazyGetCourierOrderQuery } from '@/redux/services/courier.service';
 import Loader from '../../components/Landing/Loader';
 import { toast } from 'react-hot-toast';
 import { Modal } from '../../components/Layout/Modal';
 import { Button } from '../../components/Forms';
-import { ConfirmOrder } from './ConfirmOrder';
-import { Layout } from '@/components/Layout';
 
-export const AcceptedOrders: FC = () => {
-  const [complete] = useCompleteOrderMutation();
-  const { data: allOrdersCourier = [], isLoading: courierLoad } = useGetCourierOrderQuery();
-  const data = allOrdersCourier.filter((order) => order.statusId === 2);
-  const [rowData, setRowData] = useState();
+export const AcceptedOrders = () => {
+  const [courierOrders] = useLazyGetCourierOrderQuery();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
-  // setTimeout(() => {
-  //   refetch();
-  // }, 10000);
+  const [rowData, setRowData] = useState<ICourierOrder[] | undefined>();
 
-  const handleComplete = async (id: number) => {
-    toast.promise(complete(Number(id)).unwrap(), {
-      loading: 'Загрузка...',
-      success: 'Доставлен',
-      error: (error) => JSON.stringify(error, null, 2)
-    });
+  const [data, setData] = useState<ICourierOrder>();
+
+  const courierRef = useRef<WebSocket | null>(null);
+  const completeRef = useRef<WebSocket | null>(null);
+
+  const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
+
+  const acceptOrder = async (id: number) => {
+    completeRef.current?.send(
+      JSON.stringify({
+        id
+      })
+    );
+    //@ts-ignore
+    const newData = data?.filter((item) => item.id !== id);
+    setData(newData);
+    toast.success('Заказ доставлен');
   };
+
+  useEffect(() => {
+    //@ts-ignore
+    courierOrders().then((res) => setData(res.data.filter((order) => order.statusId === 2)));
+
+    if (waitingToReconnect) {
+      return;
+    }
+
+    if (!courierRef.current) {
+      const courier = new WebSocket('ws://localhost:8080/order/accept');
+      const complete = new WebSocket('ws://localhost:8080/order/complete');
+
+      completeRef.current = complete;
+      courierRef.current = courier;
+
+      complete.onopen = () => {
+        setIsConnected(true);
+        console.log('Функции курьера подключены');
+      };
+
+      courier.onerror = (err) => {
+        console.error(err);
+      };
+
+      courier.onopen = () => {
+        console.log('Связь между диспетчером подключена');
+      };
+
+      complete.onerror = (err) => {
+        console.error(err);
+      };
+
+      complete.onclose = () => {
+        if (completeRef.current) {
+          console.log('Функции курьера отключены');
+        } else {
+          console.log('Функции курьера отключены по причине бездействия');
+        }
+      };
+
+      courier.onclose = () => {
+        if (courierRef.current) {
+          console.log('Функции курьера отключены');
+        } else {
+          console.log('Функции курьера отключены по причине бездействия');
+        }
+      };
+
+      courier.onmessage = (message) => {
+        const newData = JSON.parse(message.data);
+        //@ts-ignore
+        setData((prevData) => [newData, ...prevData]);
+      };
+
+      complete.onmessage = (message) => {
+        const newData = JSON.parse(message.data);
+        console.log(newData);
+      };
+
+      complete.onclose = () => {
+        if (courierRef.current) {
+          console.log('connection was closed');
+        } else {
+          console.log('connection closed by app component unmount');
+        }
+        if (waitingToReconnect) {
+          return;
+        }
+        setIsConnected(false);
+        console.log('connection closed');
+        setWaitingToReconnect(true);
+
+        setTimeout(() => setWaitingToReconnect(null), 5000);
+      };
+    }
+  }, [waitingToReconnect]);
 
   const columns = useMemo<ColumnDef<ICourierOrder, any>[]>(
     () => [
@@ -71,10 +150,10 @@ export const AcceptedOrders: FC = () => {
           )
       },
       {
-        header: 'Товар доставлен',
+        header: 'Действия',
         cell: ({ row }) => (
           <ActionButtons
-            handleConfirmClick={() => {
+            handleCompleteClick={() => {
               //@ts-ignore
               setRowData(row.original);
               setIsOpenModal(true);
@@ -85,20 +164,34 @@ export const AcceptedOrders: FC = () => {
     ],
     []
   );
+  if (!data) {
+    return <Loader />;
+  }
+  //@ts-ignore
+  if (data?.length === 0) {
+    return (
+      <div>
+        <h2 className={`text-lg font-bold text-center mb-4`}>Доступные заказы:</h2>
+        <p className={`text-base font-semibold text-center mb-4 text-red-600`}>
+          Нет доступных к доставке заказов!
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <Layout>
+    <div>
       <Table id="ProductsTable" columns={columns} data={data!} title="Принятые заказы" />
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
         <div className="font-montserrat text-dark-blue">
-          <p>Вы действительно хотите подтвердить доставку заказа?</p>
+          <p>Вы действительно хотите взять данный заказ?</p>
         </div>
         <div className="grid grid-cols-2 mt-2 gap-3">
           <Button
             buttonColor="bg-green-700 "
             onClick={() => {
               //@ts-ignore
-              handleComplete(rowData?.id);
+              acceptOrder(rowData?.id);
               setIsOpenModal(false);
             }}>
             Да
@@ -108,6 +201,6 @@ export const AcceptedOrders: FC = () => {
           </Button>
         </div>
       </Modal>
-    </Layout>
+    </div>
   );
 };
