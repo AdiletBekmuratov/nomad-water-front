@@ -8,7 +8,7 @@ import { IUserFull } from '@/types';
 import { useDeleteUserMutation, useGetAllUsersQuery } from '@/redux/services/user.service';
 import { CreateModal, EditModalUser } from '@/components/Admin/AllUsers';
 import Loader from '@/components/Landing/Loader';
-import { EditModalCourier } from '../Couriers';
+import { EditModalCourier } from '@/components/Admin/AllUsers'; 
 import { EditWorker } from '../../components/Admin/AllUsers/EditWorker';
 
 const AdminAllUsers = () => {
@@ -119,7 +119,7 @@ const AdminAllUsers = () => {
       />
       <CreateModal visible={visibleCreate} setVisible={setVisibleCreate} />
       <>
-        {role === 'ROLE_USER' ? (
+        {role === 'ROLE_USER' || role === 'ROLE_EMPLOYEE' ? (
           <EditModalUser data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} />
         ) : role === 'ROLE_COURIER' ? (
           <EditModalCourier data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} />

@@ -41,7 +41,7 @@ const OrderCreate: FC = () => {
   const user = useAppSelector((state) => state.auth.user);
 
   //@ts-ignore
-  const addressOrder = `${address?.street} ${address?.houseNumber}, квартира: ${address?.flat}`;
+  const addressOrder = `ул. ${address?.street},\n д. ${address?.houseNumber}, кв. ${address?.flat}`;
 
   const clientRef = useRef<WebSocket | null>(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
