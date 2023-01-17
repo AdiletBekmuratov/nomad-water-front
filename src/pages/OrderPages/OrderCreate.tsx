@@ -14,7 +14,7 @@ import * as yup from 'yup';
 import { clearItems } from '@/redux/slices/cartSlice';
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
 import { WS_URL } from '@/redux/http';
-import {MdOutlineRemoveShoppingCart} from 'react-icons/md';
+import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
@@ -142,7 +142,7 @@ const OrderCreate: FC = () => {
   return (
     <Layout>
       {products.length > 0 ? (
-        <div className={`lg:grid lg:grid-cols-3 lg:grid-row-3 gap-6  `}>
+        <div className={`lg:grid lg:grid-cols-3 lg:grid-row-3 gap-6 text-xs md:text-base `}>
           <div className={`lg:col-span-2 lg:order-1 lg:col-start-1 lg:row-start-1 grid gap-4`}>
             {products.map((item: IProduct & { quantity: number }) => (
               <OrderCard data={{ ...item }} key={item.id} />
@@ -250,7 +250,7 @@ const OrderCreate: FC = () => {
             initial={initial}
             initialTotal={total}
           />
-
+          <div className={`h-44 lg:hidden`}></div>
           <Footer className={`items-center flex justify-center lg:hidden`}>
             <Button
               className={`w-80 h-11 text-sm disabled:bg-opacity-70 md:w-2/3`}
@@ -274,15 +274,15 @@ const OrderCreate: FC = () => {
         </div>
       ) : (
         <div className={` flex flex-col gap-5 py-10 items-center text-center text-lg font-medium`}>
-        <div className='flex gap-4'>
-          Корзина пустая!  <MdOutlineRemoveShoppingCart className='w-6 h-6'/>
+          <div className="flex gap-4">
+            Корзина пустая! <MdOutlineRemoveShoppingCart className="w-6 h-6" />
+          </div>
+
+          <p> Чтобы сделать заказ, добавьте хотя бы один товар из каталога.</p>
+          <Link to="/catalog">
+            <Button className={`w-44 hover:bg-blue-900`}>В каталог</Button>
+          </Link>
         </div>
-       
-        <p> Чтобы сделать заказ, добавьте хотя бы один товар из каталога.</p>
-        <Link to="/catalog">
-          <Button className={`w-44 hover:bg-blue-900`}>В каталог</Button>
-        </Link>
-      </div>
       )}
     </Layout>
   );
