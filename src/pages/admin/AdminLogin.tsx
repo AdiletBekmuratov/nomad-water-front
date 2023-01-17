@@ -81,7 +81,7 @@ const AdminLogin = () => {
               validationSchema={SignInSchema}>
               {() => (
                 <Form className="mt-8 space-y-6">
-                  <Input inputType="formik" id="phone" name="phone" label="phone" width="w-full" />
+                  <Input inputType="formik" id="phone" name="phone" label="login" width="w-full" />
                   <Input
                     inputType="formik"
                     id="password"
