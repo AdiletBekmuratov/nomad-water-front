@@ -13,6 +13,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { clearItems } from '@/redux/slices/cartSlice';
 import { WS_URL } from '@/redux/http';
+import {MdOutlineRemoveShoppingCart} from 'react-icons/md';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
@@ -271,14 +272,16 @@ const OrderCreate: FC = () => {
           )}
         </div>
       ) : (
-        <div className={` flex flex-col gap-5 items-center`}>
-          <h2>
-            Корзина пустая <span>😕</span>
-          </h2>
-          <Link to="/catalog">
-            <Button className={`w-44`}>В каталог</Button>
-          </Link>
+        <div className={` flex flex-col gap-5 py-10 items-center text-center text-lg font-medium`}>
+        <div className='flex gap-4'>
+          Корзина пустая!  <MdOutlineRemoveShoppingCart className='w-6 h-6'/>
         </div>
+       
+        <p> Чтобы сделать заказ, добавьте хотя бы один товар из каталога.</p>
+        <Link to="/catalog">
+          <Button className={`w-44 hover:bg-blue-900`}>В каталог</Button>
+        </Link>
+      </div>
       )}
     </Layout>
   );
