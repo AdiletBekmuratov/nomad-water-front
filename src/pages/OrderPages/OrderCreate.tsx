@@ -11,7 +11,6 @@ import { FC, useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { clearItems } from '@/redux/slices/cartSlice';
-import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
