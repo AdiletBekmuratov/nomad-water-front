@@ -14,7 +14,11 @@ import { ConfirmOrder } from './ConfirmOrder';
 
 export const AcceptOrder: FC = () => {
   //const { data, isLoading, refetch } = useGetAllConfirmedOrdersQuery();
-  const { data: allOrdersCourier = [], isLoading: courierLoad } = useGetCourierOrderQuery();
+  const {
+    data: allOrdersCourier = [],
+    isLoading: courierLoad,
+    refetch
+  } = useGetCourierOrderQuery();
   const data = allOrdersCourier.filter((order) => order.statusId === 2);
   const [complete] = useCompleteOrderMutation();
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -25,6 +29,8 @@ export const AcceptOrder: FC = () => {
   // setTimeout(() => {
   //   refetch();
   // }, 10000);
+
+  useEffect(() => {}, [allOrdersCourier]);
 
   const handleComplete = async (id: number) => {
     await toast.promise(complete(Number(id)).unwrap(), {

@@ -30,7 +30,8 @@ export const FormContainer: FC<Props> = (props) => {
           {props.setValues ? (
             <>
               {props.setValues(values)}
-              {props.setIsValid(isValid)}
+              {/* @ts-ignore */}
+              {props?.setIsValid(isValid)}
             </>
           ) : (
             <Button disabled={!isValid}>Сохранить</Button>

@@ -11,13 +11,13 @@ import { useUpdateCourierMutation } from '@/redux/services/user.service';
 interface IEditModalProps {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
-  data: ICouriers;
+  data: IUserFull;
 }
 
 export const EditCourier: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
   const [update, { isLoading: isLoadingUpdate }] = useUpdateCourierMutation();
 
-  const handleEdit = (values: ICouriers) => {
+  const handleEdit = (values: IUserFull) => {
     toast
       .promise(update(values).unwrap(), {
         loading: 'Loading',

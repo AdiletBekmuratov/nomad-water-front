@@ -69,6 +69,7 @@ export const Table: FC<ITableProps> = ({ columns, data, onAddClick, id, title })
           name="toggle-compact"
           inputType="default"
           onChange={handleCompactToogle}
+          // @ts-ignore
           value={compact}
         />
         <div className="flex items-center">
