@@ -11,13 +11,18 @@ import { useUpdateCourierMutation } from '@/redux/services/user.service';
 interface IEditModalProps {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
-  data: ICouriers;
+  data: IUserFull & {
+    userId?: number | undefined;
+    courierDeliveringStatus: number;
+    successfulOrders: number;
+    car: string;
+  };
 }
 
 export const EditCourier: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
   const [update, { isLoading: isLoadingUpdate }] = useUpdateCourierMutation();
 
-  const handleEdit = (values: ICouriers) => {
+  const handleEdit = (values: IUserFull) => {
     toast
       .promise(update(values).unwrap(), {
         loading: 'Loading',
@@ -62,7 +67,7 @@ export const EditCourier: FC<IEditModalProps> = ({ visible, setVisible, data }) 
                 inputType="formik"
                 name="telegramAccount"
                 id="telegramAccount"
-                label="Telegtam"
+                label="Telegram"
               />
               <Input
                 inputType="formik"

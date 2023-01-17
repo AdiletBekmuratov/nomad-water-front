@@ -1,27 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import { useMemo } from 'react';
 
-import { Layout } from '@/components/Layout';
-import { useAppSelector } from '@/hooks/useAppSelector';
-import Loader from '@/components/Landing/Loader';
-import { useLazyGetUserOrderQuery } from '@/redux/services/base.service';
-import { Table } from '@/components/Table';
-import { ColumnDef } from '@tanstack/react-table';
+import { useGetCourierOrderQuery } from '@/redux/services/courier.service';
 import { IOrder } from '@/types';
-import OrderHistory from '../User/OrderHistory';
 
-const Orders = () => {
-  // const { data: allOrders = [] } = useGetUserOrderQuery();
-  const [fetchOrders] = useLazyGetUserOrderQuery();
-  const [allOrders, setAllOrders] = useState<IOrder>();
+import Loader from '../../components/Landing/Loader';
+import { Table } from '../../components/Table';
+import { ColumnDef } from '@tanstack/react-table';
 
-  useEffect(() => {
-    //@ts-ignore
-    fetchOrders().then((res) => setAllOrders(res.data));
-  }, [allOrders]);
+const CourierHistory = () => {
+  const { data: allOrders = [], isLoading} = useGetCourierOrderQuery();
+  const completeOrders = allOrders.filter((order) => order.statusId === 3);
 
-  const columnsUser = React.useMemo<ColumnDef<IOrder, any>[]>(
+  const columns = useMemo<ColumnDef<IOrder, any>[]>(
     () => [
-      {
+        {
         header: 'Статус заказа',
         //accessorKey: 'statusId'
         cell: ({ row }) =>
@@ -60,20 +52,14 @@ const Orders = () => {
     ],
     []
   );
-  if (!allOrders) {
+  if (isLoading) {
     return <Loader />;
   }
-  //@ts-ignore
-  const orders = allOrders.filter((order) => order.statusId !== 3);
-
   return (
-    <Layout className={``}>
-      <div>
-        <Table id="ProductsTable" data={orders} columns={columnsUser} title="Текущие заказы" />
-        <div className={`border-b-2 border-dotted border-gray-700 py-2 my-3 `}></div>
-        <OrderHistory />
-      </div>
-    </Layout>
+    <div>
+      <Table id="ProductsTable" data={completeOrders} columns={columns} title="Выполненные заказы" />
+    </div>
   );
 };
-export default Orders;
+
+export default CourierHistory;

@@ -1,20 +1,24 @@
 import { ICourierOrder } from '@/types/courier.types';
 import { ColumnDef } from '@tanstack/react-table';
 import React, { FC, useMemo, useState, useEffect, useRef } from 'react';
-import { ActionButtons, Table } from '../../components/Table';
+import { ActionButtons, Table } from '../Table';
 import {
   useCompleteOrderMutation,
   useGetCourierOrderQuery
 } from '@/redux/services/courier.service';
-import Loader from '../../components/Landing/Loader';
+import Loader from '../Landing/Loader';
 import { toast } from 'react-hot-toast';
-import { Modal } from '../../components/Layout/Modal';
-import { Button } from '../../components/Forms';
-import { ConfirmOrder } from './ConfirmOrder';
+import { Modal } from '../Layout/Modal';
+import { Button } from '../Forms';
+import { ConfirmOrder } from '../../pages/Couriers/ConfirmOrder';
 
 export const AcceptOrder: FC = () => {
   //const { data, isLoading, refetch } = useGetAllConfirmedOrdersQuery();
-  const { data: allOrdersCourier = [], isLoading: courierLoad } = useGetCourierOrderQuery();
+  const {
+    data: allOrdersCourier = [],
+    isLoading: courierLoad,
+    refetch
+  } = useGetCourierOrderQuery();
   const data = allOrdersCourier.filter((order) => order.statusId === 2);
   const [complete] = useCompleteOrderMutation();
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -25,6 +29,8 @@ export const AcceptOrder: FC = () => {
   // setTimeout(() => {
   //   refetch();
   // }, 10000);
+
+  useEffect(() => {}, [allOrdersCourier]);
 
   const handleComplete = async (id: number) => {
     await toast.promise(complete(Number(id)).unwrap(), {

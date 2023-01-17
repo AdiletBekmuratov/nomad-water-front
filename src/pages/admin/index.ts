@@ -4,4 +4,3 @@ export * from './AdminCouriers';
 export * from './AdminWorkers';
 export * from './AdminProducts';
 export * from './AdminWarehouses';
-export * from '../RegisterForLink';

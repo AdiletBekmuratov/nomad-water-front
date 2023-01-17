@@ -19,10 +19,11 @@ const params = new URLSearchParams(location.search);
 const token = params.get('token');
 const role = params.get('role');
 const warehouseId = params.get('warehouseId');
+//@ts-ignore
 const INITIAL_VALUES: IUserFull = {
-  token: token,
-  role: role,
-  warehouseId: warehouseId,
+  token: String(token),
+  role: String(role),
+  warehouseId: Number(warehouseId),
   phone: '',
 
   firstname: '',

@@ -25,9 +25,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //Получить всех пользователей по активности /active/{isActive}
@@ -38,9 +38,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //получить юзера по роли
@@ -51,9 +51,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //юзер по ID
@@ -142,7 +142,7 @@ export const userApi = createApi({
     }),
 
     //Регистрация пользователя
-    createUserAccount: builder.mutation<void, IUserFull>({
+    createUserAccount: builder.mutation<void, IUser>({
       query: (body) => ({
         url: `/auth/register/user`,
         method: `POST`,
@@ -165,9 +165,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     addFavorite: builder.mutation<void, number>({

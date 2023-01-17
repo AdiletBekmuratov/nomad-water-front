@@ -1,11 +1,8 @@
 import { ICourierOrder } from '@/types/courier.types';
 import { ColumnDef } from '@tanstack/react-table';
-import React, { useMemo, useState, useRef, useEffect } from 'react';
+import { useMemo, useState, useRef, useEffect } from 'react';
 import { ActionButtons, Table } from '../../components/Table';
-import {
-  useAcceptOrderMutation,
-  useLazyGetAllConfirmedOrdersQuery
-} from '@/redux/services/courier.service';
+import { useLazyGetAllConfirmedOrdersQuery } from '@/redux/services/courier.service';
 import Loader from '../../components/Landing/Loader';
 import { toast } from 'react-hot-toast';
 import { Modal } from '../../components/Layout/Modal';
@@ -14,7 +11,7 @@ import { WS_URL } from '@/redux/http';
 
 export const ConfirmOrder = () => {
   const [fetchOrders] = useLazyGetAllConfirmedOrdersQuery();
-  const [confirm] = useAcceptOrderMutation();
+
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [rowData, setRowData] = useState<ICourierOrder[] | undefined>();
 
@@ -37,7 +34,7 @@ export const ConfirmOrder = () => {
     //@ts-ignore
     const newData = data?.filter((item) => item.id !== id);
     setData(newData);
-    toast.success('Заказ принят, все принятые заказы можно увидеть в профиле');
+    toast.success('Заказ принят');
   };
 
   useEffect(() => {

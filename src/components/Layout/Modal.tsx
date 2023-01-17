@@ -1,5 +1,5 @@
 import { Dispatch, FC, ReactNode, SetStateAction, useEffect, useRef, HTMLAttributes } from 'react';
-import { motion, PanInfo, useAnimation } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 import { usePrevious } from '@/hooks';
 
 type Props = {

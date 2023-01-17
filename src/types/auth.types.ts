@@ -15,27 +15,25 @@ export interface IUsersState {
   message: string;
 }
 export interface IUser {
-  id: number;
+  id?: number;
   phone: string;
   firstname: string;
   lastname: string;
   middleName: string;
   role: string;
   birthday: string;
-
-  username: string;
+  username?: string;
   houseNumber: string;
   street: string;
   flat: string;
   addressComment: string;
   bonuses: number;
-  telegramAccount: string;
-  favorites: IProduct[];
-  createdDate: string;
-  updatedDate: string;
-  active: boolean;
-  chatId: number;
-
+  telegramAccount?: string;
+  favorites?: IProduct[];
+  createdDate?: string;
+  updatedDate?: string;
+  active?: boolean;
+  chatId?: number;
 }
 
 export type IUserCreate = {

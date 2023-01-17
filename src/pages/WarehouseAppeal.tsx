@@ -10,7 +10,7 @@ const cardTextStyle = 'font-montserrat text-dark-blue text-xs';
 
 const WarehouseAppeal: FC = () => {
   const { id } = useParams();
-  const urlId = parseInt(id);
+  const urlId = parseInt(id!);
 
   const warehouse = warehouses.find((e) => e.warehouseId === urlId);
 

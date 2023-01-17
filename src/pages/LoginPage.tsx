@@ -1,9 +1,9 @@
 import { Button, Input } from '@/components/Forms';
 // import { Modal } from '@/components/Layout/Modal';
 // import { useAppSelector } from '@/hooks/useAppSelector';
-import { ILoginForm, IUserFull } from '@/types';
+import { ILoginForm, IUser, IUserFull } from '@/types';
 import { Form, Formik } from 'formik';
-// import { useEffect } from 'react';
+
 import { toast } from 'react-hot-toast';
 import { login } from '@/redux/slices/auth';
 
@@ -21,10 +21,11 @@ const SignInSchema = Yup.object().shape({
   phone: Yup.string().required('Обязательное поле для заполнения')
 });
 
-const INIT: IUserFull = {
+const INIT: IUser = {
   addressComment: '',
   birthday: '',
-  bonuses: 1,
+  bonuses: 0,
+
   firstname: '',
   flat: '',
   lastname: '',
@@ -60,7 +61,7 @@ const LoginPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleCreate = async (values: IUserFull) => {
+  const handleCreate = async (values: IUser) => {
     console.log(values);
     setPhoneNumb(values.phone);
     toast
@@ -78,22 +79,18 @@ const LoginPage = () => {
     console.log(values);
     if (!isPhone) {
       toast.promise(dispatch(login({ phone: phoneNumb, password: values.password })).unwrap(), {
-        success: 'Вход выполнен успешно!',
+        success: 'Добро пожаловать в Nomad water!',
+
         loading: 'Загрузка',
         error: (err) => err.toString()
       });
-      // .then(() => {
-      //   navigate('/');
-      // });
     } else {
       toast.promise(dispatch(login({ phone: values.phone, password: values.password })).unwrap(), {
-        success: 'Вход выполнен успешно!',
+        success: 'Добро пожаловать в Nomad water!',
+
         loading: 'Загрузка',
         error: (err) => err.toString()
       });
-      // .then(() => {
-      //   navigate('/');
-      // });
     }
   };
 
@@ -121,6 +118,7 @@ const LoginPage = () => {
               <h2 className={`text-lg lg:text-3xl font-bold text-gray-900`}>Добро пожаловать!</h2>
             </div>
             <Checkbox label="Уже есть аккаунт" onChange={() => setIsPhone(!isPhone)} />
+
             {!isPhone ? (
               <Formik initialValues={INIT} onSubmit={handleCreate} validationSchema={SignInSchema}>
                 {() => (
@@ -206,7 +204,7 @@ const LoginPage = () => {
             Введите код подтверждения
           </p>
           <p className="text-center font-montserrat text-gray-700 text-sm">
-            Код придет вам в течении одной минуты
+            Код придет вам в течении пары минут Код придет вам в течении пары минут
           </p>
           <Formik initialValues={initial} validationSchema={validation} onSubmit={handleSubmit}>
             <Form>

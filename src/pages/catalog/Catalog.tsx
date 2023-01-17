@@ -105,6 +105,7 @@ const Catalog: FC = () => {
               value={item.name}
               key={item.name}
               className={`${categoriesButStyle}`}
+              //@ts-ignore
               onClick={() => onChoiceButton(item.id.toString())}>
               <svg
                 width="24"

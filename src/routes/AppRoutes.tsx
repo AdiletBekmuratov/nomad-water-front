@@ -15,8 +15,6 @@ import WarehouseAppeal from '@/pages/WarehouseAppeal';
 import Warehouses from '@/pages/Warehouses';
 import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminCategory from '@/pages/admin/AdminCategory';
-import { AcceptOrder } from '@/pages/Couriers/AcceptOrder';
-import { AcceptedOrders } from '@/pages/Couriers/AcceptedOrders';
 
 const Landing = lazy(() => import('@/pages/Landing'));
 
@@ -34,7 +32,8 @@ const Orders = lazy(() => import('@/pages/OrderPages/Orders'));
 const OrderCreate = lazy(() => import('@/pages/OrderPages/OrderCreate'));
 
 const LoginPage = lazy(() => import('@/pages/LoginPage'));
-const Courier = lazy(() => import('@/pages/Couriers/Courier'));
+const CourierOrders = lazy(() => import('@/pages/Couriers/CourierOrders'));
+const CourierPage = lazy(() => import('@/pages/Couriers/CourierPage'));
 const Employee = lazy(() => import('@/pages/Employee/Employee'));
 const UserPage = lazy(() => import('@/pages/User/UserPage'));
 const MyFavorite = lazy(() => import('@/pages/catalog/MyFavorite'));
@@ -80,31 +79,39 @@ const AppRoutes = () => {
               path="/courier"
               element={
                 <ProtectedRoute isAllowed={user?.role === 'ROLE_COURIER'} redirectPath="/catalog">
-                  <AcceptedOrders />
+                  <CourierPage />
                 </ProtectedRoute>
               }
             />
-            <Route path="/myFavorite" element={<MyFavorite />} />
+            <Route
+              path="/myFavorite"
+              element={
+                <ProtectedRoute isAllowed={user?.phone ? true : false} redirectPath="/catalog">
+                  <MyFavorite />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />
             <Route
               path="/myOrders"
               element={
                 <ProtectedRoute
-                  isAllowed={user?.role === 'ROLE_USER' || user?.role === 'ROLE_EMPLOYEE'}
+                  isAllowed={user?.role === 'ROLE_USER'}
                   redirectPath="/courier/orders">
                   <Orders />
                 </ProtectedRoute>
               }
             />
             <Route path="/order" element={<OrderCreate />} />
+
             <Route path="/orderinfo" element={<OrderInfo />} />
 
             <Route
               path="/courier/orders"
               element={
                 <ProtectedRoute isAllowed={user?.role === 'ROLE_COURIER'} redirectPath="/catalog">
-                  <Courier />
+                  <CourierOrders />
                 </ProtectedRoute>
               }
             />
