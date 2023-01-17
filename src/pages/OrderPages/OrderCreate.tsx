@@ -1,17 +1,19 @@
-import { Button } from '@/components/Forms';
+import Checkbox from '@/components/Checkbox';
+import { Button, FormContainer, Input } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';
 import { Footer, OrderAcordion, OrderCard, PaymentComponent, Total } from '@/components/Order';
 import EditCard from '@/components/Order/EditCard';
 import { useAppDispatch } from '@/hooks';
 import { useAppSelector } from '@/hooks/useAppSelector';
-
+import { useCreateOrderMutation } from '@/redux/services/base.service';
 import { IProduct, IUsersOrder } from '@/types';
-import { FC, useState, useEffect, useRef } from 'react';
+import React, { FC, useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
+import * as yup from 'yup';
 import { clearItems } from '@/redux/slices/cartSlice';
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
+import { WS_URL } from '@/redux/http';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
@@ -41,7 +43,7 @@ const OrderCreate: FC = () => {
   const user = useAppSelector((state) => state.auth.user);
 
   //@ts-ignore
-  const addressOrder = `ул. ${address?.street},\nд. ${address?.houseNumber}, кв. ${address?.flat}`;
+  const addressOrder = `${address?.street} ${address?.houseNumber}, квартира: ${address?.flat}`;
 
   const clientRef = useRef<WebSocket | null>(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
@@ -115,6 +117,7 @@ const OrderCreate: FC = () => {
     }
   }, [waitingToReconnect]);
 
+  // console.log(orderDto);
   // const validationSchema = yup.object().shape({
   //   cardNumber: yup.string().required('Поле обязательное'),
   //   validity: yup.string().required('Поле обязательное'),
@@ -134,7 +137,7 @@ const OrderCreate: FC = () => {
   //   cvc: '',
   //   nameOnCard: ''
   // };
-
+  const paymentStyle = 'placeholder:text-gray-300 font-montserrat';
   return (
     <Layout>
       {products.length > 0 ? (
@@ -269,14 +272,12 @@ const OrderCreate: FC = () => {
           )}
         </div>
       ) : (
-        <div className={` flex flex-col gap-5 py-10 items-center text-center text-lg font-medium`}>
-          <div className='flex gap-4'>
-            Корзина пустая!  <MdOutlineRemoveShoppingCart className='w-6 h-6'/>
-          </div>
-         
-          <p> Чтобы сделать заказ, добавьте хотя бы один товар из каталога.</p>
+        <div className={` flex flex-col gap-5 items-center`}>
+          <h2>
+            Корзина пустая <span>😕</span>
+          </h2>
           <Link to="/catalog">
-            <Button className={`w-44 hover:bg-blue-900`}>В каталог</Button>
+            <Button className={`w-44`}>В каталог</Button>
           </Link>
         </div>
       )}
