@@ -10,8 +10,11 @@ import { Layout } from '@/components/Layout';
 import Loader from '@/components/Landing/Loader';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { addItem, deleteItem } from '@/redux/slices/cartSlice';
+import { useAppSelector } from '@/hooks';
+import { toast } from 'react-hot-toast';
 
 const BottlePage = () => {
+  const { user = null} = useAppSelector((state) => state.auth);
   const { id } = useParams();
   const { data = [], isLoading } = useGetAllProductsQuery();
   //const product = data?.map((item: IProduct) => item);
@@ -26,6 +29,9 @@ const BottlePage = () => {
   const onDeleteItem = (id: number) => {
     dispatch(deleteItem(id));
     setIsChoice(false);
+  };
+  const onClickToast =  () => {
+    toast.success('Вы не зарегистрированы!');
   };
   if (isLoading) {
     return <Loader />;
@@ -48,7 +54,7 @@ const BottlePage = () => {
                   Убрать из корзины
                 </Button>
               ) : (
-                <Button className={` text-sm `} onClick={onClickAdd}>
+                <Button className={` text-sm `} onClick={user === null ? onClickToast : onClickAdd}>
                   В корзину
                 </Button>
               )}
