@@ -1,7 +1,7 @@
 import { Button, Input } from '@/components/Forms';
 // import { Modal } from '@/components/Layout/Modal';
 // import { useAppSelector } from '@/hooks/useAppSelector';
-import { ILoginForm, IUserFull } from '@/types';
+import { ILoginForm, IUser, IUserFull } from '@/types';
 import { Form, Formik } from 'formik';
 // import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
@@ -21,7 +21,7 @@ const SignInSchema = Yup.object().shape({
   phone: Yup.string().required('Обязательное поле для заполнения')
 });
 
-const INIT: IUserFull = {
+const INIT: IUser = {
   addressComment: '',
   birthday: '',
   bonuses: 1,
@@ -60,7 +60,7 @@ const LoginPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleCreate = async (values: IUserFull) => {
+  const handleCreate = async (values: IUser) => {
     console.log(values);
     setPhoneNumb(values.phone);
     toast

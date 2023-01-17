@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useGetUserROLEQuery } from '@/redux/services/user.service';
-import { ICouriers } from '@/types';
+import { ICouriers, IUserFull } from '@/types';
 
 import { EditCourier } from '@/components/Admin/Couriers/EditCourier';
 import { CreateModal } from '@/components/Admin/AllUsers';
@@ -14,16 +14,16 @@ import { ActionButtons, Table } from '@/components/Table';
 const AdminCouriers = () => {
   const { data: couriers = [], isLoading } = useGetUserROLEQuery('ROLE_COURIER');
 
-  const [rowData, setRowData] = useState<ICouriers>();
+  const [rowData, setRowData] = useState<IUserFull>();
   const [visibleCreate, setVisibleCreate] = useState(false);
   const [visibleEdit, setVisibleEdit] = useState(false);
 
-  const handleEditRowClick = (row: Row<ICouriers>) => {
+  const handleEditRowClick = (row: Row<IUserFull>) => {
     setRowData(row.original);
     setVisibleEdit(true);
   };
 
-  const columns = useMemo<ColumnDef<ICouriers, any>[]>(
+  const columns = useMemo<ColumnDef<IUserFull, any>[]>(
     () => [
       {
         header: 'ID',
@@ -80,6 +80,7 @@ const AdminCouriers = () => {
         onAddClick={() => setVisibleCreate(true)}
       />
       <CreateModal visible={visibleCreate} setVisible={setVisibleCreate} />
+
       <EditCourier data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} />
     </LayoutAdmin>
   );

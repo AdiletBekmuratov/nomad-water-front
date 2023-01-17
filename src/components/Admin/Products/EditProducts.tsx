@@ -29,6 +29,7 @@ export const EditProducts: FC<IEditModalProps> = ({ visible, setVisible, data })
     delete values.imageFile;
     const createResponse = await update(values).unwrap();
     toast
+    //@ts-ignore
       .promise(uploadImage({ id: createResponse.id!, formData }).unwrap(), {
         loading: 'Загрузка',
         success: 'Обновлено успешно',

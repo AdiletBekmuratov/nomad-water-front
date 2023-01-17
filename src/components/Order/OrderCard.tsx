@@ -23,15 +23,15 @@ export const OrderCard: FC<Props> = ({ data }) => {
   );
 
   const onDeleteItem = () => {
-    dispatch(deleteItem(data.id));
+    dispatch(deleteItem(Number(data.id)));
   };
 
   const handleIncrement = () => {
-    dispatch(incrementQuantity(data.id));
+    dispatch(incrementQuantity(Number(data.id)));
   };
 
   const handleDecrement = () => {
-    dispatch(decrementQuantity(data.id));
+    dispatch(decrementQuantity(Number(data.id)));
   };
 
   return (
