@@ -10,6 +10,7 @@ import { toast } from 'react-hot-toast';
 import { ColumnDef } from '@tanstack/react-table';
 import { Modal } from '@/components/Layout/Modal';
 import { Button } from '@/components/Forms';
+import { WS_URL } from '@/redux/http';
 
 const Pending = () => {
   const [fetchOrders, { isLoading }] = useLazyGetPendingOrdersQuery();
@@ -17,7 +18,7 @@ const Pending = () => {
   // const { data = [], isLoading, refetch } = useGetPendingOrdersQuery();
   const [accept] = useConfirmOrdersMutation();
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [rowData, setRowData] = useState();
+  const [rowData, setRowData] = useState<ICourierOrder>();
 
   const clientRef = useRef<WebSocket | null>(null);
   const acceptRef = useRef<WebSocket | null>(null);
@@ -33,8 +34,8 @@ const Pending = () => {
     }
 
     if (!clientRef.current) {
-      const client = new WebSocket('ws://localhost:8080/order/create');
-      const employee = new WebSocket('ws://localhost:8080/order/confirm');
+      const client = new WebSocket(WS_URL + '/order/create');
+      const employee = new WebSocket(WS_URL + '/order/confirm');
 
       clientRef.current = client;
       acceptRef.current = employee;

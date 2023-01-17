@@ -81,7 +81,7 @@ const OrderCreate: FC = () => {
     }
 
     if (!clientRef.current) {
-      const client = new WebSocket('ws://localhost:8080/order/create');
+      const client = new WebSocket(WS_URL + '/order/create');
       clientRef.current = client;
 
       client.onerror = (err) => {
