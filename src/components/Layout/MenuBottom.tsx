@@ -1,5 +1,4 @@
 import { useAppSelector } from '@/hooks/useAppSelector';
-import React from 'react';
 import { AiOutlineHome, AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 

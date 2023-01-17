@@ -8,17 +8,24 @@ import { ICard } from '@/assets/types/types';
 
 import { Button } from '@/components/Forms';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import { useAddFavoriteMutation, useDeleteFavoriteMutation } from '@/redux/services/user.service';
+import {
+  useAddFavoriteMutation,
+  useDeleteFavoriteMutation,
+  useGetUserFavoriteQuery
+} from '@/redux/services/user.service';
 import { toast } from 'react-hot-toast';
-import { useLocalStorage } from '@/hooks';
+import { useAppSelector, useLocalStorage } from '@/hooks';
 import { ICart } from '@/types';
 
-export const CardBottle: FC<ICard> = ({ items, isFavor }) => {
+export const CardBottle: FC<ICard> = ({ items }) => {
+  const { user = null, isLoading } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const [cart, setCart] = useLocalStorage<ICart>('cart', { products: [], total: 0 });
   const choice = cart.products ? cart.products.some((item) => item.id === items.id) : false;
   const [isChoice, setIsChoice] = React.useState(choice);
-  const [isFavorite, setIsFavorite] = React.useState<boolean>(isFavor);
+  const { data: favorites = [] } = useGetUserFavoriteQuery();
+  const favor = favorites ? favorites.some((item) => item.id === items.id) : false;
+  const [isFavorite, setIsFavorite] = React.useState<boolean>(favor);
   const [addFavorite] = useAddFavoriteMutation();
   const [deleteFavorite] = useDeleteFavoriteMutation();
 
@@ -48,6 +55,9 @@ export const CardBottle: FC<ICard> = ({ items, isFavor }) => {
       error: (error) => JSON.stringify(error, null, 2)
     });
   };
+  const onClickToast =  () => {
+    toast.success('Вы не зарегистрированы!');
+  };
 
   return (
     <>
@@ -75,7 +85,7 @@ export const CardBottle: FC<ICard> = ({ items, isFavor }) => {
               ) : (
                 <Button
                   className={`w-28 md:w-40 h-10 text-sm hover:bg-blue-900`}
-                  onClick={onClickAdd}>
+                  onClick={user === null ? onClickToast : onClickAdd}>
                   В корзину
                 </Button>
               )}
@@ -87,7 +97,7 @@ export const CardBottle: FC<ICard> = ({ items, isFavor }) => {
                 <AiFillHeart className={`w-6  h-6 m-2 text-red-600 cursor-pointer`} />
               </button>
             ) : (
-              <button onClick={() => onClickAddFavorite(items.id)}>
+              <button onClick={user === null ? onClickToast : () => onClickAddFavorite(items.id)}>
                 <AiOutlineHeart className={`w-6  h-6 m-2 text-red-600 cursor-pointer`} />
               </button>
             )}

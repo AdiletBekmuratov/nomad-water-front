@@ -5,7 +5,7 @@ export interface ICard {
   items: IProduct;
   children?: ReactNode;
   className?: string;
-  isFavor: boolean;
+  isFavor?: boolean;
   isFavorite?: boolean;
   setIsFavorite?: React.Dispatch<React.SetStateAction<boolean>>;
 }
