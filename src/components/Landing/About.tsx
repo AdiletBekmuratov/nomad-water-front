@@ -55,7 +55,7 @@ export const About = () => {
     <>
       <motion.section
         className={`text-dark-blue content pt-10 md:pt-16 px-7 md:px-12 lg:px-24 xl:px-56`}>
-        <motion.div
+        {/* <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ amount: 0.2, once: true }}
@@ -65,7 +65,7 @@ export const About = () => {
           <motion.img src={astana} alt="astanahub" />
           <motion.img src={astana} alt="astanahub" />
           <motion.img src={astana} alt="astanahub" />
-        </motion.div>
+        </motion.div> */}
 
         <motion.div
           className={` grid grid-cols-1 md:grid-cols-3 items-center md:pt-8 text-base lg:text-lg 
