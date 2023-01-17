@@ -116,7 +116,6 @@ const OrderCreate: FC = () => {
     }
   }, [waitingToReconnect]);
 
-  // console.log(orderDto);
   // const validationSchema = yup.object().shape({
   //   cardNumber: yup.string().required('Поле обязательное'),
   //   validity: yup.string().required('Поле обязательное'),
@@ -136,7 +135,7 @@ const OrderCreate: FC = () => {
   //   cvc: '',
   //   nameOnCard: ''
   // };
-  const paymentStyle = 'placeholder:text-gray-300 font-montserrat';
+
   return (
     <Layout>
       {products.length > 0 ? (

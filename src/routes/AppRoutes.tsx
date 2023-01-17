@@ -83,7 +83,14 @@ const AppRoutes = () => {
                 </ProtectedRoute>
               }
             />
-            <Route path="/myFavorite" element={<MyFavorite />} />
+            <Route
+              path="/myFavorite"
+              element={
+                <ProtectedRoute isAllowed={user?.phone ? true : false} redirectPath="/catalog">
+                  <MyFavorite />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />
             <Route
@@ -97,6 +104,7 @@ const AppRoutes = () => {
               }
             />
             <Route path="/order" element={<OrderCreate />} />
+
             <Route path="/orderinfo" element={<OrderInfo />} />
 
             <Route

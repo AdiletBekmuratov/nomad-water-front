@@ -1,3 +1,5 @@
+import { AiOutlineShoppingCart } from 'react-icons/ai';
+
 import { Link } from 'react-router-dom';
 import logo from '../../assets/lending/logoHead.png';
 
@@ -17,18 +19,9 @@ export const HeaderLend = () => {
         <div className={`my-0 mx-auto`}>
           <img src={logo} alt="logo" />
         </div>
-        <div className={` flex pt-2`}>
+        <div className={` flex pt-2 text-dark-blue opacity-70 cursor-pointer uppercase`}>
           <Link to="/catalog">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 31 31"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <rect x="0.84375" y="0.804688" width="29.3906" height="2" rx="1" fill="#023646" />
-              <rect x="10.8438" y="11.8047" width="19.3906" height="2" rx="1" fill="#023646" />
-              <rect x="18.4844" y="22.8047" width="11.75" height="2" rx="1" fill="#023646" />
-            </svg>
+            <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
           </Link>
         </div>
       </div>

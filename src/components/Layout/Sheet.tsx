@@ -36,7 +36,7 @@ export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
             <motion.div className={`px-3 xl:px-10 pt-6 flex justify-between items-center`}>
               <Link to="/" className={`text-sm leading-6 font-semibold`}>
                 ВОДА ВЕЛИКОЙ СТЕПИ
-                <div className={`border-b border-solid border-gray-400`}></div>
+                <motion.div className={`border-b border-solid border-gray-400`}></motion.div>
               </Link>
               <AiOutlineCloseCircle className="cursor-pointer" onClick={() => setIsOpen(false)} />
             </motion.div>
@@ -57,20 +57,27 @@ export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
                 <div className={`border-b-2 border-solid border-gray-500 my-2 lg:my-3`}></div>
 
                 <Link to="/">Партнерам</Link>
+                <Link to="/">Вакансии</Link>
                 <Link to="/">FAQ</Link>
-                <Link to="/">Политика приватности</Link>
+                <Link to="/">Политика приватности</Link>                
                 <Link to="/">Обратная связь</Link>
                 <Link to="/">На главную</Link>
                 <div className={`border-b-2 border-solid border-gray-500 my-2 lg:my-3`}></div>
                 <div className={`grid gap-3`}>
                   <h2>Наши контакты:</h2>
-                  <a href="tel:+77777777777">+7 (777)777-77-77</a>
-                  <a href="tel:+77212777777">+7 (721)277-77-77</a>
+                  <a href="tel:+77750001415">+7 (775) 000 1415</a>
+                  <a href="tel:+77292441414">+7 (7292) 44-14-14</a>
                   <a href="mailto:someone@example.com">someone@example.com</a>
                   <div className="flex gap-3 pt-3">
-                    <FaTelegramPlane className={`w-6 h-6 cursor-pointer`} />
-                    <FaWhatsapp className={`w-6 h-6 cursor-pointer`} />
-                    <FaInstagram className={`w-6 h-6 cursor-pointer`} />
+                    <a href="https://telegram.me/NomadWater_Bot">
+                      <FaTelegramPlane className={`w-6 h-6 cursor-pointer`} />
+                    </a>
+                    <a href="https://wa.me/7750001415">
+                      <FaWhatsapp className={`w-6 h-6 cursor-pointer`} />
+                    </a>
+                    <a href="http://www.instagram.com/nomad.water.aktau/">
+                      <FaInstagram className={`w-6 h-6 cursor-pointer`} />
+                    </a>
                     <FaFacebook className={`w-6 h-6 cursor-pointer`} />
                     <FiTwitter className={`w-6 h-6 cursor-pointer`} />
                   </div>
