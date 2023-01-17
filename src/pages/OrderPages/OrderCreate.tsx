@@ -1,18 +1,17 @@
-import Checkbox from '@/components/Checkbox';
-import { Button, FormContainer, Input } from '@/components/Forms';
+import { Button } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';
 import { Footer, OrderAcordion, OrderCard, PaymentComponent, Total } from '@/components/Order';
 import EditCard from '@/components/Order/EditCard';
 import { useAppDispatch } from '@/hooks';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { useCreateOrderMutation } from '@/redux/services/base.service';
+
 import { IProduct, IUsersOrder } from '@/types';
-import React, { FC, useState, useEffect, useRef } from 'react';
+import { FC, useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import * as yup from 'yup';
+
 import { clearItems } from '@/redux/slices/cartSlice';
-import { WS_URL } from '@/redux/http';
+import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
@@ -42,7 +41,7 @@ const OrderCreate: FC = () => {
   const user = useAppSelector((state) => state.auth.user);
 
   //@ts-ignore
-  const addressOrder = `ул. ${address?.street},\n д. ${address?.houseNumber}, кв. ${address?.flat}`;
+  const addressOrder = `ул. ${address?.street},\nд. ${address?.houseNumber}, кв. ${address?.flat}`;
 
   const clientRef = useRef<WebSocket | null>(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
@@ -270,12 +269,14 @@ const OrderCreate: FC = () => {
           )}
         </div>
       ) : (
-        <div className={` flex flex-col gap-5 items-center`}>
-          <h2>
-            Корзина пустая <span>😕</span>
-          </h2>
+        <div className={` flex flex-col gap-5 py-10 items-center text-center text-lg font-medium`}>
+          <div className='flex gap-4'>
+            Корзина пустая!  <MdOutlineRemoveShoppingCart className='w-6 h-6'/>
+          </div>
+         
+          <p> Чтобы сделать заказ, добавьте хотя бы один товар из каталога.</p>
           <Link to="/catalog">
-            <Button className={`w-44`}>В каталог</Button>
+            <Button className={`w-44 hover:bg-blue-900`}>В каталог</Button>
           </Link>
         </div>
       )}

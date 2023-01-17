@@ -65,7 +65,7 @@ export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
                 <div className={`border-b-2 border-solid border-gray-500 my-2 lg:my-3`}></div>
                 <div className={`grid gap-3`}>
                   <h2>Наши контакты:</h2>
-                  <a href="tel:+77750001415">+7 (775) 000 1415</a>
+                  <a href="tel:+77750001415">+7 (775) 000-14-15</a>
                   <a href="tel:+77292441414">+7 (7292) 44-14-14</a>
                   <a href="mailto:someone@example.com">someone@example.com</a>
                   <div className="flex gap-3 pt-3">
