@@ -55,7 +55,7 @@ export const CardBottle: FC<ICard> = ({ items }) => {
       error: (error) => JSON.stringify(error, null, 2)
     });
   };
-  const onClickToast = () => {
+  const onClickToast =  () => {
     toast.success('Вы не зарегистрированы!');
   };
 
@@ -67,16 +67,12 @@ export const CardBottle: FC<ICard> = ({ items }) => {
           text-sm sm:text-base lg:text-lg leading-4 font-medium p-2`}>
           <Link to={`/catalog/${items.id}`}>
             <div className={'bg-white rounded-3xl  flex items-center justify-center p-2 '}>
-              <img
-                src={items.imageUrl}
-                alt="bottle"
-                className={`object-contain w-20 h-20 md:w-40 md:h-40`}
-              />
+              <img src={items.imageUrl} alt="bottle" className={`object-contain w-20 h-20 md:w-40 md:h-40`} />
             </div>
           </Link>
           <div className={`grid grid-cols-1 pt-2 gap-3`}>
             <Link to={`/catalog/${items.id}`} className={`grid grid-cols-1`}>
-              <span className={`text-xs md:text-sm font-semibold `}>{items.productName}</span>
+              <span  className={`text-xs md:text-sm font-semibold `}>{items.productName}</span>
               <span className={`text-xs md:text-sm font-semibold `}>{items.productPrice} T</span>
             </Link>
             <>
@@ -97,15 +93,12 @@ export const CardBottle: FC<ICard> = ({ items }) => {
           </div>
           <div>
             {isFavorite ? (
-              <button onClick={() => onDeleteFavorite(Number(items.id))}>
+              <button onClick={() => onDeleteFavorite(items.id)}>
                 <AiFillHeart className={`w-5 h-5 md:w-6 md:h-6 m-2 text-red-600 cursor-pointer`} />
               </button>
             ) : (
-              <button
-                onClick={user === null ? onClickToast : () => onClickAddFavorite(Number(items.id))}>
-                <AiOutlineHeart
-                  className={`w-5 h-5 md:w-6 md:h-6 m-2 text-red-600 cursor-pointer`}
-                />
+              <button onClick={user === null ? onClickToast : () => onClickAddFavorite(items.id)}>
+                <AiOutlineHeart className={`w-5 h-5 md:w-6 md:h-6 m-2 text-red-600 cursor-pointer`} />
               </button>
             )}
           </div>

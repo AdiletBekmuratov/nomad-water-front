@@ -14,7 +14,7 @@ import { useAppSelector } from '@/hooks';
 import { toast } from 'react-hot-toast';
 
 const BottlePage = () => {
-  const { user = null } = useAppSelector((state) => state.auth);
+  const { user = null} = useAppSelector((state) => state.auth);
   const { id } = useParams();
   const { data = [], isLoading } = useGetAllProductsQuery();
   //const product = data?.map((item: IProduct) => item);
@@ -31,7 +31,7 @@ const BottlePage = () => {
     dispatch(deleteItem(id));
     setIsChoice(false);
   };
-  const onClickToast = () => {
+  const onClickToast =  () => {
     toast.success('Вы не зарегистрированы!');
   };
   if (isLoading) {
