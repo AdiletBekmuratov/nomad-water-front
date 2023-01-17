@@ -10,6 +10,7 @@ import Loader from '../../components/Landing/Loader';
 import { toast } from 'react-hot-toast';
 import { Modal } from '../../components/Layout/Modal';
 import { Button } from '../../components/Forms';
+import { WS_URL } from '@/redux/http';
 
 export const ConfirmOrder = () => {
   const [fetchOrders] = useLazyGetAllConfirmedOrdersQuery();
@@ -48,9 +49,9 @@ export const ConfirmOrder = () => {
     }
 
     if (!clientRef.current) {
-      const client = new WebSocket('ws://localhost:8080/order/create');
-      const courier = new WebSocket('ws://localhost:8080/order/accept');
-      const confirmed = new WebSocket('ws://localhost:8080/order/confirm');
+      const client = new WebSocket(WS_URL + '/order/create');
+      const courier = new WebSocket(WS_URL + '/order/accept');
+      const confirmed = new WebSocket(WS_URL + '/order/confirm');
 
       clientRef.current = client;
       courierRef.current = courier;

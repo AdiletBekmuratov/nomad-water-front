@@ -12,6 +12,7 @@ import React, { FC, useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { clearItems } from '@/redux/slices/cartSlice';
+import { WS_URL } from '@/redux/http';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
@@ -81,7 +82,7 @@ const OrderCreate: FC = () => {
     }
 
     if (!clientRef.current) {
-      const client = new WebSocket('ws://localhost:8080/order/create');
+      const client = new WebSocket(WS_URL + '/order/create');
       clientRef.current = client;
 
       client.onerror = (err) => {
