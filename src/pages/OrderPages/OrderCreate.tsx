@@ -14,7 +14,7 @@ import * as yup from 'yup';
 import { clearItems } from '@/redux/slices/cartSlice';
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
 import { WS_URL } from '@/redux/http';
-import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
+
 
 const userStyle = 'font-montserrat text-dark-blue';
 

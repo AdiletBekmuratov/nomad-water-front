@@ -93,11 +93,11 @@ export const CardBottle: FC<ICard> = ({ items }) => {
           </div>
           <div>
             {isFavorite ? (
-              <button onClick={() => onDeleteFavorite(items.id)}>
+              <button onClick={() => onDeleteFavorite(Number(items.id))}>
                 <AiFillHeart className={`w-5 h-5 md:w-6 md:h-6 m-2 text-red-600 cursor-pointer`} />
               </button>
             ) : (
-              <button onClick={user === null ? onClickToast : () => onClickAddFavorite(items.id)}>
+              <button onClick={user === null ? onClickToast : () => onClickAddFavorite(Number(items.id))}>
                 <AiOutlineHeart className={`w-5 h-5 md:w-6 md:h-6 m-2 text-red-600 cursor-pointer`} />
               </button>
             )}
