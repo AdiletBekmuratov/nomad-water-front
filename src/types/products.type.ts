@@ -19,8 +19,3 @@ export type IProductCategoryCreate = {
   id?: number;
   name: string;
 };
-
-export type IProductImage = {
-  id?: number;
-  image: string;
-};

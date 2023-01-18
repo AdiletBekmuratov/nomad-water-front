@@ -1,13 +1,14 @@
-import ScrollToTop from '@/components/ScrollToTop';
 import { lazy, Suspense, useEffect } from 'react';
-import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
-import Loader from '@/components/Landing/Loader';
+import { Toaster } from 'react-hot-toast';
 
-import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { getMe } from '@/redux/slices/auth';
+
+import Loader from '@/components/Landing/Loader';
+import ScrollToTop from '@/components/ScrollToTop';
 
 import OrderInfo from '@/pages/OrderPages/OrderInfo';
 import UserAppeal from '@/pages/UserAppeal';
@@ -32,11 +33,12 @@ const Orders = lazy(() => import('@/pages/OrderPages/Orders'));
 const OrderCreate = lazy(() => import('@/pages/OrderPages/OrderCreate'));
 
 const LoginPage = lazy(() => import('@/pages/LoginPage'));
+const UserPage = lazy(() => import('@/pages/User/UserPage'));
+const MyFavorite = lazy(() => import('@/pages/catalog/MyFavorite'));
+
 const CourierOrders = lazy(() => import('@/pages/Couriers/CourierOrders'));
 const CourierPage = lazy(() => import('@/pages/Couriers/CourierPage'));
 const Employee = lazy(() => import('@/pages/Employee/Employee'));
-const UserPage = lazy(() => import('@/pages/User/UserPage'));
-const MyFavorite = lazy(() => import('@/pages/catalog/MyFavorite'));
 
 const RequestsUser = lazy(() => import('@/pages/catalog/RequestsUser'));
 

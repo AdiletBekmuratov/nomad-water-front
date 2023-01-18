@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import bottleX from '../../assets/lending/2l.png';
 import bottleXl from '../../assets/lending/5l.png';
 import bottle2Xl from '../../assets/lending/8l.png';
-import astana from '../../assets/lending/astana.png';
 
 const astanaAnimation = {
   hidden: {
@@ -27,17 +26,7 @@ const textAnimation = {
     opacity: 1
   })
 };
-// const butAnimation = {
-//   hidden: {
-//     x: -300,
-//     opacity: 0
-//   },
-//   visible: (custom: any) => ({
-//     transition: { duration: 1, delay: custom * 0.7 },
-//     x: 0,
-//     opacity: 1
-//   })
-// };
+
 const bottleAnimation = {
   hidden: {
     x: 75,

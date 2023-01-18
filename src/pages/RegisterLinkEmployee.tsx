@@ -67,9 +67,7 @@ const RegisterLinkEmployee: FC = () => {
           success: 'Получено',
           error: (error) => JSON.stringify(error, null, 2)
         })
-        .finally(() => {
-          // setVisibleCreate(false);
-        });
+        .finally(() => {});
     } else {
       toast
         .promise(createWorker(values).unwrap(), {
@@ -77,20 +75,13 @@ const RegisterLinkEmployee: FC = () => {
           success: 'Получено',
           error: (error) => JSON.stringify(error, null, 2)
         })
-        .finally(() => {
-          // setVisibleCreate(false);
-        });
+        .finally(() => {});
     }
   };
   const validation = yup.object().shape({
     phone: yup.string().required('Это поле обязательное'),
     firstname: yup.string().required('Это поле обязательное'),
     lastname: yup.string().required('Это поле обязательное')
-    // street: yup.string().required('Это поле обязательное'),
-    // houseNumber: yup.string().required('Это поле обязательное'),
-    // flat: yup.string().required('Это поле обязательное'),
-    // addressComment: yup.string().required('Это поле обязательное'),
-    // birthday: yup.string().required('Это поле обязательное'),
   });
 
   return (
@@ -114,15 +105,6 @@ const RegisterLinkEmployee: FC = () => {
                 </span>
                 {role === 'ROLE_MASTER' ||
                   (role === 'ROLE_KEEPER' && <span>Номер склада: {warehouseId}</span>)}
-
-                {/* <Input inputType="formik" name="role" id="role" label="role" disabled />
-                  <Input
-                    inputType="formik"
-                    name="warehouseId"
-                    id="warehouseId"
-                    label="ID склада"
-                    disabled
-                  /> */}
               </div>
               <div className={`grid grid-cols-1 sm:grid-cols-3 gap-3 items-center`}>
                 <Input inputType="formik" name="firstname" id="firstname" label="Имя" />

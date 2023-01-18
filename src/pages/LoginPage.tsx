@@ -1,21 +1,21 @@
-import { Button, Input } from '@/components/Forms';
-// import { Modal } from '@/components/Layout/Modal';
-// import { useAppSelector } from '@/hooks/useAppSelector';
-import { ILoginForm, IUser, IUserFull } from '@/types';
-import { Form, Formik } from 'formik';
-
-import { toast } from 'react-hot-toast';
-import { login } from '@/redux/slices/auth';
-
-import * as Yup from 'yup';
-
 import { useEffect, useState } from 'react';
-import { Modal } from '@/components/Layout/Modal';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useNavigate } from 'react-router-dom';
-import Checkbox from '@/components/Checkbox';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useCreateUserAccountMutation } from '@/redux/services/user.service';
+
+import { login } from '@/redux/slices/auth';
+import { ILoginForm, IUser } from '@/types';
+
+import { Modal } from '@/components/Layout/Modal';
+import Checkbox from '@/components/Checkbox';
+import { Button, Input } from '@/components/Forms';
+
+import * as Yup from 'yup';
+import { Form, Formik } from 'formik';
+import { toast } from 'react-hot-toast';
+
+
 
 const SignInSchema = Yup.object().shape({
   phone: Yup.string().required('Обязательное поле для заполнения')

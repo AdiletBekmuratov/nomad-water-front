@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import Loader from '@/components/Landing/Loader';
 import { ActionButtons, DeleteModal, Table } from '@/components/Table';

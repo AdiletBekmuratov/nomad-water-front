@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useGetUserROLEQuery } from '@/redux/services/user.service';
-import { ICouriers, IUserFull } from '@/types';
+import { IUserFull } from '@/types';
 
 import { EditCourier } from '@/components/Admin/Couriers/EditCourier';
 import { CreateModal } from '@/components/Admin/AllUsers';

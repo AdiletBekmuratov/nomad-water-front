@@ -1,10 +1,9 @@
-import { motion } from 'framer-motion';
 import { FaInstagram, FaTelegramPlane, FaWhatsapp } from 'react-icons/fa';
 import FaqComp from './FaqComp';
 
 export const Question = () => {
   return (
-    <motion.section className={`content flex flex-col`}>
+    <section className={`content flex flex-col`}>
       <div
         className={` text-dark-blue flex flex-1 flex-col pt-24 lg:pt-32 pb-8 lg:pb-16 mx-16 sm:mx-32 md:mx-64 lg:px-16  xl:mx-96`}>
         <FaqComp header="Появился вопрос? Мы всегда готовы вам помочь!" />
@@ -12,15 +11,15 @@ export const Question = () => {
 
       <footer
         className={`grid grid-cols-1 lg:grid-cols-2 px-7 xl:px-48 lg:px-10 py-5 lg:py-7 
-         bg-footer-color text-white text-sm lg:text-base font-bold leading-4 lg:leading-5 `}>
+        bg-footer-color text-white text-sm lg:text-base font-bold leading-4 lg:leading-5 `}>
         <div
           className={` grid grid-flow-col grid-rows-2 gap-3 lg:gap-3 lg:grid-rows-3 mb-2 text-center lg:text-left`}>
           <a href="/">Акции</a>
-          <a href="/">Каталог</a>
+          <a href="https://demo.nomad-water.kz/catalog">Каталог</a>
           <a href="/">Пункты приема</a>
           <a href="/">Новости</a>
           <a href="/">Партнерам</a>
-          <a href="/">Карьерам</a>
+          <a href="/">Карьера</a>
           <a href="/">FAQ</a>
           <a href="/">Политика приватности</a>
         </div>
@@ -44,6 +43,6 @@ export const Question = () => {
           </div>
         </div>
       </footer>
-    </motion.section>
+    </section>
   );
 };
