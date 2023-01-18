@@ -7,6 +7,7 @@ import Loader from '../../components/Landing/Loader';
 import { toast } from 'react-hot-toast';
 import { Modal } from '../../components/Layout/Modal';
 import { Button } from '../../components/Forms';
+import { WS_URL } from '@/redux/http';
 
 export const AcceptedOrders = () => {
   const [courierOrders] = useLazyGetCourierOrderQuery();
@@ -43,8 +44,8 @@ export const AcceptedOrders = () => {
     }
 
     if (!courierRef.current) {
-      const courier = new WebSocket('ws://localhost:8080/order/accept');
-      const complete = new WebSocket('ws://localhost:8080/order/complete');
+      const courier = new WebSocket(WS_URL + '/order/accept');
+      const complete = new WebSocket(WS_URL + '/order/complete');
 
       completeRef.current = complete;
       courierRef.current = courier;

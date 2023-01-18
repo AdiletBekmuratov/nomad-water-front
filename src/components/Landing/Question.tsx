@@ -20,7 +20,7 @@ export const Question = () => {
           <a href="/">Пункты приема</a>
           <a href="/">Новости</a>
           <a href="/">Партнерам</a>
-          <a href="/">Карьерам</a>
+          <a href="/">Карьера</a>
           <a href="/">FAQ</a>
           <a href="/">Политика приватности</a>
         </div>
