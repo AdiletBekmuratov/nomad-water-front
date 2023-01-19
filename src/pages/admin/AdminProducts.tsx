@@ -54,7 +54,7 @@ const AdminProducts = () => {
       {
         header: 'Image',
         accessorKey: 'imageUrl',
-        cell: ({ getValue }) => <img src={getValue()} alt={getValue()} />
+        cell: ({ getValue }) => <img src={getValue()} alt={getValue()} className={`w-16 h-auto`}/>
       },
       {
         header: 'Name',
