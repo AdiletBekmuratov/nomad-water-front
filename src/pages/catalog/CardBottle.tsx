@@ -78,13 +78,13 @@ export const CardBottle: FC<ICard> = ({ items }) => {
             <>
               {isChoice ? (
                 <Button
-                  className={`w-28 md:w-40 h-8 md:h-10 bg-blue-400 text-xs md:text-sm hover:bg-blue-900`}
+                  className={`w-32 md:w-40 h-8 md:h-10 bg-blue-400 text-xs md:text-sm hover:bg-blue-900`}
                   onClick={onDeleteItem}>
                   Убрать из корзины
                 </Button>
               ) : (
                 <Button
-                  className={`w-28 md:w-40 h-8 md:h-10 text-xs md:text-sm hover:bg-blue-900`}
+                  className={`w-32 md:w-40 h-8 md:h-10 text-xs md:text-sm hover:bg-blue-900`}
                   onClick={user === null ? onClickToast : onClickAdd}>
                   В корзину
                 </Button>

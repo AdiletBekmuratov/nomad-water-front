@@ -119,60 +119,26 @@ const AppRoutes = () => {
             />
 
             {/**************************************************************************************** */}
-            {/*вход админ */}
-            <Route path="/admin/login" element={<AdminLogin />} />
+
             {/* страница регистрации по сгенерированным ссылкам */}
             <Route path="/register/employee/*" element={<RegisterLinkEmployee />} />
+            {/*вход админ */}
+            <Route path="/admin/login" element={<AdminLogin />} />
             <Route
-              path="/admin/allUsers"
+              path="/admin/*"
               element={
                 <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
-                  <AdminAllUsers />
+                  <NoPage />
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/admin/workers"
-              element={
-                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
-                  <AdminWorkers />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/couriers"
-              element={
-                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
-                  <AdminCouriers />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/admin/allUsers" element={<AdminAllUsers />} />
+            <Route path="/admin/workers" element={<AdminWorkers />} />
+            <Route path="/admin/couriers" element={<AdminCouriers />} />
 
-            <Route
-              path="/admin/warehouses"
-              element={
-                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
-                  <AdminWarehouses />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/products"
-              element={
-                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
-                  <AdminProducts />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/category"
-              element={
-                <ProtectedRoute isAllowed={user?.role === 'ROLE_ADMIN'} redirectPath="/admin/login">
-                  <AdminCategory />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/admin/*" element={<NoPage />} />
+            <Route path="/admin/warehouses" element={<AdminWarehouses />} />
+            <Route path="/admin/products" element={<AdminProducts />} />
+            <Route path="/admin/category" element={<AdminCategory />} />
 
             <Route path="/requestsUser" element={<RequestsUser />} />
             <Route path="/appeal" element={<UserAppeal />} />

@@ -42,9 +42,9 @@ const BottlePage = () => {
       <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4`}>
         <div className={`grid grid-cols-1 gap-2`}>
           <div className={` bg-white rounded-2xl p-3 flex items-center justify-center`}>
-            <img src={product?.imageUrl} className={`w-64 h-auto`} alt="bottleXs" />
+            <img src={product?.imageUrl} className={``} alt="bottleXs" />
           </div>
-          <div className={`grid grid-cols-1 items-center `}>
+          <div className={`grid grid-cols-1 items-center justify-center`}>
             <>
               {isChoice ? (
                 <Button
