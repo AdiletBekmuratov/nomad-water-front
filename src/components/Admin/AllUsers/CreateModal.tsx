@@ -8,24 +8,36 @@ import { Modal } from '@/components/Layout/Modal';
 import { useGetAllWarehousesQuery } from '@/redux/services/base.service';
 import { useCreateEmployeeLinkMutation } from '@/redux/services/user.service';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { useLocation } from 'react-router-dom';
 
-const INITIAL_VALUES: IEmployeeCreateLink = {
-  quantity: 1,
-  role: 'ROLE_EMPLOYEE',
-  warehouseId: 0
-};
-const employRole = [
-  { id: 1, role: 'ROLE_EMPLOYEE', name: 'Оператор' },
-  { id: 2, role: 'ROLE_COURIER', name: 'Курьер' },
-  { id: 3, role: 'ROLE_MASTER', name: 'Производственный администратор ' },
-  { id: 4, role: 'ROLE_KEEPER', name: 'Продавец магазина' }
-];
 interface ICreateModalProps {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
 }
 
 export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
+  const employRole = [
+    { id: 1, role: 'ROLE_EMPLOYEE', name: 'Оператор' },
+    { id: 2, role: 'ROLE_COURIER', name: 'Курьер' },
+    { id: 3, role: 'ROLE_MASTER', name: 'Производственный администратор ' },
+    { id: 4, role: 'ROLE_KEEPER', name: 'Продавец магазина' }
+  ];
+  let location = useLocation();
+  let pathname = location.pathname;
+  let localPathname = pathname.substring(7, pathname.length);
+  let initRole = ''
+  const getInitialRole = (localPathname:string) => {
+    if (localPathname === 'allUsers') {
+      return initRole = employRole[0].role;
+    }else if (localPathname === 'couriers'){
+        return initRole = employRole[1].role;
+    }else return initRole = employRole[2].role;
+  };
+  const INITIAL_VALUES: IEmployeeCreateLink = {
+    quantity: 1,
+    role: getInitialRole(localPathname),
+    warehouseId: 0
+  };
   const { data: warehouse } = useGetAllWarehousesQuery();
   const [response, setResponse] = React.useState<string[]>([]);
   const [create, { isLoading }] = useCreateEmployeeLinkMutation();
@@ -55,7 +67,7 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
     <>
       {response.length > 0 ? (
         <Modal isOpenModal={visible} setIsOpenModal={setVisible}>
-          <div>
+          <div className="flex items-center justify-between">
             <h2 className={`text-center text-sm md:text-lg font-semibold`}>
               Отправьте эти ссылки доступа сотрудникам для заполнения анкеты:
             </h2>
@@ -85,13 +97,13 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
               </div>
             </ul>
           ))}
-          <Button
+          {/* <Button
             onClick={() => {
               setVisible(false);
               setResponse([]);
             }}>
             Закрыть
-          </Button>
+          </Button> */}
         </Modal>
       ) : (
         <Modal isOpenModal={visible} setIsOpenModal={setVisible}>
