@@ -1,4 +1,4 @@
-import  { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';
 
 import { toast } from 'react-hot-toast';
@@ -8,7 +8,7 @@ import { IUserFull } from '@/types';
 import { useDeleteUserMutation, useGetAllUsersQuery } from '@/redux/services/user.service';
 import { CreateModal, EditModalUser } from '@/components/Admin/AllUsers';
 import Loader from '@/components/Landing/Loader';
-import { EditModalCourier } from '@/components/Admin/AllUsers'; 
+import { EditModalCourier } from '@/components/Admin/AllUsers';
 import { EditWorker } from '../../components/Admin/AllUsers/EditWorker';
 
 const AdminAllUsers = () => {
@@ -66,12 +66,9 @@ const AdminAllUsers = () => {
         accessorKey: 'middleName'
       },
       {
-        header: 'Статус',
+        header: 'Роль',
         accessorKey: 'role'
-      },
-      {
-        header: 'Д.Р.',
-        accessorKey: 'birthday'
+        
       },
       {
         header: 'Телефон',
@@ -116,6 +113,7 @@ const AdminAllUsers = () => {
         data={users}
         columns={columns}
         onAddClick={() => setVisibleCreate(true)}
+        title="Все пользователи платформы"
       />
       <CreateModal visible={visibleCreate} setVisible={setVisibleCreate} />
       <>

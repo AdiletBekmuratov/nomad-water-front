@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useGetUserROLEQuery } from '@/redux/services/user.service';
+import { useDeleteUserMutation, useGetUserROLEQuery } from '@/redux/services/user.service';
 import { IUserFull } from '@/types';
 
 import { EditCourier } from '@/components/Admin/Couriers/EditCourier';
@@ -9,7 +9,8 @@ import LayoutAdmin from '@/components/Admin/LayoutAdmin';
 import Loader from '@/components/Landing/Loader';
 
 import { ColumnDef, Row } from '@tanstack/react-table';
-import { ActionButtons, Table } from '@/components/Table';
+import { ActionButtons, DeleteModal, Table } from '@/components/Table';
+import { toast } from 'react-hot-toast';
 
 const AdminCouriers = () => {
   const { data: couriers = [], isLoading } = useGetUserROLEQuery('ROLE_COURIER');
@@ -17,12 +18,18 @@ const AdminCouriers = () => {
   const [rowData, setRowData] = useState<IUserFull>();
   const [visibleCreate, setVisibleCreate] = useState(false);
   const [visibleEdit, setVisibleEdit] = useState(false);
+  const [visibleDelete, setVisibleDelete] = useState(false);
 
   const handleEditRowClick = (row: Row<IUserFull>) => {
     setRowData(row.original);
     setVisibleEdit(true);
   };
+  const handleDeleteRowClick = (row: Row<IUserFull>) => {
+    setRowData(row.original);
+    setVisibleDelete(true);
+  };
 
+  const [deleteUser, { isLoading: isLoadingDelete }] = useDeleteUserMutation();
   const columns = useMemo<ColumnDef<IUserFull, any>[]>(
     () => [
       {
@@ -61,11 +68,27 @@ const AdminCouriers = () => {
 
       {
         header: 'Actions',
-        cell: ({ row }) => <ActionButtons handleEditClick={() => handleEditRowClick(row)} />
+        cell: ({ row }) => (
+          <ActionButtons
+            handleEditClick={() => handleEditRowClick(row)}
+            handleDeleteClick={() => handleDeleteRowClick(row)}
+          />
+        )
       }
     ],
     []
   );
+  const handleDelete = async () => {
+    toast
+      .promise(deleteUser(rowData!.id!).unwrap(), {
+        loading: 'Loading',
+        success: 'Deleted Successfully',
+        error: (error) => JSON.stringify(error, null, 2)
+      })
+      .finally(() => {
+        setVisibleDelete(false);
+      });
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -78,10 +101,17 @@ const AdminCouriers = () => {
         data={couriers}
         columns={columns}
         onAddClick={() => setVisibleCreate(true)}
+        title="Список курьеров"
       />
       <CreateModal visible={visibleCreate} setVisible={setVisibleCreate} />
 
       <EditCourier data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} />
+      <DeleteModal
+        loading={isLoadingDelete}
+        handleDelete={handleDelete}
+        setVisible={setVisibleDelete}
+        visible={visibleDelete}
+      />
     </LayoutAdmin>
   );
 };

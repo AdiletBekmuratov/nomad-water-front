@@ -79,6 +79,7 @@ const AdminCategory = () => {
         data={data}
         columns={columns}
         onAddClick={() => setVisibleCreate(true)}
+        title='Категории товаров'
       />
 
       <CreateCategory visible={visibleCreate} setVisible={setVisibleCreate} />

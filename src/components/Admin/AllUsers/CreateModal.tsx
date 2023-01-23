@@ -7,6 +7,7 @@ import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 import { useGetAllWarehousesQuery } from '@/redux/services/base.service';
 import { useCreateEmployeeLinkMutation } from '@/redux/services/user.service';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 const INITIAL_VALUES: IEmployeeCreateLink = {
   quantity: 1,
@@ -14,10 +15,10 @@ const INITIAL_VALUES: IEmployeeCreateLink = {
   warehouseId: 0
 };
 const employRole = [
-  { id: 1, role: 'ROLE_EMPLOYEE', name: 'employee' },
-  { id: 2, role: 'ROLE_COURIER', name: 'courier' },
-  { id: 3, role: 'ROLE_MASTER', name: 'master' },
-  { id: 4, role: 'ROLE_KEEPER', name: 'keeper' }
+  { id: 1, role: 'ROLE_EMPLOYEE', name: 'Оператор' },
+  { id: 2, role: 'ROLE_COURIER', name: 'Курьер' },
+  { id: 3, role: 'ROLE_MASTER', name: 'Производственный администратор ' },
+  { id: 4, role: 'ROLE_KEEPER', name: 'Продавец магазина' }
 ];
 interface ICreateModalProps {
   visible: boolean;
@@ -54,17 +55,27 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
     <>
       {response.length > 0 ? (
         <Modal isOpenModal={visible} setIsOpenModal={setVisible}>
-          <h2 className={`text-center text-lg font-semibold`}>
-            Отправьте эти ссылки доступа сотрудникам для заполнения анкеты:
-          </h2>
+          <div>
+            <h2 className={`text-center text-sm md:text-lg font-semibold`}>
+              Отправьте эти ссылки доступа сотрудникам для заполнения анкеты:
+            </h2>
+            <button
+              onClick={() => {
+                setVisible(false);
+                setResponse([]);
+              }}>
+              <AiOutlineCloseCircle className={`w-5 h-5 md:w-7 md:h-7 hover:text-blue-700`} />
+            </button>
+          </div>
+
           {response.map((str) => (
-            <ul key={str} className={`grid grid-cols-1 `}>
+            <ul key={str} className={`grid grid-cols-1  text-xs md:text-sm`}>
               <div className={`flex`}>
                 <li className={`py-2 text-center cursor-text`}>
                   <p>{str}</p>
                 </li>
                 <Button
-                  className={`w-56 my-2 cursor-copy`}
+                  className={`w-56 h-10 my-2 cursor-copy hover:bg-blue-400`}
                   id="copy"
                   onClick={() => {
                     navigator.clipboard.writeText(str);
@@ -84,7 +95,18 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
         </Modal>
       ) : (
         <Modal isOpenModal={visible} setIsOpenModal={setVisible}>
-          <h2 className={`text-center pb-3`}>Получение ссылок для работников</h2>
+          <div className="flex items-center justify-between">
+            <h2 className={`text-center pb-3 `}>
+              Получение ссылок для регистрации новых сотрудников
+            </h2>
+            <button
+              onClick={() => {
+                setVisible(false);
+                setResponse([]);
+              }}>
+              <AiOutlineCloseCircle className={`w-5 h-5 md:w-7 md:h-7 hover:text-blue-700`} />
+            </button>
+          </div>
 
           <Formik
             initialValues={INITIAL_VALUES}
@@ -134,6 +156,10 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
                 <div className="modal-action">
                   <Button type="submit" loading={isLoading}>
                     Получить
+                    {props.values.quantity === 1 ? ` ссылку` : ` ссылки `} для{' '}
+                    {props.values.quantity === 1
+                      ? `${props.values.quantity} сотрудника`
+                      : `${props.values.quantity} сотрудников`}
                   </Button>
                 </div>
               </Form>

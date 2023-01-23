@@ -90,6 +90,7 @@ const AdminWarehouses = () => {
         data={data}
         columns={columns}
         onAddClick={() => setVisibleCreate(true)}
+        title="Список всех складов"
       />
       <CreateModal visible={visibleCreate} setVisible={setVisibleCreate} />
       <EditModal data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} />

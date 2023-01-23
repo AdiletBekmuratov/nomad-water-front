@@ -3,10 +3,7 @@ import { useMemo, useState } from 'react';
 import Loader from '@/components/Landing/Loader';
 import { ActionButtons, DeleteModal, Table } from '@/components/Table';
 
-import {
-  useGetAllProductsQuery,
-  useDeleteProductMutation
-} from '../../redux/services/base.service';
+import { useGetAllProductsQuery, useDeleteProductMutation } from '@/redux/services/base.service';
 import { IProduct } from '@/types/products.type';
 import { ColumnDef, Row } from '@tanstack/react-table';
 import { toast } from 'react-hot-toast';
@@ -54,7 +51,7 @@ const AdminProducts = () => {
       {
         header: 'Image',
         accessorKey: 'imageUrl',
-        cell: ({ getValue }) => <img src={getValue()} alt={getValue()} className={`w-16 h-auto`}/>
+        cell: ({ getValue }) => <img src={getValue()} alt={getValue()} className={`w-16 h-auto`} />
       },
       {
         header: 'Name',
@@ -107,6 +104,7 @@ const AdminProducts = () => {
         data={data}
         columns={columns}
         onAddClick={() => setVisibleCreate(true)}
+        title="Все продукты"
       />
 
       <CreateProduct visible={visibleCreate} setVisible={setVisibleCreate} />

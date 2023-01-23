@@ -77,6 +77,7 @@ const AdminWorkers = () => {
         data={workers}
         columns={columns}
         onAddClick={() => setVisibleCreate(true)}
+        title="Список работников"
       />
 
       <CreateModal visible={visibleCreate} setVisible={setVisibleCreate} />
