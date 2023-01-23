@@ -54,6 +54,10 @@ const AdminCouriers = () => {
         accessorKey: 'birthday'
       },
       {
+        header: 'Телефон',
+        accessorKey: 'phone'
+      },
+      {
         header: 'telegram',
         accessorKey: 'telegramAccount'
       },
@@ -67,7 +71,7 @@ const AdminCouriers = () => {
       },
 
       {
-        header: 'Actions',
+        header: 'Изменить \n Деактивировать',
         cell: ({ row }) => (
           <ActionButtons
             handleEditClick={() => handleEditRowClick(row)}

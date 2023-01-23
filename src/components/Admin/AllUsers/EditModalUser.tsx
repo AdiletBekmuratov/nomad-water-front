@@ -8,6 +8,7 @@ import { Modal } from '@/components/Layout/Modal';
 import { Form, Formik } from 'formik';
 import toast from 'react-hot-toast';
 import { useUpdateUserMutation } from '@/redux/services/user.service';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 interface IEditModalProps {
   visible: boolean;
@@ -23,29 +24,41 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
     toast
       .promise(update(values).unwrap(), {
         loading: 'Loading',
-        success: 'Updated Successfully',
+        success: 'Обновлено',
+        error: (error) => JSON.stringify(error, null, 2)
+      })
+      .finally(() => {});
+  };
+  const handleEditSave = (values: IUserFullCreate) => {
+    toast
+      .promise(update(values).unwrap(), {
+        loading: 'Loading',
+        success: 'Сохранено',
         error: (error) => JSON.stringify(error, null, 2)
       })
       .finally(() => {
         setVisible(false);
       });
   };
-  // const userRoles = [
-  //   { id: 1, role: 'ROLE_USER', name: 'user' },
-  //   { id: 2, role: 'ROLE_ADMIN', name: 'admin' },
-  //   { id: 3, role: 'ROLE_MASTER', name: 'master' },
-  //   { id: 4, role: 'ROLE_EMPLOYEE', name: 'employee' },
-  //   { id: 5, role: 'ROLE_KEEPER', name: 'keeper' },
-  //   { id: 6, role: 'ROLE_COURIER', name: 'courier' }
-  // ];
   return (
     <Modal setIsOpenModal={setVisible} isOpenModal={visible}>
-      <h2 className={`text-center`}>Изменение данных пользователя</h2>
-      <Formik initialValues={data} onSubmit={handleEdit}>
-        {() => (
+      <div className="flex items-center justify-between">
+        <h2 className={`text-center`}>Изменение данных пользователя</h2>
+        <button
+          onClick={() => {
+            setVisible(false);
+          }}>
+          <AiOutlineCloseCircle className={`w-5 h-5 md:w-7 md:h-7 hover:text-blue-500`} />
+        </button>
+      </div>
+      <Formik initialValues={data} onSubmit={handleEditSave}>
+        {({ values }) => (
           <Form className={`flex flex-col space-y-1 sm:space-y-4`}>
             <>
+            <div className={`hidden md:block`}>
               <Input inputType="formik" name="id" id="id" label="ID" disabled />
+            </div>
+              
               <div className={`grid grid-cols-1 sm:grid-cols-3 items-center`}>
                 <Input inputType="formik" name="lastname" id="lastname" label="Фамилия" />
                 <Input inputType="formik" name="firstname" id="firstname" label="Имя" />
@@ -54,12 +67,12 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
 
               <div className={`flex flex-1 flex-col md:flex`}>
                 <Input inputType="formik" name="street" id="street" label="Улица" />
-                <div className={`grid grid-cols-3 text-center`}>
+                <div className={`grid grid-cols-2 text-center`}>
                   <Input inputType="formik" name="houseNumber" id="houseNumber" label="Дом" />
                   <Input inputType="formik" name="flat" id="flat" label="Квартира" />
                 </div>
               </div>
-              <div className={`grid grid-cols-1 sm:grid-cols-3 items-center`}>
+              <div className={`grid grid-cols-2 sm:grid-cols-3 items-center`}>
                 <Input
                   inputType="formik"
                   name="phone"
@@ -86,9 +99,15 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
                 <Input inputType="formik" name="bonuses" id="bonuses" label="Бонусы" />
               </div>
             </>
-            <div className="modal-action">
-              <Button type="submit" loading={isLoadingUpdate}>
-                Изменить
+            <div className={`flex gap-3 justify-between`}>
+              <Button type="submit" className={`hover:bg-blue-500`}>
+                Сохранить
+              </Button>
+              <Button
+                type="button"
+                onClick={() => handleEdit(values)}
+                className={`hover:bg-blue-500`}>
+                Применить
               </Button>
             </div>
           </Form>
