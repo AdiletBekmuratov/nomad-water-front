@@ -46,7 +46,7 @@ const Employee = () => {
               <strong>Почта: </strong> {` ${user?.email ? user?.email : 'Не заполнено'} `}
             </p> */}
           </div>
-          <div className="grid gap-2 ">
+          <div className="grid gap-2 ">ок
             <p className={`${styleP}`}>
               <strong>Улица: </strong>{' '}
               <span>{` ${user?.street ? user?.street : 'Не заполнено'} `}</span>

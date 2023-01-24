@@ -9,3 +9,4 @@ export * from './users.types';
 
 export * from './employee.types';
 export * from './order.types';
+export * from './profile.types';
