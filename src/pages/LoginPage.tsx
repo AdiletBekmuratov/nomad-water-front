@@ -1,7 +1,7 @@
 import { Button, Input } from '@/components/Forms';
 // import { Modal } from '@/components/Layout/Modal';
 // import { useAppSelector } from '@/hooks/useAppSelector';
-import { ILoginForm, IUser, IUserFull } from '@/types';
+import { ILoginForm, IUser } from '@/types';
 import { Form, Formik } from 'formik';
 
 import { toast } from 'react-hot-toast';
@@ -15,7 +15,10 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useNavigate } from 'react-router-dom';
 import Checkbox from '@/components/Checkbox';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { useCreateUserAccountMutation } from '@/redux/services/user.service';
+import {
+  useCreateUserAccountMutation,
+  useGetUserCodeMutation
+} from '@/redux/services/user.service';
 
 const SignInSchema = Yup.object().shape({
   phone: Yup.string().required('Обязательное поле для заполнения')
@@ -43,6 +46,8 @@ const initial: ILoginForm = {
 
 const LoginPage = () => {
   const [createAccount, { isLoading }] = useCreateUserAccountMutation();
+  const [generateCode, { isLoading: codeLoad }] = useGetUserCodeMutation();
+
   const navigate = useNavigate();
 
   const { user } = useAppSelector((state) => state.auth);
@@ -50,6 +55,9 @@ const LoginPage = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [phoneNumb, setPhoneNumb] = useState('');
   const [isPhone, setIsPhone] = useState(false);
+
+  const [isSend, setIsSend] = useState('');
+  const [isCodeGen, setIsCodeGen] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -75,23 +83,35 @@ const LoginPage = () => {
       });
   };
 
+  const handleLogin = async (values: IUser) => {
+    setPhoneNumb(values.phone);
+    console.log(values.phone);
+    toast
+      .promise(generateCode({ phone: values.phone }).unwrap(), {
+        loading: 'Загрузка...',
+        success: 'Аккаунт создан успешно',
+        error: (error) => JSON.stringify(error.data, null, 2)
+      })
+      .finally(() => {
+        setIsOpenModal(true);
+      });
+  };
+
   const handleSubmit = async (values: ILoginForm) => {
     console.log(values);
-    if (!isPhone) {
-      toast.promise(dispatch(login({ phone: phoneNumb, password: values.password })).unwrap(), {
-        success: 'Добро пожаловать в Nomad water!',
-
-        loading: 'Загрузка',
-        error: (err) => err.toString()
-      });
-    } else {
-      toast.promise(dispatch(login({ phone: values.phone, password: values.password })).unwrap(), {
-        success: 'Добро пожаловать в Nomad water!',
-
-        loading: 'Загрузка',
-        error: (err) => err.toString()
-      });
-    }
+    // if (!isPhone) {
+    toast.promise(dispatch(login({ phone: phoneNumb, password: values.password })).unwrap(), {
+      success: 'Добро пожаловать в Nomad water!',
+      loading: 'Загрузка',
+      error: (err) => err.toString()
+    });
+    // } else {
+    //   toast.promise(dispatch(login({ phone: values.phone, password: values.password })).unwrap(), {
+    //     success: 'Добро пожаловать в Nomad water!',
+    //     loading: 'Загрузка',
+    //     error: (err) => err.toString()
+    //   });
+    // }
   };
 
   const validation = Yup.object().shape({
@@ -168,7 +188,8 @@ const LoginPage = () => {
               </Formik>
             ) : (
               <>
-                <Formik initialValues={{ phone: '', password: '' }} onSubmit={handleSubmit}>
+                {/* @ts-ignore */}
+                <Formik initialValues={{ phone: '' }} onSubmit={handleLogin}>
                   <Form>
                     <Input
                       inputType="formik"
@@ -179,7 +200,8 @@ const LoginPage = () => {
                       placeholder="+7 (999) 999 99 99"
                       label="Номер телефона"
                     />
-                    <div className="mb-2">
+
+                    {/* <div className="mb-2">
                       <Input
                         inputType="formik"
                         type="password"
@@ -189,7 +211,8 @@ const LoginPage = () => {
                         placeholder="Пароль"
                         label="Пароль"
                       />
-                    </div>
+                    </div> */}
+
                     <Button type="submit">Войти</Button>
                   </Form>
                 </Formik>
@@ -198,13 +221,14 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
+      {/* isCodeGen */}
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
         <div className={`grid gap-5 px-10 lg:px-28`}>
           <p className="text-center font-montserrat text-dark-blue font-medium">
             Введите код подтверждения
           </p>
           <p className="text-center font-montserrat text-gray-700 text-sm">
-            Код придет вам в течении пары минут Код придет вам в течении пары минут
+            Код придет вам в течении пары минут
           </p>
           <Formik initialValues={initial} validationSchema={validation} onSubmit={handleSubmit}>
             <Form>

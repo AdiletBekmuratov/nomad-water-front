@@ -6,7 +6,7 @@ import svgr from 'vite-plugin-svgr';
 export default defineConfig({
   server: {
     open: true,
-    port: 3000
+    port: 3001
   },
   resolve: {
     alias: {
