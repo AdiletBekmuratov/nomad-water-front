@@ -1,7 +1,9 @@
 import React from 'react';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { Layout } from '@/components/Layout';
+
 import Pending from './Pending';
+
+import { Layout } from '@/components/Layout';
 import { Button } from '@/components/Forms';
 import { Edit } from '../User/Edit';
 

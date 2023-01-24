@@ -10,12 +10,4 @@ export interface ICard {
   setIsFavorite?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export interface IFavorite {
-  isFavorite?: boolean;
-  setIsFavorite?: React.Dispatch<React.SetStateAction<boolean>>;
-}
-export interface ICounter {
-  counter: number;
-  setCounter: React.Dispatch<React.SetStateAction<number>>;
-  quantityInStock?: number;
-}
+

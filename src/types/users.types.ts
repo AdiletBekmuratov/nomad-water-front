@@ -27,6 +27,4 @@ export interface IUserFull {
 export type IOrdersUser = Pick<IUserFull, 'phone' | 'addressComment' | 'street' | 'houseNumber' | 'flat' |
   'firstname'>;
 export type IUserFullCreate = Omit<IUserFull, 'created_date' | 'password'>;
-export type IUserFullUpdateME = Omit<IUserFull, 'id' | 'role' |
-  'created_date' | 'bonuses' | 'courierDeliveringStatus' |
-  'successfulOrders' | 'car' | 'warehouseId' | 'shopkeeperPhone'>;
+

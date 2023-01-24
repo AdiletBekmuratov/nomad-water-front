@@ -36,7 +36,7 @@ interface ITableProps {
 export const Table: FC<ITableProps> = ({ columns, data, onAddClick, id, title }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
-  const [compact, setCompact] = useLocalStorage(id, false);
+  const [compact, setCompact] = useLocalStorage(id, true);
 
   const table = useReactTable({
     data,
@@ -64,14 +64,14 @@ export const Table: FC<ITableProps> = ({ columns, data, onAddClick, id, title })
   return (
     <div id={id} className="flex flex-col space-y-4">
       <div className="flex justify-between">
-        <Toggle
+        {/* <Toggle
           id="toggle-compact"
           name="toggle-compact"
           inputType="default"
           onChange={handleCompactToogle}
           // @ts-ignore
           value={compact}
-        />
+        /> */}
         <div className="flex items-center">
           <span className="text-lg">{title}</span>
         </div>

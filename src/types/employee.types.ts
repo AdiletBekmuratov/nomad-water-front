@@ -38,8 +38,6 @@ export type ICouriers = {
   car: string;
 };
 
-export type ICouriersCreate = Pick<ICouriers, 'car'>;
-
 export type IWorker = {
   id?: number;
   shopkeeperPhone: string;

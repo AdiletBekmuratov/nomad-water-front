@@ -47,7 +47,7 @@ const AdminWarehouses = () => {
   const columns = useMemo<ColumnDef<IWarehouse, any>[]>(
     () => [
       {
-        header: 'ID',
+        header: 'ID склада',
         accessorKey: 'id'
       },
       {
@@ -55,19 +55,19 @@ const AdminWarehouses = () => {
         accessorKey: 'phone'
       },
       {
-        header: 'Address',
+        header: 'Адрес склада',
         accessorKey: 'warehouseAddress'
       },
       {
-        header: 'Created Date',
+        header: 'Дата создания',
         accessorKey: 'createdDate'
       },
       {
-        header: 'Updated Date',
+        header: 'Дата обновления',
         accessorKey: 'updatedDate'
       },
       {
-        header: 'Actions',
+        header: 'Изменить \n Деактивировать',
         cell: ({ row }) => (
           <ActionButtons
             handleEditClick={() => handleEditRowClick(row)}
@@ -90,6 +90,7 @@ const AdminWarehouses = () => {
         data={data}
         columns={columns}
         onAddClick={() => setVisibleCreate(true)}
+        title="Список всех складов"
       />
       <CreateModal visible={visibleCreate} setVisible={setVisibleCreate} />
       <EditModal data={rowData!} setVisible={setVisibleEdit} visible={visibleEdit} />

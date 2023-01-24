@@ -5,6 +5,7 @@ import { IProductCategoryCreate } from '@/types';
 import { Form, Formik } from 'formik';
 import { FC, Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 interface IEditModalProps {
   visible: boolean;
@@ -20,7 +21,17 @@ export const EditCategory: FC<IEditModalProps> = ({ visible, setVisible, data })
     toast
       .promise(update(values).unwrap(), {
         loading: 'Загрузка',
-        success: 'Обновлено успешно',
+        success: 'Обновлено',
+        error: (error) => JSON.stringify(error, null, 2)
+      })
+      .finally(() => {});
+  };
+  const handleEditSave = (values: IProductCategoryCreate) => {
+    console.log(values);
+    toast
+      .promise(update(values).unwrap(), {
+        loading: 'Загрузка',
+        success: 'Сохранено',
         error: (error) => JSON.stringify(error, null, 2)
       })
       .finally(() => {
@@ -30,15 +41,30 @@ export const EditCategory: FC<IEditModalProps> = ({ visible, setVisible, data })
 
   return (
     <Modal setIsOpenModal={setVisible} isOpenModal={visible}>
-      <Formik initialValues={data} onSubmit={handleEdit}>
-        {() => (
+      <div className="flex items-center justify-between">
+        <h2 className={`text-center`}>Изменить название категории</h2>
+        <button
+          onClick={() => {
+            setVisible(false);
+          }}>
+          <AiOutlineCloseCircle className={`w-5 h-5 md:w-7 md:h-7 hover:text-blue-500`} />
+        </button>
+      </div>
+      <Formik initialValues={data} onSubmit={handleEditSave}>
+        {({ values }) => (
           <Form className="flex flex-col space-y-4">
             <Input inputType="formik" name="id" id="id" label="ID" disabled />
-            <Input inputType="formik" name="name" id="name" label="Имя категорий" />
+            <Input inputType="formik" name="name" id="name" label="Имя категории" />
 
-            <div className="modal-action">
-              <Button type="submit" loading={isLoadingUpdate}>
-                Подтвердить
+            <div className={`flex gap-3 justify-between`}>
+              <Button type="submit" className={`hover:bg-blue-500`}>
+                Сохранить
+              </Button>
+              <Button
+                type="button"
+                onClick={() => handleEdit(values)}
+                className={`hover:bg-blue-500`}>
+                Применить
               </Button>
             </div>
           </Form>

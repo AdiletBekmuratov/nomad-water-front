@@ -158,6 +158,7 @@ export const userApi = createApi({
         body
       })
     }),
+    //получить свои избранные
     getUserFavorite: builder.query<IProduct[], void>({
       query: () => ({
         url: `/user/favorite`
@@ -170,6 +171,7 @@ export const userApi = createApi({
             ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
+    //добавить товар в избран 
     addFavorite: builder.mutation<void, number>({
       query: (id) => ({
         url: `/user/favorite/${Number(id)}`,
@@ -184,9 +186,6 @@ export const userApi = createApi({
       }),
       invalidatesTags: [{ type: 'Users', id: 'LIST' }]
     })
-
-    //api/user/favorite/{id}
-    //api/user/favorite/{id}
   })
 });
 
