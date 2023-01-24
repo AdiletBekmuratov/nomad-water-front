@@ -204,7 +204,7 @@ const LoginPage = () => {
             Введите код подтверждения
           </p>
           <p className="text-center font-montserrat text-gray-700 text-sm">
-            Код придет вам в течении пары минут Код придет вам в течении пары минут
+            Код придет вам в течении пары минут
           </p>
           <Formik initialValues={initial} validationSchema={validation} onSubmit={handleSubmit}>
             <Form>
