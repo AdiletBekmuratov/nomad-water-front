@@ -34,6 +34,14 @@ export interface IUser {
   updatedDate?: string;
   active?: boolean;
   chatId?: number;
+  profiles?: {
+    addressComment: string;
+    flat: string;
+    houseNumber: string;
+    id?: number;
+    name: string;
+    street: string;
+  }[];
 }
 
 export type IUserCreate = {

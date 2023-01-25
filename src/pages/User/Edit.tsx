@@ -51,14 +51,14 @@ export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
         </button>
       </div>
       <Formik initialValues={data} onSubmit={handleEditSave}>
-        {({values}) => (
+        {({ values }) => (
           <Form className="flex flex-col space-y-4">
             <div className={`grid grid-cols-1 items-center`}>
               <Input inputType="formik" name="lastname" id="lastname" label="Фамилия" />
               <Input inputType="formik" name="firstname" id="firstname" label="Имя" />
               <Input inputType="formik" name="middleName" id="middleName" label="Отчество" />
             </div>
-            
+
             <div className={`flex gap-3 justify-between`}>
               <Button type="submit" className={`hover:bg-blue-500`}>
                 Сохранить

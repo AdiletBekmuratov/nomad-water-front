@@ -1,7 +1,8 @@
 import React from 'react';
+import * as yup from 'yup';
 
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { useGetALLProfilesQuery } from '@/redux/services/profile.service';
+import { useGetALLProfilesQuery, useUpdateProfileMutation } from '@/redux/services/profile.service';
 import { Edit } from '@/pages/User/Edit';
 import { CreateProfile } from './CreateProfile';
 import { EditProfile } from './EditProfile';
@@ -9,22 +10,60 @@ import { DeleteProfile } from './DeleteProfile';
 import OrderHistory from '@/pages/User/OrderHistory';
 
 import { Layout } from '@/components/Layout';
-import { Button } from '@/components/Forms';
+import { Button, Input } from '@/components/Forms';
 
 import { FaTenge, FaUserTie } from 'react-icons/fa';
-import { AiOutlineEdit } from 'react-icons/ai';
+import { AiOutlineCloseCircle, AiOutlineEdit } from 'react-icons/ai';
+import { IProfile } from '@/types';
+import { Modal } from '@/components/Layout/Modal';
+import { Form, Formik } from 'formik';
+import { toast } from 'react-hot-toast';
 
 const UserPage = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { data: profile = [] } = useGetALLProfilesQuery();
+  const [update, { isLoading }] = useUpdateProfileMutation();
+  const [visible, setVisible] = React.useState(false);
 
+  const [profileData, setProfileData] = React.useState<IProfile>();
   const [isOpenEdit, setIsOpenEdit] = React.useState(false); //изменение данных юзера
   const [isOpenCreate, setIsOpenCreate] = React.useState(false); //создание нового профиля
-  const [isOpenEditProfile, setIsOpenEditProfile] = React.useState(false); //изменение профиля по id
+  const [profileId, setProfileId] = React.useState(1);
+  const [name, setName] = React.useState('');
   const [isOpenDelete, setIsOpenDelete] = React.useState(false); //удаление профиля по id
   const styleP = `text-sm md:text-base grid grid-cols-2`;
   const styleName = `text-sm md:text-base grid grid-cols-2 py-1 border-b-2 border-gray-400 border-dashed`;
   // const [idProfile, setIdProfile] = React.useState<number | null>(null);
+
+  const handleEdit = async (values: IProfile) => {
+    toast
+      .promise(update(values).unwrap(), {
+        loading: 'Загрузка',
+        success: 'Обновлено успешно',
+        error: (error) => JSON.stringify(error, null, 2)
+      })
+      .finally(() => {});
+  };
+
+  const handleEditSave = async (values: IProfile) => {
+    toast
+      .promise(update(values).unwrap(), {
+        loading: 'Загрузка',
+        success: 'Сохранено',
+        error: (error) => JSON.stringify(error, null, 2)
+      })
+      .finally(() => {
+        setVisible(false);
+      });
+  };
+
+  const validation = yup.object().shape({
+    name: yup.string().required('Это поле обязательное'),
+    street: yup.string().required('Это поле обязательное'),
+    houseNumber: yup.string().required('Это поле обязательное'),
+    flat: yup.string().required('Это поле обязательное'),
+    addressComment: yup.string().required('Это поле обязательное')
+  });
 
   return (
     <Layout>
@@ -81,7 +120,7 @@ const UserPage = () => {
           </div>
         ) : null} */}
 
-        {profile.map((item) => (
+        {profile.map((item, index) => (
           <div className={`grid gap-2 bg-light-blue rounded-xl p-3 shadow-md`} key={item.id}>
             {/* <p className={`${styleP}`}>
             <strong>День рождения: </strong> {` ${user?.birthday ? user?.birthday : ''}`}
@@ -117,20 +156,34 @@ const UserPage = () => {
               border-b-2 `}>
               <Button
                 className={`bg-blue-300 hover:bg-blue-400`}
-                onClick={() => setIsOpenEditProfile(true)}>
+                onClick={() => {
+                  setProfileData(item);
+                  // console.log(item);
+                  setVisible(true);
+                }}>
                 Изменить поля
               </Button>
               <Button
                 className={`bg-blue-300 hover:bg-blue-400`}
-                onClick={() => setIsOpenDelete(true)}>
+                value={item.id!}
+                onClick={(e: any) => {
+                  setIsOpenDelete(true);
+                  setProfileId(e.target.value);
+                  setName(item.name);
+                }}>
                 Удалить адрес
               </Button>
-              <DeleteProfile setVisible={setIsOpenDelete} visible={isOpenDelete} data={item}/>
-              <EditProfile
+              <DeleteProfile
+                setVisible={setIsOpenDelete}
+                visible={isOpenDelete}
+                id={profileId}
+                name={name}
+              />
+              {/* <EditProfile
                 setVisible={setIsOpenEditProfile}
                 visible={isOpenEditProfile}
-                data={item}
-              />
+                data={profileData!}
+              /> */}
             </div>
             {item.name === 'По умолчанию' && (
               <div className={``}>
@@ -143,6 +196,7 @@ const UserPage = () => {
             )}
           </div>
         ))}
+
         <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
         <CreateProfile setVisible={setIsOpenCreate} visible={isOpenCreate} />
       </div>
@@ -150,6 +204,57 @@ const UserPage = () => {
       <div className={`mt-4 mx-auto`}>
         <OrderHistory />
       </div>
+
+      <Modal setIsOpenModal={setVisible} isOpenModal={visible}>
+        <div className="flex items-center justify-between">
+          <h2 className={`text-center`}>Изменение полей адреса</h2>
+          <button
+            onClick={() => {
+              setVisible(false);
+            }}>
+            <AiOutlineCloseCircle className={`w-5 h-5 md:w-7 md:h-7 hover:text-blue-500`} />
+          </button>
+        </div>
+        <Formik
+          initialValues={profileData!}
+          onSubmit={handleEditSave}
+          validationSchema={validation}>
+          {({ values }) => (
+            <Form className="flex flex-col space-y-4">
+              <div className={`grid grid-cols-1 items-center`}>
+                <Input
+                  inputType="formik"
+                  name="name"
+                  id="name"
+                  label="Название для нового адреса"
+                  placeholder="Например: офис, дача, дом родителей"
+                />
+                <Input inputType="formik" id="street" name="street" label="Микрорайон / Улица" />
+                <Input inputType="formik" id="houseNumber" name="houseNumber" label="Номер дома" />
+                <Input inputType="formik" id="flat" name="flat" label="Квартира" />
+                <Input
+                  inputType="formik"
+                  id="addressComment"
+                  name="addressComment"
+                  label="Комментарий к адресу"
+                  placeholder="Например: блок, подъезд, этаж, домофон, лифт, и др"
+                />
+              </div>
+              <div className={`flex gap-3 justify-between`}>
+                <Button type="submit" className={`hover:bg-blue-500`}>
+                  Сохранить
+                </Button>
+                <Button
+                  type="button"
+                  onClick={() => handleEdit(values)}
+                  className={`hover:bg-blue-500`}>
+                  Применить
+                </Button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </Modal>
     </Layout>
   );
 };
