@@ -31,7 +31,7 @@ export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
     toast
       .promise(update(values).unwrap(), {
         loading: 'Загрузка',
-        success: 'Обновлено успешно',
+        success: 'Сохранено',
         error: (error) => JSON.stringify(error, null, 2)
       })
       .finally(() => {
@@ -58,30 +58,7 @@ export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
               <Input inputType="formik" name="firstname" id="firstname" label="Имя" />
               <Input inputType="formik" name="middleName" id="middleName" label="Отчество" />
             </div>
-            <div className={`grid grid-cols-1 sm:grid-cols-3 items-center`}>
-              {/* <Input
-                inputType="formik"
-                name="phone"
-                id="phone"
-                label="Телефон"
-                mask="+7 9999999999"
-                placeholder="+7 (999) 999 9999"
-              /> */}
-              {/* <Input
-                inputType="formik"
-                name="telegramAccount"
-                id="telegramAccount"
-                label="Telegram"
-              /> */}
-              {/* <Input inputType="formik" name="email" id="email" label="email" /> */}
-              {/* <Input
-                inputType="formik"
-                type="date"
-                name="birthday"
-                id="birthday"
-                label="День рождения"
-              /> */}
-            </div>
+            
             <div className={`flex gap-3 justify-between`}>
               <Button type="submit" className={`hover:bg-blue-500`}>
                 Сохранить

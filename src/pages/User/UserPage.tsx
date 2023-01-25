@@ -112,7 +112,8 @@ const UserPage = () => {
               {` ${item?.addressComment ? item.addressComment : 'Нет данных'} `}
             </p>
             <div
-              className={`flex items-center justify-between gap-2 border-t-2 py-2 border-gray-400 border-dashed`}>
+              className={`flex items-center justify-between gap-2 border-t-2 py-2 border-gray-400 border-dashed
+              border-b-2 `}>
               <Button
                 className={`bg-blue-300 hover:bg-blue-400`}
                 onClick={() => setIsOpenEditProfile(true)}>
@@ -123,12 +124,22 @@ const UserPage = () => {
                 onClick={() => setIsOpenDelete(true)}>
                 Удалить адрес
               </Button>
+
               <EditProfile
                 setVisible={setIsOpenEditProfile}
                 visible={isOpenEditProfile}
                 data={item}
               />
             </div>
+            {item.name === 'По умолчанию' && (
+              <div className={``}>
+                <Button
+                  className={`bg-blue-300 hover:bg-blue-400 h-9`}
+                  onClick={() => setIsOpenCreate(true)}>
+                  Добавить новый адрес
+                </Button>
+              </div>
+            )}
           </div>
         ))}
         <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
