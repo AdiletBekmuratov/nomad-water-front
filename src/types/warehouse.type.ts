@@ -5,5 +5,11 @@ export type IWarehouse = {
   createdDate: string;
   updatedDate: string;
 };
+export type IWarehouseBalance = {
+  id?: number;
+  warehouseId?: number;
+  productId: number;
+  quantity: number;
+};
 
 export type IWarehouseUpdate = Omit<IWarehouse, 'createdDate' | 'updatedDate'>;

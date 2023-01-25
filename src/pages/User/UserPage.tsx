@@ -125,7 +125,7 @@ const UserPage = () => {
                 onClick={() => setIsOpenDelete(true)}>
                 Удалить адрес
               </Button>
-              <DeleteProfile setVisible={setIsOpenDelete} visible={isOpenDelete} data={item}/>
+              <DeleteProfile setVisible={setIsOpenDelete} visible={isOpenDelete} data={item} />
               <EditProfile
                 setVisible={setIsOpenEditProfile}
                 visible={isOpenEditProfile}

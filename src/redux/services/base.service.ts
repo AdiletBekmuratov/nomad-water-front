@@ -1,3 +1,4 @@
+import { IWarehouseBalance } from './../../types/warehouse.type';
 import {
   IOrder,
   IWorker,
@@ -29,9 +30,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Products', id } as const)),
-              { type: 'Products', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Products', id } as const)),
+            { type: 'Products', id: 'LIST' }
+          ]
           : [{ type: 'Products', id: 'LIST' }]
     }),
     // /product/productCategory/{productCategoryId}
@@ -43,9 +44,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Products', id } as const)),
-              { type: 'Products', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Products', id } as const)),
+            { type: 'Products', id: 'LIST' }
+          ]
           : [{ type: 'Products', id: 'LIST' }]
     }),
     createProduct: builder.mutation<IProduct, IProductCreate>({
@@ -106,9 +107,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
-              { type: 'ProductCategory', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+            { type: 'ProductCategory', id: 'LIST' }
+          ]
           : [{ type: 'ProductCategory', id: 'LIST' }]
     }),
     getProductCategoryID: builder.query<IProductCategoryCreate[], number>({
@@ -118,9 +119,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
-              { type: 'ProductCategory', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+            { type: 'ProductCategory', id: 'LIST' }
+          ]
           : [{ type: 'ProductCategory', id: 'LIST' }]
     }),
     updateProductCategory: builder.mutation<void, IProductCategoryCreate>({
@@ -147,9 +148,21 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
-              { type: 'Warehouses', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+            { type: 'Warehouses', id: 'LIST' }
+          ]
+          : [{ type: 'Warehouses', id: 'LIST' }]
+    }),
+    getWarehouseID: builder.query<IWarehouse[], number>({
+      query: (id) => ({
+        url: `warehouse/${Number(id)}`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
+            { type: 'Warehouses', id: 'LIST' }
+          ]
           : [{ type: 'Warehouses', id: 'LIST' }]
     }),
     createWarehouse: builder.mutation<void, IWarehouseUpdate>({
@@ -157,13 +170,6 @@ export const baseApi = createApi({
         url: `warehouse`,
         method: 'POST',
         body
-      }),
-      invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
-    }),
-    deleteWarehouse: builder.mutation<void, number>({
-      query: (id) => ({
-        url: `warehouse/${Number(id)}`,
-        method: 'DELETE'
       }),
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
     }),
@@ -175,6 +181,39 @@ export const baseApi = createApi({
       }),
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
     }),
+    deleteWarehouse: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `warehouse/${Number(id)}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
+    }),
+
+    // Warehouses Balance
+    addProductToWarehouse: builder.mutation<void, IWarehouseBalance>({
+      query: (body) => ({
+        url: `warehouse/${Number(body.id)}/balance`,
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
+    }),
+    updateWarehouseBalance: builder.mutation<void, IWarehouseBalance>({
+      query: (body) => ({
+        url: `warehouse/${Number(body.id)}/balance`,
+        method: 'PUT',
+        body
+      }),
+      invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
+    }),
+    deleteProductFromWarehouse: builder.mutation<IWarehouseBalance, IWarehouseBalance>({
+      query: ({ id, productId }) => ({
+        url: `warehouse/${Number(id)}/balance/${Number(productId)}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
+    }),
+
 
     // Warehouse keeper
     createWarehouseWorker: builder.mutation<void, IWorker>({
@@ -193,9 +232,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Worker', id } as const)),
-              { type: 'Worker', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Worker', id } as const)),
+            { type: 'Worker', id: 'LIST' }
+          ]
           : [{ type: 'Worker', id: 'LIST' }]
     }),
     deleteWorker: builder.mutation<void, number>({
@@ -222,9 +261,9 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Order', id } as const)),
-              { type: 'Order', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Order', id } as const)),
+            { type: 'Order', id: 'LIST' }
+          ]
           : [{ type: 'Order', id: 'LIST' }]
     })
   })
@@ -247,9 +286,14 @@ export const {
   useUpdateProductCategoryMutation,
   // Warehouses
   useGetAllWarehousesQuery,
+  useGetWarehouseIDQuery,
   useCreateWarehouseMutation,
   useDeleteWarehouseMutation,
   useUpdateWarehouseMutation,
+  // Warehouses Balance
+  useAddProductToWarehouseMutation,
+  useUpdateWarehouseBalanceMutation,
+  useDeleteProductFromWarehouseMutation,
 
   //orders
   useGetUserOrderQuery,
