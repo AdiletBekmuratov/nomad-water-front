@@ -5,18 +5,19 @@ import { useGetALLProfilesQuery } from '@/redux/services/profile.service';
 import { Edit } from '@/pages/User/Edit';
 import { CreateProfile } from './CreateProfile';
 import { EditProfile } from './EditProfile';
+import { DeleteProfile } from './DeleteProfile';
 import OrderHistory from '@/pages/User/OrderHistory';
 
 import { Layout } from '@/components/Layout';
+import { Button } from '@/components/Forms';
+
 import { FaTenge, FaUserTie } from 'react-icons/fa';
 import { AiOutlineEdit } from 'react-icons/ai';
-import { Button } from '@/components/Forms';
 
 const UserPage = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { data: profile = [] } = useGetALLProfilesQuery();
-  const isMain = profile.find((item) => item.name === 'По умолчанию');
-  console.log(profile);
+
   const [isOpenEdit, setIsOpenEdit] = React.useState(false); //изменение данных юзера
   const [isOpenCreate, setIsOpenCreate] = React.useState(false); //создание нового профиля
   const [isOpenEditProfile, setIsOpenEditProfile] = React.useState(false); //изменение профиля по id
@@ -124,7 +125,7 @@ const UserPage = () => {
                 onClick={() => setIsOpenDelete(true)}>
                 Удалить адрес
               </Button>
-
+              <DeleteProfile setVisible={setIsOpenDelete} visible={isOpenDelete} data={item}/>
               <EditProfile
                 setVisible={setIsOpenEditProfile}
                 visible={isOpenEditProfile}
