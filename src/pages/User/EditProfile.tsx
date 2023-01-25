@@ -13,11 +13,13 @@ interface IEditModalProps {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
   data: IProfile;
+  id?: number;
 }
 
-export const EditProfile: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
+export const EditProfile: FC<IEditModalProps> = ({ visible, setVisible, data, id }) => {
   const [update, { isLoading }] = useUpdateProfileMutation();
-  //const { data: profile} = useGetProfileIDQuery(id!); 
+  //const { data: profile} = useGetProfileIDQuery(id!);
+
   const handleEdit = async (values: IProfile) => {
     toast
       .promise(update(values).unwrap(), {
@@ -46,6 +48,9 @@ export const EditProfile: FC<IEditModalProps> = ({ visible, setVisible, data }) 
     flat: yup.string().required('Это поле обязательное'),
     addressComment: yup.string().required('Это поле обязательное')
   });
+
+  console.log(data);
+
   return (
     <Modal setIsOpenModal={setVisible} isOpenModal={visible}>
       <div className="flex items-center justify-between">
