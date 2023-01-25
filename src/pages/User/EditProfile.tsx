@@ -1,6 +1,6 @@
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
-import { useUpdateProfileMutation } from '@/redux/services/profile.service';
+import { useGetProfileIDQuery, useUpdateProfileMutation } from '@/redux/services/profile.service';
 
 import { IProfile } from '@/types';
 import { Form, Formik } from 'formik';
@@ -17,7 +17,7 @@ interface IEditModalProps {
 
 export const EditProfile: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
   const [update, { isLoading }] = useUpdateProfileMutation();
-
+  //const { data: profile} = useGetProfileIDQuery(id!); 
   const handleEdit = async (values: IProfile) => {
     toast
       .promise(update(values).unwrap(), {
@@ -32,7 +32,7 @@ export const EditProfile: FC<IEditModalProps> = ({ visible, setVisible, data }) 
     toast
       .promise(update(values).unwrap(), {
         loading: 'Загрузка',
-        success: 'Обновлено успешно',
+        success: 'Сохранено',
         error: (error) => JSON.stringify(error, null, 2)
       })
       .finally(() => {

@@ -102,6 +102,8 @@ const LoginPage = () => {
       success: 'Добро пожаловать в Nomad water!',
       loading: 'Загрузка',
       error: (err) => err.toString()
+    }).finally(() => {
+      setIsOpenModal(false);
     });
     // } else {
     //   toast.promise(dispatch(login({ phone: values.phone, password: values.password })).unwrap(), {
