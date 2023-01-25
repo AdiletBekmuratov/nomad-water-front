@@ -31,7 +31,7 @@ export const profileApi = createApi({
     //получить профиль по ID
     getProfileID: builder.query<IProfile, number>({
       query: (id) => ({
-        url: `user/${Number(id)}`
+        url: `user/profile/${Number(id)}`
       }),
       providesTags: [{ type: 'Profile', id: 'LIST' }]
     }),
@@ -47,7 +47,7 @@ export const profileApi = createApi({
     //обновить профиль
     updateProfile: builder.mutation<void, IProfile>({
       query: (body) => ({
-        url: `user/${Number(body.id)}`,
+        url: `user/profile/${Number(body.id)}`,
         method: 'PUT',
         body
       }),
@@ -56,7 +56,7 @@ export const profileApi = createApi({
     //удалить профиль
     deleteProfile: builder.mutation<void, number>({
       query: (id) => ({
-        url: `user/${Number(id)}`,
+        url: `user/profile/${Number(id)}`,
         method: 'DELETE'
       }),
       invalidatesTags: [{ type: 'Profile', id: 'LIST' }]
