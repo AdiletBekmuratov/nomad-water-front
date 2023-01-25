@@ -161,7 +161,7 @@ const LoginPage = () => {
                     </div>
                     <div className={`col-span-1 lg:col-span-3`}></div>{' '}
                     <div>
-                      <Input inputType="formik" id="street" name="street" label="Улица" />
+                      <Input inputType="formik" id="street" name="street" label="Микрорайон / Улица" />
                     </div>
                     <div className={`grid grid-cols-2 gap-20`}>
                       <div>

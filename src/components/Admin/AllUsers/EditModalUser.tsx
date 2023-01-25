@@ -66,7 +66,7 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
               </div>
 
               <div className={`flex flex-1 flex-col md:flex`}>
-                <Input inputType="formik" name="street" id="street" label="Улица" />
+                <Input inputType="formik" name="street" id="street" label="Микрорайон / Улица" />
                 <div className={`grid grid-cols-2 text-center`}>
                   <Input inputType="formik" name="houseNumber" id="houseNumber" label="Дом" />
                   <Input inputType="formik" name="flat" id="flat" label="Квартира" />

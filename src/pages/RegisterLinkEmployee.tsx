@@ -120,7 +120,7 @@ const RegisterLinkEmployee: FC = () => {
               </div>
 
               <div className={`grid grid-cols-1 md:grid-col-2 gap-2`}>
-                <Input inputType="formik" name="street" id="street" label="Улица" />
+                <Input inputType="formik" name="street" id="street" label="Микрорайон / Улица" />
                 <div className={`grid grid-cols-3 gap-3 text-center`}>
                   <Input inputType="formik" name="houseNumber" id="houseNumber" label="Дом" />
                   <Input inputType="formik" name="flat" id="flat" label="Квартира" />

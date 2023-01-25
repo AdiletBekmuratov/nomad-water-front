@@ -55,7 +55,7 @@ export const Accordion: FC<Props> = (props) => {
                   name="street"
                   id="street"
                   inputType="formik"
-                  label="Улица"
+                  label="Микрорайон / Улица"
                   className={`${styleInput}`}
                 />
               </div>

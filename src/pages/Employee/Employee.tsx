@@ -48,7 +48,7 @@ const Employee = () => {
           </div>
           <div className="grid gap-2 ">ок
             <p className={`${styleP}`}>
-              <strong>Улица: </strong>{' '}
+              <strong>Микрорайон / Улица: </strong>{' '}
               <span>{` ${user?.street ? user?.street : 'Не заполнено'} `}</span>
             </p>
             <p className={`${styleP}`}>

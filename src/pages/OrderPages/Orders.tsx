@@ -68,11 +68,9 @@ const Orders = () => {
 
   return (
     <Layout className={``}>
-      <div>
-        <Table id="ProductsTable" data={orders} columns={columnsUser} title="Текущие заказы" />
-        <div className={`border-b-2 border-dotted border-gray-700 py-2 my-3 `}></div>
-        <OrderHistory />
-      </div>
+      <Table id="ProductsTable" data={orders} columns={columnsUser} title="Текущие заказы" />
+      <div className={`border-b-2 border-dotted border-gray-700 py-2 my-3 `}></div>
+      <OrderHistory />
     </Layout>
   );
 };

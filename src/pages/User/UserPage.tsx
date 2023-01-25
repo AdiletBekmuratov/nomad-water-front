@@ -5,77 +5,100 @@ import { Edit } from '@/pages/User/Edit';
 import OrderHistory from '@/pages/User/OrderHistory';
 
 import { Layout } from '@/components/Layout';
+import { FaTenge, FaUserTie } from 'react-icons/fa';
+import { useGetALLProfilesQuery } from '@/redux/services/profile.service';
+import { AiOutlineEdit } from 'react-icons/ai';
 import { Button } from '@/components/Forms';
+import { CreateProfile } from './CreateProfile';
 
 const UserPage = () => {
   const { user } = useAppSelector((state) => state.auth);
-  
-  const [isOpenEdit, setIsOpenEdit] = React.useState(false);
-  const styleP = `text-sm md:text-base bg-white rounded-md px-3 grid grid-cols-2`;
+  const { data: profile = [] } = useGetALLProfilesQuery();
+  console.log(profile);
+  const [isOpenEdit, setIsOpenEdit] = React.useState(false);//изменение данных юзера
+  const [isOpenCreate, setIsOpenCreate] = React.useState(false);//создание нового профиля
+  const [isOpenEditProfile, setIsOpenEditProfile] = React.useState(false);//изменение профиля по id
+  const [isOpenDelete, setIsOpenDelete] = React.useState(false);//удаление профиля по id
+  const styleP = `text-sm md:text-base grid grid-cols-2`;
+  const styleName = `text-sm md:text-base grid grid-cols-2 py-1 border-b-2 border-gray-400 border-dashed`;
   return (
     <Layout>
-      <div className="">
-        <h1 className="font-montserrat text-xl font-semibold text-center text-dark-blue">
-          Мои данные
-        </h1>
-        <div
-          className={`font-montserrat text-dark-blue grid grid-cols-1 lg:grid-cols-3 mt-2 gap-5 lg:gap-3`}>
-          <div className="grid gap-2 ">
-            <p className={`${styleP}`}>
-              <strong>Фамилия: </strong> <span>{` ${user?.lastname} `}</span>
-            </p>
-            <p className={`${styleP}`}>
-              <strong>Имя: </strong> {` ${user?.firstname} `}
-            </p>
-            <p className={`${styleP}`}>
-              <strong>Отчество: </strong>{' '}
-              {` ${user?.middleName ? user?.middleName : 'Не заполнено'} `}
-            </p>
-          </div>
-          <div className="grid gap-2 ">
-            <p className={`${styleP}`}>
-              <strong>День рождения: </strong> {` ${user?.birthday ? user?.birthday : ''}`}
-            </p>
-            <p className={`${styleP}`}>
-              <strong>Телефон: </strong> <span>{` ${user?.phone} `}</span>
-            </p>
-            <p className={`${styleP}`}>
-              <strong>Telegram: </strong>{' '}
-              {` ${user?.telegramAccount ? user?.telegramAccount : 'Не заполнено'} `}
-            </p>
-            {/* <p className={`${styleP}`}>
-              <strong>Почта: </strong> {` ${user?.email ? user?.email : 'Не заполнено'} `}
-            </p> */}
-          </div>
-          <div className="grid gap-2 ">
-            <p className={`${styleP}`}>
-              <strong>Улица: </strong>{' '}
-              <span>{` ${user?.street ? user?.street : 'Не заполнено'} `}</span>
-            </p>
-            <p className={`${styleP}`}>
-              <strong>Дом: </strong> {` ${user?.houseNumber ? user?.houseNumber : 'Не заполнено'} `}
-            </p>
-            <p className={`${styleP}`}>
-              <strong>Квартира: </strong> {` ${user?.flat ? user?.flat : 'Не заполнено'} `}
-            </p>
-          </div>
+      <div
+        className={`flex items-center justify-between bg-light-blue rounded-lg 
+      p-1 md:p-3 font-bold text-xs md:text-base gap-2 md:gap-3 shadow-lg`}>
+        <span className={`flex flex-col md:flex-row items-center gap-3`}>
+          <FaUserTie className={`h-5 w-5 md:h-6 md:w-6 `} />
+          {` ${user?.phone} `}
+        </span>
+        <div className={` flex flex-col md:flex-row flex-1 justify-evenly `}>
+          <span>{` ${user?.lastname} `}</span>
+          <span>{` ${user?.firstname} `}</span>
+          <span>{` ${user?.middleName ? user?.middleName : 'Нет данных'} `}</span>
         </div>
-        <div className={`grid gap-1 lg:gap-2 grid-cols-1 lg:grid-cols-3 py-2`}>
-          <p className={`${styleP}`}>
-            <strong>Мои бонусы: </strong> {` ${user?.bonuses ? user?.bonuses : '0'}`}
-          </p>
-        </div>
-        <div className={`flex justify-center py-2`}>
-          <Button className={`w-80`} onClick={() => setIsOpenEdit(true)}>
-            Изменить данные
+
+        <span className={`flex flex-col md:flex-row items-center gap-1`}>
+          <FaTenge className={`h-5 w-5 md:h-6 md:w-6`} />
+          {` 50000 `}
+        </span>
+        <button className="" onClick={() => setIsOpenEdit(true)}>
+          {/* Изменить данные */}
+          <AiOutlineEdit className={`h-6 w-6 md:h-7 md:w-7 text-red-600`} />
+        </button>
+      </div>
+
+      <div className={`text-dark-blue grid md:grid-cols-2 lg:grid-cols-3 mt-2 gap-5 lg:gap-3`}>
+        <div>
+          <Button
+            className={`bg-blue-300 hover:bg-blue-400 h-9`}
+            onClick={() => setIsOpenCreate(true)}>
+            Добавить новый адрес
           </Button>
-          <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
         </div>
-        <div className={`border-b-2 border-dotted border-gray-700 py-2`}></div>
-        <div className={`mt-4 mx-auto`}>
-          {/* <h2 className={`text-center font-semibold text-2xl`}>История заказов</h2> */}
-          <OrderHistory />
-        </div>
+
+        {profile.map((item) => (
+          <div className={`grid gap-2 bg-light-blue rounded-xl p-3 shadow-md`} key={item.id}>
+            {/* <p className={`${styleP}`}>
+            <strong>День рождения: </strong> {` ${user?.birthday ? user?.birthday : ''}`}
+          </p> */}
+            <p className={`${styleName}`}>
+              <strong>Имя адреса </strong>{' '}
+              <span>{` ${item?.name ? item.name : 'Нет данных'} `}</span>
+            </p>
+            <p className={`${styleP}`}>
+              <strong>Микрорайон / Улица: </strong>{' '}
+              <span>{` ${item?.street ? item.street : 'Нет данных'} `}</span>
+            </p>
+            <p className={`${styleP}`}>
+              <strong>Дом: </strong> {` ${item?.houseNumber ? item.houseNumber : 'Нет данных'} `}
+            </p>
+            <p className={`${styleP}`}>
+              <strong>Квартира: </strong> {` ${item?.flat ? item.flat : 'Нет данных'} `}
+            </p>
+            <p className={`${styleP}`}>
+              <strong>Комментарий к адресу: </strong>
+              {` ${item?.addressComment ? item.addressComment : 'Нет данных'} `}
+            </p>
+            <div
+              className={`flex items-center justify-between gap-2 border-t-2 py-2 border-gray-400 border-dashed`}>
+              <Button
+                className={`bg-blue-300 hover:bg-blue-400`}
+                onClick={() => setIsOpenEditProfile(true)}>
+                Изменить поля
+              </Button>
+              <Button
+                className={`bg-blue-300 hover:bg-blue-400`}
+                onClick={() => setIsOpenDelete(true)}>
+                Удалить адрес
+              </Button>
+            </div>
+          </div>
+        ))}
+        <CreateProfile setVisible={setIsOpenCreate} visible={isOpenCreate} />
+        <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
+      </div>
+      <div className={`border-b-2 border-dotted border-gray-700 py-2`}></div>
+      <div className={`mt-4 mx-auto`}>
+        <OrderHistory />
       </div>
     </Layout>
   );

@@ -91,7 +91,7 @@ const AdminAllUsers = () => {
         accessorKey: 'phone'
       },
       {
-        header: 'Улица',
+        header: 'Микрорайон Улица',
         accessorKey: 'street'
       },
       {

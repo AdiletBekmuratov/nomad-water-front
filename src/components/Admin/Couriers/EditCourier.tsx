@@ -68,7 +68,7 @@ export const EditCourier: FC<IEditModalProps> = ({ visible, setVisible, data }) 
             </div>
 
             <div className={`grid grid-cols-3 text-center`}>
-                <Input inputType="formik" name="street" id="street" label="Улица" />
+                <Input inputType="formik" name="street" id="street" label="Микрорайон / Улица" />
                 <Input inputType="formik" name="houseNumber" id="houseNumber" label="Дом" />
                 <Input inputType="formik" name="flat" id="flat" label="Квартира" />
               </div>
