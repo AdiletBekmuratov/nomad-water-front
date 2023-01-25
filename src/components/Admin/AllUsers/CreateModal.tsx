@@ -19,8 +19,8 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
   const employRole = [
     { id: 1, role: 'ROLE_EMPLOYEE', name: 'Оператор' },
     { id: 2, role: 'ROLE_COURIER', name: 'Курьер' },
-    { id: 3, role: 'ROLE_MASTER', name: 'Производственный администратор ' },
-    { id: 4, role: 'ROLE_KEEPER', name: 'Продавец магазина' }
+    { id: 3, role: 'ROLE_MASTER', name: 'Мастер' },
+    { id: 4, role: 'ROLE_KEEPER', name: 'Кипер' }
   ];
   let location = useLocation();
   let pathname = location.pathname;

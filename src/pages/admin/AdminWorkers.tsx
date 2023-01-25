@@ -63,7 +63,7 @@ const AdminWorkers = () => {
       },
       {
         header: 'Адрес склада',
-        accessorKey: 'warehouse.warehouseAddress'
+        accessorKey: 'warehouseId'
       },
       {
         header: 'Изменить \n Деактивировать',
