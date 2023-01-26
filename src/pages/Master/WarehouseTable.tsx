@@ -126,7 +126,7 @@ const WarehouseTable = () => {
             ))}
           </div>
         </div>
-        {products.map((product) => (
+        {products.map((product, id) => (
           <div
             className={`grid grid-cols-1 lg:grid-cols-5  items-center gap-2 bg-light-blue rounded-lg 
           p-1 md:p-3 text-xs`}
@@ -137,10 +137,10 @@ const WarehouseTable = () => {
             </h2>
             <h2 className={`text-dark-blue text-sm`}>
               {warehouse ? (
-                warehouse.warehouseBalanceList[product.id] ? (
+                warehouse.warehouseBalanceList[Number(id)] ? (
                   <>
                     <strong className="font-medium">На складе: </strong>
-                    {(quantityProd = warehouse.warehouseBalanceList[product.id].quantity)}
+                    {(quantityProd = warehouse.warehouseBalanceList[Number(id)].quantity)}
                   </>
                 ) : (
                   <>
@@ -153,7 +153,7 @@ const WarehouseTable = () => {
             <Input
               inputType="default"
               id="quantity"
-              placeholder="Ввведите количество"
+              placeholder="Введите количество"
               value={valueQuantity}
               onChange={onChangeQuantity}
             />

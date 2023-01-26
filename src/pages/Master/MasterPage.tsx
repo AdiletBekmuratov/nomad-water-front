@@ -7,6 +7,7 @@ import { Layout } from '@/components/Layout';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { FaTenge, FaUserTie } from 'react-icons/fa';
 import OrderHistory from '../User/OrderHistory';
+import Pending from '../Employee/Pending';
 
 const MasterPage = () => {
   const { user } = useAppSelector((state) => state.auth);
