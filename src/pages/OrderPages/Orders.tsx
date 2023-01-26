@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
-import { Layout } from '@/components/Layout';
-import { useAppSelector } from '@/hooks/useAppSelector';
-import Loader from '@/components/Landing/Loader';
 import { useLazyGetUserOrderQuery } from '@/redux/services/base.service';
+
+import { Layout } from '@/components/Layout';
 import { Table } from '@/components/Table';
 import { ColumnDef } from '@tanstack/react-table';
 import { IOrder } from '@/types';
+import Loader from '@/components/Landing/Loader';
 import OrderHistory from '../User/OrderHistory';
 
 const Orders = () => {
-  // const { data: allOrders = [] } = useGetUserOrderQuery();
+
   const [fetchOrders] = useLazyGetUserOrderQuery();
   const [allOrders, setAllOrders] = useState<IOrder>();
 
@@ -23,7 +23,6 @@ const Orders = () => {
     () => [
       {
         header: 'Статус заказа',
-        //accessorKey: 'statusId'
         cell: ({ row }) =>
           row.original.statusId === 2 ? (
             <span className="text-blue-400 uppercase">{'в пути'}</span>

@@ -16,10 +16,10 @@ const Warehouses: FC = () => {
     <Layout>
       {user ? (
         (user.role === 'ROLE_ADMIN' || user.role === 'ROLE_MASTER') ? (
-          <div className={`grid grid-cols-1 md:grid-cols-2 gap-5`}>
+          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5`}>
             {warehouses.map((warehouse) => (
               <div
-                className={`bg-white p-2 md:p-4 grid gap-3 rounded-lg shadow-lg`}
+                className={`bg-white p-3 md:p-4 grid gap-3 rounded-lg shadow-lg`}
                 key={warehouse.id}>
                 
                 <div className={`flex flex-col gap-2`}>
@@ -33,9 +33,7 @@ const Warehouses: FC = () => {
                   <span className={cardTextStyle}>
                     <strong className="font-medium">Телефон:</strong> {warehouse.phone}
                   </span>
-                  <span className={cardTextStyle}>
-                    <strong className="font-medium">Режим работы: </strong> 8:00 - 20:00
-                  </span>
+                
                 </div>
                 <Link to={`/warehouse/${warehouse.id}`}>
                   <Button>Проверить остатки на складе</Button>

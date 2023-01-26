@@ -6,6 +6,7 @@ import { Layout } from '@/components/Layout';
 
 import { AiOutlineEdit } from 'react-icons/ai';
 import { FaTenge, FaUserTie } from 'react-icons/fa';
+import OrderHistory from '../User/OrderHistory';
 
 const MasterPage = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -36,6 +37,7 @@ const MasterPage = () => {
         </button>
         <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
       </div>
+      <OrderHistory />
     </Layout>
   );
 };

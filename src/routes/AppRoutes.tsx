@@ -114,7 +114,7 @@ const AppRoutes = () => {
               path="/myOrders"
               element={
                 <ProtectedRoute
-                  isAllowed={user?.role === 'ROLE_USER'}
+                  isAllowed={user?.role === 'ROLE_USER' || user?.role === 'ROLE_MASTER'}
                   redirectPath="/courier/orders">
                   <Orders />
                 </ProtectedRoute>

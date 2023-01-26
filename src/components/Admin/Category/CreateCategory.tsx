@@ -49,7 +49,7 @@ export const CreateCategory: FC<ICreateModalProps> = ({ setVisible, visible }) =
               name="name"
               id="name"
               label="Название категории"
-              placeholder="Введите название категории"
+              placeholder="Например, вода, услуга, оборудование"
             />
 
             <div className="modal-action">
