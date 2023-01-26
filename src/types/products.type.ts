@@ -1,5 +1,5 @@
 export type IProduct = {
-  id?: number;
+  id: number;
   imageUrl?: string;
   description: string;
   productCategoryId: number;

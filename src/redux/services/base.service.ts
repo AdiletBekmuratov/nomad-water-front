@@ -184,15 +184,15 @@ export const baseApi = createApi({
     }),
 
     // Warehouses Balance
-    addProductToWarehouse: builder.mutation<void, IWarehouseBalance>({
+    addProductToWarehouse: builder.mutation<number, IWarehouseBalance>({
       query: (body) => ({
-        url: `warehouse/${Number(body.id)}/balance`,
+        url: `warehouse/${Number(body.warehouseId)}/balance`,
         method: 'POST',
         body
       }),
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
     }),
-    updateWarehouseBalance: builder.mutation<void, IWarehouseBalance>({
+    updateWarehouseBalance: builder.mutation<void, IWarehouseUpdate>({
       query: (body) => ({
         url: `warehouse/${Number(body.id)}/balance`,
         method: 'PUT',
