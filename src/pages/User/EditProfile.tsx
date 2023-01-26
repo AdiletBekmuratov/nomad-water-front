@@ -49,8 +49,6 @@ export const EditProfile: FC<IEditModalProps> = ({ visible, setVisible, data, id
     addressComment: yup.string().required('Это поле обязательное')
   });
 
-  console.log(data);
-
   return (
     <Modal setIsOpenModal={setVisible} isOpenModal={visible}>
       <div className="flex items-center justify-between">

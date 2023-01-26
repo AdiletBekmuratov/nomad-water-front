@@ -13,7 +13,6 @@ import ScrollToTop from '@/components/ScrollToTop';
 import OrderInfo from '@/pages/OrderPages/OrderInfo';
 import UserAppeal from '@/pages/UserAppeal';
 import WarehouseAppeal from '@/pages/WarehouseAppeal';
-import Warehouses from '@/pages/Warehouses';
 import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminCategory from '@/pages/admin/AdminCategory';
 
@@ -31,6 +30,7 @@ const Catalog = lazy(() => import('@/pages/catalog/Catalog'));
 const BottlePage = lazy(() => import('@/pages/catalog/BottlePage'));
 const Orders = lazy(() => import('@/pages/OrderPages/Orders'));
 const OrderCreate = lazy(() => import('@/pages/OrderPages/OrderCreate'));
+const Warehouses = lazy(() => import('@/pages/Master/Warehouses'));
 
 const LoginPage = lazy(() => import('@/pages/LoginPage'));
 const UserPage = lazy(() => import('@/pages/User/UserPage'));
@@ -39,6 +39,7 @@ const MyFavorite = lazy(() => import('@/pages/catalog/MyFavorite'));
 const CourierOrders = lazy(() => import('@/pages/Couriers/CourierOrders'));
 const CourierPage = lazy(() => import('@/pages/Couriers/CourierPage'));
 const Employee = lazy(() => import('@/pages/Employee/Employee'));
+const MasterPage = lazy(() => import('@/pages/Master/MasterPage'));
 
 const RequestsUser = lazy(() => import('@/pages/catalog/RequestsUser'));
 
@@ -76,6 +77,15 @@ const AppRoutes = () => {
                 </ProtectedRoute>
               }
             />
+            {/* личная страница мастера */}
+            <Route
+              path="/master"
+              element={
+                <ProtectedRoute isAllowed={user?.role === 'ROLE_MASTER'} redirectPath="/catalog">
+                  <MasterPage />
+                </ProtectedRoute>
+              }
+            />
             {/* личная страница курьера */}
             <Route
               path="/courier"
@@ -93,6 +103,7 @@ const AppRoutes = () => {
                 </ProtectedRoute>
               }
             />
+            <Route path="/warehouses" element={<Warehouses />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />
             <Route

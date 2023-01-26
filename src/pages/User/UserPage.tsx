@@ -5,7 +5,6 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { useGetALLProfilesQuery, useUpdateProfileMutation } from '@/redux/services/profile.service';
 import { Edit } from '@/pages/User/Edit';
 import { CreateProfile } from './CreateProfile';
-import { EditProfile } from './EditProfile';
 import { DeleteProfile } from './DeleteProfile';
 import OrderHistory from '@/pages/User/OrderHistory';
 
@@ -31,9 +30,9 @@ const UserPage = () => {
   const [profileId, setProfileId] = React.useState(1);
   const [name, setName] = React.useState('');
   const [isOpenDelete, setIsOpenDelete] = React.useState(false); //удаление профиля по id
+  
   const styleP = `text-sm md:text-base grid grid-cols-2`;
   const styleName = `text-sm md:text-base grid grid-cols-2 py-1 border-b-2 border-gray-400 border-dashed`;
-  // const [idProfile, setIdProfile] = React.useState<number | null>(null);
 
   const handleEdit = async (values: IProfile) => {
     toast
@@ -91,41 +90,8 @@ const UserPage = () => {
       </div>
 
       <div className={`text-dark-blue grid md:grid-cols-2 lg:grid-cols-3 mt-2 gap-5 lg:gap-3`}>
-        {/* {mainProfile ? (
-          <div className={`grid gap-2 bg-white  rounded-xl p-3 shadow-md shadow-blue-200`}>
-            <p className={`text-sm md:text-base text-center border-b-2 border-gray-400 border-dashed`}>
-              <strong>Основной профиль </strong>
-            </p>
-            <p className={`${styleP}`}>
-              <strong>Микрорайон / Улица: </strong>{' '}
-              <span>{` ${mainProfile?.street ? mainProfile.street : 'Нет данных'} `}</span>
-            </p>
-            <p className={`${styleP}`}>
-              <strong>Дом: </strong>{' '}
-              {` ${mainProfile?.houseNumber ? mainProfile.houseNumber : 'Нет данных'} `}
-            </p>
-            <p className={`${styleP}`}>
-              <strong>Квартира: </strong>{' '}
-              {` ${mainProfile?.flat ? mainProfile.flat : 'Нет данных'} `}
-            </p>
-            <p className={`${styleP}`}>
-              <strong>Комментарий к адресу: </strong>
-              {` ${mainProfile?.addressComment ? mainProfile.addressComment : 'Нет данных'} `}
-            </p>
-            <Button
-              className={`bg-blue-300 hover:bg-blue-400 h-9`}
-              onClick={() => setIsOpenCreate(true)}>
-              Добавить новый адрес
-            </Button>
-          </div>
-        ) : null} */}
-
         {profile.map((item, index) => (
           <div className={`grid gap-2 bg-light-blue rounded-xl p-3 shadow-md`} key={item.id}>
-            {/* <p className={`${styleP}`}>
-            <strong>День рождения: </strong> {` ${user?.birthday ? user?.birthday : ''}`}
-          </p> */}
-
             {item.name === 'По умолчанию' ? (
               <p
                 className={`text-sm md:text-base text-center border-b-2 border-gray-400 border-dashed`}>
@@ -158,7 +124,7 @@ const UserPage = () => {
                 className={`bg-blue-300 hover:bg-blue-400`}
                 onClick={() => {
                   setProfileData(item);
-                  // console.log(item);
+
                   setVisible(true);
                 }}>
                 Изменить поля
@@ -179,11 +145,6 @@ const UserPage = () => {
                 id={profileId}
                 name={name}
               />
-              {/* <EditProfile
-                setVisible={setIsOpenEditProfile}
-                visible={isOpenEditProfile}
-                data={profileData!}
-              /> */}
             </div>
             {item.name === 'По умолчанию' && (
               <div className={``}>
