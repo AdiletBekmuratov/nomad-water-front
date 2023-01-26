@@ -153,17 +153,11 @@ export const baseApi = createApi({
           ]
           : [{ type: 'Warehouses', id: 'LIST' }]
     }),
-    getWarehouseID: builder.query<IWarehouse[], number>({
+    getWarehouseID: builder.query<IWarehouse, number>({
       query: (id) => ({
         url: `warehouse/${Number(id)}`
       }),
-      providesTags: (result) =>
-        result
-          ? [
-            ...result.map(({ id }) => ({ type: 'Warehouses', id } as const)),
-            { type: 'Warehouses', id: 'LIST' }
-          ]
-          : [{ type: 'Warehouses', id: 'LIST' }]
+      providesTags: [{ type: 'Warehouses', id: 'LIST' }]
     }),
     createWarehouse: builder.mutation<void, IWarehouseUpdate>({
       query: (body) => ({

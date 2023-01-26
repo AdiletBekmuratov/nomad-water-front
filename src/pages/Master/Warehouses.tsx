@@ -11,15 +11,17 @@ const cardTextStyle = 'font-montserrat text-dark-blue text-sm';
 const Warehouses: FC = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { data: warehouses = [] } = useGetAllWarehousesQuery();
+
   return (
     <Layout>
       {user ? (
-        user.role === 'ROLE_ADMIN' || user.role === 'ROLE_MASTER' 
-        ? (
+        (user.role === 'ROLE_ADMIN' || user.role === 'ROLE_MASTER') ? (
           <div className={`grid grid-cols-1 md:grid-cols-2 gap-5`}>
             {warehouses.map((warehouse) => (
-              <div className={`bg-white p-2 md:p-4 grid gap-3 rounded-lg shadow-lg`} key={warehouse.id}>
-                {/* // <div to={`/warehouse/${warehouse.id}`} key={warehouse.id }> */}
+              <div
+                className={`bg-white p-2 md:p-4 grid gap-3 rounded-lg shadow-lg`}
+                key={warehouse.id}>
+                
                 <div className={`flex flex-col gap-2`}>
                   <h3 className="font-semibold font-montserrat text-dark-blue text-sm ">
                     Склад #{warehouse.id}
@@ -35,7 +37,9 @@ const Warehouses: FC = () => {
                     <strong className="font-medium">Режим работы: </strong> 8:00 - 20:00
                   </span>
                 </div>
-                <Button>Проверить остатки на складе</Button>
+                <Link to={`/warehouse/${warehouse.id}`}>
+                  <Button>Проверить остатки на складе</Button>
+                </Link>
               </div>
             ))}
           </div>

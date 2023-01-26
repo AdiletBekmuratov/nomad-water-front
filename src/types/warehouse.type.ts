@@ -4,6 +4,7 @@ export type IWarehouse = {
   warehouseAddress: string;
   createdDate: string;
   updatedDate: string;
+  warehouseBalanceList:string[];
 };
 export type IWarehouseBalance = {
   id?: number;

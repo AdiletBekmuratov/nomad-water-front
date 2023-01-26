@@ -31,6 +31,7 @@ const BottlePage = lazy(() => import('@/pages/catalog/BottlePage'));
 const Orders = lazy(() => import('@/pages/OrderPages/Orders'));
 const OrderCreate = lazy(() => import('@/pages/OrderPages/OrderCreate'));
 const Warehouses = lazy(() => import('@/pages/Master/Warehouses'));
+const WarehouseTable = lazy(() => import('@/pages/Master/WarehouseTable'));
 
 const LoginPage = lazy(() => import('@/pages/LoginPage'));
 const UserPage = lazy(() => import('@/pages/User/UserPage'));
@@ -103,7 +104,10 @@ const AppRoutes = () => {
                 </ProtectedRoute>
               }
             />
+            {/* Список складов */}
             <Route path="/warehouses" element={<Warehouses />} />
+            <Route path="/warehouse/:id" element={<WarehouseTable />} />
+            
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />
             <Route
@@ -153,8 +157,8 @@ const AppRoutes = () => {
 
             <Route path="/requestsUser" element={<RequestsUser />} />
             <Route path="/appeal" element={<UserAppeal />} />
-            <Route path="/warehouse" element={<Warehouses />} />
-            <Route path="/warehouse/:id" element={<WarehouseAppeal />} />
+
+            <Route path="/warehouse/appeal" element={<WarehouseAppeal />} />
           </Routes>
         </ScrollToTop>
       </Router>
