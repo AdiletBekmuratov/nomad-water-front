@@ -54,7 +54,7 @@ const WarehouseTable = () => {
   };
   const categoriesButStyle = `flex items-center justify-center py-2 px-3 
   rounded-2xl bg-white cursor-pointer`;
-
+  let quantityProd: number | null = null;
   return (
     <Layout>
       <div className="grid gap-3">
@@ -140,10 +140,13 @@ const WarehouseTable = () => {
                 warehouse.warehouseBalanceList[product.id] ? (
                   <>
                     <strong className="font-medium">На складе: </strong>
-                    {warehouse.warehouseBalanceList[product.id].quantity}
+                    {(quantityProd = warehouse.warehouseBalanceList[product.id].quantity)}
                   </>
                 ) : (
-                  <strong className="font-medium">Отсутствует на складе</strong>
+                  <>
+                    <strong className="font-medium">На складе: </strong>
+                    {((quantityProd = null), quantityProd === null && '0')}
+                  </>
                 )
               ) : null}
             </h2>
@@ -154,14 +157,27 @@ const WarehouseTable = () => {
               value={valueQuantity}
               onChange={onChangeQuantity}
             />
-            <Button
-              className={`hover:bg-blue-800`}
-              onClick={() =>
-                handleAdd(Number(valueQuantity), Number(product.id), Number(warehouse!.id))
-              }>
-              Добавить
+            {quantityProd === null ? (
+              <Button
+                className={`hover:bg-blue-800`}
+                onClick={() =>
+                  handleAdd(Number(valueQuantity), Number(product.id), Number(warehouse!.id))
+                }>
+                Добавить
+              </Button>
+            ) : (
+              <Button
+                className={`hover:bg-blue-800`}
+                onClick={() =>
+                  handleAdd(Number(valueQuantity), Number(product.id), Number(warehouse!.id))
+                }>
+                Изменить
+              </Button>
+            )}
+
+            <Button className={`hover:bg-blue-800`} disabled={quantityProd === 0}>
+              Убрать со склада
             </Button>
-            <Button className={`hover:bg-blue-800`}>Убрать со склада</Button>
           </div>
         ))}
       </div>
