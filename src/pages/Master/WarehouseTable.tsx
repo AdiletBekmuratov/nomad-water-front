@@ -159,7 +159,7 @@ const WarehouseTable = () => {
             />
             {quantityProd === null ? (
               <Button
-                className={`hover:bg-blue-800`}
+                className={` hover:bg-blue-800`}
                 onClick={() =>
                   handleAdd(Number(valueQuantity), Number(product.id), Number(warehouse!.id))
                 }>
@@ -167,7 +167,7 @@ const WarehouseTable = () => {
               </Button>
             ) : (
               <Button
-                className={`hover:bg-blue-800`}
+                className={`bg-blue-900 hover:bg-blue-700`}
                 onClick={() =>
                   handleAdd(Number(valueQuantity), Number(product.id), Number(warehouse!.id))
                 }>
@@ -175,7 +175,7 @@ const WarehouseTable = () => {
               </Button>
             )}
 
-            <Button className={`hover:bg-blue-800`} disabled={quantityProd === 0}>
+            <Button className={`bg-red-500 hover:bg-blue-800`} disabled={quantityProd === null}>
               Убрать со склада
             </Button>
           </div>
