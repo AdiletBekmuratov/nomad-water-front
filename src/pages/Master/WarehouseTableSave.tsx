@@ -74,12 +74,12 @@ const WarehouseTable = () => {
       return item.id === productId ? { ...item, ...obj } : item;
     });
     console.log(balance);
-    // let warehouseBalanceList: { id: number; warehouseBalance: IWarehouseBalance[] } = {
-    //   id: Number(warehouseIdUrl),
-    //   warehouseBalance: balance
-    // };
+    let warehouseBalanceList: { id: number; warehouseBalance: IWarehouseBalance[] } = {
+      id: Number(warehouseIdUrl),
+      warehouseBalance: balance
+    };
     toast
-      .promise(update(balance).unwrap(), {
+      .promise(update(warehouseBalanceList).unwrap(), {
         loading: 'Загрузка',
         success: 'Обновлено успешно',
         error: (error) => JSON.stringify(error, null, 2)
@@ -167,7 +167,7 @@ const WarehouseTable = () => {
           let quantityProd: number | null = null;
           if (warehouse && warehouse.warehouseBalanceList[Number(product.id)]) {
             quantityProd = warehouse.warehouseBalanceList[Number(product.id)].quantity;
-          }else{
+          } else {
             quantityProd = null;
           }
           return (
