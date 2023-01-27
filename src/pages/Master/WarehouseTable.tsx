@@ -183,7 +183,7 @@ const WarehouseTable = () => {
             </h2>
             <Input
               inputType="default"
-              id={product.id.toString()}
+              id={id.toString()}
               placeholder="Ввведите количество"
               value={valueQuantity}
               onChange={onChangeQuantity}
