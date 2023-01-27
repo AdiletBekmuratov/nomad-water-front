@@ -183,8 +183,9 @@ export const baseApi = createApi({
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
     }),
 
-    // Warehouses Balance
-    addProductToWarehouse: builder.mutation<number, IWarehouseBalance>({
+    // Warehouses Balance 
+    addProductToWarehouse: builder.mutation < void, IWarehouseBalance>({
+
       query: (body) => ({
         url: `warehouse/${Number(body.warehouseId)}/balance`,
         method: 'POST',
@@ -192,74 +193,75 @@ export const baseApi = createApi({
       }),
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
     }),
-    updateWarehouseBalance: builder.mutation<void, IWarehouseUpdate>({
-      query: (body) => ({
-        url: `warehouse/${Number(body.id)}/balance`,
-        method: 'PUT',
-        body
-      }),
-      invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
+  updateWarehouseBalance: builder.mutation<IWarehouse, { id: number; warehouseBalance: IWarehouseBalance[] }>({
+    query: (body) => ({
+      url: `warehouse/${Number(body.id)}/balance`,
+      method: 'PUT',
+      body:body.warehouseBalance
     }),
-    deleteProductFromWarehouse: builder.mutation<IWarehouseBalance, IWarehouseBalance>({
-      query: ({ id, productId }) => ({
-        url: `warehouse/${Number(id)}/balance/${Number(productId)}`,
-        method: 'DELETE'
-      }),
-      invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
+    invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
+  }),
+  deleteProductFromWarehouse: builder.mutation<IWarehouseBalance, IWarehouseBalance>({
+
+    query: ({ id, productId }) => ({
+      url: `warehouse/${Number(id)}/balance/${Number(productId)}`,
+      method: 'DELETE'
     }),
+    invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
+  }),
 
 
-    // Warehouse keeper
-    createWarehouseWorker: builder.mutation<void, IWorker>({
-      query: (body) => ({
-        url: `warehouseWorker`,
-        method: 'POST',
-        body
-      }),
-      invalidatesTags: [{ type: 'Worker', id: 'LIST' }]
+  // Warehouse keeper
+  createWarehouseWorker: builder.mutation<void, IWorker>({
+    query: (body) => ({
+      url: `warehouseWorker`,
+      method: 'POST',
+      body
     }),
+    invalidatesTags: [{ type: 'Worker', id: 'LIST' }]
+  }),
 
-    getAllWorker: builder.query<IWorker[], void>({
-      query: () => ({
-        url: `warehouseWorker`
-      }),
-      providesTags: (result) =>
-        result
-          ? [
-            ...result.map(({ id }) => ({ type: 'Worker', id } as const)),
-            { type: 'Worker', id: 'LIST' }
-          ]
-          : [{ type: 'Worker', id: 'LIST' }]
+  getAllWorker: builder.query<IWorker[], void>({
+    query: () => ({
+      url: `warehouseWorker`
     }),
-    deleteWorker: builder.mutation<void, number>({
-      query: (id) => ({
-        url: `warehouseWorker/${Number(id)}`,
-        method: 'DELETE'
-      }),
-      invalidatesTags: [{ type: 'Worker', id: 'LIST' }]
+    providesTags: (result) =>
+      result
+        ? [
+          ...result.map(({ id }) => ({ type: 'Worker', id } as const)),
+          { type: 'Worker', id: 'LIST' }
+        ]
+        : [{ type: 'Worker', id: 'LIST' }]
+  }),
+  deleteWorker: builder.mutation<void, number>({
+    query: (id) => ({
+      url: `warehouseWorker/${Number(id)}`,
+      method: 'DELETE'
     }),
+    invalidatesTags: [{ type: 'Worker', id: 'LIST' }]
+  }),
 
-    // Order
-    createOrder: builder.mutation<void, IUsersOrder>({
-      query: (body) => ({
-        url: `/order`,
-        method: 'POST',
-        body
-      }),
-      invalidatesTags: [{ type: 'Order', id: 'LIST' }]
+  // Order
+  createOrder: builder.mutation<void, IUsersOrder>({
+    query: (body) => ({
+      url: `/order`,
+      method: 'POST',
+      body
     }),
-    getUserOrder: builder.query<IOrder[], void>({
-      query: () => ({
-        url: `order/user`
-      }),
-      providesTags: (result) =>
-        result
-          ? [
-            ...result.map(({ id }) => ({ type: 'Order', id } as const)),
-            { type: 'Order', id: 'LIST' }
-          ]
-          : [{ type: 'Order', id: 'LIST' }]
-    })
+    invalidatesTags: [{ type: 'Order', id: 'LIST' }]
+  }),
+  getUserOrder: builder.query<IOrder[], void>({
+    query: () => ({
+      url: `order/user`
+    }),
+    providesTags: (result) =>
+      result
+        ? [
+          ...result.map(({ id }) => ({ type: 'Order', id } as const)),
+          { type: 'Order', id: 'LIST' }
+        ]
+        : [{ type: 'Order', id: 'LIST' }]
+  })
   })
 });
 

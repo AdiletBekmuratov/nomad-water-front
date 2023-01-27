@@ -1,13 +1,12 @@
 import { FC, Dispatch, SetStateAction } from 'react';
 
-//import { useGetAllWarehousesQuery } from '@/redux/services/base.service';
+import { useUpdateUserMutation } from '@/redux/services/user.service';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 import { Form, Formik } from 'formik';
 import toast from 'react-hot-toast';
-import { useUpdateUserMutation } from '@/redux/services/user.service';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 interface IEditModalProps {
@@ -18,7 +17,6 @@ interface IEditModalProps {
 
 export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
   const [update, { isLoading: isLoadingUpdate }] = useUpdateUserMutation();
-  //const { data: warehouse, isLoading: loadingWarehouse } = useGetAllWarehousesQuery();
 
   const handleEdit = (values: IUserFullCreate) => {
     toast

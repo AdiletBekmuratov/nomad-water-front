@@ -1,21 +1,18 @@
 export type IWarehouse = {
-  id?: number;
+  id: number;
   phone: string;
   warehouseAddress: string;
-  createdDate: string;
-  updatedDate: string;
-  warehouseBalanceList: {
-    id?: number;
-    warehouseId?: number;
-    productId: number;
-    quantity: number;
-  }[];
+  createdDate?: string;
+  updatedDate?: string;
+  warehouseBalanceList: IWarehouseBalance[];
 };
+
 export type IWarehouseBalance = {
   id?: number;
-  warehouseId?: number;
+  warehouseId: number;
   productId: number;
   quantity: number;
 };
 
-export type IWarehouseUpdate = Omit<IWarehouse, 'createdDate' | 'updatedDate'>;
+
+export type IWarehouseUpdate = Omit<IWarehouse, 'createdDate' | 'updatedDate' | 'warehouseBalanceList'>;

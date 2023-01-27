@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import {
   useAddProductToWarehouseMutation,
   useGetAllProductsQuery,
   useGetProductCategoryQuery,
-  useGetWarehouseIDQuery
+  useGetWarehouseIDQuery,
+  useUpdateWarehouseBalanceMutation
 } from '@/redux/services/base.service';
-import { IProduct, IWarehouseBalance } from '@/types';
+import { IWarehouseBalance } from '@/types';
 
 import { Layout } from '@/components/Layout';
 import { Button, Input } from '@/components/Forms';
@@ -16,17 +17,21 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { toast } from 'react-hot-toast';
 
 const WarehouseTable = () => {
-  const { id: warehouseId } = useParams();
+  const { id: warehouseIdUrl } = useParams();
   const { data: categories = [] } = useGetProductCategoryQuery();
-  const { data: warehouse } = useGetWarehouseIDQuery(Number(warehouseId));
+  const { data: warehouse } = useGetWarehouseIDQuery(Number(warehouseIdUrl));
+  let cloneBalance = warehouse ? [...warehouse.warehouseBalanceList] : [];
+
   const { data: products = [], isLoading } = useGetAllProductsQuery();
-  const [create, { isLoading: createLoad }] = useAddProductToWarehouseMutation();
+  const [create] = useAddProductToWarehouseMutation();
+  const [update] = useUpdateWarehouseBalanceMutation();
 
   const [valueSearch, setValueSearch] = useState('');
   const [valueQuantity, setValueQuantity] = useState('');
-  const searchArrName = products.filter((items: IProduct) =>
-    items.productName.toLowerCase().includes(valueSearch.toLowerCase())
-  );
+
+  // const searchArrName = products.filter((items: IProduct) =>
+  //   items.productName.toLowerCase().includes(valueSearch.toLowerCase())
+  // );
   const onChangeInputSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValueSearch(event.target.value);
   };
@@ -44,7 +49,7 @@ const WarehouseTable = () => {
           }),
         {
           loading: 'Загрузка...',
-          success: 'Новый адрес сохранен',
+          success: 'Продукт добавлен',
           error: (error) => JSON.stringify(error, null, 2)
         }
       )
@@ -52,15 +57,41 @@ const WarehouseTable = () => {
         setValueQuantity('');
       });
   };
+  const handleUpdate = async (quantity: number, productId: number, warehouseId: number) => {
+    let obj: IWarehouseBalance = {
+      quantity: quantity,
+      warehouseId: warehouseId,
+      productId: productId
+    };
+    let balance = cloneBalance.map((item) => {
+      return item.id === productId ? { ...item, ...obj } : item;
+    });
+    console.log(balance);
+    let warehouseBalanceList: { id: number; warehouseBalance: IWarehouseBalance[] } = {
+      id: Number(warehouseIdUrl),
+      warehouseBalance: balance
+    };
+    toast
+      .promise(update(warehouseBalanceList).unwrap(), {
+        loading: 'Загрузка',
+        success: 'Обновлено успешно',
+        error: (error) => JSON.stringify(error, null, 2)
+      })
+      .finally(() => {
+        setValueQuantity('');
+      });
+  };
+  let quantityProd: number | null = null;
+
   const categoriesButStyle = `flex items-center justify-center py-2 px-3 
   rounded-2xl bg-white cursor-pointer`;
-  let quantityProd: number | null = null;
+
   return (
     <Layout>
       <div className="grid gap-3">
         <div
           className={` flex flex-col md:flex-row flex-1 justify-evenly bg-light-blue rounded-lg 
-      p-1 md:p-3 text-xs md:text-base gap-2 md:gap-3 shadow-lg`}>
+      p-3 text-xs md:text-base gap-2 md:gap-3 shadow-lg`}>
           <span>
             <strong>ID:</strong>
             {` ${warehouse?.id ? warehouse.id : 'ID'} `}
@@ -126,7 +157,7 @@ const WarehouseTable = () => {
             ))}
           </div>
         </div>
-        {products.map((product) => (
+        {products.map((product,id) => (
           <div
             className={`grid grid-cols-1 lg:grid-cols-5  items-center gap-2 bg-light-blue rounded-lg 
           p-1 md:p-3 text-xs`}
@@ -137,10 +168,10 @@ const WarehouseTable = () => {
             </h2>
             <h2 className={`text-dark-blue text-sm`}>
               {warehouse ? (
-                warehouse.warehouseBalanceList[product.id] ? (
+                warehouse.warehouseBalanceList[id] ? (
                   <>
                     <strong className="font-medium">На складе: </strong>
-                    {(quantityProd = warehouse.warehouseBalanceList[product.id].quantity)}
+                    {(quantityProd = warehouse.warehouseBalanceList[id].quantity)}
                   </>
                 ) : (
                   <>
@@ -152,7 +183,7 @@ const WarehouseTable = () => {
             </h2>
             <Input
               inputType="default"
-              id="quantity"
+              id={product.id.toString()}
               placeholder="Ввведите количество"
               value={valueQuantity}
               onChange={onChangeQuantity}
@@ -169,9 +200,9 @@ const WarehouseTable = () => {
               <Button
                 className={`bg-blue-900 hover:bg-blue-700`}
                 onClick={() =>
-                  handleAdd(Number(valueQuantity), Number(product.id), Number(warehouse!.id))
+                  handleUpdate(Number(valueQuantity), Number(product.id), Number(warehouse!.id))
                 }>
-                Изменить
+                Обновить
               </Button>
             )}
 
