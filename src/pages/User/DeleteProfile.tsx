@@ -1,7 +1,6 @@
 import { Button } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 import { useDeleteProfileMutation } from '@/redux/services/profile.service';
-import { IProfile } from '@/types';
 import { FC, Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
