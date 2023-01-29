@@ -42,11 +42,13 @@ const RateOrder: FC<Props> = ({ isOpenModal, setIsOpenModal, data }) => {
   const handleRate = async () => {
     let rate = rating.filter((r) => r.checked === true);
     rate.sort((b, a) => b.value - a.value);
-    toast.promise(rateOrder({ id: data?.id, rating: rate[rate.length - 1].value }).unwrap(), {
-      loading: 'Загрузка...',
-      success: 'Ваш отзыв учтен',
-      error: (err) => err.data
-    });
+    toast
+      .promise(rateOrder({ id: data?.id, rating: rate[rate.length - 1].value }).unwrap(), {
+        loading: 'Загрузка...',
+        success: 'Ваш отзыв учтен',
+        error: (err) => err.data
+      })
+      .finally(() => setIsOpenModal(false));
   };
 
   return (
@@ -84,6 +86,7 @@ const RateOrder: FC<Props> = ({ isOpenModal, setIsOpenModal, data }) => {
                     for (let i = 0; i < idx; i++) {
                       newRate[i].checked = !r.checked;
                     }
+
                     return [...newRate];
                   })
                 }
