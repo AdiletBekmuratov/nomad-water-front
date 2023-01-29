@@ -30,7 +30,7 @@ const UserPage = () => {
   const [profileId, setProfileId] = React.useState(1);
   const [name, setName] = React.useState('');
   const [isOpenDelete, setIsOpenDelete] = React.useState(false); //удаление профиля по id
-  
+
   const styleP = `text-sm md:text-base grid grid-cols-2`;
   const styleName = `text-sm md:text-base grid grid-cols-2 py-1 border-b-2 border-gray-400 border-dashed`;
 

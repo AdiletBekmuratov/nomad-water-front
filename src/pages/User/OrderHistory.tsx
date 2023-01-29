@@ -50,10 +50,10 @@ const OrderHistory = () => {
         header: 'Комментарий',
         accessorKey: 'comment'
       },
-      {
-        header: 'Имя курьера',
-        accessorKey: 'courier.user.firstname'
-      }
+      // {
+      //   header: 'Имя курьера',
+      //   accessorKey: 'courier.user.firstname'
+      // }
     ],
     []
   );
@@ -79,7 +79,7 @@ const OrderHistory = () => {
   }
   return (
     <div>
-      {/* <Table id="ProductsTable" data={completeOrders} columns={columns} title="История заказов" /> */}
+      <Table id="ProductsTable" data={completeOrders} columns={columns} title="История заказов" />
     </div>
   );
 };
