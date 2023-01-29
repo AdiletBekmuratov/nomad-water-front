@@ -14,10 +14,12 @@ import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { Form, Formik } from 'formik';
 import { Button, Input, TextArea } from '@/components/Forms';
 import { toast } from 'react-hot-toast';
+import RateOrder from './RateOrder';
 
 const Orders = () => {
   const [fetchOrders] = useLazyGetUserOrderQuery();
   const [allOrders, setAllOrders] = useState<IOrder | []>([]);
+  const [isRating, setIsRating] = useState(false);
 
   const clientRef = useRef<WebSocket | null>();
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
@@ -44,6 +46,11 @@ const Orders = () => {
   const handleCancelOrder = (row: Row<IOrder>) => {
     setRowData(row.original);
     setIsOpenModal(true);
+  };
+
+  const handleRating = (row: Row<IOrder>) => {
+    setRowData(row.original);
+    setIsRating(true);
   };
 
   useEffect(() => {
@@ -135,14 +142,15 @@ const Orders = () => {
         accessorKey: 'comment'
       },
       {
+        header: 'Оценить заказ',
+        cell: ({ row }) =>
+          row.original.statusId === 3 && <ActionButtons handleRating={() => handleRating(row)} />
+      },
+      {
         header: 'Отменить заказ',
         cell: ({ row }) =>
-          row.original.statusId === 0 ? (
+          row.original.statusId === 0 && (
             <ActionButtons handleCancelOrder={() => handleCancelOrder(row)} />
-          ) : (
-            row.original.statusId === 2 && (
-              <ActionButtons handleCancelOrder={() => handleCancelOrder(row)} />
-            )
           )
       }
     ],
@@ -151,8 +159,6 @@ const Orders = () => {
   if (!allOrders) {
     return <Loader />;
   }
-
-  // console.log(allOrders);
 
   return (
     <Layout className={``}>
@@ -185,6 +191,7 @@ const Orders = () => {
           </Form>
         </Formik>
       </Modal>
+      <RateOrder data={rowData!} setIsOpenModal={setIsRating} isOpenModal={isRating} />
     </Layout>
   );
 };
