@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router';
 import {
   useAddProductToWarehouseMutation,
+  useDeleteProductFromWarehouseMutation,
   useGetAllProductsQuery,
   useGetProductCategoryQuery,
   useGetWarehouseIDQuery,
   useUpdateWarehouseBalanceMutation
 } from '@/redux/services/base.service';
-import { IProduct, IWarehouse, IWarehouseUpdateBalance } from '@/types';
+import { IProduct } from '@/types';
 
 import { toast } from 'react-hot-toast';
 import { Layout } from '@/components/Layout';
@@ -18,15 +19,16 @@ import { AiOutlineSearch } from 'react-icons/ai';
 
 const WarehouseTable = () => {
   const { id: warehouseIdUrl } = useParams();
+  const { data: products = [], isLoading } = useGetAllProductsQuery();
   const { data: categories = [] } = useGetProductCategoryQuery();
   const { data: warehouse, isLoading: isWarehouseLoad } = useGetWarehouseIDQuery(
     Number(warehouseIdUrl)
   );
   let cloneBalance = warehouse ? [...warehouse.warehouseBalanceList] : [];
 
-  const { data: products = [], isLoading } = useGetAllProductsQuery();
   const [create] = useAddProductToWarehouseMutation();
   const [update] = useUpdateWarehouseBalanceMutation();
+  const [deleteProd] = useDeleteProductFromWarehouseMutation();
 
   const [valueSearch, setValueSearch] = useState('');
   const [valueQuantity, setValueQuantity] = useState<string[]>([]);
@@ -51,7 +53,7 @@ const WarehouseTable = () => {
         {
           loading: 'Загрузка...',
           success: 'Продукт добавлен',
-          error: (error) => JSON.stringify(error, null, 2)
+          error: "Вы не ввели количество"
         }
       )
       .finally(() => {
@@ -69,14 +71,21 @@ const WarehouseTable = () => {
         setValueQuantity([]);
       });
   };
-
+  const handleDelete = async (productId: number, warehouseId: number) => {
+    toast
+      .promise(deleteProd({ productId,warehouseId }).unwrap(), {
+        loading: 'Загрузка',
+        success: 'Товар удален из склада',
+        error: (error) => JSON.stringify(error, null, 2)
+      })
+      .finally(() => {
+        setValueQuantity([]);
+      });
+  };
   const categoriesButStyle = `flex items-center justify-center py-2 px-3 
   rounded-2xl bg-white cursor-pointer`;
-let quantityProd: number | null = null;
-          
-          let productInBalance: IProduct[];
-          let prod: IProduct | undefined;
-          let id: number | undefined;
+  let quantityProd: number | null = null;
+
   return (
     <Layout>
       <div className="grid gap-3">
@@ -150,29 +159,6 @@ let quantityProd: number | null = null;
         </div>
         {products.map((product: IProduct) => {
           let proId = product.id!;
-          if (warehouse) {
-            if (warehouse.warehouseBalanceList) {
-              productInBalance = warehouse.warehouseBalanceList.map((balance) => balance.product);
-              if (productInBalance) {
-                prod = productInBalance.find((product) => product.id! === proId);
-                if (prod) {
-                  id = prod.id;
-                  if (id) {
-                    if (warehouse) {
-                      if (warehouse.warehouseBalanceList) {
-                        if (warehouse.warehouseBalanceList[id]) {
-                          quantityProd = warehouse.warehouseBalanceList[id].quantity;
-                          
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-
-          console.log(quantityProd);
 
           return (
             <div
@@ -196,15 +182,16 @@ let quantityProd: number | null = null;
                 inputType="default"
                 id={`${product.productName}`}
                 placeholder="Ввведите количество"
-                value={valueQuantity[id!] || ''}
-                onChange={(e) => onChangeQuantity(e, id!)}
+                value={valueQuantity[proId] || ''}
+                onChange={(e) => onChangeQuantity(e, proId)}
               />
               {quantityProd === null ? (
                 <Button
                   className={` hover:bg-blue-800`}
+                  disabled={valueQuantity[proId].length < 1 }
                   onClick={(e) => {
                     // prodId = e.currentTarget.value;
-                    handleAdd(Number(valueQuantity[id!]), Number(proId), Number(warehouse!.id));
+                    handleAdd(Number(valueQuantity[proId]), Number(proId), Number(warehouse!.id));
                   }}>
                   Добавить
                 </Button>
@@ -218,7 +205,10 @@ let quantityProd: number | null = null;
                 </Button>
               )}
 
-              <Button className={`bg-red-500 hover:bg-blue-800`} disabled={quantityProd === null}>
+              <Button
+                className={`bg-red-500 hover:bg-blue-800`}
+                //disabled={quantityProd === null}
+                onClick={() => handleDelete(Number(product.id!), Number(warehouse!.id))}>
                 Убрать со склада
               </Button>
             </div>

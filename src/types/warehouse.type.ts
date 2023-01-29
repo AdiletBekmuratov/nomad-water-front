@@ -21,6 +21,9 @@ export type IWarehouseUpdateBalance = {
   createdDate?: string;
   updatedDate?: string;
 }
-
+export type IBalanceDelete = {
+  warehouseId: number;
+  productId: number;
+}
 
 export type IWarehouseUpdate = Omit<IWarehouse, 'createdDate' | 'updatedDate' | 'warehouseBalanceList'>;

@@ -1,4 +1,4 @@
-import { IBalance, IWarehouseUpdate, IWarehouseUpdateBalance } from '@/types/warehouse.type';
+import { IBalance, IBalanceDelete, IWarehouseUpdate, IWarehouseUpdateBalance } from '@/types/warehouse.type';
 import {
   IOrder,
   IWorker,
@@ -226,7 +226,7 @@ export const baseApi = createApi({
     //   }),
     //   invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
     // }),
-    deleteProductFromWarehouse: builder.mutation<IBalance, IBalance>({
+    deleteProductFromWarehouse: builder.mutation<void, IBalanceDelete>({
       query: ({ warehouseId, productId }) => ({
         url: `warehouse/${Number(warehouseId)}/balance/${Number(productId)}`,
         method: 'DELETE'

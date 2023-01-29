@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router';
 import {
   useAddProductToWarehouseMutation,
@@ -7,7 +7,7 @@ import {
   useGetWarehouseIDQuery,
   useUpdateWarehouseBalanceMutation
 } from '@/redux/services/base.service';
-import { IBalance } from '@/types';
+import { IProduct } from '@/types';
 
 import { toast } from 'react-hot-toast';
 import { Layout } from '@/components/Layout';
@@ -29,12 +29,8 @@ const WarehouseTable = () => {
   const [update] = useUpdateWarehouseBalanceMutation();
 
   const [valueSearch, setValueSearch] = useState('');
-  // let prodId: string = '';
   const [valueQuantity, setValueQuantity] = useState<string[]>([]);
 
-  // const searchArrName = products.filter((items: IProduct) =>
-  //   items.productName.toLowerCase().includes(valueSearch.toLowerCase())
-  // );
   const onChangeInputSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValueSearch(event.target.value);
   };
@@ -42,9 +38,7 @@ const WarehouseTable = () => {
   const onChangeQuantity = (event: React.ChangeEvent<HTMLInputElement>, id: number) => {
     setValueQuantity({ ...valueQuantity, [id]: event.target.value });
   };
-  // const onChangeQuantity = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setValueQuantity(event.target.value);
-  // };
+
   const handleAdd = (quantity: number, productId: number, warehouseId: number) => {
     toast
       .promise(
@@ -64,34 +58,22 @@ const WarehouseTable = () => {
         setValueQuantity([]);
       });
   };
-  // const handleUpdate = async (quantity: number, productId: number, warehouseId: number) => {
-  //   let obj: IWarehouseBalance = {
-  //     quantity: quantity,
-  //     warehouseId: warehouseId,
-  //     productId: productId
-  //   };
-  //   let balance = cloneBalance.map((item) => {
-  //     return item.id === productId ? { ...item, ...obj } : item;
-  //   });
-  //   console.log(balance);
-  //   // let warehouseBalanceList: { id: number; warehouseBalance: IWarehouseBalance[] } = {
-  //   //   id: Number(warehouseIdUrl),
-  //   //   warehouseBalance: balance
-  //   // };
-  //   toast
-  //     .promise(update(balance).unwrap(), {
-  //       loading: 'Загрузка',
-  //       success: 'Обновлено успешно',
-  //       error: (error) => JSON.stringify(error, null, 2)
-  //     })
-  //     .finally(() => {
-  //       setValueQuantity([]);
-  //     });
-  // };
+  const handleUpdate = async (quantity: number, product: IProduct, id: number) => {
+    toast
+      .promise(update({ quantity, product, id }).unwrap(), {
+        loading: 'Загрузка',
+        success: 'Обновлено успешно',
+        error: (error) => JSON.stringify(error, null, 2)
+      })
+      .finally(() => {
+        setValueQuantity([]);
+      });
+  };
 
   const categoriesButStyle = `flex items-center justify-center py-2 px-3 
   rounded-2xl bg-white cursor-pointer`;
-
+  let quantityProd: number | null = null;
+  let id: number | undefined;
   return (
     <Layout>
       <div className="grid gap-3">
@@ -163,26 +145,17 @@ const WarehouseTable = () => {
             ))}
           </div>
         </div>
-        {products.map((product, id) => {
-          let quantityProd: number | null = null;
-          let balanceId: number | null = null;
-          if (cloneBalance[Number(product.id ? product.id : null)]) {
-            balanceId = cloneBalance[Number(product.id ? product.id : null)].id!;
-            console.log(balanceId);
-          }
-          // if (cloneBalance && cloneBalance[balanceId!]) {
-          //   quantityProd = cloneBalance[balanceId!].id!;
-          //   console.log(quantityProd)
-          // }
+        {products.map((product: IProduct) => {
+          let proId = product.id!;
 
           return (
             <div
               className={`grid grid-cols-1 lg:grid-cols-6  items-center gap-2 bg-light-blue rounded-lg 
           p-1 md:p-3 text-xs`}
-              key={product.id}>
+              key={proId}>
               <h2 className={`text-dark-blue text-sm`}>
                 <strong className="font-medium">ID: </strong>
-                {product.id}
+                {proId}
               </h2>
               <h2 className={`text-dark-blue text-sm`}>
                 <strong className="font-medium">Товар: </strong>
@@ -195,17 +168,17 @@ const WarehouseTable = () => {
               <Input
                 name={`${product.productName}`}
                 inputType="default"
-                id={id.toString()}
+                id={`${product.productName}`}
                 placeholder="Ввведите количество"
-                value={valueQuantity[id] || ''}
-                onChange={(e) => onChangeQuantity(e, id)}
+                value={valueQuantity[id!] || ''}
+                onChange={(e) => onChangeQuantity(e, id!)}
               />
-              {/* {quantityProd === null ? (
+              {quantityProd === null ? (
                 <Button
                   className={` hover:bg-blue-800`}
                   onClick={(e) => {
                     // prodId = e.currentTarget.value;
-                    handleAdd(Number(valueQuantity[id]), Number(product.id), Number(warehouse!.id));
+                    handleAdd(Number(valueQuantity[id!]), Number(proId), Number(warehouse!.id));
                   }}>
                   Добавить
                 </Button>
@@ -213,11 +186,11 @@ const WarehouseTable = () => {
                 <Button
                   className={`bg-blue-900 hover:bg-blue-700`}
                   onClick={() =>
-                    handleUpdate(Number(valueQuantity), Number(product.id), Number(warehouse!.id))
+                    handleUpdate(Number(valueQuantity), product, Number(warehouse!.id))
                   }>
                   Обновить
                 </Button>
-              )} */}
+              )}
 
               <Button className={`bg-red-500 hover:bg-blue-800`} disabled={quantityProd === null}>
                 Убрать со склада
