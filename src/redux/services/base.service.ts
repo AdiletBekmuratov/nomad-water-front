@@ -1,4 +1,4 @@
-import { IWarehouseBalance } from './../../types/warehouse.type';
+import { IBalance, IWarehouseUpdate, IWarehouseUpdateBalance } from '@/types/warehouse.type';
 import {
   IOrder,
   IWorker,
@@ -6,7 +6,7 @@ import {
   IProductCategoryCreate,
   IProductCreate,
   IWarehouse,
-  IWarehouseUpdate,
+
   IUsersOrder
 } from '@/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
@@ -184,7 +184,7 @@ export const baseApi = createApi({
     }),
 
     // Warehouses Balance 
-    addProductToWarehouse: builder.mutation<void, IWarehouseBalance>({
+    addProductToWarehouse: builder.mutation<void, IBalance>({
 
       query: (body) => ({
         url: `warehouse/${Number(body.warehouseId)}/balance`,
@@ -193,20 +193,30 @@ export const baseApi = createApi({
       }),
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
     }),
-    updateWarehouseBalance: builder.mutation<IWarehouse, IWarehouseBalance[]>({
+    updateWarehouseBalance: builder.mutation<void, IWarehouseUpdateBalance>({
       query: (body) => {
-        const idArray = body.map(item => item.warehouseId);
-        const id: number = idArray[0];
-        console.log(id);
-        const url = `warehouse/${id}/balance`;
         return {
-          url: url,
+          url: `warehouse/${body.id}/balance`,
           method: 'PUT',
           body
         }
       },
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
     }),
+    // updateWarehouseBalance: builder.mutation<IWarehouse, IWarehouseBalance[]>({
+    //   query: (body) => {
+    //     const idArray = body.map(item => item.productId);
+    //     const id: number = idArray[0];
+
+    //     const url = `warehouse/${id}/balance`;
+    //     return {
+    //       url: url,
+    //       method: 'PUT',
+    //       body
+    //     }
+    //   },
+    //   invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
+    // }),
     // updateWarehouseBalance: builder.mutation<IWarehouse, { id: number; warehouseBalance: IWarehouseBalance[] }>({
 
     //   query: (body) => ({
@@ -216,10 +226,9 @@ export const baseApi = createApi({
     //   }),
     //   invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
     // }),
-    deleteProductFromWarehouse: builder.mutation<IWarehouseBalance, IWarehouseBalance>({
-
-      query: ({ id, productId }) => ({
-        url: `warehouse/${Number(id)}/balance/${Number(productId)}`,
+    deleteProductFromWarehouse: builder.mutation<IBalance, IBalance>({
+      query: ({ warehouseId, productId }) => ({
+        url: `warehouse/${Number(warehouseId)}/balance/${Number(productId)}`,
         method: 'DELETE'
       }),
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]

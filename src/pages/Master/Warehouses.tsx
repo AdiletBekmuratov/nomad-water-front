@@ -42,7 +42,7 @@ const Warehouses: FC = () => {
             ))}
           </div>
         ) : (
-          <div className={`grid grid-cols-1 md:grid-cols-2 gap-5`}>
+          <div className={`grid grid-cols-1 md:grid-cols-3 gap-5`}>
             {warehouses.map((warehouse) => (
               <div className={`bg-white p-2 md:p-4 rounded-lg shadow-lg`} key={warehouse.id}>
                 {/* // <div to={`/warehouse/${warehouse.id}`} key={warehouse.id }> */}

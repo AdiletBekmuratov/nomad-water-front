@@ -7,7 +7,7 @@ import {
   useGetWarehouseIDQuery,
   useUpdateWarehouseBalanceMutation
 } from '@/redux/services/base.service';
-import { IWarehouseBalance } from '@/types';
+import { IBalance } from '@/types';
 
 import { toast } from 'react-hot-toast';
 import { Layout } from '@/components/Layout';
@@ -64,30 +64,30 @@ const WarehouseTable = () => {
         setValueQuantity([]);
       });
   };
-  const handleUpdate = async (quantity: number, productId: number, warehouseId: number) => {
-    let obj: IWarehouseBalance = {
-      quantity: quantity,
-      warehouseId: warehouseId,
-      productId: productId
-    };
-    let balance = cloneBalance.map((item) => {
-      return item.id === productId ? { ...item, ...obj } : item;
-    });
-    console.log(balance);
-    let warehouseBalanceList: { id: number; warehouseBalance: IWarehouseBalance[] } = {
-      id: Number(warehouseIdUrl),
-      warehouseBalance: balance
-    };
-    toast
-      .promise(update(warehouseBalanceList).unwrap(), {
-        loading: 'Загрузка',
-        success: 'Обновлено успешно',
-        error: (error) => JSON.stringify(error, null, 2)
-      })
-      .finally(() => {
-        setValueQuantity([]);
-      });
-  };
+  // const handleUpdate = async (quantity: number, productId: number, warehouseId: number) => {
+  //   let obj: IWarehouseBalance = {
+  //     quantity: quantity,
+  //     warehouseId: warehouseId,
+  //     productId: productId
+  //   };
+  //   let balance = cloneBalance.map((item) => {
+  //     return item.id === productId ? { ...item, ...obj } : item;
+  //   });
+  //   console.log(balance);
+  //   // let warehouseBalanceList: { id: number; warehouseBalance: IWarehouseBalance[] } = {
+  //   //   id: Number(warehouseIdUrl),
+  //   //   warehouseBalance: balance
+  //   // };
+  //   toast
+  //     .promise(update(balance).unwrap(), {
+  //       loading: 'Загрузка',
+  //       success: 'Обновлено успешно',
+  //       error: (error) => JSON.stringify(error, null, 2)
+  //     })
+  //     .finally(() => {
+  //       setValueQuantity([]);
+  //     });
+  // };
 
   const categoriesButStyle = `flex items-center justify-center py-2 px-3 
   rounded-2xl bg-white cursor-pointer`;
@@ -165,16 +165,25 @@ const WarehouseTable = () => {
         </div>
         {products.map((product, id) => {
           let quantityProd: number | null = null;
-          if (warehouse && warehouse.warehouseBalanceList[Number(product.id)]) {
-            quantityProd = warehouse.warehouseBalanceList[Number(product.id)].quantity;
-          } else {
-            quantityProd = null;
+          let balanceId: number | null = null;
+          if (cloneBalance[Number(product.id ? product.id : null)]) {
+            balanceId = cloneBalance[Number(product.id ? product.id : null)].id!;
+            console.log(balanceId);
           }
+          // if (cloneBalance && cloneBalance[balanceId!]) {
+          //   quantityProd = cloneBalance[balanceId!].id!;
+          //   console.log(quantityProd)
+          // }
+
           return (
             <div
-              className={`grid grid-cols-1 lg:grid-cols-5  items-center gap-2 bg-light-blue rounded-lg 
+              className={`grid grid-cols-1 lg:grid-cols-6  items-center gap-2 bg-light-blue rounded-lg 
           p-1 md:p-3 text-xs`}
               key={product.id}>
+              <h2 className={`text-dark-blue text-sm`}>
+                <strong className="font-medium">ID: </strong>
+                {product.id}
+              </h2>
               <h2 className={`text-dark-blue text-sm`}>
                 <strong className="font-medium">Товар: </strong>
                 {product.productName}
@@ -191,7 +200,7 @@ const WarehouseTable = () => {
                 value={valueQuantity[id] || ''}
                 onChange={(e) => onChangeQuantity(e, id)}
               />
-              {quantityProd === null ? (
+              {/* {quantityProd === null ? (
                 <Button
                   className={` hover:bg-blue-800`}
                   onClick={(e) => {
@@ -208,7 +217,7 @@ const WarehouseTable = () => {
                   }>
                   Обновить
                 </Button>
-              )}
+              )} */}
 
               <Button className={`bg-red-500 hover:bg-blue-800`} disabled={quantityProd === null}>
                 Убрать со склада

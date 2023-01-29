@@ -34,14 +34,14 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
   return (
     <Modal isOpenModal={visible} setIsOpenModal={setVisible}>
       <div className="flex items-center justify-between">
-    <h2 className={`text-center`}>Создание нового склада</h2>
-    <button
-      onClick={() => {
-        setVisible(false);
-      }}>
-      <AiOutlineCloseCircle className={`w-5 h-5 md:w-7 md:h-7 hover:text-blue-500`} />
-    </button>
-  </div>
+        <h2 className={`text-center`}>Создание нового склада</h2>
+        <button
+          onClick={() => {
+            setVisible(false);
+          }}>
+          <AiOutlineCloseCircle className={`w-5 h-5 md:w-7 md:h-7 hover:text-blue-500`} />
+        </button>
+      </div>
       <Formik initialValues={INITIAL_VALUES} onSubmit={handleCreate}>
         {() => (
           <Form className="flex flex-col space-y-4">

@@ -23,9 +23,7 @@ export const EditModal: FC<IEditModalProps> = ({ visible, setVisible, data }) =>
         success: 'Updated Successfully',
         error: (error) => JSON.stringify(error, null, 2)
       })
-      .finally(() => {
-        
-      });
+      .finally(() => {});
   };
   const handleEditSave = (values: IWarehouseUpdate) => {
     toast
@@ -42,7 +40,9 @@ export const EditModal: FC<IEditModalProps> = ({ visible, setVisible, data }) =>
   return (
     <Modal setIsOpenModal={setVisible} isOpenModal={visible}>
       <div className="flex items-center justify-between">
-        <h2 className={`text-center`}>Изменение данных склада по адресу: {`${data?.warehouseAddress}`}</h2>
+        <h2 className={`text-center`}>
+          Изменение данных склада по адресу: {`${data?.warehouseAddress}`}
+        </h2>
         <button
           onClick={() => {
             setVisible(false);
@@ -51,7 +51,7 @@ export const EditModal: FC<IEditModalProps> = ({ visible, setVisible, data }) =>
         </button>
       </div>
       <Formik initialValues={data} onSubmit={handleEditSave}>
-        {({values}) => (
+        {({ values }) => (
           <Form className="flex flex-col space-y-4">
             <Input inputType="formik" name="id" id="id" label="ID" disabled />
             <Input
