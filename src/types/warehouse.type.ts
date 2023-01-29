@@ -5,25 +5,29 @@ export type IWarehouse = {
   warehouseAddress: string;
   createdDate?: string;
   updatedDate?: string;
-  warehouseBalanceList: IWarehouseUpdateBalance[];
+  warehouseBalanceList: IBalance[];
 };
+export type IWarehouseUpdate = Omit<IWarehouse, 'createdDate' | 'updatedDate' | 'warehouseBalanceList'>;
 
 export type IBalance = {
-  id?: number;
-  warehouseId: number;
-  productId: number;
-  quantity: number;
-};
-export type IWarehouseUpdateBalance = {
   id: number;
   product: IProduct;
   quantity: number;
   createdDate?: string;
   updatedDate?: string;
 }
+export type IBalanceAddProd = {
+  warehouseId: number;
+  productId: number;
+  quantity: number;
+};
+
+export type IBalanceUpdate = {
+  quantity: number;
+  productId: number;
+}
 export type IBalanceDelete = {
   warehouseId: number;
   productId: number;
 }
 
-export type IWarehouseUpdate = Omit<IWarehouse, 'createdDate' | 'updatedDate' | 'warehouseBalanceList'>;

@@ -8,7 +8,7 @@ import {
   useGetWarehouseIDQuery,
   useUpdateWarehouseBalanceMutation
 } from '@/redux/services/base.service';
-import { IProduct, IWarehouseUpdateBalance } from '@/types';
+import { IProduct, IBalance, IBalanceUpdate } from '@/types';
 
 import { toast } from 'react-hot-toast';
 import { Layout } from '@/components/Layout';
@@ -25,51 +25,48 @@ const WarehouseTable = () => {
     Number(warehouseIdUrl)
   );
 
-  let cloneBalance: IWarehouseUpdateBalance[] = warehouse
+  let cloneBalance: IBalance[] = warehouse
     ? JSON.parse(JSON.stringify(warehouse.warehouseBalanceList))
     : [];
-  // console.log(cloneBalance);
   const [create] = useAddProductToWarehouseMutation();
   const [update] = useUpdateWarehouseBalanceMutation();
   const [deleteProd] = useDeleteProductFromWarehouseMutation();
 
   const [valueSearch, setValueSearch] = useState('');
-  const [valueQuantity, setValueQuantity] = useState<string[]>([]);
-
   const onChangeInputSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValueSearch(event.target.value);
   };
 
+  const [valueQuantity, setValueQuantity] = useState<string[]>([]);
   const onChangeQuantity = (event: React.ChangeEvent<HTMLInputElement>, id: number) => {
     setValueQuantity({ ...valueQuantity, [id]: event.target.value });
   };
 
+  const [warehouseBalance, setWarehouseBalance] = useState<IBalanceUpdate[]>([]);
   const handleAdd = (quantity: number, productId: number, warehouseId: number) => {
     toast
-      .promise(
-        create({ quantity, productId, warehouseId })
-          .unwrap()
-          .then((resp) => {
-            console.log(resp);
-            // setResponse(()=>resp);
-          }),
-        {
-          loading: 'Загрузка...',
-          success: 'Продукт добавлен',
-          error: 'Вы не ввели количество'
-        }
-      )
+      .promise(create({ quantity, productId, warehouseId }).unwrap(), {
+        loading: 'Загрузка...',
+        success: 'Продукт добавлен',
+        error: 'Вы не ввели количество'
+      })
       .finally(() => {
         setValueQuantity([]);
+        setWarehouseBalance((prev) => [...prev, { quantity, productId }]);
       });
   };
-  const handleUpdate = async (warehouseBalance: IWarehouseUpdateBalance[], id: number) => {
-    console.log(id);
+  const handleUpdate = async (quantity: number, productId: number, id: number) => {
+    let index = warehouseBalance.findIndex(
+      (balance) => balance.quantity !== quantity && balance.productId === productId
+    );
+    let newBalance = warehouseBalance.splice(index, 1, { quantity, productId });
+    setWarehouseBalance([]);
+    setWarehouseBalance((prev) => [...prev, ...newBalance]);
     toast
       .promise(update({ id, warehouseBalance }).unwrap(), {
         loading: 'Загрузка',
         success: 'Обновлено успешно',
-        error: (error) => JSON.stringify(error, null, 2)
+        error: 'Вы не ввели нужное количество!'
       })
       .finally(() => {
         setValueQuantity([]);
@@ -162,33 +159,34 @@ const WarehouseTable = () => {
           </div>
         </div>
         {products.map((product: IProduct) => {
-          let proId = product.id!;
-          let quantity = cloneBalance.find((balance) => balance.product.id === proId)?.quantity;
-          quantityProd = Number(quantity ? quantity :null);
+          let productId = product.id!;
+          const newLocal = cloneBalance.find((balance) => balance.product.id === productId);
+          quantityProd = newLocal?.quantity ? Number(newLocal.quantity) : null;
+
           return (
             <div
-              className={`grid grid-cols-1 lg:grid-cols-6  items-center gap-2 bg-light-blue rounded-lg 
+              className={`grid grid-cols-1 lg:grid-cols-5  items-center gap-2 bg-light-blue rounded-lg 
           p-1 md:p-3 text-xs`}
-              key={proId}>
-              <h2 className={`text-dark-blue text-sm`}>
+              key={productId}>
+              {/* <h2 className={`text-dark-blue text-sm`}>
                 <strong className="font-medium">ID: </strong>
                 {proId}
-              </h2>
+              </h2> */}
               <h2 className={`text-dark-blue text-sm`}>
                 <strong className="font-medium">Товар: </strong>
                 {product.productName}
               </h2>
               <h2 className={`text-dark-blue text-sm`}>
                 <strong className="font-medium">На складе: </strong>
-                {quantityProd}
+                {quantityProd ? quantityProd : 'Нет'}
               </h2>
               <Input
                 name={`${product.productName}`}
                 inputType="default"
                 id={`${product.productName}`}
                 placeholder="Ввведите количество"
-                value={valueQuantity[proId] || ''}
-                onChange={(e) => onChangeQuantity(e, proId)}
+                value={valueQuantity[productId] || ''}
+                onChange={(e) => onChangeQuantity(e, productId)}
               />
               {quantityProd === null ? (
                 <Button
@@ -196,23 +194,32 @@ const WarehouseTable = () => {
                   //disabled={valueQuantity[proId].length < 1 }
                   onClick={(e) => {
                     // prodId = e.currentTarget.value;
-                    handleAdd(Number(valueQuantity[proId]), Number(proId), Number(warehouse!.id));
+                    handleAdd(
+                      Number(valueQuantity[productId]),
+                      Number(productId),
+                      Number(warehouse!.id)
+                    );
                   }}>
                   Добавить
                 </Button>
               ) : (
                 <Button
                   className={`bg-blue-900 hover:bg-blue-700`}
-                  //onClick={() => handleUpdate([valueQuantity[proId]), Number(proId)], Number(warehouse!.id))}
-                  >
+                  onClick={() =>
+                    handleUpdate(
+                      Number(valueQuantity[productId]),
+                      Number(productId),
+                      Number(warehouse!.id)
+                    )
+                  }>
                   Обновить
                 </Button>
               )}
 
               <Button
                 className={`bg-red-500 hover:bg-blue-800`}
-                //disabled={quantityProd === null}
-                onClick={() => handleDelete(Number(proId), Number(warehouse!.id))}>
+                disabled={quantityProd === null}
+                onClick={() => handleDelete(Number(productId), Number(warehouse!.id))}>
                 Убрать со склада
               </Button>
             </div>
