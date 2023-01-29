@@ -162,9 +162,9 @@ const UserPage = () => {
         <CreateProfile setVisible={setIsOpenCreate} visible={isOpenCreate} />
       </div>
       <div className={`border-b-2 border-dotted border-gray-700 py-2`}></div>
-      <div className={`mt-4 mx-auto`}>
+      {/* <div className={`mt-4 mx-auto`}>
         <OrderHistory />
-      </div>
+      </div> */}
 
       <Modal setIsOpenModal={setVisible} isOpenModal={visible}>
         <div className="flex items-center justify-between">

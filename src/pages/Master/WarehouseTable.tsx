@@ -188,7 +188,7 @@ const WarehouseTable = () => {
               {quantityProd === null ? (
                 <Button
                   className={` hover:bg-blue-800`}
-                  disabled={valueQuantity[proId].length < 1 }
+                  //disabled={valueQuantity[proId].length < 1 }
                   onClick={(e) => {
                     // prodId = e.currentTarget.value;
                     handleAdd(Number(valueQuantity[proId]), Number(proId), Number(warehouse!.id));
