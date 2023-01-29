@@ -191,39 +191,15 @@ export const baseApi = createApi({
       }),
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
     }),
-    updateWarehouseBalance: builder.mutation<void, IWarehouseUpdateBalance>({
-      query: (body) => {
-        return {
-          url: `warehouse/${body.id}/balance`,
-          method: 'PUT',
-          body
-        };
-      },
+
+    updateWarehouseBalance: builder.mutation<IWarehouse, { id: number; warehouseBalance: IWarehouseUpdateBalance[] }>({
+      query: (body) => ({
+        url: `warehouse/${Number(body.id)}/balance`,
+        method: 'PUT',
+        body:body.warehouseBalance
+      }),
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
     }),
-    // updateWarehouseBalance: builder.mutation<IWarehouse, IWarehouseBalance[]>({
-    //   query: (body) => {
-    //     const idArray = body.map(item => item.productId);
-    //     const id: number = idArray[0];
-
-    //     const url = `warehouse/${id}/balance`;
-    //     return {
-    //       url: url,
-    //       method: 'PUT',
-    //       body
-    //     }
-    //   },
-    //   invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
-    // }),
-    // updateWarehouseBalance: builder.mutation<IWarehouse, { id: number; warehouseBalance: IWarehouseBalance[] }>({
-
-    //   query: (body) => ({
-    //     url: `warehouse/${Number(body.id)}/balance`,
-    //     method: 'PUT',
-    //     body:body.warehouseBalance
-    //   }),
-    //   invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
-    // }),
     deleteProductFromWarehouse: builder.mutation<void, IBalanceDelete>({
       query: ({ warehouseId, productId }) => ({
         url: `warehouse/${Number(warehouseId)}/balance/${Number(productId)}`,

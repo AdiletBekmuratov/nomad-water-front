@@ -8,7 +8,7 @@ import {
   useGetWarehouseIDQuery,
   useUpdateWarehouseBalanceMutation
 } from '@/redux/services/base.service';
-import { IProduct } from '@/types';
+import { IProduct, IWarehouseUpdateBalance } from '@/types';
 
 import { toast } from 'react-hot-toast';
 import { Layout } from '@/components/Layout';
@@ -24,8 +24,11 @@ const WarehouseTable = () => {
   const { data: warehouse, isLoading: isWarehouseLoad } = useGetWarehouseIDQuery(
     Number(warehouseIdUrl)
   );
-  let cloneBalance = warehouse ? [...warehouse.warehouseBalanceList] : [];
 
+  let cloneBalance: IWarehouseUpdateBalance[] = warehouse
+    ? JSON.parse(JSON.stringify(warehouse.warehouseBalanceList))
+    : [];
+  // console.log(cloneBalance);
   const [create] = useAddProductToWarehouseMutation();
   const [update] = useUpdateWarehouseBalanceMutation();
   const [deleteProd] = useDeleteProductFromWarehouseMutation();
@@ -53,16 +56,17 @@ const WarehouseTable = () => {
         {
           loading: 'Загрузка...',
           success: 'Продукт добавлен',
-          error: "Вы не ввели количество"
+          error: 'Вы не ввели количество'
         }
       )
       .finally(() => {
         setValueQuantity([]);
       });
   };
-  const handleUpdate = async (quantity: number, product: IProduct, id: number) => {
+  const handleUpdate = async (warehouseBalance: IWarehouseUpdateBalance[], id: number) => {
+    console.log(id);
     toast
-      .promise(update({ quantity, product, id }).unwrap(), {
+      .promise(update({ id, warehouseBalance }).unwrap(), {
         loading: 'Загрузка',
         success: 'Обновлено успешно',
         error: (error) => JSON.stringify(error, null, 2)
@@ -73,7 +77,7 @@ const WarehouseTable = () => {
   };
   const handleDelete = async (productId: number, warehouseId: number) => {
     toast
-      .promise(deleteProd({ productId,warehouseId }).unwrap(), {
+      .promise(deleteProd({ productId, warehouseId }).unwrap(), {
         loading: 'Загрузка',
         success: 'Товар удален из склада',
         error: (error) => JSON.stringify(error, null, 2)
@@ -159,7 +163,8 @@ const WarehouseTable = () => {
         </div>
         {products.map((product: IProduct) => {
           let proId = product.id!;
-
+          let quantity = cloneBalance.find((balance) => balance.product.id === proId)?.quantity;
+          quantityProd = Number(quantity ? quantity :null);
           return (
             <div
               className={`grid grid-cols-1 lg:grid-cols-6  items-center gap-2 bg-light-blue rounded-lg 
@@ -198,9 +203,8 @@ const WarehouseTable = () => {
               ) : (
                 <Button
                   className={`bg-blue-900 hover:bg-blue-700`}
-                  onClick={() =>
-                    handleUpdate(Number(valueQuantity), product, Number(warehouse!.id))
-                  }>
+                  //onClick={() => handleUpdate([valueQuantity[proId]), Number(proId)], Number(warehouse!.id))}
+                  >
                   Обновить
                 </Button>
               )}
@@ -208,7 +212,7 @@ const WarehouseTable = () => {
               <Button
                 className={`bg-red-500 hover:bg-blue-800`}
                 //disabled={quantityProd === null}
-                onClick={() => handleDelete(Number(product.id!), Number(warehouse!.id))}>
+                onClick={() => handleDelete(Number(proId), Number(warehouse!.id))}>
                 Убрать со склада
               </Button>
             </div>
