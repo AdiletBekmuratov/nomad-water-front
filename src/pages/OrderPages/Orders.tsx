@@ -202,7 +202,12 @@ const Orders = () => {
           </Form>
         </Formik>
       </Modal>
-      <RateOrder data={rowData!} setIsOpenModal={setIsRating} isOpenModal={isRating} />
+      <RateOrder
+        data={rowData!}
+        setIsOpenModal={setIsRating}
+        isOpenModal={isRating}
+        refetch={fetchOrders}
+      />
     </Layout>
   );
 };

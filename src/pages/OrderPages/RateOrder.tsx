@@ -10,6 +10,7 @@ type Props = {
   isOpenModal: boolean;
   setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   data: IOrder;
+  refetch: Function;
 };
 
 type Rating = {
@@ -17,7 +18,7 @@ type Rating = {
   checked: boolean;
 };
 
-const RateOrder: FC<Props> = ({ isOpenModal, setIsOpenModal, data }) => {
+const RateOrder: FC<Props> = ({ isOpenModal, setIsOpenModal, data, refetch }) => {
   const [rateOrder] = useRateOrderMutation();
   const [rating, setRating] = useState<Rating[]>([
     { value: 1, checked: false },
@@ -48,7 +49,10 @@ const RateOrder: FC<Props> = ({ isOpenModal, setIsOpenModal, data }) => {
         success: 'Ваш отзыв учтен',
         error: (err) => err.data
       })
-      .finally(() => setIsOpenModal(false));
+      .finally(() => {
+        refetch();
+        setIsOpenModal(false);
+      });
   };
 
   return (
