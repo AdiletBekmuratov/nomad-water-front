@@ -143,8 +143,19 @@ const Orders = () => {
       },
       {
         header: 'Оценить заказ',
-        cell: ({ row }) =>
-          row.original.statusId === 3 && <ActionButtons handleRating={() => handleRating(row)} />
+        cell: ({ row }) => {
+          if (row.original.rating) {
+            return `Заказ оценен на ${row.original.rating} звезд(ы)`;
+          } else if (row.original.statusId === 3) {
+            return <ActionButtons handleRating={() => handleRating(row)} />;
+          }
+
+          // row.original.statusId === 3 ? (
+          //   <ActionButtons handleRating={() => handleRating(row)} />
+          // ) : (
+          //   row.original.rating && <></>
+          // );
+        }
       },
       {
         header: 'Отменить заказ',
@@ -191,7 +202,12 @@ const Orders = () => {
           </Form>
         </Formik>
       </Modal>
-      <RateOrder data={rowData!} setIsOpenModal={setIsRating} isOpenModal={isRating} />
+      <RateOrder
+        data={rowData!}
+        setIsOpenModal={setIsRating}
+        isOpenModal={isRating}
+        refetch={fetchOrders}
+      />
     </Layout>
   );
 };
