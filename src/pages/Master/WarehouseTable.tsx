@@ -72,7 +72,11 @@ const WarehouseTable = () => {
 
   const categoriesButStyle = `flex items-center justify-center py-2 px-3 
   rounded-2xl bg-white cursor-pointer`;
-
+let quantityProd: number | null = null;
+          
+          let productInBalance: IProduct[];
+          let prod: IProduct | undefined;
+          let id: number | undefined;
   return (
     <Layout>
       <div className="grid gap-3">
@@ -144,9 +148,32 @@ const WarehouseTable = () => {
             ))}
           </div>
         </div>
-        {products.map((product:IProduct, id:number) => {
-          let quantityProd: number | null = null;
+        {products.map((product: IProduct) => {
           let proId = product.id!;
+          if (warehouse) {
+            if (warehouse.warehouseBalanceList) {
+              productInBalance = warehouse.warehouseBalanceList.map((balance) => balance.product);
+              if (productInBalance) {
+                prod = productInBalance.find((product) => product.id! === proId);
+                if (prod) {
+                  id = prod.id;
+                  if (id) {
+                    if (warehouse) {
+                      if (warehouse.warehouseBalanceList) {
+                        if (warehouse.warehouseBalanceList[id]) {
+                          quantityProd = warehouse.warehouseBalanceList[id].quantity;
+                          
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          console.log(quantityProd);
+
           return (
             <div
               className={`grid grid-cols-1 lg:grid-cols-6  items-center gap-2 bg-light-blue rounded-lg 
@@ -167,17 +194,17 @@ const WarehouseTable = () => {
               <Input
                 name={`${product.productName}`}
                 inputType="default"
-                id={id.toString()}
+                id={`${product.productName}`}
                 placeholder="Ввведите количество"
-                value={valueQuantity[id] || ''}
-                onChange={(e) => onChangeQuantity(e, id)}
+                value={valueQuantity[id!] || ''}
+                onChange={(e) => onChangeQuantity(e, id!)}
               />
               {quantityProd === null ? (
                 <Button
                   className={` hover:bg-blue-800`}
                   onClick={(e) => {
                     // prodId = e.currentTarget.value;
-                    handleAdd(Number(valueQuantity[id]), Number(proId), Number(warehouse!.id));
+                    handleAdd(Number(valueQuantity[id!]), Number(proId), Number(warehouse!.id));
                   }}>
                   Добавить
                 </Button>
