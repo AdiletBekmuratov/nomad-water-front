@@ -79,7 +79,7 @@ const OrderHistory = () => {
   }
   return (
     <div>
-      <Table id="ProductsTable" data={completeOrders} columns={columns} title="История заказов" />
+      {/* <Table id="ProductsTable" data={completeOrders} columns={columns} title="История заказов" /> */}
     </div>
   );
 };
