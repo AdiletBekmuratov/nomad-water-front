@@ -107,7 +107,7 @@ const AppRoutes = () => {
             {/* Список складов */}
             <Route path="/warehouses" element={<Warehouses />} />
             <Route path="/warehouse/:id" element={<WarehouseTable />} />
-            
+
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:id" element={<BottlePage />} />
             <Route

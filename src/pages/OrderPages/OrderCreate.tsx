@@ -65,14 +65,19 @@ const OrderCreate: FC = () => {
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
-  const handleCreate = ( street:string,houseNumber:string,flat:string,addressComment:string) => {
-    let values:IProfile ={
-      name:'По умолчанию',
-      street:street,
-      houseNumber:houseNumber,
-      flat:flat,
-      addressComment:addressComment
-    }
+  const handleCreate = (
+    street: string,
+    houseNumber: string,
+    flat: string,
+    addressComment: string
+  ) => {
+    let values: IProfile = {
+      name: 'По умолчанию',
+      street: street,
+      houseNumber: houseNumber,
+      flat: flat,
+      addressComment: addressComment
+    };
     toast
       .promise(
         create(values)
@@ -112,12 +117,13 @@ const OrderCreate: FC = () => {
         //@ts-ignore
         product
     };
-    
+
     clientRef.current?.send(JSON.stringify(value));
+
     dispatch(clearItems());
     // console.log(value);
   };
- 
+
   useEffect(() => {
     if (waitingToReconnect) {
       return;
@@ -209,7 +215,7 @@ const OrderCreate: FC = () => {
             grid bg-white p-3 rounded-lg h-full `}>
                   <span>
                     <strong>Адрес заказа: </strong>Основной адрес
-                  </span>{' '}
+                  </span>
                 </div>
               )}
             </div>

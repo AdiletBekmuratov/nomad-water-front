@@ -67,20 +67,6 @@ const LoginPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleCreate = async (values: IUser) => {
-    console.log(values);
-    setPhoneNumb(values.phone);
-    toast
-      .promise(createAccount(values).unwrap(), {
-        loading: 'Загрузка...',
-        success: 'Аккаунт создан успешно',
-        error: (error) => JSON.stringify(error.data, null, 2)
-      })
-      .finally(() => {
-        setIsOpenModal(true);
-      });
-  };
-
   const handleLogin = async (values: IUser) => {
     setPhoneNumb(values.phone);
     console.log(values.phone);
@@ -98,13 +84,15 @@ const LoginPage = () => {
   const handleSubmit = async (values: ILoginForm) => {
     console.log(values);
     // if (!isPhone) {
-    toast.promise(dispatch(login({ phone: phoneNumb, password: values.password })).unwrap(), {
-      success: 'Добро пожаловать в Nomad water!',
-      loading: 'Загрузка',
-      error: (err) => err.toString()
-    }).finally(() => {
-      setIsOpenModal(false);
-    });
+    toast
+      .promise(dispatch(login({ phone: phoneNumb, password: values.password })).unwrap(), {
+        success: 'Добро пожаловать в Nomad water!',
+        loading: 'Загрузка',
+        error: (err) => err.toString()
+      })
+      .finally(() => {
+        setIsOpenModal(false);
+      });
     // } else {
     //   toast.promise(dispatch(login({ phone: values.phone, password: values.password })).unwrap(), {
     //     success: 'Добро пожаловать в Nomad water!',
@@ -134,74 +122,24 @@ const LoginPage = () => {
           className={`flex h-full w-full items-center justify-center rounded-none bg-light-blue 
           px-10 sm:w-auto sm:rounded-lg md:p-10 lg:p-7 xl:w-2/5`}>
           <div className={`w-full max-w-md space-y-2 lg:space-y-3`}>
-            <div className="text-center">
+            <div className="text-center mb-2">
               <h2 className={`text-lg lg:text-3xl font-bold text-gray-900`}>Добро пожаловать!</h2>
             </div>
-            <Checkbox label="Уже есть аккаунт" onChange={() => setIsPhone(!isPhone)} />
 
-            {!isPhone ? (
-              <Formik initialValues={INIT} onSubmit={handleCreate} validationSchema={SignInSchema}>
-                {() => (
-                  <Form className={`space-y-1 lg:space-y-6 items-center`}>
-                    <div className={`col-span-1 lg:col-span-3`}>
-                      <Input
-                        inputType="formik"
-                        id="phone"
-                        name="phone"
-                        label="Номер телефона"
-                        width="w-full"
-                        mask="+79999999999"
-                      />
-                    </div>
-                    <div className={`grid col-span-1 lg:col-span-3 gap-1`}>
-                      <div>
-                        <Input inputType="formik" id="lastname" name="lastname" label="Фамилия" />
-                      </div>
-                      <div>
-                        <Input inputType="formik" id="firstname" name="firstname" label="Имя" />
-                      </div>
-                    </div>
-                    <div className={`col-span-1 lg:col-span-3`}></div>{' '}
-                    <div>
-                      <Input inputType="formik" id="street" name="street" label="Микрорайон / Улица" />
-                    </div>
-                    <div className={`grid grid-cols-2 gap-20`}>
-                      <div>
-                        <Input
-                          inputType="formik"
-                          id="houseNumber"
-                          name="houseNumber"
-                          label="Номер дома"
-                        />
-                      </div>
-                      <div>
-                        <Input inputType="formik" id="flat" name="flat" label="Квартира" />
-                      </div>
-                    </div>
-                    <div className={`pt-3`}>
-                      <Button type="submit" loading={isLoading}>
-                        Создать аккаунт
-                      </Button>
-                    </div>
-                  </Form>
-                )}
-              </Formik>
-            ) : (
-              <>
-                {/* @ts-ignore */}
-                <Formik initialValues={{ phone: '' }} onSubmit={handleLogin}>
-                  <Form>
-                    <Input
-                      inputType="formik"
-                      name="phone"
-                      id="phone"
-                      mask="+79999999999"
-                      className="mb-2"
-                      placeholder="+7 (999) 999 99 99"
-                      label="Номер телефона"
-                    />
+            {/* @ts-ignore */}
+            <Formik initialValues={{ phone: '' }} onSubmit={handleLogin}>
+              <Form>
+                <Input
+                  inputType="formik"
+                  name="phone"
+                  id="phone"
+                  mask="+79999999999"
+                  className="mb-2"
+                  placeholder="+7 (999) 999 99 99"
+                  label="Номер телефона"
+                />
 
-                    {/* <div className="mb-2">
+                {/* <div className="mb-2">
                       <Input
                         inputType="formik"
                         type="password"
@@ -213,11 +151,11 @@ const LoginPage = () => {
                       />
                     </div> */}
 
-                    <Button type="submit">Войти</Button>
-                  </Form>
-                </Formik>
-              </>
-            )}
+                <Button className="mt-3" type="submit">
+                  Войти
+                </Button>
+              </Form>
+            </Formik>
           </div>
         </div>
       </div>

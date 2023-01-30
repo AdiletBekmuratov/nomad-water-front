@@ -7,13 +7,15 @@ import * as yup from 'yup';
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   useCreateCourierMutation,
   useCreateEmployeeMutation,
   useCreateWorkerMutation
 } from '@/redux/services/user.service';
-import { IUserFull } from '@/types';
+import { ILoginForm, IUserFull } from '@/types';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { login } from '@/redux/slices/auth';
 
 const params = new URLSearchParams(location.search);
 const token = params.get('token');
@@ -45,12 +47,42 @@ const INITIAL_VALUES: IUserFull = {
 };
 
 const RegisterLinkEmployee: FC = () => {
+  const [isOpenModal, setIsOpenModal] = React.useState(false);
+  const { user } = useAppSelector((state) => state.auth);
+
+  React.useEffect(() => {
+    if (!user) {
+      navigate('/login/user');
+    } else {
+      navigate('/catalog');
+    }
+  }, [user]);
+
+  const [phone, setPhone] = React.useState('');
   const [visible, setVisible] = React.useState(false);
   const [createEMPLOYEE] = useCreateEmployeeMutation();
   const [createCourier, { isLoading }] = useCreateCourierMutation();
   const [createWorker, { isLoading: isL }] = useCreateWorkerMutation();
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleLogin = async (values: ILoginForm) => {
+    console.log(values);
+    toast
+      .promise(dispatch(login(values)).unwrap(), {
+        loading: 'Загрузка...',
+        success: 'Добро пожаловать в Nomad Water',
+        error: (error) => JSON.stringify(error, null, 2)
+      })
+      .finally(() => {
+        navigate('/catalog');
+      });
+  };
+
   const handleCreate = (values: IUserFull) => {
     if (role === 'ROLE_COURIER') {
+      setPhone(values.phone);
       toast
         .promise(createCourier(values).unwrap(), {
           loading: 'Загрузка...',
@@ -58,7 +90,7 @@ const RegisterLinkEmployee: FC = () => {
           error: (error) => JSON.stringify(error, null, 2)
         })
         .finally(() => {
-          //setVisibleCreate(false);
+          setIsOpenModal(true);
         });
     } else if (role === 'ROLE_EMPLOYEE') {
       toast
@@ -67,7 +99,9 @@ const RegisterLinkEmployee: FC = () => {
           success: 'Получено',
           error: (error) => JSON.stringify(error, null, 2)
         })
-        .finally(() => {});
+        .finally(() => {
+          setIsOpenModal(true);
+        });
     } else {
       toast
         .promise(createWorker(values).unwrap(), {
@@ -75,7 +109,9 @@ const RegisterLinkEmployee: FC = () => {
           success: 'Получено',
           error: (error) => JSON.stringify(error, null, 2)
         })
-        .finally(() => {});
+        .finally(() => {
+          setIsOpenModal(true);
+        });
     }
   };
   const validation = yup.object().shape({
@@ -168,7 +204,7 @@ const RegisterLinkEmployee: FC = () => {
               <Button type="submit" loading={isLoading || isL} onClick={() => setVisible(true)}>
                 Зарегистрироваться
               </Button>
-              <Modal isOpenModal={visible} setIsOpenModal={setVisible}>
+              {/* <Modal isOpenModal={visible} setIsOpenModal={setVisible}>
                 <div className={`flex flex-col gap-3 text-center px-10`}>
                   <h2 className={`text-lg font-semibold`}>Ваши данные сохранены!</h2>
                   <span>В течении минуты на {props.values.phone} придет смс код.</span>{' '}
@@ -177,11 +213,37 @@ const RegisterLinkEmployee: FC = () => {
                     <Button>Войти</Button>
                   </Link>
                 </div>
-              </Modal>
+              </Modal> */}
             </div>
           </Form>
         )}
       </Formik>
+      <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
+        <div className="flex justify-center">
+          <h2 className="font-montserrat text-lg">Введите код подтверждения</h2>
+        </div>
+        <div>
+          <p className="font-montserrat text-sm">Код придет к вам в течении пары минут</p>
+          <Formik
+            initialValues={{ password: '' }}
+            onSubmit={(values) => handleLogin({ phone: phone, password: values.password })}>
+            {() => (
+              <Form>
+                <Input
+                  id="password"
+                  name="password"
+                  label="Код подтверждения"
+                  inputType="formik"
+                  type="password"
+                />
+                <Button className="mt-3" type="submit">
+                  Отправить
+                </Button>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </Modal>
     </div>
   );
 };
