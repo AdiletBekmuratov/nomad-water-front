@@ -50,13 +50,13 @@ const RegisterLinkEmployee: FC = () => {
   const [isOpenModal, setIsOpenModal] = React.useState(false);
   const { user } = useAppSelector((state) => state.auth);
 
-  React.useEffect(() => {
-    if (!user) {
-      navigate('/login/user');
-    } else {
-      navigate('/catalog');
-    }
-  }, [user]);
+  // React.useEffect(() => {
+  //   if (!user) {
+  //     navigate('/login/user');
+  //   } else {
+  //     navigate('/catalog');
+  //   }
+  // }, [user]);
 
   const [phone, setPhone] = React.useState('');
   const [visible, setVisible] = React.useState(false);

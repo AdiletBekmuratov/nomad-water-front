@@ -1,24 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { useLazyGetUserOrderQuery } from '@/redux/services/base.service';
+import { useGetUserOrderQuery } from '@/redux/services/base.service';
 
-import { Layout } from '@/components/Layout';
-import { ActionButtons, Table } from '@/components/Table';
-import { ColumnDef, Row } from '@tanstack/react-table';
-import { IOrder } from '@/types';
+import { Button, TextArea } from '@/components/Forms';
 import Loader from '@/components/Landing/Loader';
-import OrderHistory from '../User/OrderHistory';
-import { WS_URL } from '@/redux/http';
+import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { ActionButtons, Table } from '@/components/Table';
+import { WS_URL } from '@/redux/http';
+import { IOrder } from '@/types';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import { Form, Formik } from 'formik';
-import { Button, Input, TextArea } from '@/components/Forms';
 import { toast } from 'react-hot-toast';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import OrderHistory from '../User/OrderHistory';
 import RateOrder from './RateOrder';
 
 const Orders = () => {
-  const [fetchOrders] = useLazyGetUserOrderQuery();
-  const [allOrders, setAllOrders] = useState<IOrder | []>([]);
+  const { data: allOrders, isLoading, refetch } = useGetUserOrderQuery();
   const [isRating, setIsRating] = useState(false);
 
   const clientRef = useRef<WebSocket | null>();
@@ -37,7 +36,6 @@ const Orders = () => {
         cancelReason
       })
     );
-    //@ts-ignore
 
     toast.success('Успешно отменен заказ');
     setIsOpenModal(false);
@@ -54,9 +52,6 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    //@ts-ignore
-    fetchOrders().then((res) => setAllOrders(res.data));
-
     if (waitingToReconnect) {
       return;
     }
@@ -90,12 +85,7 @@ const Orders = () => {
       };
 
       client.onmessage = (message) => {
-        let newData = JSON.parse(message.data);
-        //@ts-ignore
-        setAllOrders((prev) => {
-          //@ts-ignore
-          [...prev, newData];
-        });
+        refetch();
       };
     }
   }, [allOrders, waitingToReconnect]);
@@ -202,12 +192,7 @@ const Orders = () => {
           </Form>
         </Formik>
       </Modal>
-      <RateOrder
-        data={rowData!}
-        setIsOpenModal={setIsRating}
-        isOpenModal={isRating}
-        refetch={fetchOrders}
-      />
+      <RateOrder data={rowData!} setIsOpenModal={setIsRating} isOpenModal={isRating} />
     </Layout>
   );
 };

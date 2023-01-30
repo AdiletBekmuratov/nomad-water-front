@@ -10,7 +10,6 @@ type Props = {
   isOpenModal: boolean;
   setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   data: IOrder;
-  refetch: Function;
 };
 
 type Rating = {
@@ -18,39 +17,24 @@ type Rating = {
   checked: boolean;
 };
 
-const RateOrder: FC<Props> = ({ isOpenModal, setIsOpenModal, data, refetch }) => {
+const RateOrder: FC<Props> = ({ isOpenModal, setIsOpenModal, data }) => {
   const [rateOrder] = useRateOrderMutation();
-  const [rating, setRating] = useState<Rating[]>([
-    { value: 1, checked: false },
-    { value: 2, checked: false },
-    { value: 3, checked: false },
-    { value: 4, checked: false },
-    { value: 5, checked: false }
-  ]);
+  const [rating, setRating] = useState<number>(0);
 
   useEffect(() => {
     if (!isOpenModal) {
-      setRating([
-        { value: 1, checked: false },
-        { value: 2, checked: false },
-        { value: 3, checked: false },
-        { value: 4, checked: false },
-        { value: 5, checked: false }
-      ]);
+      setRating(0);
     }
   }, [isOpenModal]);
 
   const handleRate = async () => {
-    let rate = rating.filter((r) => r.checked === true);
-    rate.sort((b, a) => b.value - a.value);
     toast
-      .promise(rateOrder({ id: data?.id, rating: rate[rate.length - 1].value }).unwrap(), {
+      .promise(rateOrder({ id: data?.id, rating }).unwrap(), {
         loading: 'Загрузка...',
         success: 'Ваш отзыв учтен',
         error: (err) => err.data
       })
       .finally(() => {
-        refetch();
         setIsOpenModal(false);
       });
   };
@@ -67,36 +51,23 @@ const RateOrder: FC<Props> = ({ isOpenModal, setIsOpenModal, data, refetch }) =>
         </button>
       </div>
       <div className="w-full flex justify-center">
-        {rating
-          .sort((a, b) => a.value - b.value)
-          .map((r, idx) => (
-            <Fragment key={r.value}>
-              <label htmlFor={`rating-${r.value}`} className="cursor-pointer">
-                {rating[idx].checked === true ? (
-                  <AiFillStar className="w-7 h-7 text-yellow-500" />
-                ) : (
-                  <AiOutlineStar className="w-7 h-7 hover:text-yellow-500" />
-                )}
-              </label>
-              <input
-                type="checkbox"
-                id={`rating-${r.value}`}
-                value={r.value}
-                hidden
-                onChange={() =>
-                  setRating((prev) => {
-                    let newRate = prev.filter((rate) => rate.value !== r.value);
-                    newRate.push({ value: r.value, checked: !r.checked });
-                    for (let i = 0; i < idx; i++) {
-                      newRate[i].checked = !r.checked;
-                    }
-
-                    return [...newRate];
-                  })
-                }
+        {new Array(5)
+          .fill(0)
+          .map((item, index) =>
+            rating - 1 >= index ? (
+              <AiFillStar
+                key={`filled-${index}`}
+                className="w-7 h-7 text-yellow-500 cursor-pointer"
+                onClick={() => setRating(index + 1)}
               />
-            </Fragment>
-          ))}
+            ) : (
+              <AiOutlineStar
+                key={`oullined-${index}`}
+                className="w-7 h-7 hover:text-yellow-500 cursor-pointer"
+                onClick={() => setRating(index + 1)}
+              />
+            )
+          )}
       </div>
       <div className="w-1/3 mx-auto mt-4">
         <Button onClick={handleRate}>Оценить</Button>
