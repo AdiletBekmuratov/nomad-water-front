@@ -64,7 +64,7 @@ const OrderHistory = () => {
   if (completeOrders?.length === 0) {
     return (
       <div className="flex items-center flex-col gap-3">
-        <h2 className={`text-xl font-semibold `}>История заказов</h2>
+        <h2 className={`text-xl font-semibold `}>Завершенные заказы</h2>
         <h2 className={`text-lg font-semibold text-red-600`}>Заказов нет!</h2>
         <span>Чтобы оформить заказ перейдите в каталог:</span>
         <Link to="/catalog">

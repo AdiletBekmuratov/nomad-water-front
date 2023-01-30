@@ -24,14 +24,13 @@ const WarehouseTable = () => {
   const { data: warehouse, isLoading: isWarehouseLoad } = useGetWarehouseIDQuery(
     Number(warehouseIdUrl)
   );
-
-  let cloneBalance: IBalance[] = warehouse
-    ? JSON.parse(JSON.stringify(warehouse.warehouseBalanceList))
-    : [];
   const [create] = useAddProductToWarehouseMutation();
   const [update] = useUpdateWarehouseBalanceMutation();
   const [deleteProd] = useDeleteProductFromWarehouseMutation();
 
+  let cloneBalance: IBalance[] = warehouse
+    ? JSON.parse(JSON.stringify(warehouse.warehouseBalanceList))
+    : [];
   const [valueSearch, setValueSearch] = useState('');
   const onChangeInputSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValueSearch(event.target.value);

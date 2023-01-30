@@ -7,10 +7,11 @@ import { Button } from '../Forms';
 
 type Props = {
   pickup: boolean;
-  delivery: boolean;
   setPickup: Function;
+  delivery: boolean;
   setDelivery: Function;
-
+  useBonus: boolean;
+  setUseBonus: Function;
   isValid: boolean;
 
   initialTotal: number;
@@ -23,13 +24,15 @@ type Props = {
 //     if (isDel) setTotal(total + 300);
 //     else setTotal(total);
 //   },
-//   [cartItems]
+//   [initialTotal]
 // );
 export const Total: FC<Props> = ({
   pickup,
-  delivery,
   setPickup,
+  delivery,
   setDelivery,
+  useBonus,
+  setUseBonus,
   isValid,
   initialTotal,
   buttonAction,
@@ -39,12 +42,37 @@ export const Total: FC<Props> = ({
   // const total = useAppSelector((state) => state.cart.total);
 
   return (
-    <div className="lg:order-2 lg:bg-white lg:h-48  lg:rounded-2xl lg:row-start-1">
-      <div className="h-6 w-3/4 mt-5 mx-auto gap-2.5 md:w-5/6">
+    <div className="lg:order-3 bg-white lg:h-56  rounded-xl p-2  ">
+      <div className="flex w-full border-b-2 border-dashed border-gray-500 lg:border-gray-300">
+        <h3 className="font-bold font-montserrat text-lg text-center text-dark-blue">
+          Итого: {initialTotal} Т
+        </h3>
+      </div>
+      <div className=" mx-auto flex flex-col gap-2">
+        <div className="flex items-center w-full ">
+          <Checkbox
+            label="Использовать бонусы"
+            className="w-3.5 h-3.5 cursor-pointer"
+            checked={useBonus}
+            id="delivery"
+            name="delivery"
+            // onChange={(e) => {
+            //   handleTotal(e.target.checked);
+            // }}
+            onClick={() => {
+              if (useBonus) {
+                setPickup(false);
+              }
+              setUseBonus(!useBonus);
+            }}
+            labelClass="text-dark-blue"
+          />
+          {/* <span className="text-gray-600 font-semibold text-sm font-montserrat ml-2">+300 T</span> */}
+        </div>
         <div className="flex items-center w-full">
           <Checkbox
             label="Самовывоз"
-            className="w-3.5 h-3.5"
+            className="w-3.5 h-3.5 cursor-pointer"
             checked={pickup}
             id="deliver"
             name="deliver"
@@ -58,10 +86,10 @@ export const Total: FC<Props> = ({
             labelClass="text-dark-blue"
           />
         </div>
-        <div className="flex items-center w-full lg:mt-1.5">
+        <div className="flex items-center w-full ">
           <Checkbox
             label="Доставка до адреса"
-            className="w-3.5 h-3.5"
+            className="w-3.5 h-3.5 cursor-pointer"
             checked={delivery}
             id="delivery"
             name="delivery"
@@ -78,16 +106,11 @@ export const Total: FC<Props> = ({
           />
           <span className="text-gray-600 font-semibold text-sm font-montserrat ml-2">+300 T</span>
         </div>
-        <div className="flex w-full border-t-2 border-dashed border-gray-500 lg:border-gray-300 mt-2">
-          <h3 className="font-bold mt-4 font-montserrat text-lg text-dark-blue">
-            Итого: {initialTotal} Т
-          </h3>
-        </div>
       </div>
-      <div className="lg:w-full lg:flex lg:justify-center lg:h-2/3 lg:items-end hidden">
+      <div className="lg:w-full lg:flex py-2 lg:justify-center hidden">
         <Button
           className="w-80 h-11 text-sm disabled:bg-opacity-70 lg:w-5/6"
-          buttonColor="bg-dark-blue font-montserrat"
+          buttonColor="bg-dark-blue hover:bg-blue-900 font-montserrat"
           disabled={!isValid}
           onClick={() => {
             buttonAction(initial);

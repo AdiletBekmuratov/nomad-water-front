@@ -60,7 +60,7 @@ export const CreateProfile: FC<ICreateProfileProps> = ({ setVisible, visible }) 
     street: yup.string().required('Это поле обязательное'),
     houseNumber: yup.string().required('Это поле обязательное'),
     flat: yup.string().required('Это поле обязательное'),
-    addressComment: yup.string().required('Это поле обязательное')
+    
   });
 
   return (

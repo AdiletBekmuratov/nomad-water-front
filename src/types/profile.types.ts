@@ -5,6 +5,6 @@ export type IProfile = {
   houseNumber: string;
   flat: string;
   created_date?: string;
-  addressComment: string;
+  addressComment?: string;
   value?: any;
 };

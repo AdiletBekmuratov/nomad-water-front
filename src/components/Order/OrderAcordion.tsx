@@ -23,7 +23,7 @@ export const OrderAcordion: FC<Props> = ({
   initial
 }) => {
   return (
-    <div className="lg:order-3 col-span-2 lg:row-start-2">
+    <div className="lg:order-2 col-span-2 lg:row-start-2">
       <Address
         setIsOpen={setIsOpen}
         isOpen={isOpen}

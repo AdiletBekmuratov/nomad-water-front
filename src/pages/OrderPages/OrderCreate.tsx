@@ -1,20 +1,31 @@
+import { FC, useState, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { useAppDispatch } from '@/hooks';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { clearItems } from '@/redux/slices/cartSlice';
+import { IProduct, IProfile, IUsersOrder } from '@/types';
+
+import { WS_URL } from '@/redux/http';
+
+import {
+  Footer,
+  OrderAcordion as OrderAcсordion,
+  OrderCard,
+  PaymentComponent,
+  Total
+} from '@/components/Order';
+import EditCard from '@/components/Order/EditCard';
+
 import Checkbox from '@/components/Checkbox';
 import { Button, FormContainer, Input } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';
-import { Footer, OrderAcordion, OrderCard, PaymentComponent, Total } from '@/components/Order';
-import EditCard from '@/components/Order/EditCard';
-import { useAppDispatch } from '@/hooks';
-import { useAppSelector } from '@/hooks/useAppSelector';
-import { useCreateOrderMutation } from '@/redux/services/base.service';
-import { IProduct, IUsersOrder } from '@/types';
-import React, { FC, useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import * as yup from 'yup';
-import { clearItems } from '@/redux/slices/cartSlice';
-import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
-import { WS_URL } from '@/redux/http';
 
+import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
+import { spawn } from 'child_process';
+import { toast } from 'react-hot-toast';
+import { useCreateProfileMutation } from '@/redux/services/profile.service';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
@@ -32,16 +43,20 @@ const OrderCreate: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const { products, total } = useAppSelector((state) => state.cart);
+  const user = useAppSelector((state) => state.auth.user);
+  const [create, { isLoading }] = useCreateProfileMutation();
+
   const [isOpen, setIsOpen] = useState(true);
   const [isValid, setIsValid] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const [address, setAddress] = useState([]);
+  ///total state
   const [pickup, setPickup] = useState(false);
   const [delivery, setDelivery] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('Картой');
+  const [useBonus, setUseBonus] = useState(false);
 
-  const { products, total } = useAppSelector((state) => state.cart);
-  const user = useAppSelector((state) => state.auth.user);
+  const [paymentMethod, setPaymentMethod] = useState('Картой');
 
   //@ts-ignore
   const addressOrder = `${address?.street} ${address?.houseNumber}, квартира: ${address?.flat}`;
@@ -49,6 +64,31 @@ const OrderCreate: FC = () => {
   const clientRef = useRef<WebSocket | null>(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+
+  const handleCreate = ( street:string,houseNumber:string,flat:string,addressComment:string) => {
+    let values:IProfile ={
+      name:'По умолчанию',
+      street:street,
+      houseNumber:houseNumber,
+      flat:flat,
+      addressComment:addressComment
+    }
+    toast
+      .promise(
+        create(values)
+          .unwrap()
+          .then((resp) => {
+            console.log(resp);
+            // setResponse(()=>resp);
+          }),
+        {
+          loading: 'Загрузка...',
+          success: 'Адрес сохранен, вы можете изменить его в личной странице.',
+          error: (error) => JSON.stringify(error, null, 2)
+        }
+      )
+      .finally(() => {});
+  };
 
   const handleSendOrder = () => {
     const product = products.map((product) => {
@@ -72,12 +112,12 @@ const OrderCreate: FC = () => {
         //@ts-ignore
         product
     };
-
+    
     clientRef.current?.send(JSON.stringify(value));
     dispatch(clearItems());
     // console.log(value);
   };
-
+ 
   useEffect(() => {
     if (waitingToReconnect) {
       return;
@@ -139,47 +179,68 @@ const OrderCreate: FC = () => {
   //   nameOnCard: ''
   // };
   const paymentStyle = 'placeholder:text-gray-300 font-montserrat';
+  const choiceAddress = user!.profiles!.find((profile) => profile.name);
   return (
     <Layout>
       {products.length > 0 ? (
-        <div className={`lg:grid lg:grid-cols-3 lg:grid-row-3 gap-6 text-xs md:text-base `}>
-          <div className={`lg:col-span-2 lg:order-1 lg:col-start-1 lg:row-start-1 grid gap-4`}>
+        <div className={`lg:grid lg:grid-cols-2 gap-4 text-xs md:text-base `}>
+          <div className={` flex flex-col gap-4`}>
             {products.map((item: IProduct & { quantity: number }) => (
               <OrderCard data={{ ...item }} key={item.id} />
             ))}
           </div>
+          <div className={`lg:grid lg:grid-cols-2 gap-4 pt-7 lg:pt-0`}>
+            <div>
+              {user?.profiles?.length! < 1 && (
+                <OrderAcсordion
+                  isEdited={isEdited}
+                  isOpen={isOpen}
+                  setAddress={setAddress}
+                  setIsEdited={setIsEdited}
+                  setIsOpen={setIsOpen}
+                  setIsValid={setIsValid}
+                  initial={initial}
+                />
+              )}
 
-          <OrderAcordion
-            isEdited={isEdited}
-            isOpen={isOpen}
-            setAddress={setAddress}
-            setIsEdited={setIsEdited}
-            setIsOpen={setIsOpen}
-            setIsValid={setIsValid}
-            initial={initial}
-          />
-          <EditCard className={`lg:order-4 lg:col-span-2 lg:w-full lg:row-start-3`}>
-            <div className="flex gap-3 items-center">
-              <h3 className={`font-semibold text-sm ${userStyle}`}>Способ оплаты</h3>
-
-              <button
-                className={`p-2 border border-dashed border-dark-blue rounded-xl`}
-                onClick={() => {
-                  if (paymentMethod === 'Наличными') {
-                    setPaymentMethod('Картой');
-                  } else {
-                    setPaymentMethod('Наличными');
-                  }
-                  return paymentMethod;
-                }}>
-                {paymentMethod}
-              </button>
-              <h3 className={`font-semibold opacity-75 text-sm ${userStyle}`}>
-                (для смены нажмите кнопку)
-              </h3>
+              {user?.profiles?.length! >= 1 && choiceAddress?.name === 'По умолчанию' && (
+                <div
+                  className={`lg:col-span-2 lg:order-1 order-1 lg:col-start-3 lg:row-start-1 row-start-1 
+            grid bg-white p-3 rounded-lg h-full `}>
+                  <span>
+                    <strong>Адрес заказа: </strong>Основной адрес
+                  </span>{' '}
+                </div>
+              )}
             </div>
+            <div className={`flex flex-col gap-5 `}>
+              <EditCard className={`lg:order-3  w-full `}>
+                <div className="flex flex-col gap-3 items-center">
+                  <span className={`font-semibold text-sm ${userStyle}`}>
+                    Выберите способ оплаты
+                  </span>
 
-            {/* {paymentMethod === 'Картой' && (
+                  <button
+                    className={`p-2 border border-dashed border-dark-blue rounded-xl`}
+                    onClick={() => {
+                      if (paymentMethod === 'Наличными') {
+                        setPaymentMethod('Картой');
+                      } else {
+                        setPaymentMethod('Наличными');
+                      }
+                      return paymentMethod;
+                    }}>
+                    {paymentMethod}
+                  </button>
+                  <h3 className={`font-semibold text-center opacity-75 text-xs ${userStyle}`}>
+                    (для смены нажмите кнопку)
+                  </h3>
+                  {paymentMethod === 'Картой' && (
+                    <Button className="text-sm max-w-sm">Изменить данные карты</Button>
+                  )}
+                </div>
+
+                {/* {paymentMethod === 'Картой' && (
               <div>
                 <FormContainer
                   initialValues={initialVal}
@@ -230,7 +291,7 @@ const OrderCreate: FC = () => {
               </div>
             )} */}
 
-            {/* <button
+                {/* <button
               className="text-blue-light font-montserrat font-semibold text-xs"
               onClick={() => {
                 setIsEdited(true);
@@ -238,19 +299,23 @@ const OrderCreate: FC = () => {
               value="payment">
               Выберите способ оплаты
             </button> */}
-          </EditCard>
+              </EditCard>
+              <Total
+                delivery={delivery}
+                setDelivery={setDelivery}
+                pickup={pickup}
+                setPickup={setPickup}
+                useBonus={useBonus}
+                setUseBonus={setUseBonus}
+                isValid={isValid}
+                buttonAction={handleSendOrder}
+                initial={initial}
+                initialTotal={total}
+              />
+            </div>
+          </div>
 
-          <Total
-            delivery={delivery}
-            pickup={pickup}
-            setDelivery={setDelivery}
-            setPickup={setPickup}
-            isValid={isValid}
-            buttonAction={handleSendOrder}
-            initial={initial}
-            initialTotal={total}
-          />
-          <div className={`h-44 lg:hidden`}></div>
+          <div className={`h-28 lg:hidden`}></div>
           <Footer className={`items-center flex justify-center lg:hidden`}>
             <Button
               className={`w-80 h-11 text-sm disabled:bg-opacity-70 md:w-2/3`}

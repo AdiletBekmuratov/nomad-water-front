@@ -81,7 +81,7 @@ const UserPage = () => {
 
         <span className={`flex flex-col md:flex-row items-center gap-1`}>
           <FaTenge className={`h-5 w-5 md:h-6 md:w-6`} />
-          {` 50000 `}
+          {` ${user?.bonuses ? user.bonuses : ' 0 '} `}
         </span>
         <button className="" onClick={() => setIsOpenEdit(true)}>
           {/* Изменить данные */}
@@ -90,78 +90,106 @@ const UserPage = () => {
       </div>
 
       <div className={`text-dark-blue grid md:grid-cols-2 lg:grid-cols-3 mt-2 gap-5 lg:gap-3`}>
-        {profile.map((item, index) => (
-          <div className={`grid gap-2 bg-light-blue rounded-xl p-3 shadow-md`} key={item.id}>
-            {item.name === 'По умолчанию' ? (
-              <p
-                className={`text-sm md:text-base text-center border-b-2 border-gray-400 border-dashed`}>
-                <strong>Основной профиль </strong>
-              </p>
-            ) : (
-              <p className={`${styleName}`}>
-                <strong>Имя адреса </strong>{' '}
-                <span>{` ${item?.name ? item.name : 'Нет данных'} `}</span>
-              </p>
-            )}
-            <p className={`${styleP}`}>
-              <strong>Микрорайон / Улица: </strong>{' '}
-              <span>{` ${item?.street ? item.street : 'Нет данных'} `}</span>
+        {profile.length < 1 ? (
+          <div className={`grid gap-2 bg-light-blue rounded-xl p-3 shadow-md`}>
+            <p className={`${styleName}`}>
+              <strong>Имя адреса </strong> <span>{` 'Нет данных' `}</span>
             </p>
             <p className={`${styleP}`}>
-              <strong>Дом: </strong> {` ${item?.houseNumber ? item.houseNumber : 'Нет данных'} `}
+              <strong>Микрорайон / Улица: </strong> <span>{`  'Нет данных' `}</span>
             </p>
             <p className={`${styleP}`}>
-              <strong>Квартира: </strong> {` ${item?.flat ? item.flat : 'Нет данных'} `}
+              <strong>Дом: </strong> {` 'Нет данных' `}
+            </p>
+            <p className={`${styleP}`}>
+              <strong>Квартира: </strong> {`  'Нет данных' `}
             </p>
             <p className={`${styleP}`}>
               <strong>Комментарий к адресу: </strong>
-              {` ${item?.addressComment ? item.addressComment : 'Нет данных'} `}
+              {`  'Нет данных'`}
             </p>
-            <div
-              className={`flex items-center justify-between gap-2 border-t-2 py-2 border-gray-400 border-dashed
-              border-b-2 `}>
-              <Button
-                className={`bg-blue-300 hover:bg-blue-400`}
-                onClick={() => {
-                  setProfileData(item);
-
-                  setVisible(true);
-                }}>
-                Изменить поля
-              </Button>
-              <Button
-                className={`bg-blue-300 hover:bg-blue-400`}
-                value={item.id!}
-                onClick={(e: any) => {
-                  setIsOpenDelete(true);
-                  setProfileId(e.target.value);
-                  setName(item.name);
-                }}>
-                Удалить адрес
-              </Button>
-              <DeleteProfile
-                setVisible={setIsOpenDelete}
-                visible={isOpenDelete}
-                id={profileId}
-                name={name}
-              />
-            </div>
-            {item.name === 'По умолчанию' && (
-              <div className={``}>
-                <Button
-                  className={`bg-blue-300 hover:bg-blue-400 h-9`}
-                  onClick={() => setIsOpenCreate(true)}>
-                  Добавить новый адрес
-                </Button>
-              </div>
-            )}
+            <div className={``}>
+                  <Button
+                    className={`bg-blue-300 hover:bg-blue-400 h-9`}
+                    onClick={() => setIsOpenCreate(true)}>
+                    Добавить новый адрес
+                  </Button>
+                </div>
           </div>
-        ))}
+        ) : (
+          profile.map((item, index) => (
+            <div className={`grid gap-2 bg-light-blue rounded-xl p-3 shadow-md`} key={item.id}>
+              {item.name === 'По умолчанию' ? (
+                <p
+                  className={`text-sm md:text-base text-center border-b-2 border-gray-400 border-dashed`}>
+                  <strong>Основной профиль </strong>
+                </p>
+              ) : (
+                <p className={`${styleName}`}>
+                  <strong>Имя адреса </strong>{' '}
+                  <span>{` ${item?.name ? item.name : 'Нет данных'} `}</span>
+                </p>
+              )}
+              <p className={`${styleP}`}>
+                <strong>Микрорайон / Улица: </strong>{' '}
+                <span>{` ${item?.street ? item.street : 'Нет данных'} `}</span>
+              </p>
+              <p className={`${styleP}`}>
+                <strong>Дом: </strong> {` ${item?.houseNumber ? item.houseNumber : 'Нет данных'} `}
+              </p>
+              <p className={`${styleP}`}>
+                <strong>Квартира: </strong> {` ${item?.flat ? item.flat : 'Нет данных'} `}
+              </p>
+              <p className={`${styleP}`}>
+                <strong>Комментарий к адресу: </strong>
+                {` ${item?.addressComment ? item.addressComment : 'Нет данных'} `}
+              </p>
+              <div
+                className={`flex items-center justify-between gap-2 border-t-2 py-2 border-gray-400 border-dashed
+              border-b-2 `}>
+                <Button
+                  className={`bg-blue-300 hover:bg-blue-400`}
+                  onClick={() => {
+                    setProfileData(item);
+
+                    setVisible(true);
+                  }}>
+                  Изменить поля
+                </Button>
+                <Button
+                  className={`bg-blue-300 hover:bg-blue-400`}
+                  value={item.id!}
+                  onClick={(e: any) => {
+                    setIsOpenDelete(true);
+                    setProfileId(e.target.value);
+                    setName(item.name);
+                  }}>
+                  Удалить адрес
+                </Button>
+                <DeleteProfile
+                  setVisible={setIsOpenDelete}
+                  visible={isOpenDelete}
+                  id={profileId}
+                  name={name}
+                />
+              </div>
+              {item.name === 'По умолчанию' && (
+                <div className={``}>
+                  <Button
+                    className={`bg-blue-300 hover:bg-blue-400 h-9`}
+                    onClick={() => setIsOpenCreate(true)}>
+                    Добавить новый адрес
+                  </Button>
+                </div>
+              )}
+            </div>
+          ))
+        )}
 
         <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
         <CreateProfile setVisible={setIsOpenCreate} visible={isOpenCreate} />
       </div>
-      <div className={`border-b-2 border-dotted border-gray-700 py-2`}></div>
+      {/* <div className={`border-b-2 border-dotted border-gray-700 py-2`}></div> */}
       {/* <div className={`mt-4 mx-auto`}>
         <OrderHistory />
       </div> */}
