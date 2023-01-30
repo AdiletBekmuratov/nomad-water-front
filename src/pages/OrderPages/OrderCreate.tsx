@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '@/hooks';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { useCreateProfileMutation, useGetALLProfilesQuery } from '@/redux/services/profile.service';
 import { clearItems } from '@/redux/slices/cartSlice';
 import { IProduct, IProfile, IUsersOrder } from '@/types';
 
@@ -17,15 +18,13 @@ import {
 } from '@/components/Order';
 import EditCard from '@/components/Order/EditCard';
 
-import Checkbox from '@/components/Checkbox';
 import { Button, FormContainer, Input } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';
 
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
-import { spawn } from 'child_process';
+
 import { toast } from 'react-hot-toast';
-import { useCreateProfileMutation } from '@/redux/services/profile.service';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
@@ -43,8 +42,10 @@ const OrderCreate: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { products, total } = useAppSelector((state) => state.cart);
   const user = useAppSelector((state) => state.auth.user);
+  let profiles = user ? (user.profiles ? user.profiles : []) : [];
+  // const { data: profile = [] } = useGetALLProfilesQuery();
+  const { products, total } = useAppSelector((state) => state.cart);
   const [create, { isLoading }] = useCreateProfileMutation();
 
   const [isOpen, setIsOpen] = useState(true);
@@ -94,14 +95,13 @@ const OrderCreate: FC = () => {
   };
 
   const handleSendOrder = () => {
-    handleCreate(values);
+    profiles.length < 1 && handleCreate(values);
     const product = products.map((product) => {
       return {
         productId: product.id,
         quantity: product.quantity
       };
     });
-    // console.log(product);
     //@ts-ignore
     const value: IUsersOrder = {
       address: addressOrder,
@@ -184,7 +184,7 @@ const OrderCreate: FC = () => {
   //   nameOnCard: ''
   // };
   const paymentStyle = 'placeholder:text-gray-300 font-montserrat';
-  const choiceAddress = user!.profiles!.find((profile) => profile.name);
+  const choiceAddress = profiles.find((profile) => profile.name);
   return (
     <Layout>
       {products.length > 0 ? (
@@ -196,7 +196,7 @@ const OrderCreate: FC = () => {
           </div>
           <div className={`lg:grid lg:grid-cols-2 gap-4 pt-7 lg:pt-0`}>
             <div>
-              {user?.profiles?.length! < 1 && (
+              {profiles.length < 1 && (
                 <OrderAcсordion
                   isEdited={isEdited}
                   isOpen={isOpen}
@@ -208,13 +208,31 @@ const OrderCreate: FC = () => {
                 />
               )}
 
-              {user?.profiles?.length! >= 1 && choiceAddress?.name === 'По умолчанию' && (
+              {profiles.length > 0 && (
                 <div
                   className={`lg:col-span-2 lg:order-1 order-1 lg:col-start-3 lg:row-start-1 row-start-1 
             grid bg-white p-3 rounded-lg h-full `}>
                   <span>
-                    <strong>Адрес заказа: </strong>Основной адрес
+                    <strong>Адрес заказа: </strong>
+                    <p className="border-b-2">Основной адрес</p>
+                    <p>
+                      Улица:
+                      {`${profiles.find((profile) => profile.name === 'По умолчанию')?.street}`}
+                    </p>
+                    <p>
+                      Дом:
+                      {`${
+                        profiles.find((profile) => profile.name === 'По умолчанию')?.houseNumber
+                      }`}
+                    </p>
+                    <p>
+                      Кв:
+                      {`${profiles.find((profile) => profile.name === 'По умолчанию')?.flat}`}
+                    </p>
                   </span>
+                  <div>
+                    
+                  </div>
                 </div>
               )}
             </div>
