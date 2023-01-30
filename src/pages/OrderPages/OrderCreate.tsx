@@ -64,15 +64,19 @@ const OrderCreate: FC = () => {
   const clientRef = useRef<WebSocket | null>(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-
-  const handleCreate = ( street:string,houseNumber:string,flat:string,addressComment:string) => {
-    let values:IProfile ={
-      name:'По умолчанию',
-      street:street,
-      houseNumber:houseNumber,
-      flat:flat,
-      addressComment:addressComment
-    }
+  let values:IProfile ={
+    name:'По умолчанию',
+      //@ts-ignore
+    street:address?.street ? address.street : '',
+      //@ts-ignore
+    houseNumber:address?.houseNumber ? address?.houseNumber : '',
+      //@ts-ignore
+    flat:address?.flat ? address?.flat : '',
+    //@ts-ignore
+    addressComment:address?.addressComment ? address?.addressComment : ''
+  }
+  const handleCreate = (values:IProfile) => {
+   
     toast
       .promise(
         create(values)
@@ -89,8 +93,9 @@ const OrderCreate: FC = () => {
       )
       .finally(() => {});
   };
-
+  
   const handleSendOrder = () => {
+    handleCreate(values);
     const product = products.map((product) => {
       return {
         productId: product.id,
@@ -112,7 +117,7 @@ const OrderCreate: FC = () => {
         //@ts-ignore
         product
     };
-    
+
     clientRef.current?.send(JSON.stringify(value));
     dispatch(clearItems());
     // console.log(value);
