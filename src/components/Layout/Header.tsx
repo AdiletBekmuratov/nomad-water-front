@@ -18,6 +18,7 @@ import {
   AiOutlineMenu,
   AiOutlineShoppingCart
 } from 'react-icons/ai';
+import { Bell } from './Bell';
 
 interface IHeader {
   className?: string;
@@ -73,7 +74,7 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
                 <AiOutlineHeart className="h-6 w-6" />
               </Link>
             )}
-           {/* //Корзина//Создание заказа */} 
+            {/* //Корзина//Создание заказа */}
             <div className={`hidden md:flex gap-4`}>
               <Link to="/order">
                 {products.length === 0 ? (
@@ -82,11 +83,17 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
                   <BsFillCartFill className="h-6 w-6 cursor-pointer" />
                 )}
               </Link>
+
               {/* //личная страница */}
               {user?.role === 'ROLE_COURIER' ? (
-                <Link to="/courier">
-                  <FaUserTie className="h-6 w-6" />
-                </Link>
+                <>
+                  <Link to="/courier/orders">
+                    <Bell />
+                  </Link>
+                  <Link to="/courier">
+                    <FaUserTie className="h-6 w-6" />
+                  </Link>
+                </>
               ) : user?.role === 'ROLE_EMPLOYEE' ? (
                 <Link to="/employee">
                   <FaUserTie className="h-6 w-6" />
