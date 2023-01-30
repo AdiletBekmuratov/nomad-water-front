@@ -81,8 +81,9 @@ const RegisterLinkEmployee: FC = () => {
   };
 
   const handleCreate = (values: IUserFull) => {
+    setPhone(values.phone);
+
     if (role === 'ROLE_COURIER') {
-      setPhone(values.phone);
       toast
         .promise(createCourier(values).unwrap(), {
           loading: 'Загрузка...',
