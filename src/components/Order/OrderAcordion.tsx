@@ -20,6 +20,7 @@ import { AiOutlineEdit } from 'react-icons/ai';
 //   initial?: IUsersOrder;
 // };
 type Props = {
+  setAddressOrder: React.Dispatch<React.SetStateAction<string>>;
   setIsValid: Function;
   setAddress: React.Dispatch<
     React.SetStateAction<{
@@ -33,7 +34,7 @@ type Props = {
   >;
 };
 
-export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress }) => {
+export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrder }) => {
   const { data: profiles = [] } = useGetALLProfilesQuery();
   const { user } = useAppSelector((state) => state.auth);
   const initProfile = profiles.find((profile) => profile.name === 'По умолчанию');
@@ -43,11 +44,12 @@ export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress }) => {
   );
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedProfile(null);
     const selectedProfile = profiles.find((profile) => profile.name === event.target.value);
+    let address = `Ул.${selectedProfile?.street}, д. ${selectedProfile?.houseNumber}, кв. ${selectedProfile?.flat}`;
     setSelectedProfile(selectedProfile!);
+    setAddressOrder(address);
   };
-  // debugger
+
   const initialValues = {
     phone: user?.phone ? user?.phone : '',
     firstname: user?.firstname ? user?.firstname : '',
