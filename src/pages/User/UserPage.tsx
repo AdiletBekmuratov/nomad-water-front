@@ -6,7 +6,7 @@ import { useGetALLProfilesQuery, useUpdateProfileMutation } from '@/redux/servic
 import { Edit } from '@/pages/User/Edit';
 import { CreateProfile } from './CreateProfile';
 import { DeleteProfile } from './DeleteProfile';
-import OrderHistory from '@/pages/User/OrderHistory';
+
 
 import { Layout } from '@/components/Layout';
 import { Button, Input } from '@/components/Forms';

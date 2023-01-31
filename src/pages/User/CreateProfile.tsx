@@ -35,14 +35,14 @@ export const CreateProfile: FC<ICreateProfileProps> = ({ setVisible, visible }) 
   };
   const [response, setResponse] = React.useState<string[]>([]);
   const [create, { isLoading }] = useCreateProfileMutation();
-  
+
   const handleCreate = (values: IProfile) => {
     toast
       .promise(
         create(values)
           .unwrap()
           .then((resp) => {
-            console.log(resp);
+            resp;
             // setResponse(()=>resp);
           }),
         {
@@ -59,8 +59,7 @@ export const CreateProfile: FC<ICreateProfileProps> = ({ setVisible, visible }) 
     name: yup.string().required('Это поле обязательное'),
     street: yup.string().required('Это поле обязательное'),
     houseNumber: yup.string().required('Это поле обязательное'),
-    flat: yup.string().required('Это поле обязательное'),
-    
+    flat: yup.string().required('Это поле обязательное')
   });
 
   return (

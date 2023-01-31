@@ -51,7 +51,14 @@ const OrderCreate: FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [isValid, setIsValid] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
-  const [address, setAddress] = useState([]);
+  const [address, setAddress] = useState<{
+    phone: string;
+    firstname: string;
+    street: string;
+    houseNumber: string;
+    flat: string;
+    addressComment: string;
+  } | null>(null);
   ///total state
   const [pickup, setPickup] = useState(false);
   const [delivery, setDelivery] = useState(false);
@@ -59,8 +66,11 @@ const OrderCreate: FC = () => {
 
   const [paymentMethod, setPaymentMethod] = useState('Картой');
 
-  //@ts-ignore
-  const addressOrder = `${address?.street} ${address?.houseNumber}, квартира: ${address?.flat}`;
+  let addressOrder = address
+    ? `Ул.${address?.street}, д. ${address?.houseNumber}, кв. ${address?.flat}`
+    : '';
+  console.log(addressOrder);
+  let a = addressOrder;
 
   const clientRef = useRef<WebSocket | null>(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
@@ -110,24 +120,24 @@ const OrderCreate: FC = () => {
       addressComment: address?.addressComment ? address?.addressComment : ''
     };
     const handleCreate = () => {
-    toast
-      .promise(
-        create(values)
-          .unwrap()
-          .then((resp) => {
-            console.log(resp);
-            // setResponse(()=>resp);
-          }),
-        {
-          loading: 'Загрузка...',
-          success: 'Адрес сохранен, вы можете изменить его в личной странице.',
-          error: (error) => JSON.stringify(error, null, 2)
-        }
-      )
-      .finally(() => {
-        refetch();
-      });
-    }
+      toast
+        .promise(
+          create(values)
+            .unwrap()
+            .then((resp) => {
+              (resp);
+              // setResponse(()=>resp);
+            }),
+          {
+            loading: 'Загрузка...',
+            success: 'Адрес сохранен, вы можете изменить его в личной странице.',
+            error: (error) => JSON.stringify(error, null, 2)
+          }
+        )
+        .finally(() => {
+          refetch();
+        });
+    };
     profiles.length < 1 && handleCreate();
 
     const product = products.map((product) => {
@@ -192,7 +202,7 @@ const OrderCreate: FC = () => {
       };
 
       client.onmessage = (data) => {
-        console.log(data.data);
+        //console.log(data.data);
       };
     }
   }, [waitingToReconnect]);
@@ -231,11 +241,11 @@ const OrderCreate: FC = () => {
           <div className={`lg:grid lg:grid-cols-2 gap-4 pt-7 lg:pt-0`}>
             <div>
               <OrderAcсordion
-               // isEdited={isEdited}
+                // isEdited={isEdited}
                 //isOpen={isOpen}
                 setAddress={setAddress}
                 //setIsEdited={setIsEdited}
-               //setIsOpen={setIsOpen}
+                //setIsOpen={setIsOpen}
                 setIsValid={setIsValid}
                 //initial={initial}
               />
@@ -405,6 +415,7 @@ const OrderCreate: FC = () => {
           </Link>
         </div>
       )}
+      
     </Layout>
   );
 };

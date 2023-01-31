@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { useGetAllProductsQuery } from '@/redux/services/base.service';
-import { IProduct } from '@/types';
+import { ICart, IProduct } from '@/types';
 
 import { CardBottle } from '@/pages/catalog/CardBottle';
 import { Button } from '@/components/Forms';
@@ -10,7 +10,7 @@ import { Layout } from '@/components/Layout';
 import Loader from '@/components/Landing/Loader';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { addItem, deleteItem } from '@/redux/slices/cartSlice';
-import { useAppSelector } from '@/hooks';
+import { useAppSelector, useLocalStorage } from '@/hooks';
 import { toast } from 'react-hot-toast';
 
 const BottlePage = () => {
@@ -18,17 +18,19 @@ const BottlePage = () => {
   const { id } = useParams();
   const { data = [], isLoading } = useGetAllProductsQuery();
   //const product = data?.map((item: IProduct) => item);
+  const [cart, setCart] = useLocalStorage<ICart>('cart', { products: [], total: 0 });
   const urlId: number = parseInt(id ?? '1');
   const product = data.find((item: IProduct) => item.id === urlId);
   const [isChoice, setIsChoice] = React.useState(false);
   const dispatch = useAppDispatch();
   const onClickAdd = () => {
-    //@ts-ignore
-    dispatch(addItem(product));
+    let tempCart: ICart = JSON.parse(JSON.stringify(cart));
+    tempCart.products ? tempCart.products.push({ ...product!, quantity: 1 }) : [];
+    dispatch(addItem({ ...product!, quantity: 1 }));
     setIsChoice(true);
   };
   const onDeleteItem = (id: number) => {
-    dispatch(deleteItem(id));
+    dispatch(deleteItem(Number(product!.id)));
     setIsChoice(false);
   };
   const onClickToast =  () => {
