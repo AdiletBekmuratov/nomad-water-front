@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, useRef } from 'react';
 import { useGetALLProfilesQuery } from '@/redux/services/profile.service';
 
 import { useAppSelector } from '@/hooks/useAppSelector';
@@ -28,19 +28,20 @@ export const OrderAcordion: FC<Props> = ({
 }) => {
   const { data: profiles = [] } = useGetALLProfilesQuery();
   const { user } = useAppSelector((state) => state.auth);
-  const [choiceProfile, setChoiceProfile] = useState('По умолчанию');
+  const [selectedProfile, setSelectedProfile] = useState<IProfile | null>(null);
 
-  const onCLickChoice = (name: string) => {
-    setChoiceProfile(name);
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedProfile = profiles.find((profile) => profile.name === event.target.value);
+    setSelectedProfile(selectedProfile!);
   };
-  const mainAddress = profiles.find((profile) => profile.name === choiceProfile);
+
   const initialValues = {
     phone: user?.phone ? user?.phone : '',
     firstname: user?.firstname ? user?.firstname : '',
-    street: mainAddress?.street ? mainAddress.street : '',
-    houseNumber: mainAddress?.houseNumber ? mainAddress.houseNumber : '',
-    flat: mainAddress?.flat ? mainAddress.flat : '',
-    addressComment: mainAddress?.addressComment ? mainAddress.addressComment : ''
+    street: selectedProfile?.street ?  selectedProfile.street : '',
+    houseNumber: selectedProfile?.houseNumber ?  selectedProfile.houseNumber : '',
+    flat: selectedProfile?.flat ?  selectedProfile.flat : '',
+    addressComment: selectedProfile?.addressComment ?  selectedProfile.addressComment : '',
   };
   const validation = yup.object().shape({
     firstname: yup.string().required('Поле обязательное'),
@@ -96,15 +97,12 @@ export const OrderAcordion: FC<Props> = ({
                   as="select"
                   name="profile"
                   id="profile"
+                  value={selectedProfile?.name || ''}
+                  onChange={handleSelectChange}
                   className={`bg-white text-center cursor-pointer p-2 rounded-md `}>
-                  {profiles.map((profile) => (
-                    <option
-                      className="cursor-pointer"
-                      key={profile.id}
-                      value={profile.name}
-                      id="profile"
-                      onClick={() => onCLickChoice(profile.name)}>
-                      {profile.name}
+                  {profiles.map(({ id, name }) => (
+                    <option className="cursor-pointer" key={id} value={name} id="profile">
+                      {name}
                     </option>
                   ))}
                 </Field>
@@ -115,7 +113,7 @@ export const OrderAcordion: FC<Props> = ({
                 inputType="formik"
                 label="Микрорайон / Улица"
                 className={`${styleInput}`}
-                // value={choiceProfile?.street}
+                value={selectedProfile?.street}
               />
 
               <Input
@@ -124,7 +122,7 @@ export const OrderAcordion: FC<Props> = ({
                 inputType="formik"
                 label="Дом"
                 className={`${styleInput}`}
-                // value={choiceProfile?.houseNumber}
+                value={selectedProfile?.houseNumber}
               />
 
               <Input
@@ -133,7 +131,7 @@ export const OrderAcordion: FC<Props> = ({
                 inputType="formik"
                 label="Квартира"
                 className={`${styleInput}`}
-                // value={choiceProfile?.flat}
+                value={selectedProfile?.flat}
               />
 
               <Input
@@ -143,7 +141,7 @@ export const OrderAcordion: FC<Props> = ({
                 label="Комментарий к заказу"
                 placeholder="Например: блок, подъезд, этаж, домофон, лифт, и др"
                 className={`${styleInput}`}
-                // value={choiceProfile?.addressComment}
+                value={selectedProfile?.addressComment}
               />
 
               <Input
