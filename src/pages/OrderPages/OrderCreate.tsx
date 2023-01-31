@@ -51,6 +51,7 @@ const OrderCreate: FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [isValid, setIsValid] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
+  const [addressOrder, setAddressOrder] = useState('');
   const [address, setAddress] = useState<{
     phone: string;
     firstname: string;
@@ -66,46 +67,9 @@ const OrderCreate: FC = () => {
 
   const [paymentMethod, setPaymentMethod] = useState('Картой');
 
-  let addressOrder = address
-    ? `Ул.${address?.street}, д. ${address?.houseNumber}, кв. ${address?.flat}`
-    : '';
-  console.log(addressOrder);
-  let a = addressOrder;
-
   const clientRef = useRef<WebSocket | null>(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-
-  // const handleCreate = () => {
-  //   let values: IProfile = {
-  //     name: 'По умолчанию',
-  //     //@ts-ignore
-  //     street: address?.street ? address.street : '',
-  //     //@ts-ignore
-  //     houseNumber: address?.houseNumber ? address?.houseNumber : '',
-  //     //@ts-ignore
-  //     flat: address?.flat ? address?.flat : '',
-  //     //@ts-ignore
-  //     addressComment: address?.addressComment ? address?.addressComment : ''
-  //   };
-  //   toast
-  //     .promise(
-  //       create(values)
-  //         .unwrap()
-  //         .then((resp) => {
-  //           console.log(resp);
-  //           // setResponse(()=>resp);
-  //         }),
-  //       {
-  //         loading: 'Загрузка...',
-  //         success: 'Адрес сохранен, вы можете изменить его в личной странице.',
-  //         error: (error) => JSON.stringify(error, null, 2)
-  //       }
-  //     )
-  //     .finally(() => {
-  //       refetch();
-  //     });
-  // };
 
   const handleSendOrder = () => {
     let values: IProfile = {
@@ -125,7 +89,7 @@ const OrderCreate: FC = () => {
           create(values)
             .unwrap()
             .then((resp) => {
-              (resp);
+              resp;
               // setResponse(()=>resp);
             }),
           {
@@ -241,43 +205,11 @@ const OrderCreate: FC = () => {
           <div className={`lg:grid lg:grid-cols-2 gap-4 pt-7 lg:pt-0`}>
             <div>
               <OrderAcсordion
-                // isEdited={isEdited}
-                //isOpen={isOpen}
                 setAddress={setAddress}
-                //setIsEdited={setIsEdited}
-                //setIsOpen={setIsOpen}
+                setAddressOrder={setAddressOrder}
                 setIsValid={setIsValid}
-                //initial={initial}
               />
             </div>
-
-            {/* {profiles.length > 0 && (
-                <div
-                  className={`lg:col-span-2 lg:order-1 order-1 lg:col-start-3 lg:row-start-1 row-start-1 
-            grid bg-white p-3 rounded-lg h-full `}>
-                  <span>
-                    <strong>Адрес заказа: </strong>
-                    <p className="border-b-2">Основной адрес</p>
-                    <p>
-                      Улица:
-                      {`${profiles.find((profile) => profile.name === 'По умолчанию')?.street}`}
-                    </p>
-                    <p>
-                      Дом:
-                      {`${
-                        profiles.find((profile) => profile.name === 'По умолчанию')?.houseNumber
-                      }`}
-                    </p>
-                    <p>
-                      Кв:
-                      {`${profiles.find((profile) => profile.name === 'По умолчанию')?.flat}`}
-                    </p>
-                  </span>
-                  <div>
-                    
-                  </div>
-                </div>
-              )} */}
 
             <div className={`flex flex-col gap-5 `}>
               <EditCard className={`lg:order-3  w-full `}>
@@ -415,7 +347,6 @@ const OrderCreate: FC = () => {
           </Link>
         </div>
       )}
-      
     </Layout>
   );
 };
