@@ -11,7 +11,7 @@ export const courierApi = createApi({
       return headers;
     }
   }),
-  tagTypes: ['COrder'],
+  tagTypes: ['COrder', 'routeSheet'],
   endpoints: (builder) => ({
     getCourierOrder: builder.query<ICourierOrder[], void>({
       query: () => ({
@@ -51,6 +51,24 @@ export const courierApi = createApi({
               { type: 'COrder', id: 'LIST' }
             ]
           : [{ type: 'COrder', id: 'LIST' }]
+    }),
+    getRouteSheet: builder.query({
+      query: () => ({
+        url: '/user/routeSheet'
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }: { id: any }) => ({ type: 'routeSheet', id } as const)),
+              { type: 'routeSheet', id: 'LIST' }
+            ]
+          : [{ type: 'routeSheet', id: 'LIST' }]
+    }),
+    getCurrentCourierRouteSheet: builder.query<any, string>({
+      query: (date) => ({
+        url: `/user/routeSheet/${date}`
+      }),
+      providesTags: [{ type: 'routeSheet', id: 'LIST' }]
     })
   })
 });
@@ -61,5 +79,7 @@ export const {
   useCompleteOrderMutation,
   useGetAllConfirmedOrdersQuery,
   useLazyGetAllConfirmedOrdersQuery,
-  useLazyGetCourierOrderQuery
+  useLazyGetCourierOrderQuery,
+  useGetRouteSheetQuery,
+  useGetCurrentCourierRouteSheetQuery
 } = courierApi;
