@@ -231,13 +231,13 @@ const OrderCreate: FC = () => {
           <div className={`lg:grid lg:grid-cols-2 gap-4 pt-7 lg:pt-0`}>
             <div>
               <OrderAcсordion
-                isEdited={isEdited}
-                isOpen={isOpen}
+               // isEdited={isEdited}
+                //isOpen={isOpen}
                 setAddress={setAddress}
-                setIsEdited={setIsEdited}
-                setIsOpen={setIsOpen}
+                //setIsEdited={setIsEdited}
+               //setIsOpen={setIsOpen}
                 setIsValid={setIsValid}
-                initial={initial}
+                //initial={initial}
               />
             </div>
 

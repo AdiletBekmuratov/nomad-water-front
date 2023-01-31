@@ -8,70 +8,62 @@ import { Field, Form, Formik } from 'formik';
 import { Input } from '../Forms';
 import * as yup from 'yup';
 
+// type Props = {
+//   setIsOpen: Function;
+//   isOpen: boolean;
+//   setIsEdited: Function;
+//   setIsValid: Function;
+//   isEdited: boolean;
+//   setAddress: Function;
+//   initial?: IUsersOrder;
+// };
 type Props = {
-  setIsOpen: Function;
-  isOpen: boolean;
-  setIsEdited: Function;
   setIsValid: Function;
-  isEdited: boolean;
   setAddress: Function;
-  initial?: IUsersOrder;
 };
 
-export const OrderAcordion: FC<Props> = ({
-  setIsOpen,
-  isOpen,
-  setIsEdited,
-  setIsValid,
-
-  setAddress
-}) => {
+export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress }) => {
   const { data: profiles = [] } = useGetALLProfilesQuery();
   const { user } = useAppSelector((state) => state.auth);
-  const initProfile = profiles.find((profile) => profile.name === 'По умолчанию')
-  const [selectedProfile, setSelectedProfile] = useState<IProfile | null>(initProfile!);
+  const initProfile = profiles.find((profile) => profile.name === 'По умолчанию');
+  const [selectedProfile, setSelectedProfile] = useState<IProfile | null>(
+    initProfile ? initProfile : null
+  );
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedProfile = profiles.find((profile) => profile.name === event.target.value);
-    setSelectedProfile(selectedProfile!);
-  };
+    setSelectedProfile(selectedProfile!);}
 
-  const initialValues = {
-    phone: user?.phone ? user?.phone : '',
-    firstname: user?.firstname ? user?.firstname : '',
-    street: selectedProfile?.street ?  selectedProfile.street : '',
-    houseNumber: selectedProfile?.houseNumber ?  selectedProfile.houseNumber : '',
-    flat: selectedProfile?.flat ?  selectedProfile.flat : '',
-    addressComment: selectedProfile?.addressComment ?  selectedProfile.addressComment : '',
-  };
-  const validation = yup.object().shape({
-    firstname: yup.string().required('Поле обязательное'),
-    phone: yup.string().required('Поле обязательное'),
-    street: yup.string().required('Поле обязательное'),
-    houseNumber: yup.string().required('Поле обязательное'),
-    flat: yup.string().required('Поле обязательное')
-  });
+    const initialValues = {
+      phone: user?.phone ? user?.phone : '',
+      firstname: user?.firstname ? user?.firstname : '',
+      street: selectedProfile?.street ? selectedProfile.street : '',
+      houseNumber: selectedProfile?.houseNumber ? selectedProfile.houseNumber : '',
+      flat: selectedProfile?.flat ? selectedProfile.flat : '',
+      addressComment: selectedProfile?.addressComment ? selectedProfile.addressComment : ''
+    };
+    const validation = yup.object().shape({
+      firstname: yup.string().required('Поле обязательное'),
+      phone: yup.string().required('Поле обязательное'),
+      street: yup.string().required('Поле обязательное'),
+      houseNumber: yup.string().required('Поле обязательное'),
+      flat: yup.string().required('Поле обязательное')
+    });
 
-  const styleInput = `font-montserrat placeholder:text-gray-400 rounded-md`;
+    const styleInput = `font-montserrat placeholder:text-gray-400 rounded-md`;
 
-  return (
-    <div className="lg:order-2 col-span-2 lg:row-start-2">
-      <div
-        className="bg-white flex 
+    return (
+      <div className="lg:order-2 col-span-2 lg:row-start-2">
+        <div
+          className="bg-white flex 
     justify-evenly items-center  gap-2 rounded-lg lg:w-full">
-        {profiles.length === 0 ? (
-          <div>
-            <h5 className="text-dark-blue font-montserrat font-semibold py-3 px-2">
-              Куда доставить?
-            </h5>
-          </div>
-        ) : (
           <div
             className="bg-white flex 
         justify-evenly items-center  gap-2 rounded-2xl lg:w-full">
             <h5 className="text-dark-blue font-montserrat font-semibold py-3 px-2">
               Куда доставить?
             </h5>
+
             {/* 
             <button
               onClick={() => {
@@ -86,9 +78,7 @@ export const OrderAcordion: FC<Props> = ({
               )}
             </button> */}
           </div>
-        )}
-      </div>
-      {isOpen && (
+        </div>
         <Formik initialValues={initialValues} validationSchema={validation} onSubmit={() => {}}>
           {({ isValid, values }) => (
             <Form className="flex flex-col gap-2 pt-3">
@@ -101,7 +91,7 @@ export const OrderAcordion: FC<Props> = ({
                   value={selectedProfile?.name || ''}
                   onChange={handleSelectChange}
                   className={`bg-white text-center cursor-pointer p-2 rounded-md `}>
-                    {/* <option className="cursor-pointer">
+                  {/* <option className="cursor-pointer">
                       Выбрать адрес
                     </option> */}
                   {profiles.map(({ id, name }) => (
@@ -171,7 +161,7 @@ export const OrderAcordion: FC<Props> = ({
             </Form>
           )}
         </Formik>
-      )}
-    </div>
-  );
-};
+      </div>
+    );
+  };
+
