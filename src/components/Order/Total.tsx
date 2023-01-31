@@ -111,7 +111,7 @@ export const Total: FC<Props> = ({
         <Button
           className="w-80 h-11 text-sm disabled:bg-opacity-70 lg:w-5/6"
           buttonColor="bg-dark-blue hover:bg-blue-900 font-montserrat"
-          // disabled={!isValid}
+          disabled={!isValid}
           onClick={() => {
             buttonAction(initial);
             // alert(JSON.stringify(address, null, 2));

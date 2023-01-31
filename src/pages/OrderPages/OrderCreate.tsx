@@ -18,7 +18,7 @@ import {
 } from '@/components/Order';
 import EditCard from '@/components/Order/EditCard';
 
-import { Button, FormContainer, Input } from '@/components/Forms';
+import { Button } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';
 
@@ -43,8 +43,8 @@ const OrderCreate: FC = () => {
   const dispatch = useAppDispatch();
 
   const user = useAppSelector((state) => state.auth.user);
-  let profiles = user ? (user.profiles ? user.profiles : []) : [];
-  // const { data: profile = [] } = useGetALLProfilesQuery();
+  // let profiles = user ? (user.profiles ? user.profiles : []) : [];
+  const { data: profiles = [], refetch } = useGetALLProfilesQuery();
   const { products, total } = useAppSelector((state) => state.cart);
   const [create, { isLoading }] = useCreateProfileMutation();
 
@@ -65,18 +65,51 @@ const OrderCreate: FC = () => {
   const clientRef = useRef<WebSocket | null>(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  let values: IProfile = {
-    name: 'По умолчанию',
-    //@ts-ignore
-    street: address?.street ? address.street : '',
-    //@ts-ignore
-    houseNumber: address?.houseNumber ? address?.houseNumber : '',
-    //@ts-ignore
-    flat: address?.flat ? address?.flat : '',
-    //@ts-ignore
-    addressComment: address?.addressComment ? address?.addressComment : ''
-  };
-  const handleCreate = (values: IProfile) => {
+
+  // const handleCreate = () => {
+  //   let values: IProfile = {
+  //     name: 'По умолчанию',
+  //     //@ts-ignore
+  //     street: address?.street ? address.street : '',
+  //     //@ts-ignore
+  //     houseNumber: address?.houseNumber ? address?.houseNumber : '',
+  //     //@ts-ignore
+  //     flat: address?.flat ? address?.flat : '',
+  //     //@ts-ignore
+  //     addressComment: address?.addressComment ? address?.addressComment : ''
+  //   };
+  //   toast
+  //     .promise(
+  //       create(values)
+  //         .unwrap()
+  //         .then((resp) => {
+  //           console.log(resp);
+  //           // setResponse(()=>resp);
+  //         }),
+  //       {
+  //         loading: 'Загрузка...',
+  //         success: 'Адрес сохранен, вы можете изменить его в личной странице.',
+  //         error: (error) => JSON.stringify(error, null, 2)
+  //       }
+  //     )
+  //     .finally(() => {
+  //       refetch();
+  //     });
+  // };
+
+  const handleSendOrder = () => {
+    let values: IProfile = {
+      name: 'По умолчанию',
+      //@ts-ignore
+      street: address?.street ? address.street : '',
+      //@ts-ignore
+      houseNumber: address?.houseNumber ? address?.houseNumber : '',
+      //@ts-ignore
+      flat: address?.flat ? address?.flat : '',
+      //@ts-ignore
+      addressComment: address?.addressComment ? address?.addressComment : ''
+    };
+    const handleCreate = () => {
     toast
       .promise(
         create(values)
@@ -91,11 +124,12 @@ const OrderCreate: FC = () => {
           error: (error) => JSON.stringify(error, null, 2)
         }
       )
-      .finally(() => {});
-  };
+      .finally(() => {
+        refetch();
+      });
+    }
+    profiles.length < 1 && handleCreate();
 
-  const handleSendOrder = () => {
-    profiles.length < 1 && handleCreate(values);
     const product = products.map((product) => {
       return {
         productId: product.id,
@@ -183,8 +217,8 @@ const OrderCreate: FC = () => {
   //   cvc: '',
   //   nameOnCard: ''
   // };
-  const paymentStyle = 'placeholder:text-gray-300 font-montserrat';
-  const choiceAddress = profiles.find((profile) => profile.name);
+  // const paymentStyle = 'placeholder:text-gray-300 font-montserrat';
+  // const choiceAddress = profiles.find((profile) => profile.name);
   return (
     <Layout>
       {products.length > 0 ? (
@@ -196,19 +230,18 @@ const OrderCreate: FC = () => {
           </div>
           <div className={`lg:grid lg:grid-cols-2 gap-4 pt-7 lg:pt-0`}>
             <div>
-              {profiles.length < 1 && (
-                <OrderAcсordion
-                  isEdited={isEdited}
-                  isOpen={isOpen}
-                  setAddress={setAddress}
-                  setIsEdited={setIsEdited}
-                  setIsOpen={setIsOpen}
-                  setIsValid={setIsValid}
-                  initial={initial}
-                />
-              )}
+              <OrderAcсordion
+                isEdited={isEdited}
+                isOpen={isOpen}
+                setAddress={setAddress}
+                setIsEdited={setIsEdited}
+                setIsOpen={setIsOpen}
+                setIsValid={setIsValid}
+                initial={initial}
+              />
+            </div>
 
-              {profiles.length > 0 && (
+            {/* {profiles.length > 0 && (
                 <div
                   className={`lg:col-span-2 lg:order-1 order-1 lg:col-start-3 lg:row-start-1 row-start-1 
             grid bg-white p-3 rounded-lg h-full `}>
@@ -234,15 +267,17 @@ const OrderCreate: FC = () => {
                     
                   </div>
                 </div>
-              )}
-            </div>
+              )} */}
+
             <div className={`flex flex-col gap-5 `}>
               <EditCard className={`lg:order-3  w-full `}>
                 <div className="flex flex-col gap-3 items-center">
                   <span className={`font-semibold text-sm ${userStyle}`}>
                     Выберите способ оплаты
                   </span>
-
+                  <h3 className={`font-semibold text-center opacity-75 text-xs ${userStyle}`}>
+                    (для смены нажмите кнопку)
+                  </h3>
                   <button
                     className={`p-2 border border-dashed border-dark-blue rounded-xl`}
                     onClick={() => {
@@ -255,9 +290,7 @@ const OrderCreate: FC = () => {
                     }}>
                     {paymentMethod}
                   </button>
-                  <h3 className={`font-semibold text-center opacity-75 text-xs ${userStyle}`}>
-                    (для смены нажмите кнопку)
-                  </h3>
+
                   {paymentMethod === 'Картой' && (
                     <Button className="text-sm max-w-sm">Изменить данные карты</Button>
                   )}
@@ -343,7 +376,7 @@ const OrderCreate: FC = () => {
             <Button
               className={`w-80 h-11 text-sm disabled:bg-opacity-70 md:w-2/3`}
               buttonColor="bg-dark-blue font-montserrat"
-              disabled={!isValid}
+              //disabled={!isValid}
               onClick={() => {
                 handleSendOrder();
                 //alert(JSON.stringify(address, null, 2));

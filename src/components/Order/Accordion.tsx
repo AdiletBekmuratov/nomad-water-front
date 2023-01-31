@@ -60,10 +60,10 @@ export const Accordion: FC<Props> = (props) => {
   //     )
   //     .finally(() => {});
   // };
-  const styleInput = `font-montserrat placeholder:text-gray-400`;
+  const styleInput = `font-montserrat placeholder:text-gray-400 rounded-md`;
   return (
     <>
-      <div className={`w-3/4  ${props.className}`}>
+      <div className={`${props.className}`}>
         <Formik initialValues={initialValues} validationSchema={validation} onSubmit={() => {}}>
           {({ isValid, values }) => (
             <Form className="flex flex-col gap-2">
