@@ -28,7 +28,8 @@ export const OrderAcordion: FC<Props> = ({
 }) => {
   const { data: profiles = [] } = useGetALLProfilesQuery();
   const { user } = useAppSelector((state) => state.auth);
-  const [selectedProfile, setSelectedProfile] = useState<IProfile | null>(null);
+  const initProfile = profiles.find((profile) => profile.name === 'По умолчанию')
+  const [selectedProfile, setSelectedProfile] = useState<IProfile | null>(initProfile!);
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedProfile = profiles.find((profile) => profile.name === event.target.value);
@@ -100,6 +101,9 @@ export const OrderAcordion: FC<Props> = ({
                   value={selectedProfile?.name || ''}
                   onChange={handleSelectChange}
                   className={`bg-white text-center cursor-pointer p-2 rounded-md `}>
+                    {/* <option className="cursor-pointer">
+                      Выбрать адрес
+                    </option> */}
                   {profiles.map(({ id, name }) => (
                     <option className="cursor-pointer" key={id} value={name} id="profile">
                       {name}
