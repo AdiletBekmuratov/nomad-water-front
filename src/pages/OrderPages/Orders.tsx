@@ -15,6 +15,9 @@ import { toast } from 'react-hot-toast';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import OrderHistory from '../User/OrderHistory';
 import RateOrder from './RateOrder';
+import { Link } from 'react-router-dom';
+import { BsFillCartFill } from 'react-icons/bs';
+import { useAppSelector } from '@/hooks';
 
 const Orders = () => {
   const { data: allOrders, isLoading, refetch } = useGetUserOrderQuery();
@@ -26,7 +29,7 @@ const Orders = () => {
   const [rowData, setRowData] = useState<IOrder>();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
-
+  const { products = [] } = useAppSelector((state) => state.cart);
   // Но обновляется страница, отмена заказа работает
   const cancelOrder = async (id: number, cancelReason: string) => {
     // console.log(id, cancelReason);
@@ -163,9 +166,31 @@ const Orders = () => {
 
   return (
     <Layout className={``}>
-      <Table id="ProductsTable" data={allOrders} columns={columnsUser} title="Текущие заказы" />
-      <div className={`border-b-2 border-dotted border-gray-700 py-2 my-3 `}></div>
-      <OrderHistory />
+      {allOrders?.length === 0 ? (
+        <div className="flex items-center flex-col gap-3">
+          <h2 className={`text-xl font-semibold `}>Мои заказы</h2>
+          <h2 className={`text-lg font-semibold text-red-600`}>Заказов нет!</h2>
+          <span> Перейдите в каталог и оформите хотя бы один заказ:</span>
+          <Link to="/catalog">
+            <Button className={`w-32 hover:bg-blue-900`}>В каталог</Button>
+          </Link>
+          {products.length > 0 && (
+            <>
+              <span>Либо продолжите офромление в корзине:</span>
+              <Link to="/order">
+                <BsFillCartFill className="h-10 w-10 cursor-pointer" />
+              </Link>
+            </>
+          )}
+        </div>
+      ) : (
+        <>
+          <Table id="ProductsTable" data={allOrders} columns={columnsUser} title="Текущие заказы" />
+
+          <div className={`border-b-2 border-dotted border-gray-700 py-2 my-3 `}></div>
+          <OrderHistory />
+        </>
+      )}
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
         <div className="flex items-center justify-between">
           <h2 className={`text-center`}>Отменить заказ</h2>

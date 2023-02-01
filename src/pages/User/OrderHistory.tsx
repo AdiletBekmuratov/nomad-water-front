@@ -8,11 +8,12 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/Forms';
 import { BsFillCartFill } from 'react-icons/bs';
+import { useAppSelector } from '@/hooks';
 
 const OrderHistory = () => {
   const { data: allOrders = [], isLoading } = useGetUserOrderQuery();
   const completeOrders = allOrders.filter((order) => order.statusId === 3);
-
+  const { products = [] } = useAppSelector((state) => state.cart);
   const columns = useMemo<ColumnDef<IOrder, any>[]>(
     () => [
       {
@@ -65,15 +66,19 @@ const OrderHistory = () => {
     return (
       <div className="flex items-center flex-col gap-3">
         <h2 className={`text-xl font-semibold `}>Завершенные заказы</h2>
-        <h2 className={`text-lg font-semibold text-red-600`}>Заказов нет!</h2>
+        <h2 className={`text-lg font-semibold text-red-600`}> Завершенныех заказов нет!</h2>
         <span>Чтобы оформить заказ перейдите в каталог:</span>
         <Link to="/catalog">
           <Button className={`w-32 hover:bg-blue-900`}>В каталог</Button>
         </Link>
-        <span>Либо продолжите офромление в корзине:</span>
-        <Link to="/order">
-          <BsFillCartFill className="h-10 w-10 cursor-pointer" />
-        </Link>
+        {products.length > 0 && (
+            <>
+              <span>Либо продолжите офромление в корзине:</span>
+              <Link to="/order">
+                <BsFillCartFill className="h-10 w-10 cursor-pointer" />
+              </Link>
+            </>
+          )}
       </div>
     );
   }
