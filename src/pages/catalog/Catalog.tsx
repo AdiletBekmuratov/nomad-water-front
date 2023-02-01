@@ -21,7 +21,9 @@ const Catalog: FC = () => {
   const { data: categories = [] } = useGetProductCategoryQuery();
 
   //все товары и услуги
-  const { data: products = [], isLoading } = useGetAllProductsQuery();
+  const { data: allProducts = [], isLoading } = useGetAllProductsQuery();
+  //все доступные товары
+  const products = allProducts.filter(prod => prod.inStock === true)
   const product = products.map((item: IProduct) => item);
   //получить товары по категории
   const [categoryId, setCategoryId] = useState('');

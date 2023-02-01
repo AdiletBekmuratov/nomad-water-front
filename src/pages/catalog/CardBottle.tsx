@@ -16,6 +16,7 @@ import {
 import { toast } from 'react-hot-toast';
 import { useAppSelector, useLocalStorage } from '@/hooks';
 import { ICart } from '@/types';
+import { addItemDelayOrder, deleteItemDelayOrder, IDelayOrder } from '@/redux/slices/delayOrder';
 
 export const CardBottle: FC<ICard> = ({ items }) => {
   const dispatch = useAppDispatch();
@@ -26,22 +27,43 @@ export const CardBottle: FC<ICard> = ({ items }) => {
   const [cart, setCart] = useLocalStorage<ICart>('cart', { products: [], total: 0 });
   const choice = cart.products ? cart.products.some((item) => item.id === items.id) : false;
   const [isChoice, setIsChoice] = React.useState(choice);
+  //отложенные заказы
+  const [delayOrder, setDelayOrder] = useLocalStorage<IDelayOrder>('delayOrder', { products: [] });
+  const choiceDelayOrder = delayOrder.products
+    ? delayOrder.products.some((item) => item.id === items.id)
+    : false;
+  const [isChoiceDelay, setIsChoiceDelay] = React.useState(choiceDelayOrder);
   //избранные
   const favor = favorites ? favorites.some((item) => item.id === items.id) : false;
   const [isFavorite, setIsFavorite] = React.useState<boolean>(favor);
   const [addFavorite] = useAddFavoriteMutation();
   const [deleteFavorite] = useDeleteFavoriteMutation();
-
+  //корзина ADD
   const onClickAdd = () => {
     let tempCart: ICart = JSON.parse(JSON.stringify(cart));
     tempCart.products ? tempCart.products.push({ ...items, quantity: 1 }) : [];
     dispatch(addItem({ ...items, quantity: 1 }));
     setIsChoice(true);
   };
+  //корзина DELETE
   const onDeleteItem = () => {
     dispatch(deleteItem(Number(items.id)));
     setIsChoice(false);
   };
+  //отложенные заказы ADD
+  const onAddDelayOrder = () => {
+    let tempCart: IDelayOrder = JSON.parse(JSON.stringify(delayOrder));
+    tempCart.products ? tempCart.products.push({ ...items }) : [];
+    dispatch(addItemDelayOrder({ ...items }));
+    setIsChoiceDelay(true);
+    toast.success('Заявка оставлена, мы Вам сообщим, когда товар появится на складе.')
+  };
+  //отложенные заказы DELETE
+  const onDeleteDelayOrder = () => {
+    dispatch(deleteItemDelayOrder(Number(items.id)));
+    setIsChoiceDelay(false);
+  };
+  //избранные ADD
   const onClickAddFavorite = async (id: number) => {
     setIsFavorite(true);
     await toast.promise(addFavorite(Number(id)).unwrap(), {
@@ -50,6 +72,7 @@ export const CardBottle: FC<ICard> = ({ items }) => {
       error: (error) => JSON.stringify(error, null, 2)
     });
   };
+  //избранные  DELETE
   const onDeleteFavorite = async (id: number) => {
     setIsFavorite(false);
     await toast.promise(deleteFavorite(Number(id)).unwrap(), {
@@ -59,7 +82,7 @@ export const CardBottle: FC<ICard> = ({ items }) => {
     });
   };
   const onClickToast = () => {
-    toast.success('Вы не зарегистрированы!');
+    toast.success('Пожалуйста авторизуйтесь либо зарегистрируйтесь!');
   };
 
   return (
@@ -83,10 +106,20 @@ export const CardBottle: FC<ICard> = ({ items }) => {
               <span className={`text-xs md:text-sm font-semibold `}>{items.productPrice} T</span>
             </Link>
             <>
-              { !items.inWarehouse ? (
-                <Button className={`w-32 md:w-40 h-8 md:h-10 text-xs md:text-sm bg-blue-700 hover:bg-blue-900`}>
-                  На заказ
-                </Button>
+              {!items.inWarehouse ? (
+                isChoiceDelay ? (
+                  <Button
+                    className={`w-32 md:w-48 h-8 md:h-10 text-xs md:text-sm bg-blue-700 hover:bg-blue-900`}
+                    onClick={onDeleteDelayOrder}>
+                    Убрать из отложенных
+                  </Button>
+                ) : (
+                  <Button
+                    className={`w-32 md:w-40 h-8 md:h-10 text-xs md:text-sm bg-blue-700 hover:bg-blue-900`}
+                    onClick={onAddDelayOrder}>
+                    На заказ
+                  </Button>
+                )
               ) : isChoice ? (
                 <Button
                   className={`w-32 md:w-40 h-8 md:h-10 bg-blue-400 text-xs md:text-sm hover:bg-blue-900`}

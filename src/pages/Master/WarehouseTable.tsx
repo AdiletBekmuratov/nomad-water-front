@@ -45,16 +45,18 @@ const WarehouseTable = () => {
 
   const [warehouseBalance, setWarehouseBalance] = useState<IBalanceUpdate[]>([]);
   const handleAdd = (quantity: number, productId: number, warehouseId: number) => {
-    toast
-      .promise(create({ quantity, productId, warehouseId }).unwrap(), {
-        loading: 'Загрузка...',
-        success: 'Продукт добавлен',
-        error: 'Вы не ввели количество'
-      })
-      .finally(() => {
-        setValueQuantity([]);
-        setWarehouseBalance((prev) => [...prev, { quantity, productId }]);
-      });
+    quantity >= 0
+      ? toast
+          .promise(create({ quantity, productId, warehouseId }).unwrap(), {
+            loading: 'Загрузка...',
+            success: 'Продукт добавлен',
+            error: 'Вы не ввели количество'
+          })
+          .finally(() => {
+            setWarehouseBalance((prev) => [...prev, { quantity, productId }]);
+          })
+      : toast.error('Введите корректное значение');
+    setValueQuantity([]);
   };
   const handleUpdate = async (quantity: number, productId: number, id: number) => {
     let index = warehouseBalance.findIndex(
@@ -63,27 +65,30 @@ const WarehouseTable = () => {
     let newBalance = warehouseBalance.splice(index, 1, { quantity, productId });
     setWarehouseBalance([]);
     setWarehouseBalance((prev) => [...prev, ...newBalance]);
-    toast
-      .promise(update({ id, warehouseBalance }).unwrap(), {
-        loading: 'Загрузка',
-        success: 'Количество обновлено успешно',
-        error: 'Введите число!'
-      })
-      .finally(() => {
-        setValueQuantity([]);
-      });
+    quantity >= 0
+      ? toast.promise(update({ id, warehouseBalance }).unwrap(), {
+          loading: 'Загрузка',
+          success: 'Количество обновлено успешно',
+          error: 'Введите число!'
+        })
+      : // .finally(() => {
+
+        // })
+        toast.error('Введите корректное значение');
+    setValueQuantity([]);
   };
   const handleDelete = async (productId: number, warehouseId: number) => {
     toast
       .promise(deleteProd({ productId, warehouseId }).unwrap(), {
         loading: 'Загрузка',
-        success: ()=> `Товар ${cloneBalance[productId].product.productName} удален из склада `,
+        success: () => `Товар ${cloneBalance[productId].product.productName} удален из склада `,
         error: (error) => JSON.stringify(error, null, 2)
       })
       .finally(() => {
         setValueQuantity([]);
       });
   };
+
   const categoriesButStyle = `flex items-center justify-center py-2 px-3 
   rounded-2xl bg-white cursor-pointer`;
   let quantityProd: number | null = null;
@@ -188,15 +193,11 @@ const WarehouseTable = () => {
                 placeholder="Ввведите количество"
                 value={valueQuantity[productId] || ''}
                 onChange={(e) => onChangeQuantity(e, productId)}
-                mask={'[0-9]+'}
-                
               />
               {quantityProd === null ? (
                 <Button
                   className={` hover:bg-blue-800`}
-                  
                   onClick={(e) => {
-                    
                     handleAdd(
                       Number(valueQuantity[productId]),
                       Number(productId),

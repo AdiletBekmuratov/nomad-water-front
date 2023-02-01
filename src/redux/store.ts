@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import authReducer from './slices/auth';
 import cartSlice from './slices/cartSlice';
+import delayOrder from './slices/delayOrder';
 import { baseApi } from './services/base.service';
 import { userApi } from './services/user.service';
 import { courierApi } from './services/courier.service';
@@ -11,6 +12,7 @@ import { profileApi } from './services/profile.service';
 const rootReducer = combineReducers({
   cart: cartSlice,
   auth: authReducer,
+  delayOrder: delayOrder,
   [baseApi.reducerPath]: baseApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
   [profileApi.reducerPath]: profileApi.reducer,
