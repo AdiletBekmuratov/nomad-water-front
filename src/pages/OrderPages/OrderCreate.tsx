@@ -43,7 +43,7 @@ const OrderCreate: FC = () => {
   const dispatch = useAppDispatch();
 
   const user = useAppSelector((state) => state.auth.user);
-  // let profiles = user ? (user.profiles ? user.profiles : []) : [];
+
   const { data: profiles = [], refetch } = useGetALLProfilesQuery();
   const { products, total } = useAppSelector((state) => state.cart);
   const [create, { isLoading }] = useCreateProfileMutation();
@@ -102,7 +102,7 @@ const OrderCreate: FC = () => {
           refetch();
         });
     };
-    profiles.length < 1 && handleCreate();
+    user?.role ==='ROLE_USER' && profiles.length < 1 && handleCreate();
 
     const product = products.map((product) => {
       return {
@@ -110,9 +110,13 @@ const OrderCreate: FC = () => {
         quantity: product.quantity
       };
     });
+    let employeeAddress =address ?  `Ул.${address.street}, д. ${address.houseNumber}, кв. ${address.flat}` : '';
+    
+    
     //@ts-ignore
     const value: IUsersOrder = {
-      address: addressOrder,
+      //если заказ сделан оператором
+      address: (user?.role ==='ROLE_EMPLOYEE') ?  employeeAddress : addressOrder,
       //@ts-ignore
       comment: address.addressComment,
       //@ts-ignore

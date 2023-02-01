@@ -25,7 +25,7 @@ export const EditWorker: FC<IEditModalProps> = ({ visible, setVisible, data }) =
       .promise(update(values).unwrap(), {
         loading: 'Загрузка',
         success: 'Обновлено успешно',
-        error: (error) => JSON.stringify(error, null, 2)
+        error: ()=>"Проверьте поля"
       })
       .finally(() => {});
   };
@@ -76,7 +76,7 @@ export const EditWorker: FC<IEditModalProps> = ({ visible, setVisible, data }) =
                 name="phone"
                 id="phone"
                 label="Телефон"
-                mask="+7 9999999999"
+                mask="+79999999999"
                 placeholder="+7 (999) 999 9999"
               />
               <Input

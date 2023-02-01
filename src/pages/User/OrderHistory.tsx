@@ -66,7 +66,7 @@ export const OrderHistory = () => {
     return (
       <div className="flex items-center flex-col gap-3">
         <h2 className={`text-xl font-semibold `}>Завершенные заказы</h2>
-        <h2 className={`text-lg font-semibold text-red-600`}> Завершенныех заказов нет!</h2>
+        <h2 className={`text-lg font-semibold text-red-600`}> Завершенных заказов нет!</h2>
         <span>Чтобы оформить заказ перейдите в каталог:</span>
         <Link to="/catalog">
           <Button className={`w-32 hover:bg-blue-900`}>В каталог</Button>

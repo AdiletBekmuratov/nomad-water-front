@@ -255,6 +255,18 @@ export const baseApi = createApi({
       }),
       invalidatesTags: [{ type: 'Order', id: 'LIST' }]
     }),
+    getAllOrder: builder.query<IOrder[], void>({
+      query: () => ({
+        url: `order`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: 'Order' as const, id })),
+              { type: 'Order', id: 'LIST' }
+            ]
+          : [{ type: 'Order', id: 'LIST' }]
+    }),
     getUserOrder: builder.query<IOrder[], void>({
       query: () => ({
         url: `order/user`
@@ -305,6 +317,7 @@ export const {
 
   //orders
   useGetUserOrderQuery,
+  useGetAllOrderQuery,
   useCreateOrderMutation,
   useLazyGetUserOrderQuery,
   useRateOrderMutation,

@@ -116,7 +116,7 @@ export const CardBottle: FC<ICard> = ({ items }) => {
                 ) : (
                   <Button
                     className={`w-32 md:w-40 h-8 md:h-10 text-xs md:text-sm bg-blue-700 hover:bg-blue-900`}
-                    onClick={onAddDelayOrder}>
+                    onClick={user === null ? onClickToast : onClickAdd}>
                     На заказ
                   </Button>
                 )

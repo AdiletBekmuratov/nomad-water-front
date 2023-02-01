@@ -52,10 +52,10 @@ const LoginPage = () => {
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [phoneNumb, setPhoneNumb] = useState('');
-  const [isPhone, setIsPhone] = useState(false);
+  // const [isPhone, setIsPhone] = useState(false);
 
-  const [isSend, setIsSend] = useState('');
-  const [isCodeGen, setIsCodeGen] = useState(false);
+  // const [isSend, setIsSend] = useState('');
+  // const [isCodeGen, setIsCodeGen] = useState(false);
 
   useEffect(() => {
     if (!user) {

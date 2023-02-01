@@ -9,6 +9,7 @@ import { Edit } from '../User/Edit';
 
 const Employee = () => {
   const { user } = useAppSelector((state) => state.auth);
+
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
   const styleP = `text-sm md:text-base bg-white rounded-md px-3 grid grid-cols-2`;
   return (
