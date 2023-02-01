@@ -18,14 +18,13 @@ const CourierPage = () => {
   const { user } = useAppSelector((state) => state.auth);
   const [isOpenModal, setIsOpenModal] = React.useState(false);
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
-  const styleP = `text-sm md:text-base bg-white rounded-md px-3 grid grid-cols-2`;
   const [currentDate, setCurrentDate] = React.useState('');
   const [routeSheet, setRouteSheet] = React.useState([]);
-
+  
   function padTo2Digits(num: number) {
     return num.toString().padStart(2, '0');
   }
-
+  
   function formatDate(date: Date) {
     return [
       padTo2Digits(date.getDate()),
@@ -33,22 +32,22 @@ const CourierPage = () => {
       date.getFullYear()
     ].join('-');
   }
-
+  
   const { data } = useGetCurrentCourierRouteSheetQuery(formatDate(new Date()));
-
+  
   React.useEffect(() => {
     setCurrentDate(formatDate(new Date()));
   }, []);
 
   const handleSheet = async () => {
     console.log(data.routeSheetOrders);
-
+    
     const doc = new jsPDF();
-
+    
     doc.addFileToVFS('PTsans', PTsans);
     doc.addFont('PTSans.ttf', 'PTSans', 'normal');
     doc.setFont('PTSans'); // set font
-
+    
     //Проблема с поддержкой кириллицы
     for (let i = 0; i < data.routeSheetOrders.length; i++) {
       //@ts-ignore
@@ -58,10 +57,11 @@ const CourierPage = () => {
       //@ts-ignore
       doc.text([`Отзыв: ${data.routeSheetOrders[i].order.rating}`], 20, 80 * i);
     }
-
+    
     doc.save(`routeSheet${new Date()}.pdf`);
   };
-
+  
+  const styleP = `text-sm md:text-base bg-white rounded-md px-3 grid grid-cols-2`;
   return (
     <Layout>
       <div className="">

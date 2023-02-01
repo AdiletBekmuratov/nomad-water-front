@@ -6,7 +6,7 @@ import {
   useLazyGetPendingOrdersQuery
 } from '@/redux/services/employee.service';
 import Loader from '@/components/Landing/Loader';
-import { toast } from 'react-hot-toast';
+
 import { ColumnDef } from '@tanstack/react-table';
 import { Modal } from '@/components/Layout/Modal';
 import { Button } from '@/components/Forms';

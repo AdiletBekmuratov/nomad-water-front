@@ -8,16 +8,18 @@ import { Edit } from '../User/Edit';
 
 import { FaTenge, FaUserTie } from 'react-icons/fa';
 import { AiOutlineEdit, AiOutlinePhone } from 'react-icons/ai';
+import AllOrders from './AllOrders';
+import EmployeeAllProducts from './EmployeeAllProducts';
 
 const Employee = () => {
   const { user } = useAppSelector((state) => state.auth);
 
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
-  const [choice, setChoice] = useState('Подтвердить заказ');
+  const [choice, setChoice] = useState('3');
   const buttons = [
     {
       id: 1,
-      name: 'Подтвердить заказ'
+      name: 'Клиенты'
     },
     {
       id: 2,
@@ -25,7 +27,7 @@ const Employee = () => {
     },
     {
       id: 3,
-      name: 'Клиенты'
+      name: 'Подтвердить заказ'
     },
     {
       id: 4,
@@ -39,9 +41,8 @@ const Employee = () => {
   let flex: string = '';
   const onChoice = (event: React.MouseEvent<HTMLButtonElement>) => {
     setChoice(event.currentTarget.id);
-    
   };
-  console.log(choice);
+  const styleTitle = `text-center pt-4 text-lg border-b-2 border-dotted border-gray-700 py-2`;
   // const styleP = `text-sm md:text-base bg-white rounded-md px-3 grid grid-cols-2`;
   return (
     <Layout>
@@ -75,17 +76,45 @@ const Employee = () => {
       <div
         className={` bg-light-blue rounded-lg 
        font-bold text-xs md:text-base gap-2 md:gap-3 `}>
-        <div className={`grid grid-cols-5  items-center justify-between `}>
+        <div className={`grid grid-cols-2 md:grid-cols-5  items-center justify-between gap-3`}>
           {buttons.map((button) => (
-            <button key={button.id} className={`w-full p-3`} id={button.id.toString()} value={button.name} onClick={onChoice}>
+            <button
+              key={button.id}
+              className={`w-full p-3`}
+              id={button.id.toString()}
+              onClick={onChoice}>
               {button.name}
             </button>
           ))}
         </div>
-        <div className={`hidden ${flex}`}>
-          <h2 className={`text-center pt-4`}>Не подтвержденные заказы</h2>
-          <Pending />
-        </div>
+        {choice === '3' && (
+          <div>
+            <h2 className={styleTitle}>Не подтвержденные заказы</h2>
+            <Pending />
+          </div>
+        )}
+        {choice === '2' && (
+          <div className={``}>
+            <h2 className={styleTitle}>Все заказы</h2>
+            <AllOrders />
+          </div>
+        )}
+        {choice === '1' && (
+          <div className={``}>
+            <h2 className={styleTitle}>Клиенты</h2>
+          </div>
+        )}
+        {choice === '4' && (
+          <div className={``}>
+            <h2 className={styleTitle}>Продукты</h2>
+            <EmployeeAllProducts />
+          </div>
+        )}
+        {choice === '5' && (
+          <div className={``}>
+            <h2 className={styleTitle}>Акции</h2>
+          </div>
+        )}
       </div>
     </Layout>
   );

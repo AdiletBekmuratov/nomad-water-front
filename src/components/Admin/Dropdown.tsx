@@ -22,7 +22,8 @@ const Dropdown = () => {
 
   return (
     <div
-      className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-light-blue shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+      className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y
+       divide-gray-100 rounded-md bg-light-blue shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
       role="menu"
       aria-orientation="vertical"
       aria-labelledby="menu-button"
