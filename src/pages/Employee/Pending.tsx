@@ -136,15 +136,27 @@ const Pending = () => {
         accessorKey: 'id'
       },
       {
-        header: 'Статус',
-        accessorKey: 'statusId'
+        header: 'Статус заказа',
+        cell: ({ row }) =>
+          row.original.statusId === 2 ? (
+            <span className="text-blue-400 uppercase">{'в пути'}</span>
+          ) : row.original.statusId === 0 ? (
+            <span className="text-yellow-400 uppercase">{'В ожидании'}</span>
+          ) : row.original.statusId === 1 ? (
+            <span className="text-fuchsia-400 uppercase">{'подтвержден'}</span>
+          ) : row.original.statusId === 3 ? (
+            <span className="text-green-500 uppercase">{'доставлен'}</span>
+          ) : (
+            <span className="text-red-500 uppercase">{'отменен'}</span>
+          )
       },
+
       {
         header: 'Адрес доставки',
         accessorKey: 'address'
       },
       {
-        header: 'Комментарий',
+        header: 'Комментарий к заказу',
         accessorKey: 'comment'
       },
       {
@@ -152,7 +164,7 @@ const Pending = () => {
         accessorKey: 'paymentMethod.name'
       },
       {
-        header: 'Номер телефона',
+        header: 'Номер телефона получателя',
         accessorKey: 'phone'
       },
       {
@@ -188,7 +200,7 @@ const Pending = () => {
 
   return (
     <div className="py-3">
-      <Table data={data!} columns={columns} id="ProductsTable" title="Не подтвержденные заказы" />
+      <Table data={data!} columns={columns} id="ProductsTable"  />
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
         <div className="font-montserrat text-dark-blue">
           <p>Вы действительно хотите подтвердить данный заказ?</p>

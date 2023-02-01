@@ -72,7 +72,7 @@ export const Table: FC<ITableProps> = ({ columns, data, onAddClick, id, title })
           // @ts-ignore
           value={compact}
         /> */}
-        <div className="flex items-center">
+        <div className="flex items-center ">
           <span className="text-lg">{title}</span>
         </div>
 

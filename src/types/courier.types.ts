@@ -1,3 +1,5 @@
+import { IProfile } from "./profile.types";
+
 export type ICourierOrder = {
   id: number;
   user: {
@@ -6,11 +8,14 @@ export type ICourierOrder = {
     firstname: string;
     middleName: string;
     lastname: string;
+    role?:string;
     birthday: string;
+    bonuses?:number;
     street: string;
     houseNumber: string;
     flat: string;
     addressComment: string;
+    profiles?:IProfile[];
   };
   courier: {
     id: number;
