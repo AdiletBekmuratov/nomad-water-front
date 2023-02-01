@@ -12,32 +12,9 @@ import { Input } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
 import { CardBottle } from '@/pages/catalog/CardBottle';
 
-import { motion } from 'framer-motion';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FiDelete } from 'react-icons/fi';
 
-const cartAnimation = {
-  hidden: {
-    y: 100,
-    opacity: 0
-  },
-  visible: (custom: any) => ({
-    transition: { duration: 1.5, delay: custom * 0.1 },
-    y: 0,
-    opacity: 1
-  })
-};
-const butAnimation = {
-  hidden: {
-    x: 200,
-    opacity: 0
-  },
-  visible: {
-    transition: { duration: 1.5, delay: 0.1 },
-    x: 0,
-    opacity: 1
-  }
-};
 
 const Catalog: FC = () => {
   //категория товаров

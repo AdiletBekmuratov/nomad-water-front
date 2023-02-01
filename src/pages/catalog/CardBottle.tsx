@@ -18,12 +18,15 @@ import { useAppSelector, useLocalStorage } from '@/hooks';
 import { ICart } from '@/types';
 
 export const CardBottle: FC<ICard> = ({ items }) => {
-  const { user = null, isLoading } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+
+  const { user = null, isLoading } = useAppSelector((state) => state.auth);
+  const { data: favorites = [] } = useGetUserFavoriteQuery();
+  //корзина
   const [cart, setCart] = useLocalStorage<ICart>('cart', { products: [], total: 0 });
   const choice = cart.products ? cart.products.some((item) => item.id === items.id) : false;
   const [isChoice, setIsChoice] = React.useState(choice);
-  const { data: favorites = [] } = useGetUserFavoriteQuery();
+  //избранные
   const favor = favorites ? favorites.some((item) => item.id === items.id) : false;
   const [isFavorite, setIsFavorite] = React.useState<boolean>(favor);
   const [addFavorite] = useAddFavoriteMutation();
@@ -55,7 +58,7 @@ export const CardBottle: FC<ICard> = ({ items }) => {
       error: (error) => JSON.stringify(error, null, 2)
     });
   };
-  const onClickToast =  () => {
+  const onClickToast = () => {
     toast.success('Вы не зарегистрированы!');
   };
 
@@ -67,16 +70,24 @@ export const CardBottle: FC<ICard> = ({ items }) => {
           text-sm sm:text-base lg:text-lg leading-4 font-medium p-2`}>
           <Link to={`/catalog/${items.id}`}>
             <div className={'bg-white rounded-3xl  flex items-center justify-center p-2 '}>
-              <img src={items.imageUrl} alt="bottle" className={`object-contain w-20 h-20 md:w-40 md:h-40`} />
+              <img
+                src={items.imageUrl}
+                alt="bottle"
+                className={`object-contain w-20 h-20 md:w-40 md:h-40`}
+              />
             </div>
           </Link>
           <div className={`grid grid-cols-1 pt-2 gap-3`}>
             <Link to={`/catalog/${items.id}`} className={`grid grid-cols-1`}>
-              <span  className={`text-xs md:text-sm font-semibold `}>{items.productName}</span>
+              <span className={`text-xs md:text-sm font-semibold `}>{items.productName}</span>
               <span className={`text-xs md:text-sm font-semibold `}>{items.productPrice} T</span>
             </Link>
             <>
-              {isChoice ? (
+              { !items.inWarehouse ? (
+                <Button className={`w-32 md:w-40 h-8 md:h-10 text-xs md:text-sm bg-blue-700 hover:bg-blue-900`}>
+                  На заказ
+                </Button>
+              ) : isChoice ? (
                 <Button
                   className={`w-32 md:w-40 h-8 md:h-10 bg-blue-400 text-xs md:text-sm hover:bg-blue-900`}
                   onClick={onDeleteItem}>
@@ -97,8 +108,11 @@ export const CardBottle: FC<ICard> = ({ items }) => {
                 <AiFillHeart className={`w-5 h-5 md:w-6 md:h-6 m-2 text-red-600 cursor-pointer`} />
               </button>
             ) : (
-              <button onClick={user === null ? onClickToast : () => onClickAddFavorite(Number(items.id))}>
-                <AiOutlineHeart className={`w-5 h-5 md:w-6 md:h-6 m-2 text-red-600 cursor-pointer`} />
+              <button
+                onClick={user === null ? onClickToast : () => onClickAddFavorite(Number(items.id))}>
+                <AiOutlineHeart
+                  className={`w-5 h-5 md:w-6 md:h-6 m-2 text-red-600 cursor-pointer`}
+                />
               </button>
             )}
           </div>

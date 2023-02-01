@@ -16,6 +16,8 @@ import { Button, Input } from '@/components/Forms';
 
 import { FiDelete } from 'react-icons/fi';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { number } from 'yup';
+import { validateYupSchema } from 'formik';
 
 const WarehouseTable = () => {
   const { id: warehouseIdUrl } = useParams();
@@ -64,8 +66,8 @@ const WarehouseTable = () => {
     toast
       .promise(update({ id, warehouseBalance }).unwrap(), {
         loading: 'Загрузка',
-        success: 'Обновлено успешно',
-        error: 'Вы не ввели нужное количество!'
+        success: 'Количество обновлено успешно',
+        error: 'Введите число!'
       })
       .finally(() => {
         setValueQuantity([]);
@@ -75,7 +77,7 @@ const WarehouseTable = () => {
     toast
       .promise(deleteProd({ productId, warehouseId }).unwrap(), {
         loading: 'Загрузка',
-        success: 'Товар удален из склада',
+        success: ()=> `Товар ${cloneBalance[productId].product.productName} удален из склада `,
         error: (error) => JSON.stringify(error, null, 2)
       })
       .finally(() => {
@@ -186,13 +188,15 @@ const WarehouseTable = () => {
                 placeholder="Ввведите количество"
                 value={valueQuantity[productId] || ''}
                 onChange={(e) => onChangeQuantity(e, productId)}
+                mask={'[0-9]+'}
+                
               />
               {quantityProd === null ? (
                 <Button
                   className={` hover:bg-blue-800`}
-                  //disabled={valueQuantity[proId].length < 1 }
+                  
                   onClick={(e) => {
-                    // prodId = e.currentTarget.value;
+                    
                     handleAdd(
                       Number(valueQuantity[productId]),
                       Number(productId),
