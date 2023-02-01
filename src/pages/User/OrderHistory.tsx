@@ -10,7 +10,7 @@ import { Button } from '@/components/Forms';
 import { BsFillCartFill } from 'react-icons/bs';
 import { useAppSelector } from '@/hooks';
 
-const OrderHistory = () => {
+export const OrderHistory = () => {
   const { data: allOrders = [], isLoading } = useGetUserOrderQuery();
   const completeOrders = allOrders.filter((order) => order.statusId === 3);
   const { products = [] } = useAppSelector((state) => state.cart);
@@ -89,4 +89,4 @@ const OrderHistory = () => {
   );
 };
 
-export default OrderHistory;
+

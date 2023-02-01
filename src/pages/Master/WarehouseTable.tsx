@@ -81,7 +81,7 @@ const WarehouseTable = () => {
     toast
       .promise(deleteProd({ productId, warehouseId }).unwrap(), {
         loading: 'Загрузка',
-        success: () => `Товар ${cloneBalance[productId].product.productName} удален из склада `,
+        success: () => `Товар удален из склада `,
         error: (error) => JSON.stringify(error, null, 2)
       })
       .finally(() => {

@@ -1,23 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
+import { Form, Formik } from 'formik';
+import { toast } from 'react-hot-toast';
+import { ColumnDef, Row } from '@tanstack/react-table';
+
+import { WS_URL } from '@/redux/http';
 import { useGetUserOrderQuery } from '@/redux/services/base.service';
+import { useAppSelector } from '@/hooks';
+import { IOrder } from '@/types';
 
 import { Button, TextArea } from '@/components/Forms';
 import Loader from '@/components/Landing/Loader';
 import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';
 import { ActionButtons, Table } from '@/components/Table';
-import { WS_URL } from '@/redux/http';
-import { IOrder } from '@/types';
-import { ColumnDef, Row } from '@tanstack/react-table';
-import { Form, Formik } from 'formik';
-import { toast } from 'react-hot-toast';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
-import OrderHistory from '../User/OrderHistory';
+import { OrderHistory } from '../User';
+
 import RateOrder from './RateOrder';
-import { Link } from 'react-router-dom';
+import DelayOrders from './DelayOrders';
+
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { BsFillCartFill } from 'react-icons/bs';
-import { useAppSelector } from '@/hooks';
 
 const Orders = () => {
   const { data: allOrders, isLoading, refetch } = useGetUserOrderQuery();
@@ -30,6 +34,7 @@ const Orders = () => {
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { products = [] } = useAppSelector((state) => state.cart);
+  const { products: delayOrderProduct = [] } = useAppSelector((state) => state.delayOrder);
   // Но обновляется страница, отмена заказа работает
   const cancelOrder = async (id: number, cancelReason: string) => {
     // console.log(id, cancelReason);
@@ -93,7 +98,7 @@ const Orders = () => {
     }
   }, [allOrders, waitingToReconnect]);
 
-  const columnsUser = React.useMemo<ColumnDef<IOrder, any>[]>(
+  const columnsUser = useMemo<ColumnDef<IOrder, any>[]>(
     () => [
       {
         header: 'id',
@@ -191,6 +196,7 @@ const Orders = () => {
           <OrderHistory />
         </>
       )}
+      {delayOrderProduct.length > 0 && <DelayOrders delayOrderProduct={delayOrderProduct} />}
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
         <div className="flex items-center justify-between">
           <h2 className={`text-center`}>Отменить заказ</h2>
