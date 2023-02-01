@@ -58,6 +58,8 @@ export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrd
     flat: selectedProfile?.flat ? selectedProfile.flat : '',
     addressComment: selectedProfile?.addressComment ? selectedProfile.addressComment : ''
   };
+  let address = `Ул.${selectedProfile?.street}, д. ${selectedProfile?.houseNumber}, кв. ${selectedProfile?.flat}`;
+  setAddressOrder(address);
   useEffect(() => {
     setAddress(initialValues);
   }, [selectedProfile]);
@@ -175,9 +177,9 @@ export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrd
               name="phone"
               id="phone"
               inputType="formik"
-              mask="+7 (799) 999 9999"
+              mask="+77999999999"
               placeholder="+7 (777) 777 7777"
-              label="Номер телефона"
+              label="Номер получателя"
               className={`${styleInput}`}
             />
 
