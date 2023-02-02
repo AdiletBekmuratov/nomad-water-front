@@ -8,33 +8,42 @@ type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
 };
 
 const RouteSheetTable: FC<Props> = (props) => {
-  console.log(props.routeSheet);
-
   return (
-    <div>
-      <div>
-        <h1>Маршрутный лист</h1>
-      </div>
-      <div>
-        <table>
-          <tr>
-            <th>id</th>
-            <th>Адрес клиента</th>
-            <th>Номер клиента</th>
-          </tr>
-          <tr>
-            {props.routeSheet.map((route, idx) => (
-              <tr key={idx}>
-                <td>{route.id}</td>
-                <td>{route.order.address}</td>
-              </tr>
+    <div ref={props.componentRef}>
+      <h3 className="font-semibold text-center">{`За: ${props.date}`}</h3>
+      <table className="border-collapse w-full bg-white">
+        <tr className="">
+          <th className="border text-left p-2">Номер заказа</th>
+          <th className="border text-left p-2">Имя клиента</th>
+          <th className="border text-left p-2">Адрес клиента</th>
+          <th className="border text-left p-2">Номер клиента</th>
+          <th className="border text-left p-2">Комментарий</th>
+          <th className="border text-left p-2">Товар</th>
+          <th className="border text-left p-2">Способ оплаты</th>
+          <th className="border text-left p-2">Первоначальная цена</th>
+          <th className="border text-left p-2">Итоговая цена</th>
+        </tr>
+
+        {props.routeSheet.map((route, idx) => (
+          <tr key={idx}>
+            <td className="border text-left p-2">{route.order.id}</td>
+            <td className="border text-left p-2">{`${route.order.user.firstname} ${route.order.user.lastname}`}</td>
+            <td className="border text-left p-2">{route.order.address}</td>
+            <td className="border text-left p-2">{route.order.phone}</td>
+            <td className="border text-left p-2">
+              {route.order.comment.length > 0 ? route.order.comment : 'Нет комментариев'}
+            </td>
+            {route.order.orderProducts.map((orders, idx) => (
+              <td
+                key={idx}
+                className="border text-left p-2">{`${orders.product.productName}, к. ${orders.quantity}`}</td>
             ))}
-            <td>Alfreds Futterkiste</td>
-            <td>Maria Anders</td>
-            <td>Germany</td>
+            <td className="border text-left p-2">{`${route.order.paymentMethod.name}`}</td>
+            <td className="border text-left p-2">{`${route.order.initialPrice} тг`}</td>
+            <td className="border text-left p-2">{`${route.order.totalPrice} тг`}</td>
           </tr>
-        </table>
-      </div>
+        ))}
+      </table>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { IUserFull } from '@/types';
+import { IUserFull, IOrder, IProduct } from '@/types';
 export type IRouteSheet = {
   id?: number;
   order: {
@@ -15,5 +15,10 @@ export type IRouteSheet = {
     rating: number;
     totalPrice: number;
     user?: IUserFull;
-  }[];
+    paymentMethod: {
+      id?: number;
+      name: string;
+    };
+    orderProducts: IOrder[];
+  };
 };

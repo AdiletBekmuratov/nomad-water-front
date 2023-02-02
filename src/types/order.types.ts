@@ -18,10 +18,18 @@ export type IOrder = {
   totalPrice: number;
   paymentUrl: number;
   isSale: boolean;
-  withDeposit?:boolean;
+  withDeposit?: boolean;
+  quantity?: number;
 };
 
 export type IUsersOrder = Pick<
   IOrder,
-  'orderProductsDto' | 'paymentMethod' | 'phone' | 'address' | 'comment' | 'totalPrice' | 'isSale' | 'withDeposit'
+  | 'orderProductsDto'
+  | 'paymentMethod'
+  | 'phone'
+  | 'address'
+  | 'comment'
+  | 'totalPrice'
+  | 'isSale'
+  | 'withDeposit'
 >;

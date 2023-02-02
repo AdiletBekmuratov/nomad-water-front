@@ -9,17 +9,16 @@ import { useRef, useState, useMemo, useEffect } from 'react';
 import { FaRoute } from 'react-icons/fa';
 import { useReactToPrint } from 'react-to-print';
 import RouteSheetTable from './RouteSheetTable';
+import { AiOutlinePrinter } from 'react-icons/ai';
 
 const RouteSheet = () => {
   const componentRef = useRef<any>();
-  const [date, setDate] = useState('');
   const [routeSheet, setRouteSheet] = useState<IRouteSheet[]>([]);
   const [currentDate, setCurrentDate] = useState('');
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: `RouteSheet${new Date()}`,
-    onAfterPrint: () => alert('Printed successfully')
+    documentTitle: `Маршрутный лист за${new Date()}`
   });
 
   const handleDate = (e: any) => {
@@ -50,56 +49,22 @@ const RouteSheet = () => {
     refetch().then((res) => setRouteSheet(res.data.routeSheetOrders));
   }, [currentDate]);
 
-  const columns = useMemo<ColumnDef<IRouteSheet, any>[]>(
-    () => [
-      {
-        header: 'ID',
-        accessorKey: 'order.id'
-      },
-      {
-        header: 'Имя курьера',
-        accessorKey: 'order.courier.user.firstname'
-      },
-      {
-        header: 'Машина курьера',
-        accessorKey: 'order.courier.car'
-      },
-      {
-        header: 'Адрес доставки',
-        accessorKey: 'order.address'
-      },
-      {
-        header: 'Первоначальная цена',
-        accessorKey: 'order.initialPrice'
-      },
-      {
-        header: 'Финальная цена',
-        accessorKey: 'order.totalPrice'
-      },
-      {
-        header: 'Рейтинг',
-        accessorKey: 'order.rating'
-      },
-      {
-        header: 'Номер телефон клиента',
-        accessorKey: 'order.user.phone'
-      }
-    ],
-    []
-  );
-
   if (isLoading) {
     return <Loader />;
   }
 
   return (
     <>
-      <div ref={componentRef}>
+      <div>
         <Layout>
-          <div className="flex justify-center font-montserrat">Маршрутный лист за:</div>
+          <div className="flex justify-center font-montserrat">Выберите дату заказов</div>
           <Input inputType="default" id="date" type="date" onChange={handleDate} />
           {routeSheet.length > 0 ? (
-            <Table data={routeSheet!} id="RouteSheet" columns={columns} />
+            <RouteSheetTable
+              componentRef={componentRef}
+              date={currentDate}
+              routeSheet={routeSheet}
+            />
           ) : (
             <div className="flex justify-center font-montserrat">
               <p className="text-red-500">
@@ -107,12 +72,12 @@ const RouteSheet = () => {
               </p>
             </div>
           )}
-          <Button onClick={handlePrint}>
-            <FaRoute className="mr-2" />
-            Скачать маршрутный лист
-          </Button>
+          <div className="grid grid-cols-3 mt-4">
+            <Button onClick={handlePrint} className="font-montserrat">
+              <AiOutlinePrinter className="mr-2" /> Печать
+            </Button>
+          </div>
         </Layout>
-        {/* <RouteSheetTable componentRef={componentRef} date={currentDate} routeSheet={routeSheet} /> */}
       </div>
     </>
   );
