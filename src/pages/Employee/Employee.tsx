@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { useAppSelector } from '@/hooks/useAppSelector';
 
 import Pending from './Pending';
+import EmployeeAllProducts from './EmployeeAllProducts';
+import AllCustomers from './AllCustomers';
+import AllOrders from './AllOrders';
 
 import { Layout } from '@/components/Layout';
 import { Edit } from '../User/Edit';
 
 import { FaTenge, FaUserTie } from 'react-icons/fa';
 import { AiOutlineEdit, AiOutlinePhone } from 'react-icons/ai';
-import AllOrders from './AllOrders';
-import EmployeeAllProducts from './EmployeeAllProducts';
 
 const Employee = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -102,6 +103,7 @@ const Employee = () => {
         {choice === '1' && (
           <div className={``}>
             <h2 className={styleTitle}>Клиенты</h2>
+            <AllCustomers />
           </div>
         )}
         {choice === '4' && (

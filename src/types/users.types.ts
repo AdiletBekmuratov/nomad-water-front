@@ -1,3 +1,5 @@
+import { IProfile } from "./profile.types";
+
 export interface IUserFull {
   id: number;
   phone: string;
@@ -6,6 +8,7 @@ export interface IUserFull {
   middleName: string;
   lastname: string;
   role: string;
+  profiles?:IProfile[]
   birthday: string;
   street: string;
   houseNumber: string;
@@ -14,6 +17,7 @@ export interface IUserFull {
   addressComment: string;
   bonuses: number;
   telegramAccount: string;
+  color:string;
   //courier
   courierDeliveringStatus: number;
   successfulOrders: number;

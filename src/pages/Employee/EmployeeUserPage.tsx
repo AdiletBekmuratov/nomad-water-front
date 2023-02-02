@@ -2,7 +2,7 @@ import { Layout } from '@/components/Layout';
 import { useGetUserIDQuery } from '@/redux/services/user.service';
 import { useParams } from 'react-router-dom';
 
-const EmployeeUser = () => {
+const EmployeeUserPage = () => {
   const { id: userId } = useParams();
 
   const {data:user } = useGetUserIDQuery(Number(userId!));
@@ -53,4 +53,4 @@ const EmployeeUser = () => {
   );
 };
 
-export default EmployeeUser;
+export default EmployeeUserPage;

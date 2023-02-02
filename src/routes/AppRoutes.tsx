@@ -41,7 +41,7 @@ const CourierOrders = lazy(() => import('@/pages/Couriers/CourierOrders'));
 const CourierPage = lazy(() => import('@/pages/Couriers/CourierPage'));
 const MasterPage = lazy(() => import('@/pages/Master/MasterPage'));
 const Employee = lazy(() => import('@/pages/Employee/Employee'));
-const EmployeeUser = lazy(() => import('@/pages/Employee/EmployeeUser'));
+const EmployeeUserPage = lazy(() => import('@/pages/Employee/EmployeeUserPage'));
 
 const RequestsUser = lazy(() => import('@/pages/catalog/RequestsUser'));
 
@@ -83,7 +83,7 @@ const AppRoutes = () => {
               path="/employee/user/:id"
               element={
                 <ProtectedRoute isAllowed={user?.role === 'ROLE_EMPLOYEE'} redirectPath="/catalog">
-                  <EmployeeUser />
+                  <EmployeeUserPage />
                 </ProtectedRoute>
               }
             />

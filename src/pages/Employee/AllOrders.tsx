@@ -63,7 +63,6 @@ const AllOrders = () => {
             }`}
           </Link>
         )
-        // const user = row.original.user;
       },
       {
         header: 'Адрес доставки',
