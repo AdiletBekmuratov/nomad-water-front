@@ -98,9 +98,22 @@ const AllOrders = () => {
           </Link>
         )
       },
+
       {
-        header: 'Адрес доставки',
-        cell: ({ row }) => row.original.rating
+        header: 'Оценка заказа',
+        cell: ({ row }) =>
+        row.original.rating ?
+          (row.original.rating === 2 ? (
+            <span className="text-red-400 uppercase">{'плохо'}</span>
+          ) : row.original.rating === 4 ? (
+            <span className="text-green-300 uppercase">{'хорошо'}</span>
+          ) : row.original.rating === 1 ? (
+            <span className="text-red-600 uppercase">{'очень плохо'}</span>
+          ) : row.original.rating === 3 ? (
+            <span className="text-yellow-400 uppercase">{'удовл-но'}</span>
+          ) : (
+            <span className="text-green-600 uppercase">{'отлично'}</span>
+          )) : 'нет оценки'
       }
       // {
       //   header: 'Действия'

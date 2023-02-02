@@ -62,7 +62,7 @@ orderProducts: {
   totalPrice: number;
   initialPrice:number;
   paymentUrl: string;
-  rating:string;
+  rating:number;
   cancelReason:string;
   withDeposit:boolean;
   createdDateTime: string;
