@@ -9,12 +9,13 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/Forms';
 import { BsFillCartFill } from 'react-icons/bs';
 import { useAppSelector } from '@/hooks';
+import { ICourierOrder } from '@/types/courier.types';
 
 export const OrderHistory = () => {
   const { data: allOrders = [], isLoading } = useGetUserOrderQuery();
   const completeOrders = allOrders.filter((order) => order.statusId === 3);
   const { products = [] } = useAppSelector((state) => state.cart);
-  const columns = useMemo<ColumnDef<IOrder, any>[]>(
+  const columns = useMemo<ColumnDef<ICourierOrder, any>[]>(
     () => [
       {
         header: 'Статус заказа',
@@ -52,9 +53,18 @@ export const OrderHistory = () => {
         accessorKey: 'comment'
       },
       {
-        header: 'Имя курьера',
-        accessorKey: 'courier.user.firstname'
-      }
+        header: 'Курьер',
+        cell: ({ row }) => (
+          
+            
+              row.original.courier
+                ? row.original.courier.user
+                  ? row.original.courier.user.firstname
+                    ? row.original.courier.user.firstname
+                    : 'не указан'
+                  : 'не назначен'
+                : 'не назначен'
+        )}
     ],
     []
   );

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 import { useGetAllOrderQuery } from '@/redux/services/base.service';
 
@@ -10,7 +10,10 @@ import Loader from '@/components/Landing/Loader';
 import { Link } from 'react-router-dom';
 
 const AllOrders = () => {
-  const { data: allOrders = [], isLoading } = useGetAllOrderQuery();
+  const { data: allOrders = [] } = useGetAllOrderQuery();
+  // useEffect(() => {
+  //   () => refetch();
+  // }, [allOrders]);
 
   const [rowData, setRowData] = useState<ICourierOrder>();
 
@@ -19,6 +22,10 @@ const AllOrders = () => {
       {
         header: 'ID',
         accessorKey: 'id'
+      },
+      {
+        header: 'Метод оплаты',
+        accessorKey: 'paymentMethod.name'
       },
       {
         header: 'Статус заказа',
@@ -35,18 +42,9 @@ const AllOrders = () => {
             <span className="text-red-500 uppercase">{'отменен'}</span>
           )
       },
-
       {
-        header: 'Адрес доставки',
-        accessorKey: 'address'
-      },
-      // {
-      //   header: 'Комментарий к заказу',
-      //   accessorKey: 'comment'
-      // },
-      {
-        header: 'Метод оплаты',
-        accessorKey: 'paymentMethod.name'
+        header: 'Сумма заказа',
+        accessorKey: 'totalPrice'
       },
       {
         header: 'Получатель',
@@ -68,14 +66,19 @@ const AllOrders = () => {
         // const user = row.original.user;
       },
       {
-        header: 'Полная цена с доставкой',
-        accessorKey: 'totalPrice'
+        header: 'Адрес доставки',
+        accessorKey: 'address'
       },
+      // {
+      //   header: 'Комментарий к заказу',
+      //   accessorKey: 'comment'
+      // },
+
       {
         header: 'Курьер',
         cell: ({ row }) => (
           <Link
-          className={`cursor-pointer text-blue-400 border-b-2`}
+            className={`cursor-pointer text-blue-400 border-b-2`}
             to={`/employee/user/${
               row.original.courier
                 ? row.original.courier.id
@@ -96,16 +99,20 @@ const AllOrders = () => {
         )
       },
       {
-        header: 'Действия'
-        //   cell: ({ row }) => (
-        //     <ActionButtons
-        //       handleCompleteClick={() => {
-        //         setRowData(row.original);
-        //         setIsOpenModal(true);
-        //       }}
-        //     />
-        //   )
+        header: 'Адрес доставки',
+        cell: ({ row }) => row.original.rating
       }
+      // {
+      //   header: 'Действия'
+      //   //   cell: ({ row }) => (
+      //   //     <ActionButtons
+      //   //       handleCompleteClick={() => {
+      //   //         setRowData(row.original);
+      //   //         setIsOpenModal(true);
+      //   //       }}
+      //   //     />
+      //   //   )
+      // }
     ],
     []
   );
@@ -121,7 +128,11 @@ const AllOrders = () => {
       </div>
     );
   }
-  return <Table data={allOrders!} columns={columns} id="ProductsTable" />;
+  return (
+    <>
+      <Table data={allOrders!} columns={columns} id="ProductsTable" />
+    </>
+  );
 };
 
 export default AllOrders;
