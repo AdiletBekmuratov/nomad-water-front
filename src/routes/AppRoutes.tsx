@@ -17,7 +17,7 @@ import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminCategory from '@/pages/admin/AdminCategory';
 
 const Landing = lazy(() => import('@/pages/Landing'));
-
+const RouteSheet = lazy(() => import('@/pages/Couriers/RouteSheet'));
 const AdminLogin = lazy(() => import('@/pages/admin/AdminLogin'));
 const AdminAllUsers = lazy(() => import('@/pages/admin/AdminAllUsers'));
 const AdminCouriers = lazy(() => import('@/pages/admin/AdminCouriers'));
@@ -113,6 +113,7 @@ const AppRoutes = () => {
                 </ProtectedRoute>
               }
             />
+            <Route path="/courier/routeSheet" element={<RouteSheet />} />
             {/* Список складов */}
             <Route path="/warehouses" element={<Warehouses />} />
             <Route path="/warehouse/:id" element={<WarehouseTable />} />

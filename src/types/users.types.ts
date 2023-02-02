@@ -1,34 +1,35 @@
-import { IProfile } from "./profile.types";
+import { IProfile } from './profile.types';
 
 export interface IUserFull {
-  id: number;
+  id?: number;
   phone: string;
-  password: string;
+  password?: string;
   firstname: string;
   middleName: string;
   lastname: string;
   role: string;
-  profiles?:IProfile[]
+  profiles?: IProfile[];
   birthday: string;
-  street: string;
-  houseNumber: string;
-  flat: string;
-  created_date: string;
-  addressComment: string;
+  street?: string;
+  houseNumber?: string;
+  flat?: string;
+  created_date?: string;
+  addressComment?: string;
   bonuses: number;
   telegramAccount: string;
-  color:string;
+  color: string;
   //courier
-  courierDeliveringStatus: number;
-  successfulOrders: number;
-  car: string;
+  courierDeliveringStatus?: number;
+  successfulOrders?: number;
+  car?: string;
   //id склада
-  warehouseId: number;
-  shopkeeperPhone: string;
+  warehouseId?: number;
+  shopkeeperPhone?: string;
 
-  token: string;
+  token?: string;
 }
-export type IOrdersUser = Pick<IUserFull, 'phone' | 'addressComment' | 'street' | 'houseNumber' | 'flat' |
-  'firstname'>;
+export type IOrdersUser = Pick<
+  IUserFull,
+  'phone' | 'addressComment' | 'street' | 'houseNumber' | 'flat' | 'firstname'
+>;
 export type IUserFullCreate = Omit<IUserFull, 'created_date' | 'password'>;
-
