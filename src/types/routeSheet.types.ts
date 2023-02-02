@@ -3,7 +3,7 @@ export type IRouteSheet = {
   id?: number;
   order: {
     id?: number;
-    address: string;
+    address: string | undefined;
     changedDateTime?: string;
     comment?: string;
     createdDateTime?: string;
