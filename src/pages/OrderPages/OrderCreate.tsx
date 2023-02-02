@@ -117,7 +117,7 @@ const OrderCreate: FC = () => {
     //@ts-ignore
     const value: IUsersOrder = {
       //если заказ сделан оператором
-      address: user?.role === 'ROLE_EMPLOYEE' ? employeeAddress : addressOrder,
+      address: user?.role === 'ROLE_EMPLOYEE' || user?.role === 'ROLE_MASTER' ? employeeAddress : addressOrder,
       //@ts-ignore
       comment: address.addressComment,
       //@ts-ignore

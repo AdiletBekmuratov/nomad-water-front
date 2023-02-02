@@ -2,6 +2,7 @@ import { Button } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 import { useRateOrderMutation } from '@/redux/services/base.service';
 import { IOrder } from '@/types';
+import { ICourierOrder } from '@/types/courier.types';
 import React, { FC, useState, Fragment, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { AiFillStar, AiOutlineCloseCircle, AiOutlineStar } from 'react-icons/ai';
@@ -9,7 +10,7 @@ import { AiFillStar, AiOutlineCloseCircle, AiOutlineStar } from 'react-icons/ai'
 type Props = {
   isOpenModal: boolean;
   setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  data: IOrder;
+  data: ICourierOrder;
 };
 
 type Rating = {

@@ -51,8 +51,8 @@ export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrd
   };
 
   const initialValues = {
-    phone: user ? (user.role === 'ROLE_USER' ? user.phone : '') : '',
-    firstname: user ? (user.role === 'ROLE_USER' ? user.firstname : '') : '',
+    phone: user ? (user.role === 'ROLE_USER' || user.role === 'ROLE_MASTER' ? user.phone : '') : '',
+    firstname: user ? (user.role === 'ROLE_USER' || user.role === 'ROLE_MASTER' ? user.firstname : '') : '',
     street: selectedProfile?.street ? selectedProfile.street : '',
     houseNumber: selectedProfile?.houseNumber ? selectedProfile.houseNumber : '',
     flat: selectedProfile?.flat ? selectedProfile.flat : '',

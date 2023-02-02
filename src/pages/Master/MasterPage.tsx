@@ -6,8 +6,9 @@ import { Layout } from '@/components/Layout';
 
 import { AiOutlineEdit } from 'react-icons/ai';
 import { FaTenge, FaUserTie } from 'react-icons/fa';
-import OrderHistory from '../User/OrderHistory';
+
 import Pending from '../Employee/Pending';
+import { OrderHistory } from '../User';
 
 const MasterPage = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -28,10 +29,10 @@ const MasterPage = () => {
           <span>{` ${user?.firstname ? user.firstname : 'Место для фамилии'} `}</span>
           <span>{` ${user?.middleName ? user.middleName : 'Место для отчества'} `}</span>
         </div>
-
         <span className={`flex flex-col md:flex-row items-center gap-1`}>
-          <FaTenge className={`h-5 w-5 md:h-6 md:w-6`} />
-          {` 50000 `}
+          {/* <FaTenge className={`h-5 w-5 md:h-6 md:w-6`} /> */}
+          <FaUserTie className={`h-4 w-4 md:h-5 md:w-5`} />
+          {` ${user ? (user.role === 'ROLE_MASTER' ? 'Мастер' : null) : null} `}
         </span>
         <button className="" onClick={() => setIsOpenEdit(true)}>
           <AiOutlineEdit className={`h-6 w-6 md:h-7 md:w-7 text-red-600`} />

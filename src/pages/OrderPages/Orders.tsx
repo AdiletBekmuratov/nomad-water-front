@@ -8,7 +8,6 @@ import { ColumnDef, Row } from '@tanstack/react-table';
 import { WS_URL } from '@/redux/http';
 import { useGetUserOrderQuery } from '@/redux/services/base.service';
 import { useAppSelector } from '@/hooks';
-import { IOrder } from '@/types';
 
 import { Button, TextArea } from '@/components/Forms';
 import Loader from '@/components/Landing/Loader';
@@ -22,6 +21,7 @@ import DelayOrders from './DelayOrders';
 
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { BsFillCartFill } from 'react-icons/bs';
+import { ICourierOrder } from '@/types/courier.types';
 
 const Orders = () => {
   const { data: allOrders, isLoading, refetch } = useGetUserOrderQuery();
@@ -30,7 +30,7 @@ const Orders = () => {
   const clientRef = useRef<WebSocket | null>();
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [rowData, setRowData] = useState<IOrder>();
+  const [rowData, setRowData] = useState<ICourierOrder>();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { products = [] } = useAppSelector((state) => state.cart);
@@ -49,12 +49,12 @@ const Orders = () => {
     setIsOpenModal(false);
   };
 
-  const handleCancelOrder = (row: Row<IOrder>) => {
+  const handleCancelOrder = (row: Row<ICourierOrder>) => {
     setRowData(row.original);
     setIsOpenModal(true);
   };
 
-  const handleRating = (row: Row<IOrder>) => {
+  const handleRating = (row: Row<ICourierOrder>) => {
     setRowData(row.original);
     setIsRating(true);
   };
@@ -98,7 +98,7 @@ const Orders = () => {
     }
   }, [allOrders, waitingToReconnect]);
 
-  const columnsUser = useMemo<ColumnDef<IOrder, any>[]>(
+  const columnsUser = useMemo<ColumnDef<ICourierOrder, any>[]>(
     () => [
       {
         header: 'id',
@@ -142,17 +142,15 @@ const Orders = () => {
       {
         header: 'Оценить заказ',
         cell: ({ row }) => {
-          if (row.original.rating) {
-            return `Заказ оценен на ${row.original.rating} звезд(ы)`;
-          } else if (row.original.statusId === 3) {
-            return <ActionButtons handleRating={() => handleRating(row)} />;
+          if (row.original.user.role) {
+            if (row.original.user.role === 'ROLE_USER') {
+              if (row.original.rating) {
+                return `Заказ оценен на ${row.original.rating} звезд(ы)`;
+              } else if (row.original.statusId === 3) {
+                return <ActionButtons handleRating={() => handleRating(row)} />;
+              }
+            }
           }
-
-          // row.original.statusId === 3 ? (
-          //   <ActionButtons handleRating={() => handleRating(row)} />
-          // ) : (
-          //   row.original.rating && <></>
-          // );
         }
       },
       {
