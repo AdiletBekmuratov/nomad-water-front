@@ -110,14 +110,21 @@ const OrderCreate: FC = () => {
         quantity: product.quantity
       };
     });
-    let employeeAddress = address
+    let inputAddress = address
       ? `Ул.${address.street}, д. ${address.houseNumber}, кв. ${address.flat}`
       : '';
-
+console.log(user!.role === 'ROLE_USER' && user!.profiles &&  user!.profiles.length < 1 );
     //@ts-ignore
     const value: IUsersOrder = {
       //если заказ сделан оператором
-      address: user?.role === 'ROLE_EMPLOYEE' || user?.role === 'ROLE_MASTER' ? employeeAddress : addressOrder,
+      address: user
+        ? user.role === 'ROLE_EMPLOYEE' ||
+          user.role === 'ROLE_MASTER' ||
+          (user.role === 'ROLE_USER' && user.profiles &&  user.profiles.length < 1 )
+          ? inputAddress
+          : addressOrder
+        : '',
+
       //@ts-ignore
       comment: address.addressComment,
       //@ts-ignore
@@ -127,7 +134,8 @@ const OrderCreate: FC = () => {
       //@ts-ignore
       orderProductsDto:
         //@ts-ignore
-        product
+        product,
+      withDeposit: useBonus
     };
 
     clientRef.current?.send(JSON.stringify(value));

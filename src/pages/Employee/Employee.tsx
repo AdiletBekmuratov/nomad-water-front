@@ -127,6 +127,7 @@ const Employee = () => {
         {choice === '5' && (
           <div className={``}>
             <h2 className={styleTitle}>Акции</h2>
+            <span>В разработке</span>
           </div>
         )}
       </div>

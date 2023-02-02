@@ -13,7 +13,7 @@ import { IUserFull, IUserFullCreate } from '@/types/users.types';
 
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
-import { Form, Formik } from 'formik';
+import { Form, Formik, useFormikContext } from 'formik';
 import toast from 'react-hot-toast';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
@@ -27,9 +27,9 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
   const [update, { isLoading: isLoadingUpdate }] = useUpdateUserMutation();
   const [currentDate, setCurrentDate] = useState('');
   const handleEdit = (values: IUserFullCreate) => {
-    console.log(values);
+    const updatedValues = { ...values, birthday: currentDate.slice(0, -5) };
     toast
-      .promise(update(values).unwrap(), {
+      .promise(update(updatedValues).unwrap(), {
         loading: 'Loading',
         success: 'Обновлено',
         error: (error) => JSON.stringify(error, null, 2)
@@ -37,8 +37,9 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
       .finally(() => {});
   };
   const handleEditSave = (values: IUserFullCreate) => {
+    const updatedValues = { ...values, birthday: currentDate.slice(0, -5) };
     toast
-      .promise(update(values).unwrap(), {
+      .promise(update(updatedValues).unwrap(), {
         loading: 'Loading',
         success: 'Сохранено',
         error: (error) => JSON.stringify(error, null, 2)
@@ -53,10 +54,15 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
   }
 
   function formatDate(date: Date) {
-    return [padTo2Digits(date.getDate()), date.toLocaleString('en', { month: 'long' })].join(' ');
+    return [
+      padTo2Digits(date.getDate()),
+      date.toLocaleString('en', { month: 'long' }),
+      date.getFullYear()
+    ].join(' ');
   }
   const changeDate = (e: ChangeEvent<HTMLInputElement>) => {
     setCurrentDate(formatDate(new Date(e.target.value)));
+    console.log(currentDate);
   };
 
   return (
@@ -113,7 +119,7 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
                   id="birthday"
                   label="День рождения"
                   onChange={(e) => changeDate(e)}
-                  value={values.birthday}
+                  value={currentDate}
                 />
               </div>
               <div className="grid grid-cols-1 items-center`">
