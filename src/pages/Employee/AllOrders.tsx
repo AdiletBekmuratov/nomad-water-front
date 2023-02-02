@@ -81,8 +81,8 @@ const AllOrders = () => {
             className={`cursor-pointer text-blue-400 border-b-2`}
             to={`/employee/user/${
               row.original.courier
-                ? row.original.courier.id
-                  ? row.original.courier.id
+                ? row.original.courier.user
+                  ? row.original.courier.user.id
                   : 'null'
                 : 'null'
             }`}>
@@ -102,30 +102,22 @@ const AllOrders = () => {
       {
         header: 'Оценка заказа',
         cell: ({ row }) =>
-        row.original.rating ?
-          (row.original.rating === 2 ? (
-            <span className="text-red-400 uppercase">{'плохо'}</span>
-          ) : row.original.rating === 4 ? (
-            <span className="text-green-300 uppercase">{'хорошо'}</span>
-          ) : row.original.rating === 1 ? (
-            <span className="text-red-600 uppercase">{'очень плохо'}</span>
-          ) : row.original.rating === 3 ? (
-            <span className="text-yellow-400 uppercase">{'удовл-но'}</span>
+          row.original.rating ? (
+            row.original.rating === 2 ? (
+              <span className="text-red-400 uppercase">{'плохо'}</span>
+            ) : row.original.rating === 4 ? (
+              <span className="text-green-300 uppercase">{'хорошо'}</span>
+            ) : row.original.rating === 1 ? (
+              <span className="text-red-600 uppercase">{'очень плохо'}</span>
+            ) : row.original.rating === 3 ? (
+              <span className="text-yellow-400 uppercase">{'удовл-но'}</span>
+            ) : (
+              <span className="text-green-600 uppercase">{'отлично'}</span>
+            )
           ) : (
-            <span className="text-green-600 uppercase">{'отлично'}</span>
-          )) : 'нет оценки'
+            'нет оценки'
+          )
       }
-      // {
-      //   header: 'Действия'
-      //   //   cell: ({ row }) => (
-      //   //     <ActionButtons
-      //   //       handleCompleteClick={() => {
-      //   //         setRowData(row.original);
-      //   //         setIsOpenModal(true);
-      //   //       }}
-      //   //     />
-      //   //   )
-      // }
     ],
     []
   );

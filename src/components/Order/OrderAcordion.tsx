@@ -162,7 +162,7 @@ export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrd
               label="Комментарий к заказу"
               placeholder="Например: блок, подъезд, этаж, домофон, лифт, и др"
               className={`${styleInput}`}
-              value={selectedProfile?.addressComment}
+              
             />
 
             <Input
