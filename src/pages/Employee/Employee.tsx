@@ -11,6 +11,7 @@ import { Edit } from '../User/Edit';
 
 import { FaTenge, FaUserTie } from 'react-icons/fa';
 import { AiOutlineEdit, AiOutlinePhone } from 'react-icons/ai';
+import CustomersBirthday from './CustomersBirthday';
 
 const Employee = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -18,6 +19,10 @@ const Employee = () => {
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
   const [choice, setChoice] = useState('3');
   const buttons = [
+    {
+      id: 0,
+      name: 'Дни рождения клиентов'
+    },
     {
       id: 1,
       name: 'Клиенты'
@@ -76,8 +81,8 @@ const Employee = () => {
       {/* <div className={`border-b-2 border-dotted border-gray-700 py-2`}></div> */}
       <div
         className={` bg-light-blue rounded-lg 
-       font-bold text-xs md:text-base gap-2 md:gap-3 `}>
-        <div className={`grid grid-cols-2 md:grid-cols-5  items-center justify-between gap-3`}>
+       font-bold text-xs md:text-sm gap-2 md:gap-3 `}>
+        <div className={`grid grid-cols-2 md:grid-cols-6  items-center justify-between gap-3`}>
           {buttons.map((button) => (
             <button
               key={button.id}
@@ -88,22 +93,29 @@ const Employee = () => {
             </button>
           ))}
         </div>
-        {choice === '3' && (
-          <div>
-            <h2 className={styleTitle}>Не подтвержденные заказы</h2>
-            <Pending />
-          </div>
-        )}
-        {choice === '2' && (
+        {choice === '0' && (
           <div className={``}>
-            <h2 className={styleTitle}>Заказы</h2>
-            <AllOrders />
+            <h2 className={styleTitle}>Дни рождения клиентов</h2>
+            <CustomersBirthday />
           </div>
         )}
         {choice === '1' && (
           <div className={``}>
             <h2 className={styleTitle}>Клиенты</h2>
             <AllCustomers />
+          </div>
+        )}
+
+        {choice === '2' && (
+          <div className={``}>
+            <h2 className={styleTitle}>Заказы</h2>
+            <AllOrders />
+          </div>
+        )}
+        {choice === '3' && (
+          <div>
+            <h2 className={styleTitle}>Не подтвержденные заказы</h2>
+            <Pending />
           </div>
         )}
         {choice === '4' && (

@@ -1,4 +1,12 @@
-import { FC, Dispatch, SetStateAction } from 'react';
+import {
+  FC,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+  ChangeEventHandler,
+  ChangeEvent
+} from 'react';
 
 import { useUpdateUserMutation } from '@/redux/services/user.service';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
@@ -17,8 +25,9 @@ interface IEditModalProps {
 
 export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
   const [update, { isLoading: isLoadingUpdate }] = useUpdateUserMutation();
-
+  const [currentDate, setCurrentDate] = useState('');
   const handleEdit = (values: IUserFullCreate) => {
+    console.log(values);
     toast
       .promise(update(values).unwrap(), {
         loading: 'Loading',
@@ -38,6 +47,18 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
         setVisible(false);
       });
   };
+
+  function padTo2Digits(num: number) {
+    return num.toString().padStart(2, '0');
+  }
+
+  function formatDate(date: Date) {
+    return [padTo2Digits(date.getDate()), date.toLocaleString('en', { month: 'long' })].join(' ');
+  }
+  const changeDate = (e: ChangeEvent<HTMLInputElement>) => {
+    setCurrentDate(formatDate(new Date(e.target.value)));
+  };
+
   return (
     <Modal setIsOpenModal={setVisible} isOpenModal={visible}>
       <div className="flex items-center justify-between">
@@ -53,10 +74,10 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
         {({ values }) => (
           <Form className={`flex flex-col space-y-1 sm:space-y-4`}>
             <>
-            <div className={`hidden md:block`}>
-              <Input inputType="formik" name="id" id="id" label="ID" disabled />
-            </div>
-              
+              <div className={`hidden md:block`}>
+                <Input inputType="formik" name="id" id="id" label="ID" disabled />
+              </div>
+
               <div className={`grid grid-cols-1 sm:grid-cols-3 items-center`}>
                 <Input inputType="formik" name="lastname" id="lastname" label="Фамилия" />
                 <Input inputType="formik" name="firstname" id="firstname" label="Имя" />
@@ -91,6 +112,8 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
                   name="birthday"
                   id="birthday"
                   label="День рождения"
+                  onChange={(e) => changeDate(e)}
+                  value={values.birthday}
                 />
               </div>
               <div className="grid grid-cols-1 items-center`">

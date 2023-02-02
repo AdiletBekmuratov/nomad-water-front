@@ -30,6 +30,18 @@ export const userApi = createApi({
             ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
+    getBirthdayUsers: builder.query<IUserFull[], void>({
+      query: () => ({
+        url: `user/birthday`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
+          : [{ type: 'Users', id: 'LIST' }]
+    }),
     //Получить всех пользователей по активности /active/{isActive}
     getActiveUser: builder.query<IUserFull[], boolean>({
       query: (isActive) => ({
@@ -191,6 +203,7 @@ export const userApi = createApi({
 
 export const {
   useGetAllUsersQuery,
+  useGetBirthdayUsersQuery,
   useGetActiveUserQuery,
   useGetUserROLEQuery,
   useGetUserIDQuery,
