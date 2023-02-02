@@ -33,7 +33,7 @@ export const Total: FC<Props> = ({
   setDelivery,
   useBonus,
   setUseBonus,
-  isValid,
+  isValid, 
   initialTotal,
   buttonAction,
   initial

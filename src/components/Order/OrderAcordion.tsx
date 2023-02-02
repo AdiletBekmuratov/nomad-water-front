@@ -8,17 +8,7 @@ import { Field, Form, Formik } from 'formik';
 import { Input } from '../Forms';
 import * as yup from 'yup';
 import { EditProfile } from '@/pages/User/EditProfile';
-import { AiOutlineEdit } from 'react-icons/ai';
 
-// type Props = {
-//   setIsOpen: Function;
-//   isOpen: boolean;
-//   setIsEdited: Function;
-//   setIsValid: Function;
-//   isEdited: boolean;
-//   setAddress: Function;
-//   initial?: IUsersOrder;
-// };
 type Props = {
   setAddressOrder: React.Dispatch<React.SetStateAction<string>>;
   setIsValid: Function;
@@ -37,6 +27,7 @@ type Props = {
 export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrder }) => {
   const { data: profiles = [] } = useGetALLProfilesQuery();
   const { user } = useAppSelector((state) => state.auth);
+
   const initProfile = profiles.find((profile) => profile.name === 'По умолчанию');
   const [selectedProfile, setSelectedProfile] = useState<IProfile | null>(
     initProfile ? initProfile : null
@@ -52,17 +43,23 @@ export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrd
 
   const initialValues = {
     phone: user ? (user.role === 'ROLE_USER' || user.role === 'ROLE_MASTER' ? user.phone : '') : '',
-    firstname: user ? (user.role === 'ROLE_USER' || user.role === 'ROLE_MASTER' ? user.firstname : '') : '',
+    firstname: user
+      ? user.role === 'ROLE_USER' || user.role === 'ROLE_MASTER'
+        ? user.firstname
+        : ''
+      : '',
     street: selectedProfile?.street ? selectedProfile.street : '',
     houseNumber: selectedProfile?.houseNumber ? selectedProfile.houseNumber : '',
     flat: selectedProfile?.flat ? selectedProfile.flat : '',
     addressComment: selectedProfile?.addressComment ? selectedProfile.addressComment : ''
   };
-  let address = `Ул.${selectedProfile?.street}, д. ${selectedProfile?.houseNumber}, кв. ${selectedProfile?.flat}`;
-  setAddressOrder(address);
-  useEffect(() => {
-    setAddress(initialValues);
-  }, [selectedProfile]);
+  if (user!.role === 'ROLE_MASTER') {
+    let address = `Ул.${selectedProfile?.street}, д. ${selectedProfile?.houseNumber}, кв. ${selectedProfile?.flat}`;
+    setAddressOrder(address);
+  }
+  // useEffect(() => {
+  //   setAddress(initialValues);
+  // }, [selectedProfile]);
   const [isOpenEdit, setIsOpenEdit] = useState(false); //изменение профиля
 
   const validation = yup.object().shape({
@@ -86,75 +83,88 @@ export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrd
           <h5 className="text-dark-blue font-montserrat font-semibold py-3 px-2">
             Куда доставить?
           </h5>
-
-          {/* 
-            <button
-              onClick={() => {
-                setIsOpen(!isOpen);
-                //@ts-ignore
-                isOpen === true && setIsEdited(false);
-              }}>
-              {!isOpen ? (
-                <AiOutlineArrowDown className="cursor-pointer w-5 h-5" />
-              ) : (
-                <AiOutlineArrowUp className="cursor-pointer w-5 h-5" />
-              )}
-            </button> */}
         </div>
       </div>
       <Formik initialValues={initialValues} validationSchema={validation} onSubmit={() => {}}>
         {({ isValid, values }) => (
           <Form className="flex flex-col gap-2 pt-3">
-            {profiles.length !== 0 && (
-              <Field
-                inputType="formik"
-                as="select"
-                name="profile"
-                id="profile"
-                value={selectedProfile?.name || ''}
-                onChange={handleSelectChange}
-                className={`bg-white text-center cursor-pointer p-2 rounded-md `}>
-                {/* <option className="cursor-pointer">
+            {profiles.length !== 0 ? (
+              <>
+                <Field
+                  inputType="formik"
+                  as="select"
+                  name="profile"
+                  id="profile"
+                  value={selectedProfile?.name || ''}
+                  onChange={handleSelectChange}
+                  className={`bg-white text-center cursor-pointer p-2 rounded-md `}>
+                  {/* <option className="cursor-pointer">
                       Выбрать адрес
                     </option> */}
-                {profiles.map(({ id, name }) => (
-                  <option className="cursor-pointer" key={id} value={name} id="profile">
-                    {name}
-                    {/* <button className="" onClick={() => setIsOpenEdit(true)}>
+                  {profiles.map(({ id, name }) => (
+                    <option className="cursor-pointer" key={id} value={name} id="profile">
+                      {name}
+                      {/* <button className="" onClick={() => setIsOpenEdit(true)}>
                      
                       <AiOutlineEdit className={`h-3 w-3 text-red-600`} />
                     </button> */}
-                  </option>
-                ))}{' '}
-              </Field>
+                    </option>
+                  ))}
+                </Field>
+
+                <Input
+                  name="street"
+                  id="street"
+                  inputType="formik"
+                  label="Микрорайон / Улица"
+                  className={`${styleInput}`}
+                  value={selectedProfile?.street}
+                />
+
+                <Input
+                  name="houseNumber"
+                  id="houseNumber"
+                  inputType="formik"
+                  label="Дом"
+                  className={`${styleInput}`}
+                  value={selectedProfile?.houseNumber}
+                />
+
+                <Input
+                  name="flat"
+                  id="flat"
+                  inputType="formik"
+                  label="Квартира"
+                  className={`${styleInput}`}
+                  value={selectedProfile?.flat}
+                />
+              </>
+            ) : (
+              <>
+                {' '}
+                <Input
+                  name="street"
+                  id="street"
+                  inputType="formik"
+                  label="Микрорайон / Улица"
+                  className={`${styleInput}`}
+                />
+                <Input
+                  name="houseNumber"
+                  id="houseNumber"
+                  inputType="formik"
+                  label="Дом"
+                  className={`${styleInput}`}
+                />
+                <Input
+                  name="flat"
+                  id="flat"
+                  inputType="formik"
+                  label="Квартира"
+                  className={`${styleInput}`}
+                />
+              </>
             )}
-            <Input
-              name="street"
-              id="street"
-              inputType="formik"
-              label="Микрорайон / Улица"
-              className={`${styleInput}`}
-              value={selectedProfile?.street}
-            />
-
-            <Input
-              name="houseNumber"
-              id="houseNumber"
-              inputType="formik"
-              label="Дом"
-              className={`${styleInput}`}
-              value={selectedProfile?.houseNumber}
-            />
-
-            <Input
-              name="flat"
-              id="flat"
-              inputType="formik"
-              label="Квартира"
-              className={`${styleInput}`}
-              value={selectedProfile?.flat}
-            />
-
             <Input
               name="addressComment"
               id="addressComment"
@@ -162,9 +172,7 @@ export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrd
               label="Комментарий к заказу"
               placeholder="Например: блок, подъезд, этаж, домофон, лифт, и др"
               className={`${styleInput}`}
-              
             />
-
             <Input
               name="firstname"
               id="firstname"
