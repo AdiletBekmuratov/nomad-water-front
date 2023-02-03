@@ -108,6 +108,10 @@ const AdminAllUsers = () => {
         accessorKey: 'telegramAccount'
       },
       {
+        header: 'birthday',
+        accessorKey: 'birthday'
+      },
+      {
         header: 'Изменить \n Деактивировать',
         cell: ({ row }) => (
           <ActionButtons

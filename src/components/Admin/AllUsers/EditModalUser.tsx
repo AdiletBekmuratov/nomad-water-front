@@ -57,7 +57,7 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
     return [
       padTo2Digits(date.getDate()),
       date.toLocaleString('en', { month: 'long' }),
-      date.getFullYear()
+      //date.getFullYear()
     ].join(' ');
   }
   const changeDate = (e: ChangeEvent<HTMLInputElement>) => {

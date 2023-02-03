@@ -22,7 +22,7 @@ export const Accordion: FC<Props> = (props) => {
 
   const initialValues: IOrdersUser = {
     phone: user?.phone ? user?.phone : '',
-    firstname: user?.firstname ? user?.firstname : '',
+    firstname: user?.firstname ? user?.firstname : '', 
     street: user?.street ? user?.street : '',
     houseNumber: user?.houseNumber ? user?.houseNumber : '',
     flat: user?.flat ? user?.flat : '',

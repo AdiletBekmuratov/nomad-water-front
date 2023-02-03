@@ -1,4 +1,4 @@
-import { IUser, IUserCreate, IProduct } from '@/types';
+import { IUser, ICreateUserPhone, IProduct } from '@/types';
 import { ICouriers, IEmployeeCreate, IEmployeeCreateLink } from '@/types/employee.types';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 
@@ -25,9 +25,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     getBirthdayUsers: builder.query<IUserFull[], void>({
@@ -37,9 +37,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //Получить всех пользователей по активности /active/{isActive}
@@ -50,9 +50,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //получить юзера по роли
@@ -63,9 +63,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //юзер по ID
@@ -163,7 +163,7 @@ export const userApi = createApi({
       invalidatesTags: [{ type: 'Users', id: 'LIST' }]
     }),
     //Получения кода для входа в аккаунт
-    getUserCode: builder.mutation<void, IUserCreate>({
+    getUserCode: builder.mutation<void, ICreateUserPhone>({
       query: (body) => ({
         url: `/auth/generateCode`,
         method: `POST`,
@@ -178,9 +178,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //добавить товар в избран 

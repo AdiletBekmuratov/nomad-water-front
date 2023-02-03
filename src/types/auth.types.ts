@@ -1,4 +1,14 @@
-import { IProduct } from '@/types';
+import { IProduct, IProfile } from '@/types';
+
+export type ICreateUserPhone = {
+  phone: string;
+};
+
+export interface ILoginForm {
+  phone: string;
+  password?: string;
+}
+
 export interface IAuthState {
   user: IUser | null | undefined;
   isError: boolean;
@@ -6,13 +16,6 @@ export interface IAuthState {
   isLoading: boolean;
   message: string;
   phone: string;
-}
-export interface IUsersState {
-  users: IUser[];
-  isError: boolean;
-  isSuccess: boolean;
-  isLoading: boolean;
-  message: string;
 }
 export interface IUser {
   id?: number;
@@ -22,28 +25,17 @@ export interface IUser {
   middleName: string;
   role: string;
   birthday: string;
-  username?: string;
-  houseNumber: string;
-  street: string;
-  flat: string;
-  addressComment: string;
+
   bonuses: number;
   telegramAccount?: string;
   favorites?: IProduct[];
+  color: string,
+  annualSpent: number,
+
   createdDate?: string;
   updatedDate?: string;
   active?: boolean;
   chatId?: number;
-  profiles?: {
-    addressComment: string;
-    flat: string;
-    houseNumber: string;
-    id?: number;
-    name: string;
-    street: string;
-  }[];
+  profiles?: IProfile[];
 }
 
-export type IUserCreate = {
-  phone: string;
-};

@@ -40,18 +40,35 @@ export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrd
     setSelectedProfile(selectedProfile!);
     setAddressOrder(address);
   };
-
-  const initialValues = {
+  const [formValue, setFormValue] = useState({
     phone: user ? (user.role === 'ROLE_USER' || user.role === 'ROLE_MASTER' ? user.phone : '') : '',
     firstname: user
       ? user.role === 'ROLE_USER' || user.role === 'ROLE_MASTER'
         ? user.firstname
         : ''
       : '',
-    street: selectedProfile?.street ? selectedProfile.street : '',
-    houseNumber: selectedProfile?.houseNumber ? selectedProfile.houseNumber : '',
-    flat: selectedProfile?.flat ? selectedProfile.flat : '',
-    addressComment: selectedProfile?.addressComment ? selectedProfile.addressComment : ''
+    street: '',
+    houseNumber: '',
+    flat: '',
+    addressComment: ''
+  });
+  const initialValues = {
+    phone: user
+      ? user.role === 'ROLE_USER' || user.role === 'ROLE_MASTER'
+        ? user.phone
+        : ''
+      : formValue.phone,
+    firstname: user
+      ? user.role === 'ROLE_USER' || user.role === 'ROLE_MASTER'
+        ? user.firstname
+        : ''
+      : formValue.firstname,
+    street: selectedProfile?.street ? selectedProfile.street : formValue.street,
+    houseNumber: selectedProfile?.houseNumber ? selectedProfile.houseNumber : formValue.houseNumber,
+    flat: selectedProfile?.flat ? selectedProfile.flat : formValue.flat,
+    addressComment: selectedProfile?.addressComment
+      ? selectedProfile.addressComment
+      : formValue.addressComment
   };
   if (user!.role === 'ROLE_MASTER') {
     let address = `Ул.${selectedProfile?.street}, д. ${selectedProfile?.houseNumber}, кв. ${selectedProfile?.flat}`;
@@ -190,7 +207,7 @@ export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrd
               label="Номер получателя"
               className={`${styleInput}`}
             />
-
+            {setFormValue(values)}
             {setIsValid(isValid)}
             {setAddress(values)}
           </Form>

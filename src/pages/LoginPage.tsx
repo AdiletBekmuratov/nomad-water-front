@@ -2,40 +2,18 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import {
-  useCreateUserAccountMutation,
-  useGetUserCodeMutation
-} from '@/redux/services/user.service';
+import { useGetUserCodeMutation } from '@/redux/services/user.service';
 
 import { login } from '@/redux/slices/auth';
-import { ILoginForm, IUser } from '@/types';
+import { ICreateUserPhone, ILoginForm } from '@/types';
 
 import { Modal } from '@/components/Layout/Modal';
-import Checkbox from '@/components/Checkbox';
+
 import { Button, Input } from '@/components/Forms';
 
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { toast } from 'react-hot-toast';
-
-const SignInSchema = Yup.object().shape({
-  phone: Yup.string().required('Обязательное поле для заполнения')
-});
-
-const INIT: IUser = {
-  addressComment: '',
-  birthday: '',
-  bonuses: 0,
-
-  firstname: '',
-  flat: '',
-  lastname: '',
-  middleName: '',
-  phone: '',
-  role: 'ROLE_USER',
-  street: '',
-  houseNumber: ''
-};
 
 const initial: ILoginForm = {
   password: '',
@@ -43,19 +21,13 @@ const initial: ILoginForm = {
 };
 
 const LoginPage = () => {
-  const [createAccount, { isLoading }] = useCreateUserAccountMutation();
   const [generateCode, { isLoading: codeLoad }] = useGetUserCodeMutation();
 
   const navigate = useNavigate();
-
   const { user } = useAppSelector((state) => state.auth);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [phoneNumb, setPhoneNumb] = useState('');
-  // const [isPhone, setIsPhone] = useState(false);
-
-  // const [isSend, setIsSend] = useState('');
-  // const [isCodeGen, setIsCodeGen] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -67,9 +39,9 @@ const LoginPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleLogin = async (values: IUser) => {
+  const handleLogin = async (values: ICreateUserPhone) => {
     setPhoneNumb(values.phone);
-    console.log(values.phone);
+
     toast
       .promise(generateCode({ phone: values.phone }).unwrap(), {
         loading: 'Загрузка...',
@@ -80,10 +52,7 @@ const LoginPage = () => {
         setIsOpenModal(true);
       });
   };
-
   const handleSubmit = async (values: ILoginForm) => {
-    console.log(values);
-    // if (!isPhone) {
     toast
       .promise(dispatch(login({ phone: phoneNumb, password: values.password })).unwrap(), {
         success: 'Добро пожаловать в Nomad water!',
@@ -92,14 +61,8 @@ const LoginPage = () => {
       })
       .finally(() => {
         setIsOpenModal(false);
+        navigate('/catalog');
       });
-    // } else {
-    //   toast.promise(dispatch(login({ phone: values.phone, password: values.password })).unwrap(), {
-    //     success: 'Добро пожаловать в Nomad water!',
-    //     loading: 'Загрузка',
-    //     error: (err) => err.toString()
-    //   });
-    // }
   };
 
   const validation = Yup.object().shape({
@@ -126,7 +89,6 @@ const LoginPage = () => {
               <h2 className={`text-lg lg:text-3xl font-bold text-gray-900`}>Добро пожаловать!</h2>
             </div>
 
-            {/* @ts-ignore */}
             <Formik initialValues={{ phone: '' }} onSubmit={handleLogin}>
               <Form>
                 <Input
@@ -138,19 +100,6 @@ const LoginPage = () => {
                   placeholder="+7 (999) 999 99 99"
                   label="Номер телефона"
                 />
-
-                {/* <div className="mb-2">
-                      <Input
-                        inputType="formik"
-                        type="password"
-                        name="password"
-                        id="password"
-                        className="mb-2"
-                        placeholder="Пароль"
-                        label="Пароль"
-                      />
-                    </div> */}
-
                 <Button className="mt-3" type="submit">
                   Войти
                 </Button>

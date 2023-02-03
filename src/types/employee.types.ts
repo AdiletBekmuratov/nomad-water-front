@@ -4,6 +4,7 @@ export type IEmployeeCreateLink = {
   warehouseId?: number;
 };
 export type IEmployeeCreate = {
+  active:boolean;
   token?: string;
   id?: number;
   phone: string;

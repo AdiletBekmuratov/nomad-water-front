@@ -10,7 +10,8 @@ import { Link } from 'react-router-dom';
 
 const AllCustomers = () => {
  
-  const { data: users = [], isLoading } = useGetUserROLEQuery('ROLE_USER');
+  const { data: allUsers = [], isLoading } = useGetUserROLEQuery('ROLE_USER');
+  const users = allUsers.filter(user=>user.active ===true);
 
   const columns = useMemo<ColumnDef<IUserFull, any>[]>(
     () => [
