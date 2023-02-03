@@ -2,7 +2,7 @@ import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 import { useGetAllWarehousesQuery } from '@/redux/services/base.service';
 import { useUpdateWorkerMutation } from '@/redux/services/user.service';
-import { IEmployeeCreate } from '@/types';
+import { IUserFull } from '@/types';
 
 import { Form, Formik } from 'formik';
 import { FC, Dispatch, SetStateAction } from 'react';
@@ -12,24 +12,24 @@ import { AiOutlineCloseCircle } from 'react-icons/ai';
 interface IEditModalProps {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
-  data: IEmployeeCreate;
+  data: IUserFull;
 }
 
 export const EditWorker: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
   const [update, { isLoading: isLoadingUpdate }] = useUpdateWorkerMutation();
   const { data: warehouses, isLoading: isLoad } = useGetAllWarehousesQuery();
 
-  const handleEdit = (values: IEmployeeCreate) => {
+  const handleEdit = (values: IUserFull) => {
     console.log(values);
     toast
       .promise(update(values).unwrap(), {
         loading: 'Загрузка',
         success: 'Обновлено успешно',
-        error: ()=>"Проверьте поля"
+        error: () => 'Проверьте поля'
       })
       .finally(() => {});
   };
-  const handleEditSave = (values: IEmployeeCreate) => {
+  const handleEditSave = (values: IUserFull) => {
     console.log(values);
     toast
       .promise(update(values).unwrap(), {

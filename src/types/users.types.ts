@@ -3,7 +3,7 @@ import { IProfile } from './profile.types';
 export interface IUserFull {
   id?: number;
   phone: string;
-  password?: string;
+
   firstname: string;
   middleName: string;
   lastname: string;
@@ -19,6 +19,8 @@ export interface IUserFull {
   telegramAccount: string;
   color: string;
   //courier
+  userId?: number | undefined;
+
   courierDeliveringStatus?: number;
   successfulOrders?: number;
   car?: string;
@@ -32,4 +34,4 @@ export type IOrdersUser = Pick<
   IUserFull,
   'phone' | 'addressComment' | 'street' | 'houseNumber' | 'flat' | 'firstname'
 >;
-export type IUserFullCreate = Omit<IUserFull, 'created_date' | 'password'>;
+export type IUserFullCreate = Omit<IUserFull, 'created_date' >;

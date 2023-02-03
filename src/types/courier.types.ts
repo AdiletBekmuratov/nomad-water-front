@@ -1,6 +1,7 @@
-import { IEmployeeCreate } from '@/types/employee.types';
+
 import { IProduct } from './products.type';
 import { IProfile } from "./profile.types";
+import { IUserFull } from './users.types';
 
 export type ICourierOrder = {
   id: number;
@@ -10,13 +11,13 @@ export type ICourierOrder = {
     firstname: string;
     middleName: string;
     lastname: string;
-    role?:string;
+    role?: string;
     birthday: string;
-    bonuses?:number;
+    bonuses?: number;
     addressComment: string;
-    profiles?:IProfile[];
-    color:string;
-    active:boolean;
+    profiles?: IProfile[];
+    color: string;
+    active: boolean;
   };
   courier: {
     id: number;
@@ -36,35 +37,35 @@ export type ICourierOrder = {
       active: true;
     };
   };
-  employee:IEmployeeCreate;
+  employee: IUserFull;
   statusId: number;
-  orderType:  {
+  orderType: {
     id: number,
     name: string,
     createdDate: string,
     updatedDate: string
-};
-  paymentMethod: {
+  };
+  paymentMethod?: {
     id: number,
     name: string,
     createdDate: string,
     updatedDate: string
-};
-orderProducts: {
-  id:number;
-  product:IProduct;
-  quantity:number;
-}[];
+  };
+  orderProducts: {
+    id: number;
+    product: IProduct;
+    quantity: number;
+  }[];
   deliveryDateTime: string;
   phone: string;
   address: string;
   comment: string;
   totalPrice: number;
-  initialPrice:number;
+  initialPrice: number;
   paymentUrl: string;
-  rating:number;
-  cancelReason:string;
-  withDeposit:boolean;
+  rating: number;
+  cancelReason: string;
+  withDeposit: boolean;
   createdDateTime: string;
   orderDateTime: string;
   changedDateTime: string;

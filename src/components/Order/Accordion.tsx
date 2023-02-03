@@ -1,11 +1,10 @@
 import { DetailedHTMLProps, FC, HTMLAttributes } from 'react';
 import { useAppSelector } from '@/hooks/useAppSelector';
 
-import { IOrdersUser,  IUsersOrder } from '@/types';
-
 import { Form, Formik } from 'formik';
 import {  Input } from '../Forms';
 import * as yup from 'yup';
+import { ICourierOrder } from '@/types/courier.types';
 
 
 type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
@@ -13,21 +12,21 @@ type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
   setIsEdited?: Function;
   isEdited?: boolean;
   setAddress: Function;
-  initial?: IUsersOrder;
+  initial?: ICourierOrder;
 };
 
 export const Accordion: FC<Props> = (props) => {
   const { user } = useAppSelector((state) => state.auth);
 
 
-  const initialValues: IOrdersUser = {
-    phone: user?.phone ? user?.phone : '',
-    firstname: user?.firstname ? user?.firstname : '', 
-    street: user?.street ? user?.street : '',
-    houseNumber: user?.houseNumber ? user?.houseNumber : '',
-    flat: user?.flat ? user?.flat : '',
-    addressComment: ''
-  };
+  // const initialValues: IOrdersUser = {
+  //   phone: user?.phone ? user?.phone : '',
+  //   firstname: user?.firstname ? user?.firstname : '', 
+  //   street: user?.street ? user?.street : '',
+  //   houseNumber: user?.houseNumber ? user?.houseNumber : '',
+  //   flat: user?.flat ? user?.flat : '',
+  //   addressComment: ''
+  // };
 
   const validation = yup.object().shape({
     firstname: yup.string().required('Поле обязательное'),
@@ -64,7 +63,7 @@ export const Accordion: FC<Props> = (props) => {
   return (
     <>
       <div className={`${props.className}`}>
-        <Formik initialValues={initialValues} validationSchema={validation} onSubmit={() => {}}>
+        {/* <Formik initialValues={initialValues} validationSchema={validation} onSubmit={() => {}}>
           {({ isValid, values }) => (
             <Form className="flex flex-col gap-2">
               <div>
@@ -129,7 +128,7 @@ export const Accordion: FC<Props> = (props) => {
               {props.setAddress(values)}
             </Form>
           )}
-        </Formik>
+        </Formik> */}
       </div>
     </>
   );

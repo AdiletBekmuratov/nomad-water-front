@@ -1,7 +1,7 @@
 import { Button } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 import { useRateOrderMutation } from '@/redux/services/base.service';
-import { IOrder } from '@/types';
+
 import { ICourierOrder } from '@/types/courier.types';
 import React, { FC, useState, Fragment, useEffect } from 'react';
 import { toast } from 'react-hot-toast';

@@ -12,12 +12,7 @@ import { AiOutlineCloseCircle } from 'react-icons/ai';
 interface IEditModalProps {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
-  data: IUserFull & {
-    userId?: number | undefined;
-    courierDeliveringStatus: number;
-    successfulOrders: number;
-    car: string;
-  };
+  data: IUserFull;
 }
 
 export const EditCourier: FC<IEditModalProps> = ({ visible, setVisible, data }) => {

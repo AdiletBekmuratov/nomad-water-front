@@ -2,7 +2,7 @@ import { FC, useEffect, useState, useRef } from 'react';
 import { useGetALLProfilesQuery } from '@/redux/services/profile.service';
 
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { IProfile, IUsersOrder } from '@/types';
+import { IProfile } from '@/types';
 
 import { Field, Form, Formik } from 'formik';
 import { Input } from '../Forms';

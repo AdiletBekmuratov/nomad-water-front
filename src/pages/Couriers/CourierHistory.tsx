@@ -1,17 +1,18 @@
 import { useMemo } from 'react';
 
 import { useGetCourierOrderQuery } from '@/redux/services/courier.service';
-import { IOrder } from '@/types';
+
 
 import Loader from '../../components/Landing/Loader';
 import { Table } from '../../components/Table';
 import { ColumnDef } from '@tanstack/react-table';
+import { ICourierOrder } from '@/types/courier.types';
 
 const CourierHistory = () => {
   const { data: allOrders = [], isLoading} = useGetCourierOrderQuery();
   const completeOrders = allOrders.filter((order) => order.statusId === 3);
 
-  const columns = useMemo<ColumnDef<IOrder, any>[]>(
+  const columns = useMemo<ColumnDef<ICourierOrder, any>[]>(
     () => [
         {
         header: 'Статус заказа',

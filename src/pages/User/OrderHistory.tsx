@@ -3,7 +3,7 @@ import { useGetUserOrderQuery } from '@/redux/services/base.service';
 
 import Loader from '@/components/Landing/Loader';
 import { Table } from '@/components/Table';
-import { IOrder } from '@/types';
+
 import { ColumnDef } from '@tanstack/react-table';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/Forms';

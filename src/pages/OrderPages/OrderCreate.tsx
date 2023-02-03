@@ -32,6 +32,7 @@ const initial: IUsersOrder = {
   address: '',
   comment: '',
   isSale: false,
+
   paymentMethod: 'Наличными',
   phone: '',
   orderProductsDto: [],
@@ -343,7 +344,7 @@ console.log(user!.role === 'ROLE_USER' && user!.profiles &&  user!.profiles.leng
           {isEdited && (
             <>
               <Modal isOpenModal={isOpen} setIsOpenModal={setIsEdited}>
-                <PaymentComponent buttonName="Продолжить" name={user?.username ?? ''} />
+                <PaymentComponent buttonName="Продолжить" name={user?.firstname ?? ''} />
               </Modal>
             </>
           )}

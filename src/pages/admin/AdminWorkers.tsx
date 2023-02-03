@@ -1,5 +1,5 @@
 import { useDeleteUserMutation, useGetUserROLEQuery } from '@/redux/services/user.service';
-import { IEmployeeCreate, IUserFull } from '@/types';
+import { IUserFull, IUserFull } from '@/types';
 import { useMemo, useState } from 'react';
 
 import { CreateModal } from '@/components/Admin/AllUsers';
