@@ -19,6 +19,10 @@ export type IRouteSheet = {
       id?: number;
       name: string;
     };
-    orderProducts: IOrder[];
+    orderProducts: {
+      id:number;
+      product: IProduct;
+      quantity:number;
+    }[];
   };
 };

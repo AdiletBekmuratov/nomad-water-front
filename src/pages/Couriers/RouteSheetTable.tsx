@@ -7,10 +7,10 @@ type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
   routeSheet: IRouteSheet[];
 };
 
-const RouteSheetTable: FC<Props> = (props) => {
+const RouteSheetTable: FC<Props> = ({ date, componentRef, routeSheet }) => {
   return (
-    <div ref={props.componentRef}>
-      <h3 className="font-semibold text-center">{`За: ${props.date}`}</h3>
+    <div ref={componentRef}>
+      <h3 className="font-semibold text-center">{`За: ${date}`}</h3>
       <table className="border-collapse w-full bg-white">
         <tr className="">
           <th className="border text-left p-2">Номер заказа</th>
@@ -24,14 +24,18 @@ const RouteSheetTable: FC<Props> = (props) => {
           <th className="border text-left p-2">Итоговая цена</th>
         </tr>
 
-        {props.routeSheet.map((route, idx) => (
+        {routeSheet.map((route, idx) => (
           <tr key={idx}>
             <td className="border text-left p-2">{route.order.id}</td>
-            <td className="border text-left p-2">{`${route.order.user.firstname} ${route.order.user.lastname}`}</td>
+            <td className="border text-left p-2">
+              {`${route.order.user ? route.order.user.firstname : 'нет имени'} ${
+                route.order.user ? route.order.user.lastname : 'нет фамилии'
+              }`}
+            </td>
             <td className="border text-left p-2">{route.order.address}</td>
             <td className="border text-left p-2">{route.order.phone}</td>
             <td className="border text-left p-2">
-              {route.order.comment.length > 0 ? route.order.comment : 'Нет комментариев'}
+              {route.order.comment ? route.order.comment.length > 0 ? route.order.comment : 'Нет комментариев' : 'Нет комментариев'}
             </td>
             {route.order.orderProducts.map((orders, idx) => (
               <td
