@@ -55,7 +55,7 @@ const CustomersBirthday = () => {
       },
       {
         header: 'Сумма за год',
-       // accessorKey: 'totalPrice'
+       accessorKey: 'annualSpent'
       },
       {
         header: 'Карточка клиента',
