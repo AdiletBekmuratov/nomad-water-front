@@ -3,7 +3,7 @@ import { ICourier, ICourierOrder } from './courier.types';
 export type IRouteSheet = {
   id?: number;
   courier: ICourier;
-  IRouteSheetOrders: {
+  routeSheetOrders: {
     id?: number;
     order: ICourierOrder;
   }[];

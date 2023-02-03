@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API_URL } from '../http';
 import { ICourierOrder } from '@/types/courier.types';
+import { IRouteSheet } from '@/types/routeSheet.types';
 
 export const courierApi = createApi({
   reducerPath: 'courierApi',
@@ -52,23 +53,28 @@ export const courierApi = createApi({
             ]
           : [{ type: 'COrder', id: 'LIST' }]
     }),
-    getAllRouteSheet: builder.query({
+    getAllRouteSheet: builder.query<IRouteSheet[], void>({
       query: () => ({
         url: '/user/routeSheet'
       }),
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }: { id: any }) => ({ type: 'routeSheet', id } as const)),
+              ...result.map(({ id }) => ({ type: 'routeSheet', id } as const)),
               { type: 'routeSheet', id: 'LIST' }
             ]
           : [{ type: 'routeSheet', id: 'LIST' }]
     }),
-    getCurrentCourierRouteSheet: builder.query<any, string>({
+    getCurrentCourierRouteSheet: builder.query<IRouteSheet, string>({
       query: (date) => ({
         url: `/user/routeSheet/${date}`
       }),
       providesTags: [{ type: 'routeSheet', id: 'LIST' }]
+    }),
+    getCourierRouteSheetOrders: builder.query<IRouteSheet, { id: number; date: string }>({
+      query: ({ id, date }) => ({
+        url: `/user/routeSheet/${id}/${date}}`
+      })
     })
   })
 });

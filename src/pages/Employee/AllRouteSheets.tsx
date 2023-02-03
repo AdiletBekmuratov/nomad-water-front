@@ -4,14 +4,19 @@ import Loader from '@/components/Landing/Loader';
 import { useGetAllRouteSheetQuery } from '@/redux/services/courier.service';
 import { IRouteSheet } from '@/types/routeSheet.types';
 
-import { useRef, useState, useMemo, useEffect } from 'react';
+import { useRef, useState, useMemo, useEffect, Fragment } from 'react';
 
 import { useReactToPrint } from 'react-to-print';
+import RouteSheetTable from '../Couriers/RouteSheetTable';
+import { AiOutlinePrinter } from 'react-icons/ai';
+import { useGetUserROLEQuery } from '@/redux/services/user.service';
 
 const AllRouteSheets = () => {
   const componentRef = useRef<any>();
-  const [routeSheet, setRouteSheet] = useState<IRouteSheet[]>([]);
+  const [routeSheet, setRouteSheet] = useState([]);
   const [currentDate, setCurrentDate] = useState('');
+  const { data: couriers = [], isLoading: courierLoad } = useGetUserROLEQuery('ROLE_COURIER');
+  const [courierId, setCourierId] = useState('');
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -36,17 +41,11 @@ const AllRouteSheets = () => {
     ].join('-');
   }
 
+  const { data: routeData = [], isLoading } = useGetAllRouteSheetQuery();
   useEffect(() => {
-    setCurrentDate(formatDate(new Date()));
-  }, []);
-
-  const { data: routeData = [], isLoading, refetch } = useGetAllRouteSheetQuery(currentDate);
-
-  useEffect(() => {
-    refetch().then((res) => setRouteSheet(res.data.routeSheetOrders));
-  }, [currentDate]);
-
-  if (isLoading) {
+    routeData?.map((route) => setRouteSheet(route.routeSheetOrders));
+  }, [isLoading]);
+  if (isLoading && courierLoad) {
     return <Loader />;
   }
 
@@ -61,29 +60,34 @@ const AllRouteSheets = () => {
           onChange={handleDate}
           // className={`max-w-md`}
         />
+        Выберите курьера
+        <select id="courier" onChange={(e) => setCourierId(e.target.value)}>
+          {couriers.map((cour) => (
+            <Fragment key={cour.id}>
+              <option value="">Выберите курьера</option>
+              <option value={cour.id}>{`${cour.firstname} ${cour.lastname}`}</option>
+            </Fragment>
+          ))}
+        </select>
       </div>
-      {routeData.length > 0 ? (
-        // <RouteSheetTable componentRef={componentRef} date={currentDate} routeSheet={routeSheet} />
-        <div className={`flex flex-col`}>
-          <div className={`flex items-center justify-between`}>
-            {/* {routeData.map(route=>route)} */}
-
-          </div>
-        </div>
-      ) : (
-        <div className="flex justify-center font-montserrat">
-          {currentDate.length === 0 ? (
-            <>На сегодня нет маршрутных листов</>
-          ) : (
-            <p className="text-red-500">На эту дату нет маршрутных листов</p>
-          )}
-        </div>
-      )}
-      {/* <div className="grid grid-cols-3 mt-4">
+      <div className="grid grid-cols-3 mt-4">
         <Button onClick={handlePrint} className="font-montserrat">
           <AiOutlinePrinter className="mr-2" /> Печать
         </Button>
-      </div> */}
+      </div>
+      <div className="flex justify-center font-montserrat">
+        {routeSheet.length === 0 ? (
+          <>На сегодня нет маршрутных листов</>
+        ) : currentDate.length === 0 ? (
+          <RouteSheetTable
+            componentRef={componentRef}
+            date={formatDate(new Date())}
+            routeSheet={routeSheet}
+          />
+        ) : (
+          <>sdfsdf</>
+        )}
+      </div>
     </>
   );
 };

@@ -35,7 +35,11 @@ const RouteSheetTable: FC<Props> = ({ date, componentRef, routeSheet }) => {
             <td className="border text-left p-2">{route.order.address}</td>
             <td className="border text-left p-2">{route.order.phone}</td>
             <td className="border text-left p-2">
-              {route.order.comment ? route.order.comment.length > 0 ? route.order.comment : 'Нет комментариев' : 'Нет комментариев'}
+              {route.order.comment
+                ? route.order.comment.length > 0
+                  ? route.order.comment
+                  : 'Нет комментариев'
+                : 'Нет комментариев'}
             </td>
             {route.order.orderProducts.map((orders, idx) => (
               <td

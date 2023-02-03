@@ -27,8 +27,10 @@ type Props = {
 export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrder }) => {
   const { data: profiles = [] } = useGetALLProfilesQuery();
   const { user } = useAppSelector((state) => state.auth);
-
-  const initProfile = profiles.find((profile) => profile.name === 'По умолчанию');
+  let initProfile;
+  if (profiles.length !== 0) {
+    initProfile = profiles.find((profile) => profile.name === 'По умолчанию');
+  }
   const [selectedProfile, setSelectedProfile] = useState<IProfile | null>(
     initProfile ? initProfile : null
     //null

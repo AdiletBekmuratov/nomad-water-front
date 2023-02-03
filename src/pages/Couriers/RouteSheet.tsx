@@ -13,7 +13,7 @@ import { AiOutlinePrinter } from 'react-icons/ai';
 
 const RouteSheet = () => {
   const componentRef = useRef<any>();
-  const [routeSheet, setRouteSheet] = useState<IRouteSheet[]>([]);
+  const [routeSheet, setRouteSheet] = useState([]);
   const [currentDate, setCurrentDate] = useState('');
 
   const handlePrint = useReactToPrint({
@@ -43,10 +43,12 @@ const RouteSheet = () => {
     setCurrentDate(formatDate(new Date()));
   }, []);
 
-  const { isLoading, refetch } = useGetCurrentCourierRouteSheetQuery(currentDate);
+  const { isLoading, refetch } = useGetCurrentCourierRouteSheetQuery(formatDate(new Date()));
 
   useEffect(() => {
-    refetch().then((res) => setRouteSheet(res.data.routeSheetOrders));
+    refetch().then((res) => {
+      setRouteSheet(res.data?.routeSheetOrders);
+    });
   }, [currentDate]);
 
   if (isLoading) {
@@ -54,32 +56,22 @@ const RouteSheet = () => {
   }
 
   return (
-    <>
-      <div>
-        <Layout>
-          <div className="flex justify-center font-montserrat">Выберите дату заказов</div>
-          <Input inputType="default" id="date" type="date" onChange={handleDate} />
-          {routeSheet.length > 0 ? (
-            <RouteSheetTable
-              componentRef={componentRef}
-              date={currentDate}
-              routeSheet={routeSheet}
-            />
-          ) : (
-            <div className="flex justify-center font-montserrat">
-              <p className="text-red-500">
-                На данный промежуток времени у вас нет маршрутного листа
-              </p>
-            </div>
-          )}
-          <div className="grid grid-cols-3 mt-4">
-            <Button onClick={handlePrint} className="font-montserrat">
-              <AiOutlinePrinter className="mr-2" /> Печать
-            </Button>
-          </div>
-        </Layout>
+    <Layout>
+      <div className="flex justify-center font-montserrat">Выберите дату заказов</div>
+      <Input inputType="default" id="date" type="date" onChange={handleDate} />
+      <div className="grid grid-cols-3 mt-4">
+        <Button onClick={handlePrint} className="font-montserrat">
+          <AiOutlinePrinter className="mr-2" /> Печать
+        </Button>
       </div>
-    </>
+      {routeSheet.length > 0 ? (
+        <RouteSheetTable componentRef={componentRef} date={currentDate} routeSheet={routeSheet} />
+      ) : (
+        <div className="flex justify-center font-montserrat">
+          <p className="text-red-500">На данный промежуток времени у вас нет маршрутного листа</p>
+        </div>
+      )}
+    </Layout>
   );
 };
 
