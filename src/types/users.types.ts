@@ -7,12 +7,15 @@ export interface IUserFull {
   firstname: string;
   middleName: string;
   lastname: string;
+  
   role: string;
-
   birthday: string;
+  
   street?: string;
   houseNumber?: string;
   flat?: string;
+  
+  updatedDate?:string;
   created_date?: string;
   addressComment?: string;
   bonuses?: number;

@@ -20,18 +20,21 @@ export interface IAuthState {
 export interface IUser {
   id?: number;
   phone: string;
+
   firstname: string;
   lastname: string;
   middleName: string;
   role: string;
-  birthday: string;
 
+  birthday: string;
   bonuses?: number;
   telegramAccount?: string;
+
   favorites?: IProduct[];
+  profiles?: IProfile[];
+  
   color?: string,
   annualSpent?: number,
-  profiles?: IProfile[];
 
   createdDate?: string;
   updatedDate?: string;
