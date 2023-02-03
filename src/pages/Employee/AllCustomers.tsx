@@ -3,14 +3,14 @@ import { useMemo, useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import { Table } from '@/components/Table';
 import { IUserFull } from '@/types';
-import { useGetAllUsersQuery } from '@/redux/services/user.service';
+import { useGetAllUsersQuery, useGetUserROLEQuery } from '@/redux/services/user.service';
 
 import Loader from '@/components/Landing/Loader';
 import { Link } from 'react-router-dom';
 
 const AllCustomers = () => {
-  const { data: allUsers = [], isLoading } = useGetAllUsersQuery();
-  const users = allUsers.filter((user) => user.role === 'ROLE_USER');
+ 
+  const { data: users = [], isLoading } = useGetUserROLEQuery('ROLE_USER');
 
   const columns = useMemo<ColumnDef<IUserFull, any>[]>(
     () => [

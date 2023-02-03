@@ -22,7 +22,7 @@ const INITIAL_VALUES: IProductCreate = {
   productCategoryId: 1,
   productName: '',
   productPrice: 0,
-  urgencyPrice: 0,
+
   imageFile: null
 };
 
