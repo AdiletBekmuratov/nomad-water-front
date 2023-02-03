@@ -6,15 +6,11 @@ import { Edit } from '../User/Edit';
 
 import { Layout } from '@/components/Layout';
 import { Button } from '@/components/Forms';
-import { Modal } from '@/components/Layout/Modal';
-import { FaRoute } from 'react-icons/fa';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { useGetCurrentCourierRouteSheetQuery } from '@/redux/services/courier.service';
-import { FiDownload } from 'react-icons/fi';
+
 import { Link } from 'react-router-dom';
 
 const CourierPage = () => {
-  const { user } = useAppSelector((state) => state.auth);
+  const user = useAppSelector((state) => state.auth.user);
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
 
   const styleP = `text-sm md:text-base bg-white rounded-md px-3 grid grid-cols-2`;
@@ -53,7 +49,7 @@ const CourierPage = () => {
           <div className="grid gap-2 ">
             <p className={`${styleP}`}>
               <strong>Микрорайон / Улица: </strong>{' '}
-              <span>{` ${user?.street ? user?.street : 'Не заполнено'} `}</span>
+              <span>{` ${user ? user?.street : 'Не заполнено'} `}</span>
             </p>
             <p className={`${styleP}`}>
               <strong>Дом: </strong> {` ${user?.houseNumber ? user?.houseNumber : 'Не заполнено'} `}

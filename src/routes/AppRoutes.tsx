@@ -12,7 +12,7 @@ import ScrollToTop from '@/components/ScrollToTop';
 
 import OrderInfo from '@/pages/OrderPages/OrderInfo';
 import UserAppeal from '@/pages/UserAppeal';
-import WarehouseAppeal from '@/pages/WarehouseAppeal';
+
 import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminCategory from '@/pages/admin/AdminCategory';
 
@@ -167,8 +167,6 @@ const AppRoutes = () => {
 
             <Route path="/requestsUser" element={<RequestsUser />} />
             <Route path="/appeal" element={<UserAppeal />} />
-
-            <Route path="/warehouse/appeal" element={<WarehouseAppeal />} />
           </Routes>
         </ScrollToTop>
       </Router>
