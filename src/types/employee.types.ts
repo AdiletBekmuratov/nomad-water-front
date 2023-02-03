@@ -4,14 +4,6 @@ export type IEmployeeCreateLink = {
   warehouseId?: number;
 };
 
-export type ICouriers = {
-  id: number;
-  userId?: number;
-  courierDeliveringStatus: number;
-  successfulOrders: number;
-  car: string;
-};
-
 export type IWorker = {
   id?: number;
   shopkeeperPhone: string;

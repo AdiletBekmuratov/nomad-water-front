@@ -10,7 +10,7 @@ import { CreateModal, EditModalUser } from '@/components/Admin/AllUsers';
 import Loader from '@/components/Landing/Loader';
 
 import { EditWorker } from '../../components/Admin/AllUsers/EditWorker';
-import { EditCourier } from '@/components/Admin/Couriers/EditCourier';
+import { EditCourier } from '@/components/Admin/AllUsers/EditCourier';
 
 const AdminAllUsers = () => {
   const { data: users = [], isLoading } = useGetAllUsersQuery();
@@ -68,22 +68,14 @@ const AdminAllUsers = () => {
       },
       {
         header: 'Роль',
-        accessorKey: 'role',
+        accessorKey: 'role'
         // cell: ({ row }) => {
-        //   if (!row.getValue(role)) {
-        //     return '';
-        //   }
-        //   role === 'ROLE_EMPLOYEE'
-        //     ? 'Оператор'
-        //     : role === 'ROLE_COURIER'
-        //     ? 'Курьер'
-        //     : role === 'ROLE_USER'
-        //     ? 'Клиент'
-        //     : role === 'ROLE_MASTER'
-        //     ? 'Производственный администратор'
-        //     : role === 'ROLE_ADMIN'
-        //     ? 'Админ'
-        //     : role === 'ROLE_KEEPER' && 'Продавец магазина';
+        //   row.original.role === 'ROLE_EMPLOYEE' && 'Оператор';
+        //   row.original.role === 'ROLE_COURIER' && 'Курьер';
+        //   row.original.role === 'ROLE_USER' && 'Клиент';
+        //   row.original.role === 'ROLE_MASTER' && 'Мастер';
+        //   row.original.role === 'ROLE_ADMIN' && 'Админ';
+        //   row.original.role === 'ROLE_KEEPER' && 'Продавец магазина';
         // }
       },
       {
@@ -92,15 +84,43 @@ const AdminAllUsers = () => {
       },
       {
         header: 'Микрорайон  Улица',
-        accessorKey: 'street'
+        cell: ({ row }) =>
+          row.original.role === 'ROLE_USER'
+            ? row.original.profiles
+              ? row.original.profiles[0]
+                ? row.original.profiles[0].street
+                : 'не указан'
+              : 'не указан'
+            : row.original.street
+            ? row.original.street
+            : ''
+      },
+
+      {
+        header: 'Микрорайон  Улица',
+        cell: ({ row }) =>
+          row.original.role === 'ROLE_USER'
+            ? row.original.profiles
+              ? row.original.profiles[0]
+                ? row.original.profiles[0].houseNumber
+                : 'не указан'
+              : 'не указан'
+            : row.original.houseNumber
+            ? row.original.houseNumber
+            : ''
       },
       {
-        header: 'Дом',
-        accessorKey: 'houseNumber'
-      },
-      {
-        header: 'Кв.',
-        accessorKey: 'flat'
+        header: 'Микрорайон  Улица',
+        cell: ({ row }) =>
+          row.original.role === 'ROLE_USER'
+            ? row.original.profiles
+              ? row.original.profiles[0]
+                ? row.original.profiles[0].flat
+                : 'не указан'
+              : 'не указан'
+            : row.original.flat
+            ? row.original.flat
+            : ''
       },
 
       {

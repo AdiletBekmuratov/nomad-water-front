@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useDeleteUserMutation, useGetUserROLEQuery } from '@/redux/services/user.service';
 import { IUserFull } from '@/types';
 
-import { EditCourier } from '@/components/Admin/Couriers/EditCourier';
+import { EditCourier } from '@/components/Admin/AllUsers/EditCourier';
 import { CreateModal } from '@/components/Admin/AllUsers';
 
 import LayoutAdmin from '@/components/Admin/LayoutAdmin';

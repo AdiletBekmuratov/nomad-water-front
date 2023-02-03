@@ -1,22 +1,29 @@
-import { FC } from 'react';
+import {  FC, ReactNode, useState } from 'react';
 import { Link } from 'react-router-dom';
-import React from 'react';
+import { toast } from 'react-hot-toast';
 
+import { useAppSelector, useLocalStorage } from '@/hooks';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { addItem, deleteItem } from '@/redux/slices/cartSlice';
-import { ICard } from '@/assets/types/types';
-
-import { Button } from '@/components/Forms';
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import { addItemDelayOrder, deleteItemDelayOrder, IDelayOrder } from '@/redux/slices/delayOrder';
 import {
   useAddFavoriteMutation,
   useDeleteFavoriteMutation,
   useGetUserFavoriteQuery
 } from '@/redux/services/user.service';
-import { toast } from 'react-hot-toast';
-import { useAppSelector, useLocalStorage } from '@/hooks';
-import { ICart } from '@/types';
-import { addItemDelayOrder, deleteItemDelayOrder, IDelayOrder } from '@/redux/slices/delayOrder';
+import { ICart, IProduct } from '@/types';
+
+import { Button } from '@/components/Forms';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+
+export interface ICard {
+  items: IProduct;
+  children?: ReactNode;
+  className?: string;
+  isFavor?: boolean;
+  isFavorite?: boolean;
+  setIsFavorite?: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 export const CardBottle: FC<ICard> = ({ items }) => {
   const dispatch = useAppDispatch();
@@ -26,16 +33,16 @@ export const CardBottle: FC<ICard> = ({ items }) => {
   //корзина
   const [cart, setCart] = useLocalStorage<ICart>('cart', { products: [], total: 0 });
   const choice = cart.products ? cart.products.some((item) => item.id === items.id) : false;
-  const [isChoice, setIsChoice] = React.useState(choice);
+  const [isChoice, setIsChoice] = useState(choice);
   //отложенные заказы
   const [delayOrder, setDelayOrder] = useLocalStorage<IDelayOrder>('delayOrder', { products: [] });
   const choiceDelayOrder = delayOrder.products
     ? delayOrder.products.some((item) => item.id === items.id)
     : false;
-  const [isChoiceDelay, setIsChoiceDelay] = React.useState(choiceDelayOrder);
+  const [isChoiceDelay, setIsChoiceDelay] = useState(choiceDelayOrder);
   //избранные
   const favor = favorites ? favorites.some((item) => item.id === items.id) : false;
-  const [isFavorite, setIsFavorite] = React.useState<boolean>(favor);
+  const [isFavorite, setIsFavorite] = useState<boolean>(favor);
   const [addFavorite] = useAddFavoriteMutation();
   const [deleteFavorite] = useDeleteFavoriteMutation();
   //корзина ADD
@@ -56,7 +63,7 @@ export const CardBottle: FC<ICard> = ({ items }) => {
     tempCart.products ? tempCart.products.push({ ...items }) : [];
     dispatch(addItemDelayOrder({ ...items }));
     setIsChoiceDelay(true);
-    toast.success('Заявка оставлена, мы Вам сообщим, когда товар появится на складе.')
+    toast.success('Заявка оставлена, мы Вам сообщим, когда товар появится на складе.');
   };
   //отложенные заказы DELETE
   const onDeleteDelayOrder = () => {

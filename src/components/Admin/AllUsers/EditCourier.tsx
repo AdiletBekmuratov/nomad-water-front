@@ -1,6 +1,6 @@
 import { FC, Dispatch, SetStateAction } from 'react';
 
-import { ICouriers, IUserFull } from '@/types';
+import { IUserFull } from '@/types';
 
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';

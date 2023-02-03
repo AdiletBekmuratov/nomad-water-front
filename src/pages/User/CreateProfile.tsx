@@ -1,10 +1,6 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { useGetAllWarehousesQuery } from '@/redux/services/base.service';
-import { useCreateEmployeeLinkMutation } from '@/redux/services/user.service';
-import { IEmployeeCreateLink } from '@/types/employee.types';
-
 import { Form, Formik } from 'formik';
 import { toast } from 'react-hot-toast';
 import * as yup from 'yup';

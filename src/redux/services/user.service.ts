@@ -1,5 +1,5 @@
 import { IUser, ICreateUserPhone, IProduct } from '@/types';
-import { ICouriers,  IEmployeeCreateLink } from '@/types/employee.types';
+import {  IEmployeeCreateLink } from '@/types/employee.types';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';

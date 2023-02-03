@@ -1,20 +1,13 @@
-import {
-  FC,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-  ChangeEventHandler,
-  ChangeEvent
-} from 'react';
+import { FC, Dispatch, SetStateAction, useState, ChangeEvent } from 'react';
+import { Form, Formik, useFormikContext } from 'formik';
+import toast from 'react-hot-toast';
 
 import { useUpdateUserMutation } from '@/redux/services/user.service';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
-import { Form, Formik, useFormikContext } from 'formik';
-import toast from 'react-hot-toast';
+
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 interface IEditModalProps {
@@ -25,9 +18,9 @@ interface IEditModalProps {
 
 export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
   const [update, { isLoading: isLoadingUpdate }] = useUpdateUserMutation();
-  const [currentDate, setCurrentDate] = useState('');
+  const [currentDate, setCurrentDate] = useState(``);
   const handleEdit = (values: IUserFullCreate) => {
-    const updatedValues = { ...values, birthday: currentDate.slice(0, -5) };
+    const updatedValues = { ...values, birthday: formatDate(new Date(currentDate)) };
     toast
       .promise(update(updatedValues).unwrap(), {
         loading: 'Loading',
@@ -37,7 +30,7 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
       .finally(() => {});
   };
   const handleEditSave = (values: IUserFullCreate) => {
-    const updatedValues = { ...values, birthday: currentDate.slice(0, -5) };
+    const updatedValues = { ...values, birthday: formatDate(new Date(currentDate)) };
     toast
       .promise(update(updatedValues).unwrap(), {
         loading: 'Loading',
@@ -46,6 +39,7 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
       })
       .finally(() => {
         setVisible(false);
+        setCurrentDate('');
       });
   };
 
@@ -56,12 +50,12 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
   function formatDate(date: Date) {
     return [
       padTo2Digits(date.getDate()),
-      date.toLocaleString('en', { month: 'long' }),
+      date.toLocaleString('en', { month: 'long' })
       //date.getFullYear()
     ].join(' ');
   }
   const changeDate = (e: ChangeEvent<HTMLInputElement>) => {
-    setCurrentDate(formatDate(new Date(e.target.value)));
+    setCurrentDate(e.target.value);
     console.log(currentDate);
   };
 
@@ -89,14 +83,60 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
                 <Input inputType="formik" name="firstname" id="firstname" label="Имя" />
                 <Input inputType="formik" name="middleName" id="middleName" label="Отчество" />
               </div>
-
-              <div className={`flex flex-1 flex-col md:flex`}>
-                <Input inputType="formik" name="street" id="street" label="Микрорайон / Улица" />
-                <div className={`grid grid-cols-2 text-center`}>
-                  <Input inputType="formik" name="houseNumber" id="houseNumber" label="Дом" />
-                  <Input inputType="formik" name="flat" id="flat" label="Квартира" />
+              {data.role !== 'ROLE_USER' ? (
+                <div className={`flex flex-1 flex-col md:flex`}>
+                  <Input inputType="formik" name="street" id="street" label="Микрорайон / Улица" />
+                  <div className={`grid grid-cols-2 text-center`}>
+                    <Input inputType="formik" name="houseNumber" id="houseNumber" label="Дом" />
+                    <Input inputType="formik" name="flat" id="flat" label="Квартира" />
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className={`flex flex-1 flex-col md:flex`}>
+                  <Input
+                    inputType="formik"
+                    name="street"
+                    id="street"
+                    label="Микрорайон / Улица"
+                    value={
+                      data.profiles
+                        ? data.profiles?.length > 0
+                          ? data.profiles[0].street
+                          : ''
+                        : ''
+                    }
+                  />
+                  <div className={`grid grid-cols-2 text-center`}>
+                    <Input
+                      inputType="formik"
+                      name="houseNumber"
+                      id="houseNumber"
+                      label="Дом"
+                      value={
+                        data.profiles
+                          ? data.profiles?.length > 0
+                            ? data.profiles[0].houseNumber
+                            : ''
+                          : ''
+                      }
+                    />
+                    <Input
+                      inputType="formik"
+                      name="flat"
+                      id="flat"
+                      label="Квартира"
+                      value={
+                        data.profiles
+                          ? data.profiles?.length > 0
+                            ? data.profiles[0].houseNumber
+                            : ''
+                          : ''
+                      }
+                    />
+                  </div>
+                </div>
+              )}
+
               <div className={`grid grid-cols-2 sm:grid-cols-3 items-center`}>
                 <Input
                   inputType="formik"
@@ -122,9 +162,11 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
                   value={currentDate}
                 />
               </div>
-              <div className="grid grid-cols-1 items-center`">
-                <Input inputType="formik" name="bonuses" id="bonuses" label="Бонусы" />
-              </div>
+              {data.role === 'ROLE_USER' && (
+                <div className="grid grid-cols-1 items-center`">
+                  <Input inputType="formik" name="bonuses" id="bonuses" label="Бонусы" />
+                </div>
+              )}
             </>
             <div className={`flex gap-3 justify-between`}>
               <Button type="submit" className={`hover:bg-blue-500`}>

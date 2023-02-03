@@ -1,4 +1,4 @@
-import { IUserFull, IOrder, IProduct } from '@/types';
+import { IUserFull, IProduct } from '@/types';
 export type IRouteSheet = {
   id?: number;
   order: {
