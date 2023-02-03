@@ -1,28 +1,12 @@
 import { IUserFull, IProduct } from '@/types';
+import { ICourier, ICourierOrder } from './courier.types';
 export type IRouteSheet = {
   id?: number;
-  order: {
+  courier: ICourier;
+  IRouteSheetOrders: {
     id?: number;
-    address: string | undefined;
-    changedDateTime?: string;
-    comment?: string;
-    createdDateTime?: string;
-    deliveryDateTime?: string;
-    employee?: string;
-    initialPrice: number;
-    orderDateTime: string;
-    phone: string;
-    rating: number;
-    totalPrice: number;
-    user?: IUserFull;
-    paymentMethod: {
-      id?: number;
-      name: string;
-    };
-    orderProducts: {
-      id:number;
-      product: IProduct;
-      quantity:number;
-    }[];
-  };
+    order: ICourierOrder;
+  }[];
+  routeSheetDate?: string;
+  createdDateTime: string;
 };

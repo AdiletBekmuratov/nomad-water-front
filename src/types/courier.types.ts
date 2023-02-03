@@ -4,18 +4,20 @@ import { IProduct } from './products.type';
 
 import { IUserFull } from './users.types';
 
+export type ICourier = {
+  id: number;
+  courierDeliveringStatus: string;
+  successfulOrders: string;
+  car: string;
+  user: IUserFull;
+  createdDate?: string,
+  updatedDate?: string
+};
+
 export type ICourierOrder = {
   id: number;
   user: IUser;
-  courier: {
-    id: number;
-    courierDeliveringStatus: string;
-    successfulOrders: string;
-    car: string;
-    user: IUserFull;
-    createdDate?: string,
-    updatedDate?: string
-  };
+  courier: ICourier;
   employee: IUserFull;
   statusId: number;
   orderType: {
@@ -44,11 +46,10 @@ export type ICourierOrder = {
   paymentUrl: string;
   rating: number;
   cancelReason: string;
-  ratingComment:string;
+  ratingComment: string;
   withDeposit: boolean;
   createdDateTime: string;
   orderDateTime: string;
   changedDateTime: string;
   sale: boolean;
 };
-

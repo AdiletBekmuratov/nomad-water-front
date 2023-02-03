@@ -12,6 +12,7 @@ import { Edit } from '../User/Edit';
 import { FaTenge, FaUserTie } from 'react-icons/fa';
 import { AiOutlineEdit, AiOutlinePhone } from 'react-icons/ai';
 import CustomersBirthday from './CustomersBirthday';
+import AllRouteSheets from './AllRouteSheets';
 
 const Employee = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -41,7 +42,7 @@ const Employee = () => {
     },
     {
       id: 5,
-      name: 'Акции'
+      name: 'Все маршруты'
     }
   ];
   let flex: string = '';
@@ -126,8 +127,8 @@ const Employee = () => {
         )}
         {choice === '5' && (
           <div className={``}>
-            <h2 className={styleTitle}>Акции</h2>
-            <span>В разработке</span>
+            {/* <h2 className={styleTitle}>Все маршруты</h2> */}
+            <AllRouteSheets />
           </div>
         )}
       </div>

@@ -52,7 +52,7 @@ export const courierApi = createApi({
             ]
           : [{ type: 'COrder', id: 'LIST' }]
     }),
-    getRouteSheet: builder.query({
+    getAllRouteSheet: builder.query({
       query: () => ({
         url: '/user/routeSheet'
       }),
@@ -80,6 +80,6 @@ export const {
   useGetAllConfirmedOrdersQuery,
   useLazyGetAllConfirmedOrdersQuery,
   useLazyGetCourierOrderQuery,
-  useGetRouteSheetQuery,
+  useGetAllRouteSheetQuery,
   useGetCurrentCourierRouteSheetQuery
 } = courierApi;
