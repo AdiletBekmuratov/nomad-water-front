@@ -54,6 +54,10 @@ const CustomersBirthday = () => {
           )
       },
       {
+        header: 'Сумма за год',
+       // accessorKey: 'totalPrice'
+      },
+      {
         header: 'Карточка клиента',
         cell: ({ row }) => (
           <Link
