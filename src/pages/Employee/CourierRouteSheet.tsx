@@ -63,7 +63,7 @@ const CourierRouteSheet = () => {
                   value={cour.id}>{`${cour.firstname} ${cour.lastname}`}</option>
               ))}
             </Input>
-            <div className="w-1/2 mx-auto mt-3">
+            <div className="w-6/8 mx-auto mt-3">
               <Button disabled={!isValid} type="submit">
                 Найти лист под курьера
               </Button>
