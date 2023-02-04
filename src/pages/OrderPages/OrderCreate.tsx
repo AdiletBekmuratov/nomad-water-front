@@ -406,7 +406,7 @@ const OrderCreate: FC = () => {
           </button>
         </div>
         <Formik initialValues={user!} onSubmit={handleEditSave} validationSchema={validation}>
-          {({ values }) => (
+          {({ values,isValid }) => (
             <Form className="flex flex-col space-y-4">
               <div className={`grid grid-cols-1 items-center`}>
                 <Input inputType="formik" name="lastname" id="lastname" label="Фамилия" />
@@ -415,7 +415,7 @@ const OrderCreate: FC = () => {
               </div>
 
               <div className={`flex gap-3 justify-between`}>
-                <Button type="submit" className={`hover:bg-blue-500`}>
+                <Button type="submit" disabled={!isValid} className={`hover:bg-blue-500` }>
                   Продолжить покупки
                 </Button>
                 {/* <Button

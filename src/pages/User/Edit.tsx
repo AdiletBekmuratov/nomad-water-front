@@ -1,7 +1,9 @@
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
+import { useAppDispatch } from '@/hooks';
 
 import { useUpdateUserMeMutation } from '@/redux/services/user.service';
+import { getMe } from '@/redux/slices/auth';
 import { IUser } from '@/types';
 import { Form, Formik } from 'formik';
 import { FC, Dispatch, SetStateAction } from 'react';
@@ -16,7 +18,7 @@ interface IEditModalProps {
 
 export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
   const [update, { isLoading }] = useUpdateUserMeMutation();
-
+  const dispatch = useAppDispatch();
   const handleEdit = async (values: IUser) => {
     toast
       .promise(update(values).unwrap(), {
@@ -24,7 +26,9 @@ export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
         success: 'Обновлено успешно',
         error: (error) => JSON.stringify(error, null, 2)
       })
-      .finally(() => {});
+      .finally(() => {
+        dispatch(getMe);
+      });
   };
 
   const handleEditSave = async (values: IUser) => {
@@ -35,6 +39,7 @@ export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
         error: (error) => JSON.stringify(error, null, 2)
       })
       .finally(() => {
+        dispatch(getMe);
         setVisible(false);
       });
   };
