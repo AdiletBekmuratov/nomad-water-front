@@ -3,18 +3,18 @@ import { IRouteSheet } from '@/types/routeSheet.types';
 import { DetailedHTMLProps, FC, HTMLAttributes } from 'react';
 
 type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
-  date: string;
+  date?: string;
   componentRef: any;
-  routeSheet:  {
+  routeSheet: {
     id?: number;
     order: ICourierOrder;
-}[];
+  }[];
 };
 
 const RouteSheetTable: FC<Props> = ({ date, componentRef, routeSheet }) => {
   return (
     <div ref={componentRef}>
-      <h3 className="font-semibold text-center">{`За: ${date}`}</h3>
+      {date && <h3 className="font-semibold text-center">{`За: ${date}`}</h3>}
       <table className="border-collapse w-full bg-white">
         <tr className="">
           <th className="border text-left p-2">Номер заказа</th>

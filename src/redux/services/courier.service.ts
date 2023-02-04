@@ -73,7 +73,7 @@ export const courierApi = createApi({
     }),
     getCourierRouteSheetOrders: builder.query<IRouteSheet, { id: number; date: string }>({
       query: ({ id, date }) => ({
-        url: `/user/routeSheet/${id}/${date}}`
+        url: `/user/routeSheet/${id}/${date}`
       })
     })
   })
@@ -87,5 +87,8 @@ export const {
   useLazyGetAllConfirmedOrdersQuery,
   useLazyGetCourierOrderQuery,
   useGetAllRouteSheetQuery,
-  useGetCurrentCourierRouteSheetQuery
+  useGetCurrentCourierRouteSheetQuery,
+  useLazyGetCurrentCourierRouteSheetQuery,
+  useGetCourierRouteSheetOrdersQuery,
+  useLazyGetCourierRouteSheetOrdersQuery
 } = courierApi;
