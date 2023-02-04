@@ -13,11 +13,31 @@ const initialState: IAuthState = {
   phone: ''
 };
 
-export const getMe = createAsyncThunk<IUserFull, undefined, { rejectValue: string }>(
+// export const getMe = createAsyncThunk<IUserFull, undefined, { rejectValue: string }>(
+//   'auth/me',
+//   async (_, thunkAPI) => {
+//     try {
+//       return await authService.getMe();
+//     } catch (error) {
+//       if (axios.isAxiosError(error)) {
+//         const message = error.message || error.toString();
+//         return thunkAPI.rejectWithValue(message);
+//       }
+//     }
+//   }
+// );
+export const getMe = createAsyncThunk<IUserFull, IUserFull, { rejectValue: string }>(
   'auth/me',
-  async (_, thunkAPI) => {
+  async (user, thunkAPI) => {
     try {
-      return await authService.getMe();
+      const currentUser = user;
+      const updatedUser = await authService.getMe();
+
+      if (!currentUser || currentUser.id !== updatedUser.id) {
+        return updatedUser;
+      }
+
+      return currentUser;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const message = error.message || error.toString();
@@ -26,6 +46,11 @@ export const getMe = createAsyncThunk<IUserFull, undefined, { rejectValue: strin
     }
   }
 );
+
+
+
+
+
 //send phone number
 export const getPassword = createAsyncThunk<string, string, { rejectValue: string }>(
   'auth/password',

@@ -4,7 +4,7 @@ import { useAppDispatch } from '@/hooks';
 
 import { useUpdateUserMeMutation } from '@/redux/services/user.service';
 import { getMe } from '@/redux/slices/auth';
-import { IUser } from '@/types';
+import { IUser, IUserFull } from '@/types';
 import { Form, Formik } from 'formik';
 import { FC, Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
@@ -13,7 +13,7 @@ import { AiOutlineCloseCircle } from 'react-icons/ai';
 interface IEditModalProps {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
-  data: IUser;
+  data: IUserFull;
 }
 
 export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
@@ -27,7 +27,7 @@ export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
         error: (error) => JSON.stringify(error, null, 2)
       })
       .finally(() => {
-        dispatch(getMe);
+        dispatch(getMe(data));
       });
   };
 
@@ -39,7 +39,7 @@ export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
         error: (error) => JSON.stringify(error, null, 2)
       })
       .finally(() => {
-        dispatch(getMe);
+        dispatch(getMe(data));
         setVisible(false);
       });
   };
