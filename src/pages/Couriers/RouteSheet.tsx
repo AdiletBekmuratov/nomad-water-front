@@ -2,7 +2,10 @@ import { Button, Input } from '@/components/Forms';
 import Loader from '@/components/Landing/Loader';
 import { Layout } from '@/components/Layout';
 
-import { useGetCurrentCourierRouteSheetQuery } from '@/redux/services/courier.service';
+import {
+  useGetCurrentCourierRouteSheetQuery,
+  useLazyGetCurrentCourierRouteSheetQuery
+} from '@/redux/services/courier.service';
 import { IRouteSheet } from '@/types/routeSheet.types';
 
 import { useRef, useState, useMemo, useEffect } from 'react';
@@ -15,7 +18,7 @@ const RouteSheet = () => {
   const componentRef = useRef<any>();
   const [routeSheet, setRouteSheet] = useState<IRouteSheet | null>(null);
   const [currentDate, setCurrentDate] = useState('');
-
+  const [fetch] = useLazyGetCurrentCourierRouteSheetQuery();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: `Маршрутный лист за${new Date()}`
@@ -43,7 +46,7 @@ const RouteSheet = () => {
     setCurrentDate(formatDate(new Date()));
   }, []);
 
-  const { isLoading, refetch } = useGetCurrentCourierRouteSheetQuery(formatDate(new Date()));
+  const { isLoading, refetch } = useGetCurrentCourierRouteSheetQuery(currentDate);
 
   useEffect(() => {
     refetch().then((res) => {
@@ -66,7 +69,11 @@ const RouteSheet = () => {
       </div>
       {routeSheet?.routeSheetOrders ? (
         routeSheet?.routeSheetOrders.length > 0 ? (
-          <RouteSheetTable componentRef={componentRef} date={currentDate} routeSheet={routeSheet?.routeSheetOrders} />
+          <RouteSheetTable
+            componentRef={componentRef}
+            date={currentDate}
+            routeSheet={routeSheet?.routeSheetOrders}
+          />
         ) : (
           <div className="flex justify-center font-montserrat">
             <p className="text-red-500">На данный промежуток времени у вас нет маршрутного листа</p>

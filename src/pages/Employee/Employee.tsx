@@ -13,6 +13,7 @@ import { FaTenge, FaUserTie } from 'react-icons/fa';
 import { AiOutlineEdit, AiOutlinePhone } from 'react-icons/ai';
 import CustomersBirthday from './CustomersBirthday';
 import AllRouteSheets from './AllRouteSheets';
+import CourierRouteSheet from './CourierRouteSheet';
 
 const Employee = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -43,6 +44,10 @@ const Employee = () => {
     {
       id: 5,
       name: 'Все маршруты'
+    },
+    {
+      id: 6,
+      name: 'Получить листы курьера'
     }
   ];
   let flex: string = '';
@@ -83,7 +88,7 @@ const Employee = () => {
       <div
         className={` bg-light-blue rounded-lg 
        font-bold text-xs md:text-sm gap-2 md:gap-3 `}>
-        <div className={`grid grid-cols-2 md:grid-cols-6  items-center justify-between gap-3`}>
+        <div className={`grid grid-cols-2 md:grid-cols-7  items-center justify-between gap-3`}>
           {buttons.map((button) => (
             <button
               key={button.id}
@@ -129,6 +134,12 @@ const Employee = () => {
           <div className={``}>
             {/* <h2 className={styleTitle}>Все маршруты</h2> */}
             <AllRouteSheets />
+          </div>
+        )}
+        {choice === '6' && (
+          <div>
+            <h2 className={styleTitle}>Найти по курьеру</h2>
+            <CourierRouteSheet />
           </div>
         )}
       </div>
