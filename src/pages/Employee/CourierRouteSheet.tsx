@@ -65,7 +65,7 @@ const CourierRouteSheet = () => {
             </Input>
             <div className="w-6/8 mx-auto mt-3">
               <Button disabled={!isValid} type="submit">
-                Найти лист под курьера
+                Найти маршрутный лист
               </Button>
             </div>
           </Form>
