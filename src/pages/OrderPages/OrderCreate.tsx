@@ -1,11 +1,12 @@
 import { FC, useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import * as yup from 'yup';
 
 import { useAppDispatch } from '@/hooks';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useCreateProfileMutation, useGetALLProfilesQuery } from '@/redux/services/profile.service';
 import { clearItems } from '@/redux/slices/cartSlice';
-import { IProduct, IProfile, IUsersOrder } from '@/types';
+import { IProduct, IProfile, IUser, IUsersOrder } from '@/types';
 
 import { WS_URL } from '@/redux/http';
 
@@ -18,13 +19,16 @@ import {
 } from '@/components/Order';
 import EditCard from '@/components/Order/EditCard';
 
-import { Button } from '@/components/Forms';
+import { Button, Input } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
 import { Modal } from '@/components/Layout/Modal';
 
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
 
 import { toast } from 'react-hot-toast';
+import { Form, Formik } from 'formik';
+import { useUpdateUserMeMutation } from '@/redux/services/user.service';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 const userStyle = 'font-montserrat text-dark-blue';
 
@@ -47,11 +51,11 @@ const OrderCreate: FC = () => {
 
   const { data: profiles = [], refetch } = useGetALLProfilesQuery();
   const { products, total } = useAppSelector((state) => state.cart);
-  const [create, { isLoading }] = useCreateProfileMutation();
+  const [create, { isLoading: loadProfile }] = useCreateProfileMutation();
 
   const [isOpen, setIsOpen] = useState(true);
   const [isValid, setIsValid] = useState(false);
-  const [isEdited, setIsEdited] = useState(false);
+
   const [addressOrder, setAddressOrder] = useState('');
   const [address, setAddress] = useState<{
     phone: string;
@@ -114,14 +118,14 @@ const OrderCreate: FC = () => {
     let inputAddress = address
       ? `Ул.${address.street}, д. ${address.houseNumber}, кв. ${address.flat}`
       : '';
-console.log(user!.role === 'ROLE_USER' && user!.profiles &&  user!.profiles.length < 1 );
+    console.log(user!.role === 'ROLE_USER' && user!.profiles && user!.profiles.length < 1);
     //@ts-ignore
     const value: IUsersOrder = {
       //если заказ сделан оператором
       address: user
         ? user.role === 'ROLE_EMPLOYEE' ||
           user.role === 'ROLE_MASTER' ||
-          (user.role === 'ROLE_USER' && user.profiles &&  user.profiles.length < 1 )
+          (user.role === 'ROLE_USER' && user.profiles && user.profiles.length < 1)
           ? inputAddress
           : addressOrder
         : '',
@@ -207,6 +211,34 @@ console.log(user!.role === 'ROLE_USER' && user!.profiles &&  user!.profiles.leng
   // };
   // const paymentStyle = 'placeholder:text-gray-300 font-montserrat';
   // const choiceAddress = profiles.find((profile) => profile.name);
+
+  const [update, { isLoading }] = useUpdateUserMeMutation();
+  const [isEditedInfo, setIsEditedInfo] = useState(false);
+  //if ((user && !user.firstname) || (user && !user.birthday)) {
+  useEffect(() => {
+    if (user && user.firstname.length === 0) {
+      setTimeout(() => {
+        setIsEditedInfo(true);
+      }, 2000);
+    }
+  }, [user]);
+
+  const validation = yup.object().shape({
+    firstname: yup.string().required('Это поле обязательное')
+  });
+
+  const handleEditSave = async (values: IUser) => {
+    toast
+      .promise(update(values).unwrap(), {
+        loading: 'Загрузка',
+        success: 'Сохранено',
+        error: (error) => JSON.stringify(error, null, 2)
+      })
+      .finally(() => {
+        setIsEditedInfo(false);
+      });
+  };
+
   return (
     <Layout>
       {products.length > 0 ? (
@@ -341,13 +373,13 @@ console.log(user!.role === 'ROLE_USER' && user!.profiles &&  user!.profiles.leng
               Оформить заказ
             </Button>
           </Footer>
-          {isEdited && (
+          {/* {isEdited && (
             <>
               <Modal isOpenModal={isOpen} setIsOpenModal={setIsEdited}>
                 <PaymentComponent buttonName="Продолжить" name={user?.firstname ?? ''} />
               </Modal>
             </>
-          )}
+          )} */}
         </div>
       ) : (
         <div className={` flex flex-col gap-5 py-10 items-center text-center text-lg font-medium`}>
@@ -361,6 +393,42 @@ console.log(user!.role === 'ROLE_USER' && user!.profiles &&  user!.profiles.leng
           </Link>
         </div>
       )}
+      <Modal isOpenModal={isEditedInfo} setIsOpenModal={setIsEditedInfo}>
+        <div className="flex items-center justify-between gap-2 pb-2">
+          <h2 className={`flex items-center justify-center`}>
+            Чтобы продолжить покупки, пожалуйста, заполните информацию о себе
+          </h2>
+          <button
+            onClick={() => {
+              setIsEditedInfo(false);
+            }}>
+            <AiOutlineCloseCircle className={`w-5 h-5 md:w-7 md:h-7 hover:text-blue-500`} />
+          </button>
+        </div>
+        <Formik initialValues={user!} onSubmit={handleEditSave} validationSchema={validation}>
+          {({ values }) => (
+            <Form className="flex flex-col space-y-4">
+              <div className={`grid grid-cols-1 items-center`}>
+                <Input inputType="formik" name="lastname" id="lastname" label="Фамилия" />
+                <Input inputType="formik" name="firstname" id="firstname" label="Имя" />
+                <Input inputType="formik" name="middleName" id="middleName" label="Отчество" />
+              </div>
+
+              <div className={`flex gap-3 justify-between`}>
+                <Button type="submit" className={`hover:bg-blue-500`}>
+                  Продолжить покупки
+                </Button>
+                {/* <Button
+                  type="button"
+                  onClick={() => handleEdit(values)}
+                  className={`hover:bg-blue-500`}>
+                  Сохранить
+                </Button> */}
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </Modal>
     </Layout>
   );
 };
