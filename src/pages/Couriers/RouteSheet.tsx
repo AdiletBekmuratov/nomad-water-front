@@ -1,19 +1,19 @@
 import { Button, Input } from '@/components/Forms';
 import Loader from '@/components/Landing/Loader';
 import { Layout } from '@/components/Layout';
-import { Table } from '@/components/Table';
+
 import { useGetCurrentCourierRouteSheetQuery } from '@/redux/services/courier.service';
 import { IRouteSheet } from '@/types/routeSheet.types';
-import { ColumnDef } from '@tanstack/react-table';
+
 import { useRef, useState, useMemo, useEffect } from 'react';
-import { FaRoute } from 'react-icons/fa';
+
 import { useReactToPrint } from 'react-to-print';
 import RouteSheetTable from './RouteSheetTable';
 import { AiOutlinePrinter } from 'react-icons/ai';
 
 const RouteSheet = () => {
   const componentRef = useRef<any>();
-  const [routeSheet, setRouteSheet] = useState([]);
+  const [routeSheet, setRouteSheet] = useState<IRouteSheet | null>(null);
   const [currentDate, setCurrentDate] = useState('');
 
   const handlePrint = useReactToPrint({
@@ -47,7 +47,7 @@ const RouteSheet = () => {
 
   useEffect(() => {
     refetch().then((res) => {
-      setRouteSheet(res.data?.routeSheetOrders);
+      setRouteSheet(res.data ? res.data : null);
     });
   }, [currentDate]);
 
@@ -64,13 +64,15 @@ const RouteSheet = () => {
           <AiOutlinePrinter className="mr-2" /> Печать
         </Button>
       </div>
-      {routeSheet.length > 0 ? (
-        <RouteSheetTable componentRef={componentRef} date={currentDate} routeSheet={routeSheet} />
-      ) : (
-        <div className="flex justify-center font-montserrat">
-          <p className="text-red-500">На данный промежуток времени у вас нет маршрутного листа</p>
-        </div>
-      )}
+      {routeSheet?.routeSheetOrders ? (
+        routeSheet?.routeSheetOrders.length > 0 ? (
+          <RouteSheetTable componentRef={componentRef} date={currentDate} routeSheet={routeSheet?.routeSheetOrders} />
+        ) : (
+          <div className="flex justify-center font-montserrat">
+            <p className="text-red-500">На данный промежуток времени у вас нет маршрутного листа</p>
+          </div>
+        )
+      ) : null}
     </Layout>
   );
 };

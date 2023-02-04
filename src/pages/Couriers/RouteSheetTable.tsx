@@ -1,10 +1,14 @@
+import { ICourierOrder } from '@/types/courier.types';
 import { IRouteSheet } from '@/types/routeSheet.types';
 import { DetailedHTMLProps, FC, HTMLAttributes } from 'react';
 
 type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
   date: string;
   componentRef: any;
-  routeSheet: IRouteSheet[];
+  routeSheet:  {
+    id?: number;
+    order: ICourierOrder;
+}[];
 };
 
 const RouteSheetTable: FC<Props> = ({ date, componentRef, routeSheet }) => {
@@ -41,12 +45,12 @@ const RouteSheetTable: FC<Props> = ({ date, componentRef, routeSheet }) => {
                   : 'Нет комментариев'
                 : 'Нет комментариев'}
             </td>
-            {route.order.orderProducts.map((orders, idx) => (
+            {route.order.orderProducts.map((order, idx) => (
               <td
                 key={idx}
-                className="border text-left p-2">{`${orders.product.productName}, к. ${orders.quantity}`}</td>
+                className="border text-left p-2">{`${order.product.productName}, к. ${order.quantity}`}</td>
             ))}
-            <td className="border text-left p-2">{`${route.order.paymentMethod.name}`}</td>
+            <td className="border text-left p-2">{`${route.order.paymentMethod!.name}`}</td>
             <td className="border text-left p-2">{`${route.order.initialPrice} тг`}</td>
             <td className="border text-left p-2">{`${route.order.totalPrice} тг`}</td>
           </tr>

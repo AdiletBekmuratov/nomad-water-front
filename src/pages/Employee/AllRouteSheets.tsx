@@ -13,7 +13,7 @@ import { useGetUserROLEQuery } from '@/redux/services/user.service';
 
 const AllRouteSheets = () => {
   const componentRef = useRef<any>();
-  const [routeSheet, setRouteSheet] = useState([]);
+  const [routeSheet, setRouteSheet] = useState<IRouteSheet | null>(null);
   const [currentDate, setCurrentDate] = useState('');
   const { data: couriers = [], isLoading: courierLoad } = useGetUserROLEQuery('ROLE_COURIER');
   const [courierId, setCourierId] = useState('');
@@ -43,7 +43,7 @@ const AllRouteSheets = () => {
 
   const { data: routeData = [], isLoading } = useGetAllRouteSheetQuery();
   useEffect(() => {
-    routeData?.map((route) => setRouteSheet(route.routeSheetOrders));
+    routeData?.map((route) => setRouteSheet(route));
   }, [isLoading]);
   if (isLoading && courierLoad) {
     return <Loader />;
@@ -76,17 +76,19 @@ const AllRouteSheets = () => {
         </Button>
       </div>
       <div className="flex justify-center font-montserrat">
-        {routeSheet.length === 0 ? (
-          <>На сегодня нет маршрутных листов</>
-        ) : currentDate.length === 0 ? (
-          <RouteSheetTable
-            componentRef={componentRef}
-            date={formatDate(new Date())}
-            routeSheet={routeSheet}
-          />
-        ) : (
-          <>sdfsdf</>
-        )}
+        {routeSheet ? (
+          routeSheet.routeSheetOrders.length === 0 ? (
+            <>На сегодня нет маршрутных листов</>
+          ) : currentDate.length === 0 ? (
+            <RouteSheetTable
+              componentRef={componentRef}
+              date={formatDate(new Date())}
+              routeSheet={routeSheet?.routeSheetOrders}
+            />
+          ) : (
+            <>sdfsdf</>
+          )
+        ) : null}
       </div>
     </>
   );
