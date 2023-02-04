@@ -13,31 +13,11 @@ const initialState: IAuthState = {
   phone: ''
 };
 
-// export const getMe = createAsyncThunk<IUserFull, undefined, { rejectValue: string }>(
-//   'auth/me',
-//   async (_, thunkAPI) => {
-//     try {
-//       return await authService.getMe();
-//     } catch (error) {
-//       if (axios.isAxiosError(error)) {
-//         const message = error.message || error.toString();
-//         return thunkAPI.rejectWithValue(message);
-//       }
-//     }
-//   }
-// );
-export const getMe = createAsyncThunk<IUserFull, IUserFull, { rejectValue: string }>(
+export const getMe = createAsyncThunk<IUserFull, undefined, { rejectValue: string }>(
   'auth/me',
-  async (user, thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
-      const currentUser = user;
-      const updatedUser = await authService.getMe();
-
-      if (!currentUser || currentUser.id !== updatedUser.id) {
-        return updatedUser;
-      }
-
-      return currentUser;
+      return await authService.getMe();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const message = error.message || error.toString();
@@ -46,6 +26,26 @@ export const getMe = createAsyncThunk<IUserFull, IUserFull, { rejectValue: strin
     }
   }
 );
+// export const getMe = createAsyncThunk<IUserFull, IUserFull, { rejectValue: string }>(
+//   'auth/me',
+//   async (user, thunkAPI) => {
+//     try {
+//       const currentUser = user;
+//       const updatedUser = await authService.getMe();
+
+//       if (!currentUser || currentUser.id !== updatedUser.id) {
+//         return updatedUser;
+//       }
+
+//       return currentUser;
+//     } catch (error) {
+//       if (axios.isAxiosError(error)) {
+//         const message = error.message || error.toString();
+//         return thunkAPI.rejectWithValue(message);
+//       }
+//     }
+//   }
+// );
 
 
 

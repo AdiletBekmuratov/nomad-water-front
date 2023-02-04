@@ -17,6 +17,8 @@ import { IProfile } from '@/types';
 import { Modal } from '@/components/Layout/Modal';
 import { Form, Formik } from 'formik';
 import { toast } from 'react-hot-toast';
+import { useAppDispatch } from '@/hooks';
+import { getMe } from '@/redux/slices/auth';
 
 const UserPage = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -33,7 +35,7 @@ const UserPage = () => {
 
   const styleP = `text-sm md:text-base grid grid-cols-2`;
   const styleName = `text-sm md:text-base grid grid-cols-2 py-1 border-b-2 border-gray-400 border-dashed`;
-
+const dispatch=useAppDispatch();
   const handleEdit = async (values: IProfile) => {
     toast
       .promise(update(values).unwrap(), {
@@ -50,7 +52,7 @@ const UserPage = () => {
         loading: 'Загрузка',
         success: 'Сохранено',
         error: (error) => JSON.stringify(error, null, 2)
-      })
+      }).then(()=>dispatch(getMe()))
       .finally(() => {
         setVisible(false);
       });

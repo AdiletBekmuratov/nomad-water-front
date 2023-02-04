@@ -6,7 +6,7 @@ import {
   useGetCourierRouteSheetOrdersQuery,
   useLazyGetCourierRouteSheetOrdersQuery
 } from '@/redux/services/courier.service';
-import { IRouteSheet } from '@/types/routeSheet.types';
+import { IRouteSheet, IRouteSheetOrders } from '@/types/routeSheet.types';
 
 import { useRef, useState, useEffect, Fragment } from 'react';
 
@@ -16,7 +16,7 @@ import { AiOutlinePrinter } from 'react-icons/ai';
 
 const AllRouteSheets = () => {
   const componentRef = useRef<any>();
-  const [routeSheet, setRouteSheet] = useState<IRouteSheet | null>(null);
+  const [routeSheet, setRouteSheet] = useState<IRouteSheetOrders[]>([]);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: `Маршрутный лист за${new Date()}`
@@ -35,8 +35,11 @@ const AllRouteSheets = () => {
   }
 
   const { data: routeData = [], isLoading } = useGetAllRouteSheetQuery();
+  
   useEffect(() => {
-    routeData?.map((route) => setRouteSheet(route));
+
+    const dataR = routeData?.map((route) => route.routeSheetOrders);
+    setRouteSheet(dataR.flat());
   }, [isLoading]);
 
   if (isLoading) {
@@ -54,7 +57,7 @@ const AllRouteSheets = () => {
         {!routeSheet ? (
           <>На данный момент нет маршрутных листов</>
         ) : (
-          <RouteSheetTable componentRef={componentRef} routeSheet={routeSheet?.routeSheetOrders} />
+          <RouteSheetTable componentRef={componentRef} routeSheet={routeSheet} />
         )}
       </div>
     </>
