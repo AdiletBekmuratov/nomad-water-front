@@ -81,7 +81,7 @@ const CourierPage = () => {
         </div>
       </div>
 
-      <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
+      <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} user={user!} />
     </Layout>
   );
 };

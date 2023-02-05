@@ -2,7 +2,7 @@ import { DetailedHTMLProps, FC, HTMLAttributes, ReactNode } from 'react';
 
 type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
   children: ReactNode;
-};
+}; 
 
 const EditCard: FC<Props> = (props) => {
   return (

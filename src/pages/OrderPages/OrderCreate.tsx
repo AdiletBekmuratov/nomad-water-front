@@ -1,62 +1,28 @@
 import { FC, useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as yup from 'yup';
+import { Formik, Form } from 'formik';
 
 import { useAppDispatch } from '@/hooks';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { useCreateProfileMutation, useGetALLProfilesQuery } from '@/redux/services/profile.service';
+
 import { clearItems } from '@/redux/slices/cartSlice';
-import { IProduct, IProfile, IUser, IUsersOrder } from '@/types';
+import { IProduct, IUsersOrder } from '@/types';
 
 import { WS_URL } from '@/redux/http';
-
-import {
-  Footer,
-  OrderAcordion as OrderAcсordion,
-  OrderCard,
-  PaymentComponent,
-  Total
-} from '@/components/Order';
-import EditCard from '@/components/Order/EditCard';
+import Payment from './Payment';
+import { OrderCard, Total } from '@/components/Order';
 
 import { Button, Input } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
-import { Modal } from '@/components/Layout/Modal';
 
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
 
-import { toast } from 'react-hot-toast';
-import { Form, Formik } from 'formik';
-import { useUpdateUserMeMutation } from '@/redux/services/user.service';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
-
-const userStyle = 'font-montserrat text-dark-blue';
-
-const initial: IUsersOrder = {
-  address: '',
-  comment: '',
-  isSale: false,
-
-  paymentMethod: 'Наличными',
-  phone: '',
-  orderProductsDto: [],
-  totalPrice: 0
-};
-
 const OrderCreate: FC = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const user = useAppSelector((state) => state.auth.user);
-
-  const { data: profiles = [], refetch } = useGetALLProfilesQuery();
   const { products, total } = useAppSelector((state) => state.cart);
-  const [create, { isLoading: loadProfile }] = useCreateProfileMutation();
-
-  const [isOpen, setIsOpen] = useState(true);
+  const user = useAppSelector((state) => state.auth.user);
   const [isValid, setIsValid] = useState(false);
-
-  const [addressOrder, setAddressOrder] = useState('');
   const [address, setAddress] = useState<{
     phone: string;
     firstname: string;
@@ -67,9 +33,7 @@ const OrderCreate: FC = () => {
   } | null>(null);
   ///total state
   const [pickup, setPickup] = useState(false);
-  const [delivery, setDelivery] = useState(false);
   const [useBonus, setUseBonus] = useState(false);
-
   const [paymentMethod, setPaymentMethod] = useState('Картой');
 
   const clientRef = useRef<WebSocket | null>(null);
@@ -77,76 +41,34 @@ const OrderCreate: FC = () => {
   const [isConnected, setIsConnected] = useState(false);
 
   const handleSendOrder = () => {
-    let values: IProfile = {
-      name: 'По умолчанию',
-      //@ts-ignore
-      street: address?.street ? address.street : '',
-      //@ts-ignore
-      houseNumber: address?.houseNumber ? address?.houseNumber : '',
-      //@ts-ignore
-      flat: address?.flat ? address?.flat : '',
-      //@ts-ignore
-      addressComment: address?.addressComment ? address?.addressComment : ''
-    };
-    const handleCreate = () => {
-      toast
-        .promise(
-          create(values)
-            .unwrap()
-            .then((resp) => {
-              resp;
-              // setResponse(()=>resp);
-            }),
-          {
-            loading: 'Загрузка...',
-            success: 'Адрес сохранен, вы можете изменить его в личной странице.',
-            error: (error) => JSON.stringify(error, null, 2)
-          }
-        )
-        .finally(() => {
-          refetch();
-        });
-    };
-    user?.role === 'ROLE_USER' && profiles.length < 1 && handleCreate();
-
     const product = products.map((product) => {
       return {
         productId: product.id,
         quantity: product.quantity
       };
     });
-    let inputAddress = address
+    let addressOrder = address
       ? `Ул.${address.street}, д. ${address.houseNumber}, кв. ${address.flat}`
       : '';
-    console.log(user!.role === 'ROLE_USER' && user!.profiles && user!.profiles.length < 1);
-    //@ts-ignore
     const value: IUsersOrder = {
-      //если заказ сделан оператором
-      address: user
-        ? user.role === 'ROLE_EMPLOYEE' ||
-          user.role === 'ROLE_MASTER' ||
-          (user.role === 'ROLE_USER' && user.profiles && user.profiles.length < 1)
-          ? inputAddress
-          : addressOrder
+      phone: address ? address.phone : '',
+      firstname: user
+        ? user.role === 'ROLE_EMPLOYEE'
+          ? address
+            ? address.firstname
+            : ''
+          : user.firstname
         : '',
 
-      //@ts-ignore
-      comment: address.addressComment,
-      //@ts-ignore
-      phone: address.phone,
+      address: addressOrder,
+      comment: address ? address.addressComment : '',
       totalPrice: total,
       paymentMethod,
       //@ts-ignore
-      orderProductsDto:
-        //@ts-ignore
-        product,
-      withDeposit: useBonus
+      orderProductsDto: product
     };
-
     clientRef.current?.send(JSON.stringify(value));
-
     dispatch(clearItems());
-    // console.log(value);
   };
 
   useEffect(() => {
@@ -188,56 +110,22 @@ const OrderCreate: FC = () => {
       };
     }
   }, [waitingToReconnect]);
-
-  // console.log(orderDto);
-  // const validationSchema = yup.object().shape({
-  //   cardNumber: yup.string().required('Поле обязательное'),
-  //   validity: yup.string().required('Поле обязательное'),
-  //   cvc: yup.string().required('Поле обязательное').min(3, 'Должно быть 3').max(3),
-  //   nameOnCard: yup.string().required('Поле обязательное')
-  // });
-  // type initialValues = {
-  //   cardNumber: string;
-  //   validity: string;
-  //   cvc: string;
-  //   nameOnCard: string;
-  // };
-
-  // const initialVal: initialValues = {
-  //   cardNumber: '',
-  //   validity: '',
-  //   cvc: '',
-  //   nameOnCard: ''
-  // };
-  // const paymentStyle = 'placeholder:text-gray-300 font-montserrat';
-  // const choiceAddress = profiles.find((profile) => profile.name);
-
-  const [update, { isLoading }] = useUpdateUserMeMutation();
-  const [isEditedInfo, setIsEditedInfo] = useState(false);
-  //if ((user && !user.firstname) || (user && !user.birthday)) {
-  useEffect(() => {
-    if (user && user.firstname.length === 0) {
-      setTimeout(() => {
-        setIsEditedInfo(true);
-      }, 2000);
-    }
-  }, [user]);
-
-  const validation = yup.object().shape({
-    firstname: yup.string().required('Это поле обязательное')
-  });
-
-  const handleEditSave = async (values: IUser) => {
-    toast
-      .promise(update(values).unwrap(), {
-        loading: 'Загрузка',
-        success: 'Сохранено',
-        error: (error) => JSON.stringify(error, null, 2)
-      })
-      .finally(() => {
-        setIsEditedInfo(false);
-      });
+  const initialValues = {
+    phone: user ? (user.role === 'ROLE_MASTER' ? user.phone : '') : '',
+    firstname: user ? (user.role === 'ROLE_MASTER' ? user.firstname : '') : '',
+    street: '',
+    houseNumber: '',
+    flat: '',
+    addressComment: ''
   };
+  const validation = yup.object().shape({
+    firstname: yup.string().required('Поле обязательное'),
+    phone: yup.string().required('Поле обязательное'),
+    street: yup.string().required('Поле обязательное'),
+    houseNumber: yup.string().required('Поле обязательное'),
+    flat: yup.string().required('Поле обязательное')
+  });
+  const styleInput = `font-montserrat placeholder:text-gray-400 cursor-pointer rounded-md`;
 
   return (
     <Layout>
@@ -250,136 +138,79 @@ const OrderCreate: FC = () => {
           </div>
           <div className={`lg:grid lg:grid-cols-2 gap-4 pt-7 lg:pt-0`}>
             <div>
-              <OrderAcсordion
-                setAddress={setAddress}
-                setAddressOrder={setAddressOrder}
-                setIsValid={setIsValid}
-              />
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validation}
+                onSubmit={() => {}}>
+                {({ isValid, values }) => (
+                  <Form className="flex flex-col gap-2 pt-3">
+                    <>
+                      <Input
+                        name="street"
+                        id="street"
+                        inputType="formik"
+                        label="Микрорайон / Улица"
+                        className={`${styleInput}`}
+                      />
+                      <Input
+                        name="houseNumber"
+                        id="houseNumber"
+                        inputType="formik"
+                        label="Дом"
+                        className={`${styleInput}`}
+                      />
+                      <Input
+                        name="flat"
+                        id="flat"
+                        inputType="formik"
+                        label="Квартира"
+                        className={`${styleInput}`}
+                      />
+                      <Input
+                        name="addressComment"
+                        id="addressComment"
+                        inputType="formik"
+                        label="Комментарий к заказу"
+                        placeholder="Например: блок, подъезд, этаж, домофон, лифт, и др"
+                        className={`${styleInput}`}
+                      />
+                      <Input
+                        name="firstname"
+                        id="firstname"
+                        inputType="formik"
+                        label="Имя получателя"
+                        className={`${styleInput}`}
+                      />
+                      <Input
+                        name="phone"
+                        id="phone"
+                        inputType="formik"
+                        mask="+77999999999"
+                        placeholder="+7 (777) 777 7777"
+                        label="Номер получателя"
+                        className={`${styleInput}`}
+                      />
+                      {setIsValid(isValid)}
+                      {setAddress(values)}
+                    </>
+                  </Form>
+                )}
+              </Formik>
             </div>
 
-            <div className={`flex flex-col gap-5 `}>
-              <EditCard className={`lg:order-3  w-full `}>
-                <div className="flex flex-col gap-3 items-center">
-                  <span className={`font-semibold text-sm ${userStyle}`}>
-                    Выберите способ оплаты
-                  </span>
-                  <h3 className={`font-semibold text-center opacity-75 text-xs ${userStyle}`}>
-                    (для смены нажмите кнопку)
-                  </h3>
-                  <button
-                    className={`p-2 border border-dashed border-dark-blue rounded-xl`}
-                    onClick={() => {
-                      if (paymentMethod === 'Наличными') {
-                        setPaymentMethod('Картой');
-                      } else {
-                        setPaymentMethod('Наличными');
-                      }
-                      return paymentMethod;
-                    }}>
-                    {paymentMethod}
-                  </button>
-
-                  {paymentMethod === 'Картой' && (
-                    <Button className="text-sm max-w-sm">Изменить данные карты</Button>
-                  )}
-                </div>
-
-                {/* {paymentMethod === 'Картой' && (
-              <div>
-                <FormContainer
-                  initialValues={initialVal}
-                  validationSchema={validationSchema}
-                  setIsValid={setIsValid}
-                  className="px-6">
-                  <div className="mb-2">
-                    <Input
-                      inputType="formik"
-                      name="cardNumber"
-                      id="cardNumber"
-                      label="Номер банковской карты"
-                      mask="9999 9999 9999 9999"
-                      placeholder="4444 0000 0000 0000"
-                      className={paymentStyle}
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 mb-2">
-                    <div className="mr-2">
-                      <Input
-                        inputType="formik"
-                        name="validity"
-                        id="validity"
-                        label="Срок действия"
-                        className={paymentStyle}
-                        placeholder="01/01"
-                        mask="99/99"
-                      />
-                    </div>
-                    <div className="ml-2">
-                      <Input name="cvc" id="cvc" inputType="formik" label="CVC" type="password" />
-                    </div>
-                  </div>
-                  <div className="mb-5">
-                    <Input
-                      inputType="formik"
-                      name="nameOnCard"
-                      id="nameOnCard"
-                      label="Имя и фамилия на карте"
-                      className={paymentStyle}
-                      placeholder="JOHN SMITH"
-                    />
-                  </div>
-                  <div className="border-b-2 mb-5">
-                    <Checkbox id="saveCard" name="saveCard" label="Сохранить карту" />
-                  </div>
-                </FormContainer>
-              </div>
-            )} */}
-
-                {/* <button
-              className="text-blue-light font-montserrat font-semibold text-xs"
-              onClick={() => {
-                setIsEdited(true);
-              }}
-              value="payment">
-              Выберите способ оплаты
-            </button> */}
-              </EditCard>
+            <div className={`flex flex-col gap-5 lg:order-3`}>
+              <Payment paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
               <Total
-                delivery={delivery}
-                setDelivery={setDelivery}
                 pickup={pickup}
                 setPickup={setPickup}
                 useBonus={useBonus}
                 setUseBonus={setUseBonus}
                 isValid={isValid}
                 buttonAction={handleSendOrder}
-                initial={initial}
                 initialTotal={total}
               />
             </div>
           </div>
-
-          <div className={`h-28 lg:hidden`}></div>
-          <Footer className={`items-center flex justify-center lg:hidden`}>
-            <Button
-              className={`w-80 h-11 text-sm disabled:bg-opacity-70 md:w-2/3`}
-              buttonColor="bg-dark-blue font-montserrat"
-              //disabled={!isValid}
-              onClick={() => {
-                handleSendOrder();
-                //alert(JSON.stringify(address, null, 2));
-                navigate('/myOrders');
-              }}>
-              Оформить заказ
-            </Button>
-          </Footer>
-          {/* {isEdited && (
-            <>
-              <Modal isOpenModal={isOpen} setIsOpenModal={setIsEdited}>
-                <PaymentComponent buttonName="Продолжить" name={user?.firstname ?? ''} />
-              </Modal>
-            </>
-          )} */}
         </div>
       ) : (
         <div className={` flex flex-col gap-5 py-10 items-center text-center text-lg font-medium`}>
@@ -393,42 +224,6 @@ const OrderCreate: FC = () => {
           </Link>
         </div>
       )}
-      <Modal isOpenModal={isEditedInfo} setIsOpenModal={setIsEditedInfo}>
-        <div className="flex items-center justify-between gap-2 pb-2">
-          <h2 className={`flex items-center justify-center`}>
-            Чтобы продолжить покупки, пожалуйста, заполните информацию о себе
-          </h2>
-          <button
-            onClick={() => {
-              setIsEditedInfo(false);
-            }}>
-            <AiOutlineCloseCircle className={`w-5 h-5 md:w-7 md:h-7 hover:text-blue-500`} />
-          </button>
-        </div>
-        <Formik initialValues={user!} onSubmit={handleEditSave} validationSchema={validation}>
-          {({ values,isValid }) => (
-            <Form className="flex flex-col space-y-4">
-              <div className={`grid grid-cols-1 items-center`}>
-                <Input inputType="formik" name="lastname" id="lastname" label="Фамилия" />
-                <Input inputType="formik" name="firstname" id="firstname" label="Имя" />
-                <Input inputType="formik" name="middleName" id="middleName" label="Отчество" />
-              </div>
-
-              <div className={`flex gap-3 justify-between`}>
-                <Button type="submit" disabled={!isValid} className={`hover:bg-blue-500` }>
-                  Продолжить покупки
-                </Button>
-                {/* <Button
-                  type="button"
-                  onClick={() => handleEdit(values)}
-                  className={`hover:bg-blue-500`}>
-                  Сохранить
-                </Button> */}
-              </div>
-            </Form>
-          )}
-        </Formik>
-      </Modal>
     </Layout>
   );
 };

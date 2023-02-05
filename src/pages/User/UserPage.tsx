@@ -44,7 +44,7 @@ const UserPage = () => {
       </div>
 
       <Profiles />
-      <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
+      <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} user={user!} />
     
     </Layout>
   );

@@ -1,5 +1,6 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
-import { useLocation } from 'react-router-dom';
+
+import { useCreateProfileMutation } from '@/redux/services/profile.service';
 
 import { Form, Formik } from 'formik';
 import { toast } from 'react-hot-toast';
@@ -9,7 +10,6 @@ import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { IProfile } from '@/types';
-import { useCreateProfileMutation } from '@/redux/services/profile.service';
 
 interface ICreateProfileProps {
   visible: boolean;
@@ -17,10 +17,6 @@ interface ICreateProfileProps {
 }
 
 export const CreateProfile: FC<ICreateProfileProps> = ({ setVisible, visible }) => {
-  let location = useLocation();
-  let pathname = location.pathname;
-  let localPathname = pathname.substring(7, pathname.length);
-  let initRole = '';
 
   const INITIAL_VALUES: IProfile = {
     name: '',

@@ -30,6 +30,7 @@ const Catalog = lazy(() => import('@/pages/catalog/Catalog'));
 const BottlePage = lazy(() => import('@/pages/catalog/BottlePage'));
 const Orders = lazy(() => import('@/pages/OrderPages/Orders'));
 const OrderCreate = lazy(() => import('@/pages/OrderPages/OrderCreate'));
+const UserOrderCreate = lazy(() => import('@/pages/OrderPages/UserOrderCreate'));
 const Warehouses = lazy(() => import('@/pages/Master/Warehouses'));
 const WarehouseTable = lazy(() => import('@/pages/Master/WarehouseTable'));
 
@@ -132,7 +133,8 @@ const AppRoutes = () => {
                 </ProtectedRoute>
               }
             />
-            <Route path="/order" element={<OrderCreate />} />
+            <Route path="/order" element={<UserOrderCreate />} />
+            <Route path="/employeeOrder" element={<OrderCreate />} />
 
             <Route path="/orderinfo" element={<OrderInfo />} />
 

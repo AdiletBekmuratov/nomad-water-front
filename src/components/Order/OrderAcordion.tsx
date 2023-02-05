@@ -24,7 +24,7 @@ type Props = {
   >;
 };
 
-export const OrderAcordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrder }) => {
+export const OrderAccordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrder }) => {
   const { data: profiles = [] } = useGetALLProfilesQuery();
   const { user } = useAppSelector((state) => state.auth);
   let initProfile;

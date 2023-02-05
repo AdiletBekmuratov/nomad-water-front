@@ -76,13 +76,24 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
             )}
             {/* //Корзина//Создание заказа */}
             <div className={`hidden md:flex gap-4`}>
-              <Link to="/order">
-                {products.length === 0 ? (
-                  <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
-                ) : (
-                  <BsFillCartFill className="h-6 w-6 cursor-pointer" />
-                )}
-              </Link>
+              {user?.role === 'ROLE_USER' && (
+                <Link to="/order">
+                  {products.length === 0 ? (
+                    <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
+                  ) : (
+                    <BsFillCartFill className="h-6 w-6 cursor-pointer" />
+                  )}
+                </Link>
+              )}
+              {(user?.role === 'ROLE_EMPLOYEE' || user?.role === 'ROLE_MASTER') && (
+                <Link to="/employeeOrder">
+                  {products.length === 0 ? (
+                    <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
+                  ) : (
+                    <BsFillCartFill className="h-6 w-6 cursor-pointer" />
+                  )}
+                </Link>
+              )}
 
               {/* //личная страница */}
               {user?.role === 'ROLE_COURIER' ? (

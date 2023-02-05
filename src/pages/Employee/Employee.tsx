@@ -82,7 +82,7 @@ const Employee = () => {
         </button>
       </div>
       <div className={`flex justify-center py-2`}>
-        <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
+        <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} user={user!} />
       </div>
       {/* <div className={`border-b-2 border-dotted border-gray-700 py-2`}></div> */}
       <div

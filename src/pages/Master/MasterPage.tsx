@@ -37,7 +37,7 @@ const MasterPage = () => {
         <button className="" onClick={() => setIsOpenEdit(true)}>
           <AiOutlineEdit className={`h-6 w-6 md:h-7 md:w-7 text-red-600`} />
         </button>
-        <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
+        <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} user={user!} />
       </div>
       <OrderHistory />
     </Layout>

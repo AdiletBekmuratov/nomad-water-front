@@ -10,7 +10,6 @@ export type IProduct = {
   inStock?:boolean;
   inWarehouse?:boolean;
 
-
 };
 
 export type ICart = {

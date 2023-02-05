@@ -1,6 +1,6 @@
 export type IProfile = {
   id?: number;
-  name: string;
+  name?: string;
   street: string;
   houseNumber: string;
   flat: string;
