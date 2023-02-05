@@ -26,9 +26,8 @@ export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
         success: 'Обновлено успешно',
         error: (error) => JSON.stringify(error, null, 2)
       })
-      .finally(() => {
-        dispatch(getMe(data));
-      });
+      .then(() => dispatch(getMe()))
+      .finally(() => {});
   };
 
   const handleEditSave = async (values: IUser) => {
@@ -38,8 +37,8 @@ export const Edit: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
         success: 'Сохранено',
         error: (error) => JSON.stringify(error, null, 2)
       })
+      .then(() => dispatch(getMe()))
       .finally(() => {
-        dispatch(getMe(data));
         setVisible(false);
       });
   };

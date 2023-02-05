@@ -7,7 +7,7 @@ import { IProfile } from '@/types';
 import { Field, Form, Formik } from 'formik';
 import { Input } from '../Forms';
 import * as yup from 'yup';
-import { EditProfile } from '@/pages/User/EditProfile';
+import { EditProfile } from '@/pages/User/Profiles/EditProfile';
 
 type Props = {
   setAddressOrder: React.Dispatch<React.SetStateAction<string>>;

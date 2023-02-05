@@ -26,30 +26,6 @@ export const getMe = createAsyncThunk<IUserFull, undefined, { rejectValue: strin
     }
   }
 );
-// export const getMe = createAsyncThunk<IUserFull, IUserFull, { rejectValue: string }>(
-//   'auth/me',
-//   async (user, thunkAPI) => {
-//     try {
-//       const currentUser = user;
-//       const updatedUser = await authService.getMe();
-
-//       if (!currentUser || currentUser.id !== updatedUser.id) {
-//         return updatedUser;
-//       }
-
-//       return currentUser;
-//     } catch (error) {
-//       if (axios.isAxiosError(error)) {
-//         const message = error.message || error.toString();
-//         return thunkAPI.rejectWithValue(message);
-//       }
-//     }
-//   }
-// );
-
-
-
-
 
 //send phone number
 export const getPassword = createAsyncThunk<string, string, { rejectValue: string }>(
