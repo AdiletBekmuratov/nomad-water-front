@@ -21,7 +21,7 @@ type Rating = {
 const RateOrder: FC<Props> = ({ isOpenModal, setIsOpenModal, data }) => {
   const [rateOrder] = useRateOrderMutation();
   const [rating, setRating] = useState<number>(0);
-
+  const [ratingComment, setRatingComment] = useState('');
   useEffect(() => {
     if (!isOpenModal) {
       setRating(0);
@@ -29,8 +29,13 @@ const RateOrder: FC<Props> = ({ isOpenModal, setIsOpenModal, data }) => {
   }, [isOpenModal]);
 
   const handleRate = async () => {
+    if (rating < 3) {
+      toast('Нам очень жаль что вам не понравился продукт');
+    } else {
+      toast('Спасибо за покупку');
+    }
     toast
-      .promise(rateOrder({ id: data?.id, rating }).unwrap(), {
+      .promise(rateOrder({ id: data?.id, rating, ratingComment }).unwrap(), {
         loading: 'Загрузка...',
         success: 'Ваш отзыв учтен',
         error: (err) => err.data
@@ -69,6 +74,17 @@ const RateOrder: FC<Props> = ({ isOpenModal, setIsOpenModal, data }) => {
               />
             )
           )}
+      </div>
+      <div className="w-full flex flex-col">
+        <label htmlFor="ratingComment" className="font-montserrat">
+          Комментарий
+        </label>
+        <textarea
+          className="border border-dark-blue rounded-xl placeholder:font-montserrat"
+          id="ratingComment"
+          placeholder="Комментарий к заказу"
+          onChange={(e) => setRatingComment(e.target.value)}
+        />
       </div>
       <div className="w-1/3 mx-auto mt-4">
         <Button onClick={handleRate}>Оценить</Button>

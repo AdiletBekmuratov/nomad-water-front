@@ -15,6 +15,7 @@ import UserAppeal from '@/pages/UserAppeal';
 
 import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminCategory from '@/pages/admin/AdminCategory';
+import AdminRouteSheet from '@/pages/admin/AdminRouteSheet';
 
 const Landing = lazy(() => import('@/pages/Landing'));
 const RouteSheet = lazy(() => import('@/pages/Couriers/RouteSheet'));
@@ -164,7 +165,7 @@ const AppRoutes = () => {
             <Route path="/admin/allUsers" element={<AdminAllUsers />} />
             <Route path="/admin/workers" element={<AdminWorkers />} />
             <Route path="/admin/couriers" element={<AdminCouriers />} />
-
+            <Route path="/admin/routeSheet" element={<AdminRouteSheet />} />
             <Route path="/admin/warehouses" element={<AdminWarehouses />} />
             <Route path="/admin/products" element={<AdminProducts />} />
             <Route path="/admin/category" element={<AdminCategory />} />

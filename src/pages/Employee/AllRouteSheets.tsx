@@ -1,12 +1,8 @@
-import { Button, Input } from '@/components/Forms';
+import { Button } from '@/components/Forms';
 import Loader from '@/components/Landing/Loader';
 
-import {
-  useGetAllRouteSheetQuery,
-  useGetCourierRouteSheetOrdersQuery,
-  useLazyGetCourierRouteSheetOrdersQuery
-} from '@/redux/services/courier.service';
-import { IRouteSheet, IRouteSheetOrders } from '@/types/routeSheet.types';
+import { useGetAllRouteSheetQuery } from '@/redux/services/courier.service';
+import { IRouteSheetOrders } from '@/types/routeSheet.types';
 
 import { useRef, useState, useEffect, Fragment } from 'react';
 
@@ -35,9 +31,8 @@ const AllRouteSheets = () => {
   }
 
   const { data: routeData = [], isLoading } = useGetAllRouteSheetQuery();
-  
-  useEffect(() => {
 
+  useEffect(() => {
     const dataR = routeData?.map((route) => route.routeSheetOrders);
     setRouteSheet(dataR.flat());
   }, [isLoading]);

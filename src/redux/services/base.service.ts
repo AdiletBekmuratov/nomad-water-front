@@ -279,9 +279,9 @@ export const baseApi = createApi({
             ]
           : [{ type: 'Order', id: 'LIST' }]
     }),
-    rateOrder: builder.mutation<void, { id: number; rating: number }>({
-      query: ({ id, rating }) => ({
-        url: `/order/${id}/rating/${rating}`,
+    rateOrder: builder.mutation<void, { id: number; rating: number; ratingComment: string }>({
+      query: (body) => ({
+        url: `/order/${body.id}/rating/${body.rating}?ratingComment=${body.ratingComment}`,
         method: 'PUT'
       }),
       invalidatesTags: [{ type: 'Order', id: 'LIST' }]
