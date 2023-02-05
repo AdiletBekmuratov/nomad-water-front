@@ -6,7 +6,7 @@ import { Form, Formik } from 'formik';
 import { useRef, useState, useEffect } from 'react';
 import RouteSheetTable from '../Couriers/RouteSheetTable';
 import * as yup from 'yup';
-import { IRouteSheet } from '@/types/routeSheet.types';
+import { IRouteSheet, IRouteSheetOrders } from '@/types/routeSheet.types';
 import { useReactToPrint } from 'react-to-print';
 
 const CourierRouteSheet = () => {
@@ -14,7 +14,7 @@ const CourierRouteSheet = () => {
   const componentRef = useRef<any>();
 
   const [currentDate, setCurrentDate] = useState<string>('');
-  const [routeSheetCourier, setRouteSheet] = useState<IRouteSheet[] | null>(null);
+  const [routeSheetCourier, setRouteSheet] = useState<IRouteSheetOrders[] | null>(null);
 
   const [fetch, { isLoading }] = useLazyGetCourierRouteSheetOrdersQuery();
 
@@ -28,7 +28,7 @@ const CourierRouteSheet = () => {
       date: `${day}-${month}-${year}`
     };
     fetch(value).then((res) => {
-      setRouteSheet(res.data?.routeSheetOrders);
+      setRouteSheet(res.data ? res.data.routeSheetOrders : null);
     });
   };
   const handlePrint = useReactToPrint({
