@@ -68,9 +68,9 @@ export const Edit: FC<IEditModalProps> = ({ visible, setVisible, user }) => {
             {user && user.firstname.length === 0 ? (
               <p className={`text-center text-xs`}>Необходимо заполнить хотя бы имя.</p>
             ) : null}
-            <div>
+            {/* <div>
               <h2>Также рекомендуем добавить дату рождения, чтобы получать больше бонусов</h2>
-            </div>
+            </div> */}
             <div className={`flex gap-3 justify-between`}>
               <Button type="submit" disabled={!isValid} className={`hover:bg-blue-500`}>
                 Сохранить

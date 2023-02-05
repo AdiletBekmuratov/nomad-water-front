@@ -1,23 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAppSelector } from '@/hooks';
+import { Link} from 'react-router-dom';
 
 import { toast } from 'react-hot-toast';
 
-import { IProduct, IProfile, IUsersOrder } from '@/types';
-import { useCreateProfileMutation, useGetALLProfilesQuery } from '@/redux/services/profile.service';
-
-import { Button, Input } from '@/components/Forms';
-import { Layout } from '@/components/Layout';
-
-import { Edit } from '../User/Edit';
-import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
-import { Link, useNavigate } from 'react-router-dom';
-import { Footer, OrderCard, Total } from '@/components/Order';
-import { OrderAccordion } from './OrderAccordion';
-import Payment from './Payment';
-import { WS_URL } from '@/redux/http';
-import { useAppDispatch } from '@/hooks';
 import { clearItems } from '@/redux/slices/cartSlice';
+import { useCreateProfileMutation, useGetALLProfilesQuery } from '@/redux/services/profile.service';
+import { useAppDispatch } from '@/hooks';
+import { IProduct, IProfile, IUsersOrder } from '@/types';
+
+import {  OrderCard, Total } from '@/components/Order';
+import { OrderAccordion } from './OrderAccordion';
+import { WS_URL } from '@/redux/http';
+
+import { Button } from '@/components/Forms';
+import { Layout } from '@/components/Layout';
+import { Edit } from '../User';
+import Payment from './Payment';
+
+import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
 export type AddressType = {
   name?: string;
   phone: string;
@@ -32,10 +33,13 @@ const UserOrderCreate = () => {
   const { products, total } = useAppSelector((state) => state.cart);
 
   const dispatch = useAppDispatch();
+//список профилей
   const { data: profiles = [], refetch } = useGetALLProfilesQuery();
+  //создание профиля при первом заказе
   const [create, { isLoading: loadProfile }] = useCreateProfileMutation();
-
+//самовывоз заказа клиентом
   const [pickup, setPickup] = useState(false);
+  //использование бонусов при заказе
   const [useBonus, setUseBonus] = useState(false);
 
   const [paymentMethod, setPaymentMethod] = useState('Картой');
@@ -43,7 +47,7 @@ const UserOrderCreate = () => {
   const clientRef = useRef<WebSocket | null>(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-
+//выбор профиля при заказе если клиент не сделал выбор
   const initProf = profiles.length > 0 ? profiles[0] : null;
   const initAddress: AddressType = {
     name: initProf ? initProf.name! : '',
@@ -54,12 +58,15 @@ const UserOrderCreate = () => {
     flat: initProf ? initProf.flat : '',
     addressComment: initProf ? initProf.addressComment! : ''
   };
-
+//адрес если профиля не было или он не был изменен
   const [address, setAddress] = useState<AddressType>(initAddress);
+  //адрес если профиль был изменен
   const [addressOrder, setAddressOrder] = useState('');
+  //валидность формы
   const [isValid, setIsValid] = useState(false);
-
+// создание заказа
   const handleSendOrder = () => {
+    //если не было профилей создаем при заказе
     let values: IProfile = {
       name: address?.name ? address.name : 'По умолчанию',
       street: address?.street ? address.street : '',
@@ -67,6 +74,7 @@ const UserOrderCreate = () => {
       flat: address?.flat ? address?.flat : '',
       addressComment: address?.addressComment ? address?.addressComment : ''
     };
+//создание первого профиля
     const handleCreate = () => {
       toast
         .promise(
@@ -87,13 +95,14 @@ const UserOrderCreate = () => {
         });
     };
     profiles.length < 1 && handleCreate();
-
+//пересохраняем продукты для отправки
     const product = products.map((product) => {
       return {
         productId: product.id,
         quantity: product.quantity
       };
     });
+    //адрес если профиля не было или он не был изменен
     let inputAddress = address
       ? `Ул.${address.street}, д. ${address.houseNumber}, кв. ${address.flat}`
       : '';
@@ -114,12 +123,12 @@ const UserOrderCreate = () => {
       orderProductsDto: product,
       withDeposit: useBonus
     };
-
+//отправка заказа по сокету
     clientRef.current?.send(JSON.stringify(value));
-
+//очистка корзины
     dispatch(clearItems());
   };
-
+//сокеты
   useEffect(() => {
     if (waitingToReconnect) {
       return;
@@ -161,13 +170,14 @@ const UserOrderCreate = () => {
   }, [waitingToReconnect]);
   //всплывашка сохранения данных юзера
   const [isEditedInfo, setIsEditedInfo] = useState(false);
+  //проверка на наличие имени
   useEffect(() => {
     if (user && user.firstname.length === 0) {
       setTimeout(() => {
         setIsEditedInfo(true);
       }, 2000);
     }
-  }, [user]);
+  }, []);
 
   return (
     <Layout>

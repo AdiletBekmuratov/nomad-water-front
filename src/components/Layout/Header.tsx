@@ -85,7 +85,9 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
                   )}
                 </Link>
               )}
-              {(user?.role === 'ROLE_EMPLOYEE' || user?.role === 'ROLE_MASTER') && (
+              {(user?.role === 'ROLE_EMPLOYEE' ||
+                user?.role === 'ROLE_MASTER' ||
+                user?.role === 'ROLE_ADMIN') && (
                 <Link to="/employeeOrder">
                   {products.length === 0 ? (
                     <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
@@ -105,7 +107,7 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
                     <FaUserTie className="h-6 w-6" />
                   </Link>
                 </>
-              ) : user?.role === 'ROLE_EMPLOYEE' ? (
+              ) : user?.role === 'ROLE_EMPLOYEE' || user?.role === 'ROLE_ADMIN' ? (
                 <Link to="/employee">
                   <FaUserTie className="h-6 w-6" />
                 </Link>
