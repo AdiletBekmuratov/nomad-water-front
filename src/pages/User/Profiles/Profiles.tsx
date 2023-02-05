@@ -129,7 +129,7 @@ const Profiles = () => {
                 onClick={(e: any) => {
                   setIsOpenDelete(true);
                   setProfileId(e.target.value);
-                  setName(item.name);
+                  setName(item.name!);
                 }}>
                 Удалить адрес
               </Button>
