@@ -86,6 +86,9 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
               <NavLink to="/admin/category" className={changeLink}>
                 Категории
               </NavLink>
+              <NavLink to="/admin/routeSheet" className={changeLink}>
+                Маршрутные листы
+              </NavLink>
             </div>
           </aside>
         ) : (
