@@ -81,11 +81,14 @@ export const courierApi = createApi({
 
 export const {
   useGetCourierOrderQuery,
+  useLazyGetCourierOrderQuery,
+  
   useAcceptOrderMutation,
   useCompleteOrderMutation,
+  
   useGetAllConfirmedOrdersQuery,
   useLazyGetAllConfirmedOrdersQuery,
-  useLazyGetCourierOrderQuery,
+  
   useGetAllRouteSheetQuery,
   useGetCurrentCourierRouteSheetQuery,
   useLazyGetCurrentCourierRouteSheetQuery,

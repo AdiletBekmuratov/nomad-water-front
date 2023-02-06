@@ -84,7 +84,9 @@ const CourierRouteSheet = () => {
       </Formik>
       <div className="flex justify-center font-montserrat">
         {!routeSheetCourier ? (
-          <div>На данную дату нет маршрутного листа</div>
+          <div>
+            <h2>Выберите курьера и нужный день, чтобы посмотреть маршрутный лист</h2>
+            </div>
         ) : (
           <div className="flex justify-center items-center flex-col">
             <RouteSheetTable
