@@ -1,6 +1,6 @@
 import { ICourierOrder } from '@/types/courier.types';
 import { ColumnDef } from '@tanstack/react-table';
-import { useMemo, useState, useRef, useEffect } from 'react';
+import { useMemo, useState, useRef, useEffect, FC } from 'react';
 import { ActionButtons, Table } from '../../components/Table';
 import { useLazyGetCourierOrderQuery } from '@/redux/services/courier.service';
 import Loader from '../../components/Landing/Loader';
@@ -10,11 +10,11 @@ import { Button } from '../../components/Forms';
 import { WS_URL } from '@/redux/http';
 
 type Props = {
-  setClick: Function;
-  click: boolean | any;
+  setClick: React.Dispatch<React.SetStateAction<boolean>>;
+  click: boolean;
 };
 
-export const AcceptedOrders = (props: Props) => {
+export const AcceptedOrders: FC<Props> = ( {setClick, click} ) => {
   const [courierOrders] = useLazyGetCourierOrderQuery();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -120,8 +120,9 @@ export const AcceptedOrders = (props: Props) => {
   useEffect(() => {
     //@ts-ignore
     courierOrders().then((res) => setData(res.data?.filter((order) => order.statusId === 2)));
-    props.setClick(false);
-  }, [props.click]);
+   
+    setClick(false);
+  }, [click]);
 
   const columns = useMemo<ColumnDef<ICourierOrder, any>[]>(
     () => [

@@ -1,6 +1,6 @@
 import { ICourierOrder } from '@/types/courier.types';
 import { ColumnDef } from '@tanstack/react-table';
-import { useMemo, useState, useRef, useEffect } from 'react';
+import { useMemo, useState, useRef, useEffect, FC } from 'react';
 import { ActionButtons, Table } from '../../components/Table';
 import { useLazyGetAllConfirmedOrdersQuery } from '@/redux/services/courier.service';
 import Loader from '../../components/Landing/Loader';
@@ -10,23 +10,25 @@ import { Button } from '../../components/Forms';
 import { WS_URL } from '@/redux/http';
 
 type Props = {
-  setClick: Function;
+  setClick: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const ConfirmOrder = (props: Props) => {
+export const ConfirmOrder: FC<Props> = ({ setClick }) => {
   const [fetchOrders] = useLazyGetAllConfirmedOrdersQuery();
-
+  
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [rowData, setRowData] = useState<ICourierOrder[] | undefined>();
-
+  
   const [data, setData] = useState<ICourierOrder>();
-
+  
   const clientRef = useRef<WebSocket | null>(null);
   const courierRef = useRef<WebSocket | null>(null);
   const confirmedRef = useRef<WebSocket | null>(null);
-
+  
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+  const [isOnClick, setIsOnClick] = useState(false);
+  setClick(isOnClick);
 
   const confirmOrder = async (id: number) => {
     console.log(id);
@@ -39,8 +41,7 @@ export const ConfirmOrder = (props: Props) => {
     const newData = data?.filter((item) => item.id !== id);
     setData(newData);
     toast.success('Заказ принят');
-    //ts-ignore
-    props && props?.setClick(true);
+    setIsOnClick(true);
   };
 
   useEffect(() => {
