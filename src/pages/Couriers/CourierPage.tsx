@@ -47,13 +47,13 @@ const CourierPage = () => {
             </p>
           </div>
           <div className="grid gap-2 ">
-            <p className={`${styleP}`}>
+            {/* <p className={`${styleP}`}>
               <strong>Микрорайон / Улица: </strong>{' '}
               <span>{` ${
                 user ? (user.profiles ? user.profiles[0].street : 'Не заполнено') : 'Не заполнено'
               } `}</span>
-            </p>
-            <p className={`${styleP}`}>
+            </p> */}
+            {/* <p className={`${styleP}`}>
               <strong>Дом: </strong>{' '}
               {` ${
                 user
@@ -62,13 +62,13 @@ const CourierPage = () => {
                     : 'Не заполнено'
                   : 'Не заполнено'
               } `}
-            </p>
-            <p className={`${styleP}`}>
+            </p> */}
+            {/* <p className={`${styleP}`}>
               <strong>Квартира: </strong>{' '}
               {` ${
                 user ? (user.profiles ? user.profiles[0].flat : 'Не заполнено') : 'Не заполнено'
               } `}
-            </p>
+            </p> */}
           </div>
         </div>
 

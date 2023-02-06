@@ -9,7 +9,11 @@ import { Modal } from '../../components/Layout/Modal';
 import { Button } from '../../components/Forms';
 import { WS_URL } from '@/redux/http';
 
-export const ConfirmOrder = () => {
+type Props = {
+  setClick: Function;
+};
+
+export const ConfirmOrder = (props: Props) => {
   const [fetchOrders] = useLazyGetAllConfirmedOrdersQuery();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -35,6 +39,8 @@ export const ConfirmOrder = () => {
     const newData = data?.filter((item) => item.id !== id);
     setData(newData);
     toast.success('Заказ принят');
+    //ts-ignore
+    props && props?.setClick(true);
   };
 
   useEffect(() => {

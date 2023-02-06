@@ -9,7 +9,12 @@ import { Modal } from '../../components/Layout/Modal';
 import { Button } from '../../components/Forms';
 import { WS_URL } from '@/redux/http';
 
-export const AcceptedOrders = () => {
+type Props = {
+  setClick: Function;
+  click: boolean | any;
+};
+
+export const AcceptedOrders = (props: Props) => {
   const [courierOrders] = useLazyGetCourierOrderQuery();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -111,6 +116,12 @@ export const AcceptedOrders = () => {
       };
     }
   }, [waitingToReconnect]);
+
+  useEffect(() => {
+    //@ts-ignore
+    courierOrders().then((res) => setData(res.data?.filter((order) => order.statusId === 2)));
+    props.setClick(false);
+  }, [props.click]);
 
   const columns = useMemo<ColumnDef<ICourierOrder, any>[]>(
     () => [
