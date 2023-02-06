@@ -85,42 +85,30 @@ const AdminAllUsers = () => {
       {
         header: 'Микрорайон  Улица',
         cell: ({ row }) =>
-          row.original.role === 'ROLE_USER'
-            ? row.original.profiles
-              ? row.original.profiles[0]
-                ? row.original.profiles[0].street
-                : 'не указан'
+          row.original.profiles
+            ? row.original.profiles[0]
+              ? row.original.profiles[0].street
               : 'не указан'
-            : row.original.street
-            ? row.original.street
-            : ''
+            : 'не указан'
       },
 
       {
         header: 'Микрорайон  Улица',
         cell: ({ row }) =>
-          row.original.role === 'ROLE_USER'
-            ? row.original.profiles
-              ? row.original.profiles[0]
-                ? row.original.profiles[0].houseNumber
-                : 'не указан'
+          row.original.profiles
+            ? row.original.profiles[0]
+              ? row.original.profiles[0].houseNumber
               : 'не указан'
-            : row.original.houseNumber
-            ? row.original.houseNumber
-            : ''
+            : 'не указан'
       },
       {
         header: 'Микрорайон  Улица',
         cell: ({ row }) =>
-          row.original.role === 'ROLE_USER'
-            ? row.original.profiles
-              ? row.original.profiles[0]
-                ? row.original.profiles[0].flat
-                : 'не указан'
+          row.original.profiles
+            ? row.original.profiles[0]
+              ? row.original.profiles[0].flat
               : 'не указан'
-            : row.original.flat
-            ? row.original.flat
-            : ''
+            : 'не указан'
       },
 
       {

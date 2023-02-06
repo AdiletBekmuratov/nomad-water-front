@@ -74,19 +74,33 @@ export const Edit: FC<IEditModalProps> = ({ visible, setVisible, user }) => {
               <Input inputType="formik" name="firstname" id="firstname" label="Имя" />
               <Input inputType="formik" name="middleName" id="middleName" label="Отчество" />
             </div>
-
-            <div>
-              <Input
-                inputType="formik"
-                type="date"
-                name="birthday"
-                id="birthday"
-                label="День рождения"
-                onChange={(e) => changeDate(e)}
-                value={currentDate}
+            {user.birthday ? null : (
+              <div>
+                <Input
+                  inputType="formik"
+                  type="date"
+                  name="birthday"
+                  id="birthday"
+                  label="День рождения"
+                  onChange={(e) => changeDate(e)}
+                  value={currentDate}
                 />
-                <h2 className={`text-xs text-center`}>Рекомендуем добавить дату рождения, чтобы получать больше бонусов</h2>
-            </div>
+                {user.role === 'ROLE_USER' && (
+                  <h2 className={`text-xs text-center`}>
+                    Рекомендуем добавить дату рождения, чтобы получать больше бонусов
+                  </h2>
+                )}
+              </div>
+              )}
+              {user.role !== 'ROLE_USER' && (
+                <Input
+                inputType="formik"
+                name="telegramAccount"
+                id="telegramAccount"
+                label="Telegram"
+              />
+              )}
+
             <div className={`flex gap-3 justify-between`}>
               <Button type="submit" disabled={!isValid} className={`hover:bg-blue-500`}>
                 Сохранить

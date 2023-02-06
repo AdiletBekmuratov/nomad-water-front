@@ -49,13 +49,25 @@ const CourierPage = () => {
           <div className="grid gap-2 ">
             <p className={`${styleP}`}>
               <strong>Микрорайон / Улица: </strong>{' '}
-              <span>{` ${user ? user?.street : 'Не заполнено'} `}</span>
+              <span>{` ${
+                user ? (user.profiles ? user.profiles[0].street : 'Не заполнено') : 'Не заполнено'
+              } `}</span>
             </p>
             <p className={`${styleP}`}>
-              <strong>Дом: </strong> {` ${user?.houseNumber ? user?.houseNumber : 'Не заполнено'} `}
+              <strong>Дом: </strong>{' '}
+              {` ${
+                user
+                  ? user.profiles
+                    ? user.profiles[0].houseNumber
+                    : 'Не заполнено'
+                  : 'Не заполнено'
+              } `}
             </p>
             <p className={`${styleP}`}>
-              <strong>Квартира: </strong> {` ${user?.flat ? user?.flat : 'Не заполнено'} `}
+              <strong>Квартира: </strong>{' '}
+              {` ${
+                user ? (user.profiles ? user.profiles[0].flat : 'Не заполнено') : 'Не заполнено'
+              } `}
             </p>
           </div>
         </div>
