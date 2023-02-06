@@ -169,7 +169,7 @@ export const AcceptedOrders = () => {
     return <Loader />;
   }
   //@ts-ignore
-  if (data?.length === 0) {
+  if (data.length === 0) {
     return (
       <div>
         <h2 className={`text-lg font-bold text-center mb-4`}>Доступные заказы:</h2>

@@ -107,7 +107,7 @@ const AllOrders = () => {
             ) : row.original.rating === 4 ? (
               <span className="text-green-300 uppercase">{'хорошо'}</span>
             ) : row.original.rating === 1 ? (
-              <span className="text-red-600 uppercase">{'очень плохо'}</span>
+              <span className="text-red-600 uppercase">{'ужасно'}</span>
             ) : row.original.rating === 3 ? (
               <span className="text-yellow-400 uppercase">{'удовл-но'}</span>
             ) : (

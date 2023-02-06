@@ -171,8 +171,9 @@ const UserOrderCreate = () => {
   //всплывашка сохранения данных юзера
   const [isEditedInfo, setIsEditedInfo] = useState(false);
   //проверка на наличие имени
+  const userName = user ? user.firstname ? user.firstname :  '' : '';
   useEffect(() => {
-    if (user && user.firstname.length === 0) {
+    if (userName.length === 0) {
       setTimeout(() => {
         setIsEditedInfo(true);
       }, 2000);

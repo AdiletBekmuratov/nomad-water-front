@@ -14,7 +14,7 @@ type Props = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
 const RouteSheetTable: FC<Props> = ({ date, componentRef, routeSheet }) => {
   return (
     <div ref={componentRef}>
-      {date && <h3 className="font-semibold text-center">{`За: ${date}`}</h3>}
+      {date && <h3 className="font-semibold text-center">{`Маршрутный лист за: ${date}`}</h3>}
       <table className="border-collapse w-full bg-white">
         <tr className="">
           <th className="border text-left p-2">Номер заказа</th>
@@ -45,11 +45,13 @@ const RouteSheetTable: FC<Props> = ({ date, componentRef, routeSheet }) => {
                   : 'Нет комментариев'
                 : 'Нет комментариев'}
             </td>
-            {route.order.orderProducts.map((order, idx) => (
-              <td
-                key={idx}
-                className="border text-left p-2">{`${order.product.productName}, к. ${order.quantity}`}</td>
-            ))}
+            <td className="border text-left p-2">
+              {route.order.orderProducts.map((order, idx) => (
+                <p
+                  key={idx}
+                  className="text-left p-2">{`${idx+1})`}{`${order.product.productName}, к. ${order.quantity}`}</p>
+              ))}
+            </td>
             <td className="border text-left p-2">{`${route.order.paymentMethod!.name}`}</td>
             <td className="border text-left p-2">{`${route.order.initialPrice} тг`}</td>
             <td className="border text-left p-2">{`${route.order.totalPrice} тг`}</td>

@@ -1,12 +1,13 @@
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 import { useAppDispatch } from '@/hooks';
+import { formatDate } from '@/hooks/dateChange';
 
 import { useUpdateUserMeMutation } from '@/redux/services/user.service';
 import { getMe } from '@/redux/slices/auth';
 import { IUser, IUserFull } from '@/types';
 import { Form, Formik } from 'formik';
-import { FC, Dispatch, SetStateAction } from 'react';
+import { FC, Dispatch, SetStateAction, useState, ChangeEvent } from 'react';
 import toast from 'react-hot-toast';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import * as yup from 'yup';
@@ -19,9 +20,16 @@ interface IEditModalProps {
 export const Edit: FC<IEditModalProps> = ({ visible, setVisible, user }) => {
   const [update, { isLoading }] = useUpdateUserMeMutation();
   const dispatch = useAppDispatch();
+  const [currentDate, setCurrentDate] = useState(``);
+
+  const changeDate = (e: ChangeEvent<HTMLInputElement>) => {
+    setCurrentDate(e.target.value);
+  };
+
   const handleEdit = async (values: IUser) => {
+    const updatedValues = { ...values, birthday: formatDate(new Date(currentDate)) };
     toast
-      .promise(update(values).unwrap(), {
+      .promise(update(updatedValues).unwrap(), {
         loading: 'Загрузка',
         success: 'Обновлено успешно',
         error: (error) => JSON.stringify(error, null, 2)
@@ -31,8 +39,9 @@ export const Edit: FC<IEditModalProps> = ({ visible, setVisible, user }) => {
   };
 
   const handleEditSave = async (values: IUser) => {
+    const updatedValues = { ...values, birthday: formatDate(new Date(currentDate)) };
     toast
-      .promise(update(values).unwrap(), {
+      .promise(update(updatedValues).unwrap(), {
         loading: 'Загрузка',
         success: 'Сохранено',
         error: (error) => JSON.stringify(error, null, 2)
@@ -65,12 +74,19 @@ export const Edit: FC<IEditModalProps> = ({ visible, setVisible, user }) => {
               <Input inputType="formik" name="firstname" id="firstname" label="Имя" />
               <Input inputType="formik" name="middleName" id="middleName" label="Отчество" />
             </div>
-            {user && user.firstname.length === 0 ? (
-              <p className={`text-center text-xs`}>Необходимо заполнить хотя бы имя.</p>
-            ) : null}
-            {/* <div>
-              <h2>Также рекомендуем добавить дату рождения, чтобы получать больше бонусов</h2>
-            </div> */}
+
+            <div>
+              <Input
+                inputType="formik"
+                type="date"
+                name="birthday"
+                id="birthday"
+                label="День рождения"
+                onChange={(e) => changeDate(e)}
+                value={currentDate}
+                />
+                <h2 className={`text-xs text-center`}>Рекомендуем добавить дату рождения, чтобы получать больше бонусов</h2>
+            </div>
             <div className={`flex gap-3 justify-between`}>
               <Button type="submit" disabled={!isValid} className={`hover:bg-blue-500`}>
                 Сохранить

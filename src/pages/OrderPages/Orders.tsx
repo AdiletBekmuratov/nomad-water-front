@@ -24,13 +24,14 @@ import { BsFillCartFill } from 'react-icons/bs';
 import { ICourierOrder } from '@/types/courier.types';
 
 const Orders = () => {
-  const { data: allOrders, isLoading, refetch } = useGetUserOrderQuery();
-  const [isRating, setIsRating] = useState(false);
+  const { data: allOrders = [], isLoading, refetch } = useGetUserOrderQuery();
+  const orders = allOrders.filter((order) => order.statusId !== 3 && order.statusId !== 4);
 
   const clientRef = useRef<WebSocket | null>();
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [rowData, setRowData] = useState<ICourierOrder>();
+
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { products = [] } = useAppSelector((state) => state.cart);
@@ -54,10 +55,7 @@ const Orders = () => {
     setIsOpenModal(true);
   };
 
-  const handleRating = (row: Row<ICourierOrder>) => {
-    setRowData(row.original);
-    setIsRating(true);
-  };
+
 
   useEffect(() => {
     if (waitingToReconnect) {
@@ -139,20 +137,7 @@ const Orders = () => {
         header: 'Комментарий',
         accessorKey: 'comment'
       },
-      {
-        header: 'Оценить заказ',
-        cell: ({ row }) => {
-          if (row.original.user.role) {
-            if (row.original.user.role === 'ROLE_USER') {
-              if (row.original.rating) {
-                return `Заказ оценен на ${row.original.rating} звезд(ы)`;
-              } else if (row.original.statusId === 3) {
-                return <ActionButtons handleRating={() => handleRating(row)} />;
-              }
-            }
-          }
-        }
-      },
+      
       {
         header: 'Отменить заказ',
         cell: ({ row }) =>
@@ -163,16 +148,16 @@ const Orders = () => {
     ],
     []
   );
-  if (!allOrders) {
+  if (!orders) {
     return <Loader />;
   }
 
   return (
     <Layout className={``}>
-      {allOrders?.length === 0 ? (
+      {orders.length === 0 ? (
         <div className="flex items-center flex-col gap-3">
           <h2 className={`text-xl font-semibold `}>Мои заказы</h2>
-          <h2 className={`text-lg font-semibold text-red-600`}>Заказов нет!</h2>
+          <h2 className={`text-lg font-semibold text-red-600`}>Текущих заказов нет</h2>
           <span> Перейдите в каталог и оформите хотя бы один заказ:</span>
           <Link to="/catalog">
             <Button className={`w-32 hover:bg-blue-900`}>В каталог</Button>
@@ -187,13 +172,10 @@ const Orders = () => {
           )}
         </div>
       ) : (
-        <>
-          <Table id="ProductsTable" data={allOrders} columns={columnsUser} title="Текущие заказы" />
-
-          <div className={`border-b-2 border-dotted border-gray-700 py-2 my-3 `}></div>
-          <OrderHistory />
-        </>
+        <Table id="ProductsTable" data={orders} columns={columnsUser} title="Текущие заказы" />
       )}
+      <div className={`border-b-2 border-dotted border-gray-700 py-2 my-3 `}></div>
+      <OrderHistory />
       {delayOrderProduct.length > 0 && <DelayOrders delayOrderProduct={delayOrderProduct} />}
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
         <div className="flex items-center justify-between">
@@ -221,7 +203,6 @@ const Orders = () => {
           </Form>
         </Formik>
       </Modal>
-      <RateOrder data={rowData!} setIsOpenModal={setIsRating} isOpenModal={isRating} />
     </Layout>
   );
 };

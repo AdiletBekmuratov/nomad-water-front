@@ -9,6 +9,7 @@ import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { formatDate } from '@/hooks/dateChange';
 
 interface IEditModalProps {
   visible: boolean;
@@ -43,17 +44,7 @@ export const EditModalUser: FC<IEditModalProps> = ({ visible, setVisible, data }
       });
   };
 
-  function padTo2Digits(num: number) {
-    return num.toString().padStart(2, '0');
-  }
-
-  function formatDate(date: Date) {
-    return [
-      padTo2Digits(date.getDate()),
-      date.toLocaleString('en', { month: 'long' })
-      //date.getFullYear()
-    ].join(' ');
-  }
+  
   const changeDate = (e: ChangeEvent<HTMLInputElement>) => {
     setCurrentDate(e.target.value);
     console.log(currentDate);

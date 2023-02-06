@@ -15,7 +15,7 @@ import {
 } from '@/redux/services/user.service';
 import { ILoginForm, IUserFull } from '@/types';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { login } from '@/redux/slices/auth';
+import { getMe, login } from '@/redux/slices/auth';
 
 const params = new URLSearchParams(location.search);
 const token = params.get('token');
@@ -74,7 +74,7 @@ const RegisterLinkEmployee: FC = () => {
         loading: 'Загрузка...',
         success: 'Добро пожаловать в Nomad Water',
         error: (error) => JSON.stringify(error, null, 2)
-      })
+      }).then(() => dispatch(getMe()))
       .finally(() => {
         navigate('/catalog');
       });
@@ -191,10 +191,10 @@ const RegisterLinkEmployee: FC = () => {
                   <>
                     <Input
                       inputType="formik"
-                      type="text"
                       name="shopkeeperPhone"
                       id="shopkeeperPhone"
                       label="Номер владельца склада"
+                      mask="+79999999999"
                     />
                   </>
                 )}
@@ -205,16 +205,6 @@ const RegisterLinkEmployee: FC = () => {
               <Button type="submit" loading={isLoading || isL} onClick={() => setVisible(true)}>
                 Зарегистрироваться
               </Button>
-              {/* <Modal isOpenModal={visible} setIsOpenModal={setVisible}>
-                <div className={`flex flex-col gap-3 text-center px-10`}>
-                  <h2 className={`text-lg font-semibold`}>Ваши данные сохранены!</h2>
-                  <span>В течении минуты на {props.values.phone} придет смс код.</span>{' '}
-                  <p>Используйте его вместо пароля для входа в систему</p>
-                  <Link to="/login/user">
-                    <Button>Войти</Button>
-                  </Link>
-                </div>
-              </Modal> */}
             </div>
           </Form>
         )}

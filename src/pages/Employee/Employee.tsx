@@ -41,13 +41,13 @@ const Employee = () => {
       id: 4,
       name: 'Продукты'
     },
+    // {
+    //   id: 5,
+    //   name: 'Все маршруты'
+    // },
     {
       id: 5,
-      name: 'Все маршруты'
-    },
-    {
-      id: 6,
-      name: 'Получить листы курьера'
+      name: 'Маршрутные листы'
     }
   ];
   let flex: string = '';
@@ -88,7 +88,7 @@ const Employee = () => {
       <div
         className={` bg-light-blue rounded-lg 
        font-bold text-xs md:text-sm gap-2 md:gap-3 `}>
-        <div className={`grid grid-cols-2 md:grid-cols-7  items-center justify-between gap-3`}>
+        <div className={`grid grid-cols-2 md:grid-cols-6  items-center justify-between gap-3`}>
           {buttons.map((button) => (
             <button
               key={button.id}
@@ -130,15 +130,14 @@ const Employee = () => {
             <EmployeeAllProducts />
           </div>
         )}
-        {choice === '5' && (
+        {/* {choice === '5' && (
           <div className={``}>
-            {/* <h2 className={styleTitle}>Все маршруты</h2> */}
             <AllRouteSheets />
           </div>
-        )}
-        {choice === '6' && (
+        )} */}
+        {choice === '5' && (
           <div>
-            <h2 className={styleTitle}>Найти по курьеру</h2>
+            <h2 className={styleTitle}>Найти по курьеру и дате</h2>
             <CourierRouteSheet />
           </div>
         )}
