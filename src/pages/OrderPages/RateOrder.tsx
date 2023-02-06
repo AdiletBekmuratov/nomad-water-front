@@ -13,11 +13,6 @@ type Props = {
   data: ICourierOrder;
 };
 
-type Rating = {
-  value: number;
-  checked: boolean;
-};
-
 const RateOrder: FC<Props> = ({ isOpenModal, setIsOpenModal, data }) => {
   const [rateOrder] = useRateOrderMutation();
   const [rating, setRating] = useState<number>(0);
@@ -87,7 +82,9 @@ const RateOrder: FC<Props> = ({ isOpenModal, setIsOpenModal, data }) => {
         />
       </div>
       <div className="w-1/3 mx-auto mt-4">
-        <Button onClick={handleRate}>Оценить</Button>
+        <Button onClick={handleRate} disabled={rating === 0}>
+          Оценить
+        </Button>
       </div>
     </Modal>
   );
