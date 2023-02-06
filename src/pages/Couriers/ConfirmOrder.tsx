@@ -172,7 +172,7 @@ export const ConfirmOrder = () => {
           )
       },
       {
-        header: 'Действия',
+        header: 'Принять заказ',
         cell: ({ row }) => (
           <ActionButtons
             handleConfirmClick={() => {

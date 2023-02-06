@@ -151,7 +151,7 @@ export const AcceptedOrders = () => {
           )
       },
       {
-        header: 'Действия',
+        header: 'Доставить заказ',
         cell: ({ row }) => (
           <ActionButtons
             handleCompleteClick={() => {
