@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAppSelector } from '@/hooks';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { toast } from 'react-hot-toast';
 
@@ -9,7 +9,7 @@ import { useCreateProfileMutation, useGetALLProfilesQuery } from '@/redux/servic
 import { useAppDispatch } from '@/hooks';
 import { IProduct, IProfile, IUsersOrder } from '@/types';
 
-import {  OrderCard, Total } from '@/components/Order';
+import { OrderCard, Total } from '@/components/Order';
 import { OrderAccordion } from './OrderAccordion';
 import { WS_URL } from '@/redux/http';
 
@@ -33,11 +33,11 @@ const UserOrderCreate = () => {
   const { products, total } = useAppSelector((state) => state.cart);
 
   const dispatch = useAppDispatch();
-//список профилей
+  //список профилей
   const { data: profiles = [], refetch } = useGetALLProfilesQuery();
   //создание профиля при первом заказе
   const [create, { isLoading: loadProfile }] = useCreateProfileMutation();
-//самовывоз заказа клиентом
+  //самовывоз заказа клиентом
   const [pickup, setPickup] = useState(false);
   //использование бонусов при заказе
   const [useBonus, setUseBonus] = useState(false);
@@ -47,7 +47,7 @@ const UserOrderCreate = () => {
   const clientRef = useRef<WebSocket | null>(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-//выбор профиля при заказе если клиент не сделал выбор
+  //выбор профиля при заказе если клиент не сделал выбор
   const initProf = profiles.length > 0 ? profiles[0] : null;
   const initAddress: AddressType = {
     name: initProf ? initProf.name! : '',
@@ -58,13 +58,13 @@ const UserOrderCreate = () => {
     flat: initProf ? initProf.flat : '',
     addressComment: initProf ? initProf.addressComment! : ''
   };
-//адрес если профиля не было или он не был изменен
+  //адрес если профиля не было или он не был изменен
   const [address, setAddress] = useState<AddressType>(initAddress);
   //адрес если профиль был изменен
   const [addressOrder, setAddressOrder] = useState('');
   //валидность формы
   const [isValid, setIsValid] = useState(false);
-// создание заказа
+  // создание заказа
   const handleSendOrder = () => {
     //если не было профилей создаем при заказе
     let values: IProfile = {
@@ -74,7 +74,7 @@ const UserOrderCreate = () => {
       flat: address?.flat ? address?.flat : '',
       addressComment: address?.addressComment ? address?.addressComment : ''
     };
-//создание первого профиля
+    //создание первого профиля
     const handleCreate = () => {
       toast
         .promise(
@@ -95,7 +95,7 @@ const UserOrderCreate = () => {
         });
     };
     profiles.length < 1 && handleCreate();
-//пересохраняем продукты для отправки
+    //пересохраняем продукты для отправки
     const product = products.map((product) => {
       return {
         productId: product.id,
@@ -123,12 +123,12 @@ const UserOrderCreate = () => {
       orderProductsDto: product,
       withDeposit: useBonus
     };
-//отправка заказа по сокету
+    //отправка заказа по сокету
     clientRef.current?.send(JSON.stringify(value));
-//очистка корзины
+    //очистка корзины
     dispatch(clearItems());
   };
-//сокеты
+  //сокеты
   useEffect(() => {
     if (waitingToReconnect) {
       return;

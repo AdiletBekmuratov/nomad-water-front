@@ -6,5 +6,6 @@ export type IProfile = {
   flat: string;
   created_date?: string;
   addressComment?: string;
-
+  longitude?: string,
+  latitude?: string
 };
