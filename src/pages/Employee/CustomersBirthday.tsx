@@ -55,7 +55,7 @@ const CustomersBirthday = () => {
       },
       {
         header: 'Сумма за год',
-       accessorKey: 'annualSpent'
+        accessorKey: 'annualSpent'
       },
       {
         header: 'Карточка клиента',
@@ -72,6 +72,9 @@ const CustomersBirthday = () => {
   );
   if (isLoading) {
     return <Loader />;
+  }
+  if (users.length === 0) {
+    return null;
   }
   return <Table id="AllUsersTable" data={users} columns={columns} />;
 };

@@ -85,6 +85,9 @@ const AllCustomers = () => {
   if (isLoading) {
     return <Loader />;
   }
+  if (users.length === 0) {
+    return null;
+  }
   return <Table id="AllUsersTable" data={users} columns={columns} />;
 };
 export default AllCustomers;

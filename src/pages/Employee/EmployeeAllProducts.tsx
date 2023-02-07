@@ -65,7 +65,7 @@ const EmployeeAllProducts = () => {
 
       {
         header: 'Изменить поля продукта',
-        cell: ({ row }) =><ActionButtons handleEditClick={() => handleEditRowClick(row)} />
+        cell: ({ row }) => <ActionButtons handleEditClick={() => handleEditRowClick(row)} />
       }
     ],
     []
@@ -73,6 +73,9 @@ const EmployeeAllProducts = () => {
 
   if (isLoading) {
     return <Loader />;
+  }
+  if (products.length < 1) {
+    return null;
   }
 
   return (
