@@ -3,3 +3,4 @@
 
 export const API_URL = 'http://localhost:8080/api';
 export const WS_URL = 'ws://localhost:8080';
+export const OSM_URL = 'https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=Kazakhstan,Astana,'

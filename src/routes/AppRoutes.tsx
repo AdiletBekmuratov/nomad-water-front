@@ -16,6 +16,7 @@ import UserAppeal from '@/pages/UserAppeal';
 import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminCategory from '@/pages/admin/AdminCategory';
 import AdminRouteSheet from '@/pages/admin/AdminRouteSheet';
+import SuggestionExample from '@/pages/SuggestionExample';
 
 const Landing = lazy(() => import('@/pages/Landing'));
 const RouteSheet = lazy(() => import('@/pages/Couriers/RouteSheet'));
@@ -172,6 +173,8 @@ const AppRoutes = () => {
 
             <Route path="/requestsUser" element={<RequestsUser />} />
             <Route path="/appeal" element={<UserAppeal />} />
+
+            <Route path="/suggest" element={<SuggestionExample />} />
           </Routes>
         </ScrollToTop>
       </Router>

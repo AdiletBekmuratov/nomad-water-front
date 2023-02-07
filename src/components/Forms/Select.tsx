@@ -1,6 +1,7 @@
-import Downshift from 'downshift';
+import Downshift, { ControllerStateAndHelpers } from 'downshift';
 import { FC } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
+import { Button } from './Button';
 
 interface ISelectProps {
   initialSelectedItem?: object;
@@ -9,7 +10,11 @@ interface ISelectProps {
   id: string;
   label: string;
   onSelectionItemsChange: Function;
+  onInputChange?:
+    | ((inputValue: string, stateAndHelpers: ControllerStateAndHelpers<object>) => void)
+    | undefined;
   customItem?: Function;
+  inputValue: string | null | undefined;
 }
 
 export const Select: FC<ISelectProps> = ({
@@ -19,7 +24,9 @@ export const Select: FC<ISelectProps> = ({
   label,
   onSelectionItemsChange,
   searchKey,
-  customItem
+  customItem,
+  onInputChange,
+  inputValue
 }) => {
   const itemToString = (item: any) => {
     return item && item[searchKey] ? item[searchKey] : '';
@@ -29,7 +36,9 @@ export const Select: FC<ISelectProps> = ({
     <Downshift
       initialSelectedItem={initialSelectedItem}
       itemToString={itemToString}
-      onChange={(selectedItem) => onSelectionItemsChange(selectedItem)}>
+      onChange={(selectedItem) => onSelectionItemsChange(selectedItem)}
+      onInputValueChange={onInputChange}
+      inputValue={inputValue}>
       {({
         getLabelProps,
         getInputProps,
@@ -42,39 +51,46 @@ export const Select: FC<ISelectProps> = ({
         inputValue
       }) => {
         return (
-          <div>
+          <div className="flex flex-col space-y-1 w-full">
             <label {...getLabelProps({ htmlFor: id, className: 'label' })}>
               <span className="label-text">{label}</span>
             </label>
+            {label && (
+              <label
+                {...getLabelProps({ htmlFor: id })}
+                className="font-montserrat text-dark-blue text-xs font-semibold">
+                {label}
+              </label>
+            )}
             <div className="flex space-x-2">
               <input
                 {...getInputProps({
                   id: id,
-                  className: 'input input-bordered w-full',
+                  className: 'w-full outline-none ring-0 border p-2',
                   placeholder: 'Search'
                 })}
                 type="text"
               />
 
-              <button
+              <Button
                 {...getToggleButtonProps({
                   className: 'btn btn-primary'
                 })}>
                 {isOpen ? 'close' : 'open'}
-              </button>
+              </Button>
 
               {selectedItem ? (
-                <button
-                  className="btn btn-error"
+                <Button
+                  buttonColor="bg-red-500"
                   onClick={() => {
                     onSelectionItemsChange(null);
                     clearSelection();
                   }}>
                   <AiOutlineClose />
-                </button>
+                </Button>
               ) : null}
             </div>
-            <ul {...getMenuProps()} className={`bg-base-200 ${isOpen ? 'menu' : 'hidden'}`}>
+            <ul {...getMenuProps()} className={`rounded p-2 ${isOpen ? 'menu' : 'hidden'}`}>
               {isOpen
                 ? items
                     .filter(
@@ -86,9 +102,9 @@ export const Select: FC<ISelectProps> = ({
                         <li
                           key={`menu-item-${index}`}
                           {...getItemProps({
-                            item,
-                            className: `rounded`
-                          })}>
+                            item
+                          })}
+                          className="hover:opacity-75 mt-2">
                           {customItem ? customItem(item) : item[searchKey]}
                         </li>
                       );

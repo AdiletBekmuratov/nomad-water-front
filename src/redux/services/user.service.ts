@@ -1,9 +1,9 @@
-import { IUser, ICreateUserPhone, IProduct } from '@/types';
-import {  IEmployeeCreateLink } from '@/types/employee.types';
+import { IUser, ICreateUserPhone, IProduct, IAddressData } from '@/types';
+import { IEmployeeCreateLink } from '@/types/employee.types';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { API_URL } from '../http';
+import { API_URL, OSM_URL } from '../http';
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -25,9 +25,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     getBirthdayUsers: builder.query<IUserFull[], void>({
@@ -37,9 +37,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //Получить всех пользователей по активности /active/{isActive}
@@ -50,9 +50,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //получить юзера по роли
@@ -63,9 +63,9 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //юзер по ID
@@ -81,8 +81,7 @@ export const userApi = createApi({
       query: (body) => ({
         url: `/user/me`,
         method: `PUT`,
-        body,
-        
+        body
       }),
       invalidatesTags: [{ type: 'Users', id: 'LIST' }]
     }),
@@ -179,12 +178,12 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-            { type: 'Users', id: 'LIST' }
-          ]
+              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+              { type: 'Users', id: 'LIST' }
+            ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
-    //добавить товар в избран 
+    //добавить товар в избран
     addFavorite: builder.mutation<void, number>({
       query: (id) => ({
         url: `/user/favorite/${Number(id)}`,
@@ -198,6 +197,12 @@ export const userApi = createApi({
         method: `DELETE`
       }),
       invalidatesTags: [{ type: 'Users', id: 'LIST' }]
+    }),
+
+    findLocation: builder.query<IAddressData[], string>({
+      query: (address) => ({
+        url: `${OSM_URL}&query=${address},Nur-Sultan%20010000`
+      })
     })
   })
 });
@@ -225,5 +230,7 @@ export const {
 
   useGetUserFavoriteQuery,
   useAddFavoriteMutation,
-  useDeleteFavoriteMutation
+  useDeleteFavoriteMutation,
+
+  useFindLocationQuery
 } = userApi;
