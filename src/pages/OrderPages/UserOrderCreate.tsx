@@ -53,7 +53,9 @@ const UserOrderCreate = () => {
     name: initProf ? initProf.name! : '',
     phone: user ? user.phone : '',
     firstname: user ? user.firstname : '',
+    //@ts-ignore
     street: initProf ? initProf.street : '',
+    //@ts-ignore
     houseNumber: initProf ? initProf.houseNumber : '',
     flat: initProf ? initProf.flat : '',
     addressComment: initProf ? initProf.addressComment! : ''
@@ -171,7 +173,7 @@ const UserOrderCreate = () => {
   //всплывашка сохранения данных юзера
   const [isEditedInfo, setIsEditedInfo] = useState(false);
   //проверка на наличие имени
-  const userName = user ? user.firstname ? user.firstname :  '' : '';
+  const userName = user ? (user.firstname ? user.firstname : '') : '';
   useEffect(() => {
     if (userName.length === 0) {
       setTimeout(() => {

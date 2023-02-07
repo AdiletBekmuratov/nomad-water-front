@@ -17,6 +17,7 @@ import { Button, Input } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
 
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
+import SuggestionExample from '../SuggestionExample';
 
 const OrderCreate: FC = () => {
   const dispatch = useAppDispatch();
@@ -35,6 +36,10 @@ const OrderCreate: FC = () => {
   const [pickup, setPickup] = useState(false);
   const [useBonus, setUseBonus] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('Картой');
+  const [profile, setProfile] = useState({
+    houseNumber: '',
+    street: ''
+  });
 
   const clientRef = useRef<WebSocket | null>(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
@@ -121,8 +126,8 @@ const OrderCreate: FC = () => {
   const validation = yup.object().shape({
     firstname: yup.string().required('Поле обязательное'),
     phone: yup.string().required('Поле обязательное'),
-    street: yup.string().required('Поле обязательное'),
-    houseNumber: yup.string().required('Поле обязательное'),
+    // street: yup.string().required('Поле обязательное'),
+    // houseNumber: yup.string().required('Поле обязательное'),
     flat: yup.string().required('Поле обязательное')
   });
   const styleInput = `font-montserrat placeholder:text-gray-400 cursor-pointer rounded-md`;
@@ -159,6 +164,7 @@ const OrderCreate: FC = () => {
                         label="Дом"
                         className={`${styleInput}`}
                       />
+
                       <Input
                         name="flat"
                         id="flat"

@@ -10,11 +10,17 @@ import { Modal } from '@/components/Layout/Modal';
 import { Form, Formik } from 'formik';
 import { DeleteProfile } from './DeleteProfile';
 import { CreateProfile } from './CreateProfile';
+import SuggestionExample from '@/pages/SuggestionExample';
 
 const Profiles = () => {
   const { data: profile = [] } = useGetALLProfilesQuery();
   const [update, { isLoading }] = useUpdateProfileMutation();
-
+  const [addressProfile, setAddressProfile] = useState({
+    houseNumber: '',
+    longitude: '',
+    latitude: '',
+    street: ''
+  });
   const [isOpenCreate, setIsOpenCreate] = useState(false); //создание нового профиля
   const [profileId, setProfileId] = useState(1);
   const [name, setName] = useState('');
@@ -26,8 +32,13 @@ const Profiles = () => {
   const styleP = `text-sm md:text-base grid grid-cols-2`;
   const styleName = `text-sm md:text-base grid grid-cols-2 py-1 border-b-2 border-gray-400 border-dashed`;
   const handleEdit = async (values: IProfile) => {
+    const value = {
+      ...values,
+      ...addressProfile
+    };
+    // console.log(value);
     toast
-      .promise(update(values).unwrap(), {
+      .promise(update(value).unwrap(), {
         loading: 'Загрузка',
         success: 'Обновлено успешно',
         error: (error) => JSON.stringify(error, null, 2)
@@ -36,8 +47,13 @@ const Profiles = () => {
   };
 
   const handleEditSave = async (values: IProfile) => {
+    const value = {
+      ...values,
+      ...addressProfile
+    };
+    // console.log(value);
     toast
-      .promise(update(values).unwrap(), {
+      .promise(update(value).unwrap(), {
         loading: 'Загрузка',
         success: 'Сохранено',
         error: (error) => JSON.stringify(error, null, 2)
@@ -50,8 +66,8 @@ const Profiles = () => {
 
   const validation = yup.object().shape({
     name: yup.string().required('Это поле обязательное'),
-    street: yup.string().required('Это поле обязательное'),
-    houseNumber: yup.string().required('Это поле обязательное'),
+    // street: yup.string().required('Это поле обязательное'),
+    // houseNumber: yup.string().required('Это поле обязательное'),
     flat: yup.string().required('Это поле обязательное'),
     addressComment: yup.string().required('Это поле обязательное')
   });
@@ -178,8 +194,11 @@ const Profiles = () => {
                   label="Название для нового адреса"
                   placeholder="Например: офис, дача, дом родителей"
                 />
-                <Input inputType="formik" id="street" name="street" label="Микрорайон / Улица" />
-                <Input inputType="formik" id="houseNumber" name="houseNumber" label="Номер дома" />
+                <SuggestionExample
+                  setAddress={setAddressProfile}
+                  label="Адрес проживания"
+                  id="address"
+                />
                 <Input inputType="formik" id="flat" name="flat" label="Квартира" />
                 <Input
                   inputType="formik"

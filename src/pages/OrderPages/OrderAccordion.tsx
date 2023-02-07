@@ -10,15 +10,16 @@ import * as yup from 'yup';
 import { EditProfile } from '@/pages/User/Profiles/EditProfile';
 import { Input } from '@/components/Forms';
 import { AddressType } from './UserOrderCreate';
+import SuggestionExample from '../SuggestionExample';
 
 type Props = {
   setAddressOrder: React.Dispatch<React.SetStateAction<string>>;
   setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
   setAddress: React.Dispatch<React.SetStateAction<AddressType>>;
-  address:AddressType;
+  address: AddressType;
 };
 
-export const OrderAccordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrder,address }) => {
+export const OrderAccordion: FC<Props> = ({ setIsValid, setAddress, setAddressOrder, address }) => {
   const { data: profiles = [] } = useGetALLProfilesQuery();
   const { user } = useAppSelector((state) => state.auth);
 
@@ -124,6 +125,12 @@ export const OrderAccordion: FC<Props> = ({ setIsValid, setAddress, setAddressOr
                     className={`${styleInput}`}
                     value={selectedProfile ? selectedProfile.houseNumber : ''}
                   />
+                  {/* 
+                  <SuggestionExample
+                    setAddress={setProfile}
+                    id="address"
+                    label="Адрес проживания"
+                  /> */}
 
                   <Input
                     name="flat"

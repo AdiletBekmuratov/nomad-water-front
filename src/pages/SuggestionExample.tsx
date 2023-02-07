@@ -1,20 +1,18 @@
-import { useDebounce } from '@/hooks';
 import { OSM_URL } from '@/redux/http';
 import { IAddressData } from '@/types';
 import axios from 'axios';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import AsyncSelect from 'react-select/async';
-
-const SELECT_DATA = [
-  { id: 1, name: 'Text1' },
-  { id: 2, name: 'Text2' },
-  { id: 3, name: 'Text3' },
-  { id: 4, name: 'Text4' }
-];
 
 interface REACT_SELECT_ADDRESS {
   label: string;
   value: IAddressData;
+}
+
+interface Props {
+  setAddress?: Function;
+  label?: string;
+  id?: string;
 }
 
 const fetchAddressess = async (address: string) => {
@@ -26,7 +24,7 @@ const fetchAddressess = async (address: string) => {
   return payload;
 };
 
-const SuggestionExample = () => {
+const SuggestionExample: FC<Props> = ({ setAddress, label, id }) => {
   const [inputData, setInputData] = useState('');
 
   const promiseOptions = (
@@ -39,17 +37,29 @@ const SuggestionExample = () => {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center">
-      <div className="w-[400px]">
-        <AsyncSelect
-          cacheOptions
-          loadOptions={promiseOptions}
-          defaultOptions
-          onInputChange={(value) => setInputData(value)}
-          inputValue={inputData}
-          onChange={(value) => console.log(value)}
-        />
-      </div>
+    <div className="w-full">
+      {label && (
+        <label className="font-montserrat text-dark-blue text-xs font-semibold" htmlFor={id}>
+          {label}
+        </label>
+      )}
+      <AsyncSelect
+        id={id ? id : ''}
+        cacheOptions
+        loadOptions={promiseOptions}
+        defaultOptions
+        onInputChange={(value) => setInputData(value)}
+        inputValue={inputData}
+        onChange={(value) => {
+          setAddress &&
+            setAddress({
+              longitude: value?.value.lon,
+              latitude: value?.value.lat,
+              houseNumber: value?.value.address.house_number,
+              street: value?.value.address.road
+            });
+        }}
+      />
     </div>
   );
 };
