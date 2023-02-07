@@ -1,12 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import Loader from '@/components/Landing/Loader';
 import { ActionButtons, DeleteModal, Table } from '@/components/Table';
 
-import {
-  useGetAllProductsQuery,
-  useDeleteProductMutation
-} from '../../redux/services/base.service';
+import { useGetAllProductsQuery, useDeleteProductMutation } from '@/redux/services/base.service';
 import { IProduct } from '@/types/products.type';
 import { ColumnDef, Row } from '@tanstack/react-table';
 import { toast } from 'react-hot-toast';
@@ -47,44 +44,45 @@ const AdminProducts = () => {
 
   const columns = useMemo<ColumnDef<IProduct, any>[]>(
     () => [
+      // {
+      //   header: 'ID продукта',
+      //   accessorKey: 'id'
+      // },
       {
-        header: 'ID',
-        accessorKey: 'id'
+        header: 'Категория продукта',
+        accessorKey: 'productCategory.name'
+      },
+      {
+        header: 'Имя',
+        accessorKey: 'productName'
       },
       {
         header: 'Image',
         accessorKey: 'imageUrl',
-        cell: ({ getValue }) => <img src={getValue()} alt={getValue()} />
+        cell: ({ getValue }) => <img src={getValue()} alt={getValue()} className={`w-16 h-auto`} />
       },
+
       {
-        header: 'Name',
-        accessorKey: 'productName'
-      },
-      {
-        header: 'Category',
-        accessorKey: 'productCategory.name'
-      },
-      {
-        header: 'Description',
+        header: 'Описание',
         accessorKey: 'description',
         cell: ({ getValue }) => <>{getValue().slice(0, 20)}...</>
       },
 
       {
-        header: 'Product Price',
+        header: 'Цена продукта',
         accessorKey: 'productPrice'
       },
+      // {
+      //   header: 'Дата создания',
+      //   accessorKey: 'createdDate'
+      // },
       {
-        header: 'Created Date',
-        accessorKey: 'createdDate'
-      },
-      {
-        header: 'Updated Date',
+        header: 'Дата обновления',
         accessorKey: 'updatedDate'
       },
 
       {
-        header: 'Actions',
+        header: 'Изменить \n Деактивировать',
         cell: ({ row }) => (
           <ActionButtons
             handleEditClick={() => handleEditRowClick(row)}
@@ -107,6 +105,7 @@ const AdminProducts = () => {
         data={data}
         columns={columns}
         onAddClick={() => setVisibleCreate(true)}
+        title="Все продукты"
       />
 
       <CreateProduct visible={visibleCreate} setVisible={setVisibleCreate} />

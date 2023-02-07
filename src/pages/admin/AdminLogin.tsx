@@ -91,7 +91,7 @@ const AdminLogin = () => {
                     type="password"
                   />
                   <Button type="submit">Войти</Button>
-                  {/* {props.values.password === '' && <Button>Получить код</Button>} */}
+                 
                 </Form>
               )}
             </Formik>

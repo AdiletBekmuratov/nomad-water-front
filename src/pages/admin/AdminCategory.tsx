@@ -48,17 +48,18 @@ const AdminCategory = () => {
   const columns = useMemo<ColumnDef<IProductCategoryCreate, any>[]>(
     () => [
       {
-        header: 'ID',
+        header: 'ID категории',
         accessorKey: 'id'
       },
       {
-        header: 'Name',
+        header: 'Название категории',
         accessorKey: 'name'
       },
       {
-        header: 'Actions',
+        header: 'Изменить \n Деактивировать',
         cell: ({ row }) => (
           <ActionButtons
+          
             handleEditClick={() => handleEditRowClick(row)}
             handleDeleteClick={() => handleDeleteRowClick(row)}
           />
@@ -79,6 +80,7 @@ const AdminCategory = () => {
         data={data}
         columns={columns}
         onAddClick={() => setVisibleCreate(true)}
+        title='Категории товаров'
       />
 
       <CreateCategory visible={visibleCreate} setVisible={setVisibleCreate} />

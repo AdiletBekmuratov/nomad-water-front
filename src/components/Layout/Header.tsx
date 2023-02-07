@@ -1,10 +1,11 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 import { useAppDispatch } from '@/hooks/useAppDispatch';
-import { toast } from 'react-hot-toast';
 import { logout } from '@/redux/slices/auth';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { useGetUserFavoriteQuery } from '@/redux/services/user.service';
 
 import { FaUserTie } from 'react-icons/fa';
 import logo from '@/assets/crm/logoHead.png';
@@ -17,9 +18,7 @@ import {
   AiOutlineMenu,
   AiOutlineShoppingCart
 } from 'react-icons/ai';
-import { useGetUserFavoriteQuery } from '@/redux/services/user.service';
-
-//import { useState } from 'react';
+import { Bell } from './Bell';
 
 interface IHeader {
   className?: string;
@@ -32,7 +31,7 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
   const { user } = useAppSelector((state) => state.auth);
   const headerStyle = `flex items-center py-3 justify-between layout ${props.className}`;
   const { data: favorites = [] } = useGetUserFavoriteQuery();
-  // const [isDrop, setIsDrop] = useState();
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const handleLogout = async () => {
@@ -51,20 +50,21 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
     <div className="bg-white">
       {user ? (
         <div className={`${headerStyle}`}>
+          {/* //меню кнопка */}
           <div className="flex-1">
             <AiOutlineMenu
               onClick={() => setIsOpen((prev) => !prev)}
               className={`hidden md:block cursor-pointer w-6 h-6`}
             />
           </div>
-
+          {/* //лого */}
           <div className="flex justify-center items-center flex-1">
             <Link to="/" className={``}>
               <img src={logo} alt="nomadLogo" />
             </Link>
           </div>
-
           <div className={`flex items-center justify-end gap-4 md:gap-4 flex-1`}>
+            {/* //избранные */}
             {favorites.length > 0 ? (
               <Link to="/myFavorite" className={`cursor-pointer`}>
                 <AiFillHeart className="h-6 w-6" />
@@ -74,23 +74,45 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
                 <AiOutlineHeart className="h-6 w-6" />
               </Link>
             )}
-
+            {/* //Корзина//Создание заказа */}
             <div className={`hidden md:flex gap-4`}>
-              <Link to="/order">
-                {products.length === 0 ? (
-                  <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
-                ) : (
-                  <BsFillCartFill className="h-6 w-6 cursor-pointer" />
-                )}
-              </Link>
+              {user?.role === 'ROLE_USER' && (
+                <Link to="/order">
+                  {products.length === 0 ? (
+                    <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
+                  ) : (
+                    <BsFillCartFill className="h-6 w-6 cursor-pointer" />
+                  )}
+                </Link>
+              )}
+              {(user?.role === 'ROLE_EMPLOYEE' ||
+                user?.role === 'ROLE_MASTER' ||
+                user?.role === 'ROLE_ADMIN') && (
+                <Link to="/employeeOrder">
+                  {products.length === 0 ? (
+                    <AiOutlineShoppingCart className="h-6 w-6 cursor-pointer" />
+                  ) : (
+                    <BsFillCartFill className="h-6 w-6 cursor-pointer" />
+                  )}
+                </Link>
+              )}
 
-              {/* {isDrop && <Dropdown />} */}
+              {/* //личная страница */}
               {user?.role === 'ROLE_COURIER' ? (
-                <Link to="/courier">
+                <>
+                  <Link to="/courier/orders">
+                    <Bell />
+                  </Link>
+                  <Link to="/courier">
+                    <FaUserTie className="h-6 w-6" />
+                  </Link>
+                </>
+              ) : user?.role === 'ROLE_EMPLOYEE' || user?.role === 'ROLE_ADMIN' ? (
+                <Link to="/employee">
                   <FaUserTie className="h-6 w-6" />
                 </Link>
-              ) : user?.role === 'ROLE_EMPLOYEE' ? (
-                <Link to="/employee">
+              ) : user?.role === 'ROLE_MASTER' ? (
+                <Link to="/master">
                   <FaUserTie className="h-6 w-6" />
                 </Link>
               ) : (
@@ -99,7 +121,6 @@ export const Header: FC<IHeader> = ({ setIsOpen, ...props }) => {
                 </Link>
               )}
             </div>
-
             <RxExit className="h-6 w-6 cursor-pointer" onClick={handleLogout} />
           </div>
         </div>

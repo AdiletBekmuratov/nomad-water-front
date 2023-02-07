@@ -1,6 +1,6 @@
 import { ICourierOrder } from '@/types/courier.types';
 import { ColumnDef } from '@tanstack/react-table';
-import { useMemo, useState, useRef, useEffect } from 'react';
+import { useMemo, useState, useRef, useEffect, FC } from 'react';
 import { ActionButtons, Table } from '../../components/Table';
 import { useLazyGetCourierOrderQuery } from '@/redux/services/courier.service';
 import Loader from '../../components/Landing/Loader';
@@ -9,7 +9,12 @@ import { Modal } from '../../components/Layout/Modal';
 import { Button } from '../../components/Forms';
 import { WS_URL } from '@/redux/http';
 
-export const AcceptedOrders = () => {
+type Props = {
+  setClick: React.Dispatch<React.SetStateAction<boolean>>;
+  click: boolean;
+};
+
+export const AcceptedOrders: FC<Props> = ( {setClick, click} ) => {
   const [courierOrders] = useLazyGetCourierOrderQuery();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -112,6 +117,13 @@ export const AcceptedOrders = () => {
     }
   }, [waitingToReconnect]);
 
+  useEffect(() => {
+    //@ts-ignore
+    courierOrders().then((res) => setData(res.data?.filter((order) => order.statusId === 2)));
+   
+    setClick(false);
+  }, [click]);
+
   const columns = useMemo<ColumnDef<ICourierOrder, any>[]>(
     () => [
       {
@@ -151,7 +163,7 @@ export const AcceptedOrders = () => {
           )
       },
       {
-        header: 'Действия',
+        header: 'Доставить заказ',
         cell: ({ row }) => (
           <ActionButtons
             handleCompleteClick={() => {
@@ -169,7 +181,7 @@ export const AcceptedOrders = () => {
     return <Loader />;
   }
   //@ts-ignore
-  if (data?.length === 0) {
+  if (data.length === 0) {
     return (
       <div>
         <h2 className={`text-lg font-bold text-center mb-4`}>Доступные заказы:</h2>

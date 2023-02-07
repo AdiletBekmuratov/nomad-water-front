@@ -12,39 +12,18 @@ import { Input } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
 import { CardBottle } from '@/pages/catalog/CardBottle';
 
-import { motion } from 'framer-motion';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FiDelete } from 'react-icons/fi';
 
-const cartAnimation = {
-  hidden: {
-    y: 100,
-    opacity: 0
-  },
-  visible: (custom: any) => ({
-    transition: { duration: 1.5, delay: custom * 0.1 },
-    y: 0,
-    opacity: 1
-  })
-};
-const butAnimation = {
-  hidden: {
-    x: 200,
-    opacity: 0
-  },
-  visible: {
-    transition: { duration: 1.5, delay: 0.1 },
-    x: 0,
-    opacity: 1
-  }
-};
 
 const Catalog: FC = () => {
   //категория товаров
   const { data: categories = [] } = useGetProductCategoryQuery();
 
   //все товары и услуги
-  const { data: products = [], isLoading } = useGetAllProductsQuery();
+  const { data: allProducts = [], isLoading } = useGetAllProductsQuery();
+  //все доступные товары
+  const products = allProducts.filter(prod => prod.inStock === true)
   const product = products.map((item: IProduct) => item);
   //получить товары по категории
   const [categoryId, setCategoryId] = useState('');
@@ -93,13 +72,7 @@ const Catalog: FC = () => {
           }
         />
         {/* кнопки для сортировки по категориям */}
-        <motion.div
-          className={`grid sm:grid-cols-3 gap-4 md:gap-4`}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ amount: 0.2, once: true }}
-          variants={butAnimation}
-          custom={2}>
+        <div className={`grid sm:grid-cols-3 gap-4 md:gap-4`}>
           {categories.map((item) => (
             <button
               value={item.name}
@@ -125,15 +98,9 @@ const Catalog: FC = () => {
               <span>{item.name}</span>
             </button>
           ))}
-        </motion.div>
+        </div>
       </div>
-      <motion.div
-        className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-1 sm:grid-cols-2  `}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ amount: 0.2, once: true }}
-        variants={cartAnimation}
-        custom={1}>
+      <div className={`grid gap-x-4 gap-y-6 pt-6 grid-cols-1 sm:grid-cols-2  `}>
         {categoryId === '' ? (
           <>
             {value.length === 0
@@ -160,7 +127,7 @@ const Catalog: FC = () => {
             ))}
           </>
         )}
-      </motion.div>
+      </div>
       <div className={`border-b border-solid border-gray-300 mt-8 mb-4 md:border-none`}></div>
     </Layout>
   );

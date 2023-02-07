@@ -9,6 +9,10 @@ interface IActionButtonsProps {
   handleImageClick?: Function;
   handleConfirmClick?: Function;
   handleCompleteClick?: Function;
+  handleCancelOrder?: Function;
+  handleRating?: Function;
+  ratingId?: number;
+  setRating?: Function | undefined;
 }
 
 export const ActionButtons: FC<IActionButtonsProps> = ({
@@ -16,7 +20,11 @@ export const ActionButtons: FC<IActionButtonsProps> = ({
   handleEditClick,
   handleImageClick,
   handleConfirmClick,
-  handleCompleteClick
+  handleCompleteClick,
+  handleCancelOrder,
+  handleRating,
+  ratingId,
+  setRating
 }) => {
   return (
     <>
@@ -63,6 +71,22 @@ export const ActionButtons: FC<IActionButtonsProps> = ({
               onClick={() => handleCompleteClick()}
               className={`!rounded-full p-3 bg-medium-blue`}>
               Подтвердить
+            </Button>
+          </div>
+        )}
+        {handleCancelOrder && (
+          <div data-tip="Delete" className="tooltip">
+            <Button
+              onClick={() => handleCancelOrder()}
+              className={`!rounded-full p-3 bg-medium-blue`}>
+              Отменить
+            </Button>
+          </div>
+        )}
+        {handleRating && (
+          <div data-tip="Rate" className="tooltip">
+            <Button onClick={() => handleRating()} className={`!rounded-full p-3 bg-medium-blue`}>
+              Оценить
             </Button>
           </div>
         )}

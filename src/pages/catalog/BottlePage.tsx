@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { useGetAllProductsQuery } from '@/redux/services/base.service';
-import { IProduct } from '@/types';
+import { ICart, IProduct } from '@/types';
 
 import { CardBottle } from '@/pages/catalog/CardBottle';
 import { Button } from '@/components/Forms';
@@ -10,7 +10,7 @@ import { Layout } from '@/components/Layout';
 import Loader from '@/components/Landing/Loader';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { addItem, deleteItem } from '@/redux/slices/cartSlice';
-import { useAppSelector } from '@/hooks';
+import { useAppSelector, useLocalStorage } from '@/hooks';
 import { toast } from 'react-hot-toast';
 
 const BottlePage = () => {
@@ -18,17 +18,19 @@ const BottlePage = () => {
   const { id } = useParams();
   const { data = [], isLoading } = useGetAllProductsQuery();
   //const product = data?.map((item: IProduct) => item);
+  const [cart, setCart] = useLocalStorage<ICart>('cart', { products: [], total: 0 });
   const urlId: number = parseInt(id ?? '1');
   const product = data.find((item: IProduct) => item.id === urlId);
   const [isChoice, setIsChoice] = React.useState(false);
   const dispatch = useAppDispatch();
   const onClickAdd = () => {
-    //@ts-ignore
-    dispatch(addItem(product));
+    let tempCart: ICart = JSON.parse(JSON.stringify(cart));
+    tempCart.products ? tempCart.products.push({ ...product!, quantity: 1 }) : [];
+    dispatch(addItem({ ...product!, quantity: 1 }));
     setIsChoice(true);
   };
   const onDeleteItem = (id: number) => {
-    dispatch(deleteItem(id));
+    dispatch(deleteItem(Number(product!.id)));
     setIsChoice(false);
   };
   const onClickToast =  () => {
@@ -42,9 +44,9 @@ const BottlePage = () => {
       <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4`}>
         <div className={`grid grid-cols-1 gap-2`}>
           <div className={` bg-white rounded-2xl p-3 flex items-center justify-center`}>
-            <img src={product?.imageUrl} className={`w-64 h-auto`} alt="bottleXs" />
+            <img src={product?.imageUrl} className={``} alt="bottleXs" />
           </div>
-          <div className={`grid grid-cols-1 items-center `}>
+          <div className={`grid grid-cols-1 items-center justify-center`}>
             <>
               {isChoice ? (
                 <Button

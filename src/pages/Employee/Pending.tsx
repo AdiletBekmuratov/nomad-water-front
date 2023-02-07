@@ -1,12 +1,12 @@
 import { ICourierOrder } from '@/types/courier.types';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ActionButtons, Table } from '@/components/Table';
 import {
   useConfirmOrdersMutation,
   useLazyGetPendingOrdersQuery
 } from '@/redux/services/employee.service';
 import Loader from '@/components/Landing/Loader';
-import { toast } from 'react-hot-toast';
+
 import { ColumnDef } from '@tanstack/react-table';
 import { Modal } from '@/components/Layout/Modal';
 import { Button } from '@/components/Forms';
@@ -22,6 +22,8 @@ const Pending = () => {
 
   const clientRef = useRef<WebSocket | null>(null);
   const acceptRef = useRef<WebSocket | null>(null);
+  const cancelRef = useRef<WebSocket | null>(null);
+
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
@@ -36,9 +38,11 @@ const Pending = () => {
     if (!clientRef.current) {
       const client = new WebSocket(WS_URL + '/order/create');
       const employee = new WebSocket(WS_URL + '/order/confirm');
+      const cancel = new WebSocket(WS_URL + '/order/cancel');
 
       clientRef.current = client;
       acceptRef.current = employee;
+      cancelRef.current = cancel;
 
       client.onerror = (err) => {
         console.error(err);
@@ -48,9 +52,15 @@ const Pending = () => {
         console.error(err);
       };
 
+      cancel.onerror = (err) => console.error(err);
+
       client.onopen = () => {
         setIsConnected(true);
         console.log('Диспетчер подключен');
+      };
+
+      cancel.onopen = () => {
+        console.log('Отмена заказа');
       };
 
       employee.onopen = () => {
@@ -81,6 +91,14 @@ const Pending = () => {
         }
       };
 
+      cancel.onclose = () => {
+        if (cancelRef.current) {
+          console.log('Отмена');
+        } else {
+          console.log('Отмена бездействия');
+        }
+      };
+
       client.onmessage = (message) => {
         const newData = JSON.parse(message.data);
         console.log(newData);
@@ -91,6 +109,10 @@ const Pending = () => {
       employee.onmessage = (message) => {
         const newData = JSON.parse(message.data);
         console.log(newData);
+      };
+
+      cancel.onmessage = (message) => {
+        const newData = JSON.parse(message.data);
       };
     }
   }, [waitingToReconnect]);
@@ -114,11 +136,27 @@ const Pending = () => {
         accessorKey: 'id'
       },
       {
+        header: 'Статус заказа',
+        cell: ({ row }) =>
+          row.original.statusId === 2 ? (
+            <span className="text-blue-400 uppercase">{'в пути'}</span>
+          ) : row.original.statusId === 0 ? (
+            <span className="text-yellow-400 uppercase">{'В ожидании'}</span>
+          ) : row.original.statusId === 1 ? (
+            <span className="text-fuchsia-400 uppercase">{'подтвержден'}</span>
+          ) : row.original.statusId === 3 ? (
+            <span className="text-green-500 uppercase">{'доставлен'}</span>
+          ) : (
+            <span className="text-red-500 uppercase">{'отменен'}</span>
+          )
+      },
+
+      {
         header: 'Адрес доставки',
         accessorKey: 'address'
       },
       {
-        header: 'Комментарий',
+        header: 'Комментарий к заказу',
         accessorKey: 'comment'
       },
       {
@@ -126,7 +164,7 @@ const Pending = () => {
         accessorKey: 'paymentMethod.name'
       },
       {
-        header: 'Номер телефона',
+        header: 'Номер телефона получателя',
         accessorKey: 'phone'
       },
       {
@@ -162,7 +200,7 @@ const Pending = () => {
 
   return (
     <div className="py-3">
-      <Table data={data!} columns={columns} id="ProductsTable" title="Не подтвержденные заказы" />
+      <Table data={data!} columns={columns} id="ProductsTable"  />
       <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
         <div className="font-montserrat text-dark-blue">
           <p>Вы действительно хотите подтвердить данный заказ?</p>

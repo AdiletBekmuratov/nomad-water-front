@@ -1,6 +1,6 @@
 import { ICourierOrder } from '@/types/courier.types';
 import { ColumnDef } from '@tanstack/react-table';
-import { useMemo, useState, useRef, useEffect } from 'react';
+import { useMemo, useState, useRef, useEffect, FC } from 'react';
 import { ActionButtons, Table } from '../../components/Table';
 import { useLazyGetAllConfirmedOrdersQuery } from '@/redux/services/courier.service';
 import Loader from '../../components/Landing/Loader';
@@ -9,20 +9,26 @@ import { Modal } from '../../components/Layout/Modal';
 import { Button } from '../../components/Forms';
 import { WS_URL } from '@/redux/http';
 
-export const ConfirmOrder = () => {
-  const [fetchOrders] = useLazyGetAllConfirmedOrdersQuery();
+type Props = {
+  setClick: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
+export const ConfirmOrder: FC<Props> = ({ setClick }) => {
+  const [fetchOrders] = useLazyGetAllConfirmedOrdersQuery();
+  
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [rowData, setRowData] = useState<ICourierOrder[] | undefined>();
-
+  
   const [data, setData] = useState<ICourierOrder>();
-
+  
   const clientRef = useRef<WebSocket | null>(null);
   const courierRef = useRef<WebSocket | null>(null);
   const confirmedRef = useRef<WebSocket | null>(null);
-
+  
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+  const [isOnClick, setIsOnClick] = useState(false);
+  setClick(isOnClick);
 
   const confirmOrder = async (id: number) => {
     console.log(id);
@@ -35,6 +41,7 @@ export const ConfirmOrder = () => {
     const newData = data?.filter((item) => item.id !== id);
     setData(newData);
     toast.success('Заказ принят');
+    setIsOnClick(true);
   };
 
   useEffect(() => {
@@ -172,7 +179,7 @@ export const ConfirmOrder = () => {
           )
       },
       {
-        header: 'Действия',
+        header: 'Принять заказ',
         cell: ({ row }) => (
           <ActionButtons
             handleConfirmClick={() => {

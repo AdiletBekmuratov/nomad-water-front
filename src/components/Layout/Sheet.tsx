@@ -47,12 +47,11 @@ export const Sheet: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => (
               exit="closed"
               variants={itemVariants}>
               <div className={`grid grid-cols-1 gap-2 `}>
-                <Link to="/catalog">Акции</Link>
                 <Link to="/catalog">Каталог</Link>
-
                 <Link to="/myOrders">Мои заказы</Link>
                 {/* <Link to="/userPage">Мой аккаунт</Link> */}
                 <Link to="/myFavorite">Избранные</Link>
+                <Link to="/warehouses">Склады</Link>
 
                 <div className={`border-b-2 border-solid border-gray-500 my-2 lg:my-3`}></div>
 

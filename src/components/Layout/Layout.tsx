@@ -15,7 +15,7 @@ export const Layout: FC<ILayoutProps> = ({ children, ...props }) => {
         <Header setIsOpen={setIsOpen} />
         <div
           {...props}
-          className={`layout py-4 md:py-8 mb-20 md:mb-0 w-full min-h-screen ${props.className}`}>
+          className={`layout py-4 md:py-6 mb-20 md:mb-0 w-full min-h-screen ${props.className}`}>
           {children}
         </div>
         <MenuBottom />

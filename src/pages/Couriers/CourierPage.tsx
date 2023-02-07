@@ -7,10 +7,12 @@ import { Edit } from '../User/Edit';
 import { Layout } from '@/components/Layout';
 import { Button } from '@/components/Forms';
 
-const CourierPage = () => {
-  const { user } = useAppSelector((state) => state.auth);
+import { Link } from 'react-router-dom';
 
+const CourierPage = () => {
+  const user = useAppSelector((state) => state.auth.user);
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
+
   const styleP = `text-sm md:text-base bg-white rounded-md px-3 grid grid-cols-2`;
   return (
     <Layout>
@@ -46,29 +48,66 @@ const CourierPage = () => {
           </div>
           <div className="grid gap-2 ">
             <p className={`${styleP}`}>
-              <strong>Улица: </strong>{' '}
-              <span>{` ${user?.street ? user?.street : 'Не заполнено'} `}</span>
+              <strong>Микрорайон / Улица: </strong>{' '}
+              <span>{` ${
+                user
+                  ? user.profiles
+                    ? user.profiles[0]
+                      ? user.profiles[0].street
+                      : 'Не заполнено'
+                    : 'Не заполнено'
+                  : 'Не заполнено'
+              } `}</span>
             </p>
             <p className={`${styleP}`}>
-              <strong>Дом: </strong> {` ${user?.houseNumber ? user?.houseNumber : 'Не заполнено'} `}
+              <strong>Дом: </strong>{' '}
+              {` ${
+                user
+                  ? user.profiles
+                    ? user.profiles[0]
+                      ? user.profiles[0].houseNumber
+                      : 'Не заполнено'
+                    : 'Не заполнено'
+                  : 'Не заполнено'
+              } `}
             </p>
             <p className={`${styleP}`}>
-              <strong>Квартира: </strong> {` ${user?.flat ? user?.flat : 'Не заполнено'} `}
+              <strong>Квартира: </strong>{' '}
+              {` ${
+                user
+                  ? user.profiles
+                    ? user.profiles[0]
+                      ? user.profiles[0].flat
+                      : 'Не заполнено'
+                    : 'Не заполнено'
+                  : 'Не заполнено'
+              } `}
             </p>
           </div>
         </div>
 
         <div className={`flex justify-center py-2`}>
-          <Button className={`w-80`} onClick={() => setIsOpenEdit(true)}>
+          <Button className={`w-80 cursor-pointer`} onClick={() => setIsOpenEdit(true)}>
             Изменить данные
           </Button>
-          <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} data={user!} />
+        </div>
+        <div className={`flex items-center py-2 flex-col`}>
+          {/* <Button className={`w-80 cursor-pointer`} onClick={handleSheet}>
+            <FaRoute />
+            <p className="font-montserrat font-medium mx-2">Маршрутный лист за сегодня</p>
+            <FiDownload />
+          </Button> */}
+          <Link to="/courier/routeSheet" className="underline mt-1 hover:text-blue-700">
+            Получить маршрутный лист
+          </Link>
         </div>
         <div className={`border-b-2 border-dotted border-gray-700 py-2`}></div>
         <div className={`mt-4 mx-auto`}>
           <CourierHistory />
         </div>
       </div>
+
+      <Edit setVisible={setIsOpenEdit} visible={isOpenEdit} user={user!} />
     </Layout>
   );
 };

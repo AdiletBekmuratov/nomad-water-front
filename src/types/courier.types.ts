@@ -1,66 +1,55 @@
+import { IUser } from '@/types';
+
+import { IProduct } from './products.type';
+
+import { IUserFull } from './users.types';
+
+export type ICourier = {
+  id: number;
+  courierDeliveringStatus: string;
+  successfulOrders: string;
+  car: string;
+  user: IUserFull;
+  createdDate?: string,
+  updatedDate?: string
+};
+
 export type ICourierOrder = {
   id: number;
-  user: {
-    id: number;
-    phone: string;
-    firstname: string;
-    middleName: string;
-    lastname: string;
-    birthday: string;
-    street: string;
-    houseNumber: string;
-    flat: string;
-    addressComment: string;
-  };
-  courier: {
-    id: number;
-    courierDeliveringStatus: string;
-    successfulOrders: string;
-    car: string;
-    user: {
-      id: number;
-      phone: string;
-      firstname: string;
-      middleName: string;
-      lastname: string;
-      street: string;
-      houseNumber: string;
-      flat: string;
-      addressComment: string;
-      active: true;
-    };
-  };
+  user: IUser;
+  courier: ICourier;
+  employee: IUserFull;
   statusId: number;
-  orderType: string;
-  paymentMethod: string;
-  products: [];
+  orderType: {
+    id: number,
+    name: string,
+    createdDate: string,
+    updatedDate: string
+  };
+  paymentMethod?: {
+    id: number,
+    name: string,
+    createdDate: string,
+    updatedDate: string
+  };
+  orderProducts: {
+    id: number;
+    product: IProduct;
+    quantity: number;
+  }[];
   deliveryDateTime: string;
   phone: string;
   address: string;
   comment: string;
   totalPrice: number;
+  initialPrice: number;
   paymentUrl: string;
+  rating: number;
+  cancelReason: string;
+  ratingComment: string;
+  withDeposit: boolean;
   createdDateTime: string;
   orderDateTime: string;
   changedDateTime: string;
-  sale: true;
-};
-export type ICourierUpdate = {
-  id: number;
-  phone: string;
-  password: string;
-  firstname: string;
-  middleName: string;
-  lastname: string;
-  role: string;
-  birthday: string;
-  street: string;
-  houseNumber: string;
-  flat: string;
-  addressComment: string;
-  bonuses: number;
-  telegramAccount: string;
-  courierDeliveringStatus: number;
-  successfulOrders: number;
-  car: string;
+  sale: boolean;
 };

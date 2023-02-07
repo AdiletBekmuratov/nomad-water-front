@@ -1,4 +1,4 @@
-import { IAuthState, ILoginForm, IUser } from '@/types';
+import { IAuthState, ILoginForm, IUser, IUserFull } from '@/types';
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
@@ -13,7 +13,7 @@ const initialState: IAuthState = {
   phone: ''
 };
 
-export const getMe = createAsyncThunk<IUser, undefined, { rejectValue: string }>(
+export const getMe = createAsyncThunk<IUserFull, undefined, { rejectValue: string }>(
   'auth/me',
   async (_, thunkAPI) => {
     try {
@@ -26,6 +26,7 @@ export const getMe = createAsyncThunk<IUser, undefined, { rejectValue: string }>
     }
   }
 );
+
 //send phone number
 export const getPassword = createAsyncThunk<string, string, { rejectValue: string }>(
   'auth/password',
@@ -42,7 +43,7 @@ export const getPassword = createAsyncThunk<string, string, { rejectValue: strin
 );
 
 // Login user
-export const login = createAsyncThunk<IUser, ILoginForm, { rejectValue: string }>(
+export const login = createAsyncThunk<IUserFull, ILoginForm, { rejectValue: string }>(
   'api/auth/login',
   async (user, thunkAPI) => {
     try {

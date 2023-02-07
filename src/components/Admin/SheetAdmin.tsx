@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { FC, ReactNode, useEffect, useState } from 'react';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { useWindowSize } from '@/hooks';
 
@@ -57,31 +57,38 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
     }
   }, [width]);
   const linkStyle = `hover:bg-medium-blue hover:text-white px-4 py-2 rounded-md transition-all`;
+  const linkStyleActive = `bg-medium-blue text-white px-4 py-2 rounded-md`;
+  const changeLink = ({ isActive }: { isActive: boolean }) => {
+    return isActive ? `${linkStyleActive}` : `${linkStyle}`;
+  };
+
   return (
     <div className={`h-screen flex w-full`}>
       <AnimatePresence>
         {!isMobile ? (
           <aside className={`bg-light-blue h-screen w-64`}>
             <div className={`grid grid-cols-1 gap-2 p-2 text-dark-blue`}>
-              <Link to="/admin/allUsers" className={`${linkStyle}`}>
+              <NavLink to="/admin/allUsers" className={changeLink}>
                 Пользователи
-              </Link>
-              <Link to="/admin/couriers" className={`${linkStyle}`}>
+              </NavLink>
+              <NavLink to="/admin/couriers" className={changeLink}>
                 Курьеры
-              </Link>
-              <Link to="/admin/workers" className={`${linkStyle}`}>
+              </NavLink>
+              <NavLink to="/admin/workers" className={changeLink}>
                 Работники склада
-              </Link>
-              <Link to="/admin/warehouses" className={`${linkStyle}`}>
+              </NavLink>
+              <NavLink to="/admin/warehouses" className={changeLink}>
                 Склады
-              </Link>
-
-              <Link to="/admin/products" className={`${linkStyle}`}>
+              </NavLink>
+              <NavLink to="/admin/products" className={changeLink}>
                 Продукты
-              </Link>
-              <Link to="/admin/category" className={`${linkStyle}`}>
+              </NavLink>
+              <NavLink to="/admin/category" className={changeLink}>
                 Категории
-              </Link>
+              </NavLink>
+              <NavLink to="/admin/routeSheet" className={changeLink}>
+                Маршрутные листы
+              </NavLink>
             </div>
           </aside>
         ) : (
@@ -99,25 +106,25 @@ export const SheetAdmin: FC<ISheetProps> = ({ children, isOpen, setIsOpen }) => 
                     onClick={() => setIsOpen(false)}
                   />
 
-                  <Link to="/admin/allUsers" className={`${linkStyle}`}>
+                  <NavLink to="/admin/allUsers" className={changeLink}>
                     Пользователи
-                  </Link>
-                  <Link to="/admin/couriers" className={`${linkStyle}`}>
+                  </NavLink>
+                  <NavLink to="/admin/couriers" className={changeLink}>
                     Курьеры
-                  </Link>
-                  <Link to="/admin/workers" className={`${linkStyle}`}>
+                  </NavLink>
+                  <NavLink to="/admin/workers" className={changeLink}>
                     Работники склада
-                  </Link>
-                  <Link to="/admin/warehouses" className={`${linkStyle}`}>
+                  </NavLink>
+                  <NavLink to="/admin/warehouses" className={changeLink}>
                     Склады
-                  </Link>
+                  </NavLink>
 
-                  <Link to="/admin/products" className={`${linkStyle}`}>
+                  <NavLink to="/admin/products" className={changeLink}>
                     Продукты
-                  </Link>
-                  <Link to="/admin/category" className={`${linkStyle}`}>
+                  </NavLink>
+                  <NavLink to="/admin/category" className={changeLink}>
                     Категории
-                  </Link>
+                  </NavLink>
                 </motion.div>
               </motion.aside>
               <div

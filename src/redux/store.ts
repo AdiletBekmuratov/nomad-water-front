@@ -1,19 +1,21 @@
-import { courierApi } from './services/courier.service';
-// import { userApi } from './services/user.service';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import { baseApi } from './services/base.service';
 import authReducer from './slices/auth';
-import { userApi } from './services/user.service';
-import { employeeApi } from './services/employee.service';
-
 import cartSlice from './slices/cartSlice';
+import delayOrder from './slices/delayOrder';
+import { baseApi } from './services/base.service';
+import { userApi } from './services/user.service';
+import { courierApi } from './services/courier.service';
+import { employeeApi } from './services/employee.service';
+import { profileApi } from './services/profile.service';
 
 const rootReducer = combineReducers({
   cart: cartSlice,
   auth: authReducer,
+  delayOrder: delayOrder,
   [baseApi.reducerPath]: baseApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
+  [profileApi.reducerPath]: profileApi.reducer,
   [courierApi.reducerPath]: courierApi.reducer,
   [employeeApi.reducerPath]: employeeApi.reducer
 });
@@ -25,7 +27,8 @@ export const store = configureStore({
       baseApi.middleware,
       userApi.middleware,
       courierApi.middleware,
-      employeeApi.middleware
+      employeeApi.middleware,
+      profileApi.middleware
     ]),
   devTools: import.meta.env.NODE_ENV !== 'production'
 });

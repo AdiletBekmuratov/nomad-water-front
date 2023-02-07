@@ -1,11 +1,16 @@
 import {
+  IWarehouseUpdate,
+  IBalanceAddProd,
+  IBalanceDelete,
+  IBalanceUpdate
+} from '@/types/warehouse.type';
+import {
   IOrder,
   IWorker,
   IProduct,
   IProductCategoryCreate,
   IProductCreate,
   IWarehouse,
-  IWarehouseUpdate,
   IUsersOrder
 } from '@/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
@@ -152,10 +157,24 @@ export const baseApi = createApi({
             ]
           : [{ type: 'Warehouses', id: 'LIST' }]
     }),
+    getWarehouseID: builder.query<IWarehouse, number>({
+      query: (id) => ({
+        url: `warehouse/${Number(id)}`
+      }),
+      providesTags: [{ type: 'Warehouses', id: 'LIST' }]
+    }),
     createWarehouse: builder.mutation<void, IWarehouseUpdate>({
       query: (body) => ({
         url: `warehouse`,
         method: 'POST',
+        body
+      }),
+      invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
+    }),
+    updateWarehouse: builder.mutation<void, IWarehouseUpdate>({
+      query: (body) => ({
+        url: `warehouse/${Number(body.id)}`,
+        method: 'PUT',
         body
       }),
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
@@ -167,11 +186,32 @@ export const baseApi = createApi({
       }),
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
     }),
-    updateWarehouse: builder.mutation<void, IWarehouseUpdate>({
+
+    // Warehouses Balance
+    addProductToWarehouse: builder.mutation<void, IBalanceAddProd>({
       query: (body) => ({
-        url: `warehouse/${Number(body.id)}`,
-        method: 'PUT',
+        url: `warehouse/${Number(body.warehouseId)}/balance`,
+        method: 'POST',
         body
+      }),
+      invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
+    }),
+
+    updateWarehouseBalance: builder.mutation<
+      IWarehouse,
+      { id: number; warehouseBalance: IBalanceUpdate[] }
+    >({
+      query: (body) => ({
+        url: `warehouse/${Number(body.id)}/balance`,
+        method: 'PUT',
+        body: body.warehouseBalance
+      }),
+      invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
+    }),
+    deleteProductFromWarehouse: builder.mutation<void, IBalanceDelete>({
+      query: ({ warehouseId, productId }) => ({
+        url: `warehouse/${Number(warehouseId)}/balance/${Number(productId)}`,
+        method: 'DELETE'
       }),
       invalidatesTags: [{ type: 'Warehouses', id: 'LIST' }]
     }),
@@ -215,6 +255,18 @@ export const baseApi = createApi({
       }),
       invalidatesTags: [{ type: 'Order', id: 'LIST' }]
     }),
+    getAllOrder: builder.query<IOrder[], void>({
+      query: () => ({
+        url: `order`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: 'Order' as const, id })),
+              { type: 'Order', id: 'LIST' }
+            ]
+          : [{ type: 'Order', id: 'LIST' }]
+    }),
     getUserOrder: builder.query<IOrder[], void>({
       query: () => ({
         url: `order/user`
@@ -222,10 +274,17 @@ export const baseApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Order', id } as const)),
+              ...result.map(({ id }) => ({ type: 'Order' as const, id })),
               { type: 'Order', id: 'LIST' }
             ]
           : [{ type: 'Order', id: 'LIST' }]
+    }),
+    rateOrder: builder.mutation<void, { id: number; rating: number; ratingComment: string }>({
+      query: (body) => ({
+        url: `/order/${body.id}/rating/${body.rating}?ratingComment=${body.ratingComment}`,
+        method: 'PUT'
+      }),
+      invalidatesTags: [{ type: 'Order', id: 'LIST' }]
     })
   })
 });
@@ -247,14 +306,21 @@ export const {
   useUpdateProductCategoryMutation,
   // Warehouses
   useGetAllWarehousesQuery,
+  useGetWarehouseIDQuery,
   useCreateWarehouseMutation,
   useDeleteWarehouseMutation,
   useUpdateWarehouseMutation,
+  // Warehouses Balance
+  useAddProductToWarehouseMutation,
+  useUpdateWarehouseBalanceMutation,
+  useDeleteProductFromWarehouseMutation,
 
   //orders
   useGetUserOrderQuery,
+  useGetAllOrderQuery,
   useCreateOrderMutation,
   useLazyGetUserOrderQuery,
+  useRateOrderMutation,
 
   //Worker
   useGetAllWorkerQuery,

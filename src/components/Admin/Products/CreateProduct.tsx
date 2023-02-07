@@ -9,6 +9,7 @@ import { IProductCreate } from '@/types';
 import { Form, Formik } from 'formik';
 import { Dispatch, FC, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { Categories } from './Categories';
 
 interface ICreateModalProps {
@@ -21,7 +22,7 @@ const INITIAL_VALUES: IProductCreate = {
   productCategoryId: 1,
   productName: '',
   productPrice: 0,
-  urgencyPrice: 0,
+
   imageFile: null
 };
 
@@ -46,8 +47,18 @@ export const CreateProduct: FC<ICreateModalProps> = ({ setVisible, visible }) =>
         setVisible(false);
       });
   };
+
   return (
     <Modal isOpenModal={visible} setIsOpenModal={setVisible}>
+      <div className="flex items-center justify-between">
+        <h2 className={`text-center`}>Добавить новый товар или услугу</h2>
+        <button
+          onClick={() => {
+            setVisible(false);
+          }}>
+          <AiOutlineCloseCircle className={`w-5 h-5 md:w-7 md:h-7 hover:text-blue-500`} />
+        </button>
+      </div>
       <Formik initialValues={INITIAL_VALUES} onSubmit={handleCreate}>
         {({ setFieldValue }) => (
           <Form className="flex flex-col space-y-4">
@@ -56,7 +67,7 @@ export const CreateProduct: FC<ICreateModalProps> = ({ setVisible, visible }) =>
               name="productName"
               id="productName"
               label="Название продукта"
-              placeholder="Название продукта"
+              placeholder="Введите название продукта"
             />
             <Input
               inputType="default"

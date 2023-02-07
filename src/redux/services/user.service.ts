@@ -1,5 +1,5 @@
-import { IUser, IUserCreate, IProduct } from '@/types';
-import { ICouriers, IEmployeeCreate, IEmployeeCreateLink } from '@/types/employee.types';
+import { IUser, ICreateUserPhone, IProduct } from '@/types';
+import {  IEmployeeCreateLink } from '@/types/employee.types';
 import { IUserFull, IUserFullCreate } from '@/types/users.types';
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
@@ -25,9 +25,21 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
+          : [{ type: 'Users', id: 'LIST' }]
+    }),
+    getBirthdayUsers: builder.query<IUserFull[], void>({
+      query: () => ({
+        url: `user/birthday`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //Получить всех пользователей по активности /active/{isActive}
@@ -38,22 +50,22 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //получить юзера по роли
-    getUserROLE: builder.query<IEmployeeCreate[], string>({
+    getUserROLE: builder.query<IUserFull[], string>({
       query: (role) => ({
         url: `user/role/${role}`
       }),
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
     //юзер по ID
@@ -69,7 +81,8 @@ export const userApi = createApi({
       query: (body) => ({
         url: `/user/me`,
         method: `PUT`,
-        body
+        body,
+        
       }),
       invalidatesTags: [{ type: 'Users', id: 'LIST' }]
     }),
@@ -99,7 +112,7 @@ export const userApi = createApi({
     }),
 
     //регистрация курьеров
-    createEmployee: builder.mutation<void, IEmployeeCreate>({
+    createEmployee: builder.mutation<void, IUserFull>({
       query: (body) => ({
         url: `auth/register/employee/${body.token}`,
         method: 'POST',
@@ -107,7 +120,7 @@ export const userApi = createApi({
       }),
       invalidatesTags: [{ type: 'Link', id: 'LIST' }]
     }),
-    createCourier: builder.mutation<void, IEmployeeCreate>({
+    createCourier: builder.mutation<void, IUserFull>({
       query: (body) => ({
         url: `auth/register/courier/${body.token}`,
         method: 'POST',
@@ -124,7 +137,7 @@ export const userApi = createApi({
       invalidatesTags: [{ type: 'Users', id: 'LIST' }]
     }),
     //регистрация рабочего склада
-    createWorker: builder.mutation<void, IEmployeeCreate>({
+    createWorker: builder.mutation<void, IUserFull>({
       query: (body) => ({
         url: `auth/register/warehouseWorker/${body.token}`,
         method: 'POST',
@@ -132,7 +145,7 @@ export const userApi = createApi({
       }),
       invalidatesTags: [{ type: 'Link', id: 'LIST' }]
     }),
-    updateWorker: builder.mutation<void, IEmployeeCreate>({
+    updateWorker: builder.mutation<void, IUserFull>({
       query: (body) => ({
         url: `user/warehouseWorker/${Number(body.id)}`,
         method: 'PUT',
@@ -151,13 +164,14 @@ export const userApi = createApi({
       invalidatesTags: [{ type: 'Users', id: 'LIST' }]
     }),
     //Получения кода для входа в аккаунт
-    getUserCode: builder.mutation<void, IUserCreate>({
+    getUserCode: builder.mutation<void, ICreateUserPhone>({
       query: (body) => ({
         url: `/auth/generateCode`,
         method: `POST`,
         body
       })
     }),
+    //получить свои избранные
     getUserFavorite: builder.query<IProduct[], void>({
       query: () => ({
         url: `/user/favorite`
@@ -165,11 +179,12 @@ export const userApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: 'Users', id } as const)),
-              { type: 'Users', id: 'LIST' }
-            ]
+            ...result.map(({ id }) => ({ type: 'Users', id } as const)),
+            { type: 'Users', id: 'LIST' }
+          ]
           : [{ type: 'Users', id: 'LIST' }]
     }),
+    //добавить товар в избран 
     addFavorite: builder.mutation<void, number>({
       query: (id) => ({
         url: `/user/favorite/${Number(id)}`,
@@ -184,14 +199,12 @@ export const userApi = createApi({
       }),
       invalidatesTags: [{ type: 'Users', id: 'LIST' }]
     })
-
-    //api/user/favorite/{id}
-    //api/user/favorite/{id}
   })
 });
 
 export const {
   useGetAllUsersQuery,
+  useGetBirthdayUsersQuery,
   useGetActiveUserQuery,
   useGetUserROLEQuery,
   useGetUserIDQuery,
