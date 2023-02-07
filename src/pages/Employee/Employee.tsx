@@ -50,7 +50,7 @@ const Employee = () => {
       name: 'Маршрутные листы'
     }
   ];
-  let flex: string = '';
+  let active: string = 'md:border-b-2 border-blue-200 bg-blue-100';
   const onChoice = (event: React.MouseEvent<HTMLButtonElement>) => {
     setChoice(event.currentTarget.id);
   };
@@ -88,11 +88,11 @@ const Employee = () => {
       <div
         className={` bg-light-blue rounded-lg 
        font-bold text-xs md:text-sm gap-2 md:gap-3 `}>
-        <div className={`grid grid-cols-2 md:grid-cols-6  items-center justify-between gap-3`}>
+        <div className={`grid grid-cols-2 md:grid-cols-6  justify-between`}>
           {buttons.map((button) => (
             <button
               key={button.id}
-              className={`w-full p-3`}
+              className={`w-full py-2 ${choice !== button.id.toString() && active}`}
               id={button.id.toString()}
               onClick={onChoice}>
               {button.name}

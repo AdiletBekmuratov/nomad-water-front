@@ -52,11 +52,11 @@ const CourierRouteSheet = () => {
         validationSchema={validateSchema}>
         {(isValid) => (
           <Form>
-            <div className="grid grid-cols-4 gap-5 p-3">
+            <div className="grid grid-cols-1 lg:grid-cols-4  gap-5 p-3">
               <div className="flex flex-col md:flex-row gap-2 items-center">
                 <span>Курьер:</span>
                 <Input as="select" inputType="formik" id="id" name="id">
-                  <option value="">Выберите курьера</option>
+                  <option value="">Выбрать курьера</option>
                   {couriers.map((cour) => (
                     <option
                       key={cour.id}
