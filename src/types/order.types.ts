@@ -20,6 +20,8 @@ export type IOrder = {
   isSale: boolean;
   withDeposit?: boolean;
   quantity?: number;
+  longitude?:string;
+  latitude?:string;
 };
 
 export type IUsersOrder = Pick<
@@ -32,4 +34,6 @@ export type IUsersOrder = Pick<
   | 'totalPrice'
   | 'isSale'
   | 'withDeposit'
+  | 'longitude'
+  | 'latitude'
 >;

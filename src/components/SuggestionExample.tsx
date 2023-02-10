@@ -46,8 +46,10 @@ const SuggestionExample: FC<Props> = ({ setAddress, label, id }) => {
       <AsyncSelect
         id={id ? id : ''}
         cacheOptions
+        
         loadOptions={promiseOptions}
         defaultOptions
+        placeholder='Введите улицу, дом и выберите адрес'
         onInputChange={(value) => setInputData(value)}
         inputValue={inputData}
         onChange={(value) => {

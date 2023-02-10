@@ -11,6 +11,7 @@ import { IProduct, IProfile, IUsersOrder } from '@/types';
 
 import { OrderCard, Total } from '@/components/Order';
 import { OrderAccordion } from './OrderAccordion';
+import { OrderUserProfile } from './OrderUserProfile';
 import { WS_URL } from '@/redux/http';
 
 import { Button } from '@/components/Forms';
@@ -19,14 +20,19 @@ import { Edit } from '../User';
 import Payment from './Payment';
 
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
-export type AddressType = {
+
+export type IAddressType = {
   name?: string;
   phone: string;
   firstname: string;
-  street: string;
-  houseNumber: string;
   flat: string;
   addressComment: string;
+};
+export type IStreetType = {
+  houseNumber: string;
+  longitude: string;
+  latitude: string;
+  street: string;
 };
 const UserOrderCreate = () => {
   const user = useAppSelector((state) => state.auth.user);
@@ -36,12 +42,17 @@ const UserOrderCreate = () => {
   //список профилей
   const { data: profiles = [], refetch } = useGetALLProfilesQuery();
   //создание профиля при первом заказе
-  const [create, { isLoading: loadProfile }] = useCreateProfileMutation();
+  const [create] = useCreateProfileMutation();
   //самовывоз заказа клиентом
   const [pickup, setPickup] = useState(false);
   //использование бонусов при заказе
   const [useBonus, setUseBonus] = useState(false);
-
+  const [street, setStreet] = useState<IStreetType>({
+    houseNumber: profiles[0] ? profiles[0].houseNumber! : '',
+    longitude: profiles[0] ? profiles[0].longitude! : '',
+    latitude:profiles[0] ? profiles[0].latitude! : '',
+    street:profiles[0] ? profiles[0].street! : ''
+  });
   const [paymentMethod, setPaymentMethod] = useState('Картой');
 
   const clientRef = useRef<WebSocket | null>(null);
@@ -49,33 +60,36 @@ const UserOrderCreate = () => {
   const [isConnected, setIsConnected] = useState(false);
   //выбор профиля при заказе если клиент не сделал выбор
   const initProf = profiles.length > 0 ? profiles[0] : null;
-  const initAddress: AddressType = {
+
+  const initAddress: IAddressType = {
     name: initProf ? initProf.name! : '',
     phone: user ? user.phone : '',
     firstname: user ? user.firstname : '',
     //@ts-ignore
     street: initProf ? initProf.street : '',
-    //@ts-ignore
+
     houseNumber: initProf ? initProf.houseNumber : '',
     flat: initProf ? initProf.flat : '',
     addressComment: initProf ? initProf.addressComment! : ''
   };
   //адрес если профиля не было или он не был изменен
-  const [address, setAddress] = useState<AddressType>(initAddress);
-  //адрес если профиль был изменен
-  const [addressOrder, setAddressOrder] = useState('');
+  const [address, setAddress] = useState<IAddressType>(initAddress);
   //валидность формы
   const [isValid, setIsValid] = useState(false);
+
   // создание заказа
   const handleSendOrder = () => {
     //если не было профилей создаем при заказе
     let values: IProfile = {
       name: address?.name ? address.name : 'По умолчанию',
-      street: address?.street ? address.street : '',
-      houseNumber: address?.houseNumber ? address?.houseNumber : '',
+      street: street ? street.street : '',
+      houseNumber: street ? street.houseNumber : '',
+      latitude: street ? street.latitude : '',
+      longitude: street ? street.longitude : '',
       flat: address?.flat ? address?.flat : '',
       addressComment: address?.addressComment ? address?.addressComment : ''
     };
+
     //создание первого профиля
     const handleCreate = () => {
       toast
@@ -105,25 +119,21 @@ const UserOrderCreate = () => {
       };
     });
     //адрес если профиля не было или он не был изменен
-    let inputAddress = address
-      ? `Ул.${address.street}, д. ${address.houseNumber}, кв. ${address.flat}`
-      : '';
+    let inputAddress = `${street.street}, д. ${street.houseNumber} ${
+      address.flat ? ', кв.' + address.flat : ''
+    }`;
 
     const value: IUsersOrder = {
-      address:
-        profiles.length > 1
-          ? addressOrder.length > 1
-            ? addressOrder
-            : inputAddress
-          : inputAddress,
+      address: inputAddress,
       comment: address ? address.addressComment : '',
-
       phone: address ? address.phone : '',
       totalPrice: total,
       paymentMethod,
       //@ts-ignore
       orderProductsDto: product,
-      withDeposit: useBonus
+      withDeposit: useBonus,
+      latitude: street.latitude,
+      longitude: street.longitude
     };
     //отправка заказа по сокету
     clientRef.current?.send(JSON.stringify(value));
@@ -193,12 +203,22 @@ const UserOrderCreate = () => {
           </div>
           <div className={`lg:grid lg:grid-cols-2 gap-4 pt-7 lg:pt-0`}>
             <div>
-              <OrderAccordion
-                setAddress={setAddress}
-                setAddressOrder={setAddressOrder}
-                setIsValid={setIsValid}
-                address={address}
-              />
+              {profiles.length > 0 ? (
+                <OrderUserProfile
+                  profiles={profiles}
+                  setAddress={setAddress}
+                  setIsValid={setIsValid}
+                  street={street}
+                  setStreet={setStreet}
+                />
+              ) : (
+                <OrderAccordion
+                  setStreet={setStreet}
+                  address={address}
+                  setAddress={setAddress}
+                  setIsValid={setIsValid}
+                />
+              )}
             </div>
 
             <div className={`flex flex-col gap-5 lg:order-3`}>

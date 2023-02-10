@@ -1,6 +1,6 @@
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
-import SuggestionExample from '@/pages/SuggestionExample';
+import SuggestionExample from '@/components/SuggestionExample';
 import { useCreateWarehouseMutation } from '@/redux/services/base.service';
 import { IWarehouseUpdate } from '@/types';
 import { Form, Formik } from 'formik';

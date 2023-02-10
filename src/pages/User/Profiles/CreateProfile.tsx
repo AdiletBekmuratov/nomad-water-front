@@ -10,7 +10,7 @@ import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { IProfile } from '@/types';
-import SuggestionExample from '@/pages/SuggestionExample';
+import SuggestionExample from '@/components/SuggestionExample';
 
 interface ICreateProfileProps {
   visible: boolean;

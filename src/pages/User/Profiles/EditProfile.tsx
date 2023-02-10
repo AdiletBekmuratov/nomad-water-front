@@ -1,6 +1,6 @@
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
-import SuggestionExample from '@/pages/SuggestionExample';
+import SuggestionExample from '@/components/SuggestionExample';
 import { useGetProfileIDQuery, useUpdateProfileMutation } from '@/redux/services/profile.service';
 
 import { IProfile } from '@/types';

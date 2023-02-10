@@ -10,7 +10,7 @@ import { Modal } from '@/components/Layout/Modal';
 import { Form, Formik } from 'formik';
 import { DeleteProfile } from './DeleteProfile';
 import { CreateProfile } from './CreateProfile';
-import SuggestionExample from '@/pages/SuggestionExample';
+import SuggestionExample from '@/components/SuggestionExample';
 
 const Profiles = () => {
   const { data: profile = [] } = useGetALLProfilesQuery();
@@ -100,7 +100,7 @@ const Profiles = () => {
           </div>
         </div>
       ) : (
-        profile.map((item) => (
+        profile.map((item, index: number) => (
           <div className={`grid gap-2 bg-light-blue rounded-xl p-3 shadow-md`} key={item.id}>
             {item.name === 'По умолчанию' ? (
               <p
@@ -156,7 +156,7 @@ const Profiles = () => {
                 name={name}
               />
             </div>
-            {item.name === 'По умолчанию' && (
+            {index === 0 && (
               <div className={``}>
                 <Button
                   className={`bg-blue-300 hover:bg-blue-400 h-9`}
