@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import { FC } from 'react';
 import { toast } from 'react-hot-toast';
@@ -16,6 +16,7 @@ import {
 import { ILoginForm, IUserFull } from '@/types';
 import { useAppDispatch } from '@/hooks';
 import { getMe, login } from '@/redux/slices/auth';
+import SuggestionExample from '@/components/SuggestionExample';
 
 const params = new URLSearchParams(location.search);
 const token = params.get('token');
@@ -35,7 +36,7 @@ const INITIAL_VALUES: IUserFull = {
   street: '',
   houseNumber: '',
   flat: '',
-  car: '',
+  car: ''
 };
 
 const RegisterLinkEmployee: FC = () => {
@@ -51,7 +52,6 @@ const RegisterLinkEmployee: FC = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (values: ILoginForm) => {
-    console.log(values);
     toast
       .promise(dispatch(login(values)).unwrap(), {
         loading: 'Загрузка...',
@@ -66,10 +66,14 @@ const RegisterLinkEmployee: FC = () => {
 
   const handleCreate = (values: IUserFull) => {
     setPhone(values.phone);
+    const value = {
+      ...values,
+      ...addressProfile
+    };
 
     if (role === 'ROLE_COURIER') {
       toast
-        .promise(createCourier(values).unwrap(), {
+        .promise(createCourier(value).unwrap(), {
           loading: 'Загрузка...',
           success: 'Получено',
           error: (error) => JSON.stringify(error, null, 2)
@@ -79,7 +83,7 @@ const RegisterLinkEmployee: FC = () => {
         });
     } else if (role === 'ROLE_EMPLOYEE') {
       toast
-        .promise(createEMPLOYEE(values).unwrap(), {
+        .promise(createEMPLOYEE(value).unwrap(), {
           loading: 'Загрузка...',
           success: 'Получено',
           error: (error) => JSON.stringify(error, null, 2)
@@ -89,7 +93,7 @@ const RegisterLinkEmployee: FC = () => {
         });
     } else {
       toast
-        .promise(createWorker(values).unwrap(), {
+        .promise(createWorker(value).unwrap(), {
           loading: 'Загрузка...',
           success: 'Получено',
           error: (error) => JSON.stringify(error, null, 2)
@@ -103,9 +107,15 @@ const RegisterLinkEmployee: FC = () => {
     phone: yup.string().required('Это поле обязательное'),
     firstname: yup.string().required('Это поле обязательное'),
     lastname: yup.string().required('Это поле обязательное'),
-    street: yup.string().required('Это поле обязательное'),
-    houseNumber: yup.string().required('Это поле обязательное'),
+    // street: yup.string().required('Это поле обязательное'),
+    // houseNumber: yup.string().required('Это поле обязательное'),
     flat: yup.string().required('Это поле обязательное')
+  });
+  const [addressProfile, setAddressProfile] = useState({
+    houseNumber: '',
+    longitude: '',
+    latitude: '',
+    street: ''
   });
 
   return (
@@ -148,11 +158,15 @@ const RegisterLinkEmployee: FC = () => {
                 </div>
 
                 <div className={`grid grid-cols-1 md:grid-col-2 gap-2`}>
+                  {/*                   
                   <Input inputType="formik" name="street" id="street" label="Микрорайон / Улица" />
-                  <div className={`grid grid-cols-3 gap-3 text-center`}>
-                    <Input inputType="formik" name="houseNumber" id="houseNumber" label="Дом" />
-                    <Input inputType="formik" name="flat" id="flat" label="Квартира" />
-                  </div>
+                  <Input inputType="formik" name="houseNumber" id="houseNumber" label="Дом" /> */}
+                  <SuggestionExample
+                    setAddress={setAddressProfile}
+                    label="Адрес проживания"
+                    id="address"
+                  />
+                  <Input inputType="formik" name="flat" id="flat" label="Квартира" />
                 </div>
                 {/* <div className={`grid grid-cols-1 sm:grid-cols-3 gap-3 items-center`}>
                 <Input

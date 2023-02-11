@@ -10,6 +10,7 @@ import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { IProfile } from '@/types';
+import SuggestionExample from '@/components/SuggestionExample';
 
 interface ICreateProfileProps {
   visible: boolean;
@@ -17,21 +18,33 @@ interface ICreateProfileProps {
 }
 
 export const CreateProfile: FC<ICreateProfileProps> = ({ setVisible, visible }) => {
-
   const INITIAL_VALUES: IProfile = {
-    name: '',
-    street: '',
     houseNumber: '',
     flat: '',
-    addressComment: ''
+    addressComment: '',
+    name: ''
   };
   const [response, setResponse] = React.useState<string[]>([]);
   const [create, { isLoading }] = useCreateProfileMutation();
 
+  const [addressProfile, setAddressProfile] = React.useState({
+    houseNumber: '',
+    longitude: '',
+    latitude: '',
+    street: ''
+  });
+
   const handleCreate = (values: IProfile) => {
+    const value = {
+      ...values,
+      ...addressProfile
+    };
+
+    // console.log(value);
+
     toast
       .promise(
-        create(values)
+        create(value)
           .unwrap()
           .then((resp) => {
             resp;
@@ -48,11 +61,10 @@ export const CreateProfile: FC<ICreateProfileProps> = ({ setVisible, visible }) 
       });
   };
   const validation = yup.object().shape({
-    name: yup.string().required('Это поле обязательное'),
-    street: yup.string().required('Это поле обязательное'),
-    houseNumber: yup.string().required('Это поле обязательное'),
-    flat: yup.string().required('Это поле обязательное')
+    name: yup.string().required('Это поле обязательное')
   });
+
+  // console.log(addressProfile);
 
   return (
     <>
@@ -83,12 +95,17 @@ export const CreateProfile: FC<ICreateProfileProps> = ({ setVisible, visible }) 
                     label="Название для нового адреса"
                     placeholder="Например: офис, дача, дом родителей"
                   />
-                  <Input inputType="formik" id="street" name="street" label="Микрорайон / Улица" />
+                  {/* <Input inputType="formik" id="street" name="street" label="Микрорайон / Улица" />
                   <Input
                     inputType="formik"
                     id="houseNumber"
                     name="houseNumber"
                     label="Номер дома"
+                  /> */}
+                  <SuggestionExample
+                    setAddress={setAddressProfile}
+                    label="Адрес проживания"
+                    id="address"
                   />
                   <Input inputType="formik" id="flat" name="flat" label="Квартира" />
                   <Input

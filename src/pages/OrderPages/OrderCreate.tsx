@@ -17,6 +17,8 @@ import { Button, Input } from '@/components/Forms';
 import { Layout } from '@/components/Layout';
 
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
+import SuggestionExample from '../../components/SuggestionExample';
+import { IStreetType } from './UserOrderCreate';
 
 const OrderCreate: FC = () => {
   const dispatch = useAppDispatch();
@@ -26,8 +28,8 @@ const OrderCreate: FC = () => {
   const [address, setAddress] = useState<{
     phone: string;
     firstname: string;
-    street: string;
-    houseNumber: string;
+    // street: string;
+    // houseNumber: string;
     flat: string;
     addressComment: string;
   } | null>(null);
@@ -39,7 +41,12 @@ const OrderCreate: FC = () => {
   const clientRef = useRef<WebSocket | null>(null);
   const [waitingToReconnect, setWaitingToReconnect] = useState<boolean | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-
+  const [street, setStreet] = useState<IStreetType>({
+    houseNumber: '',
+    longitude: '',
+    latitude: '',
+    street: ''
+  });
   const handleSendOrder = () => {
     const product = products.map((product) => {
       return {
@@ -48,7 +55,7 @@ const OrderCreate: FC = () => {
       };
     });
     let addressOrder = address
-      ? `Ул.${address.street}, д. ${address.houseNumber}, кв. ${address.flat}`
+      ? `${street.street}, д. ${street.houseNumber}, кв. ${address.flat}`
       : '';
     const value: IUsersOrder = {
       phone: address ? address.phone : '',
@@ -65,7 +72,9 @@ const OrderCreate: FC = () => {
       totalPrice: total,
       paymentMethod,
       //@ts-ignore
-      orderProductsDto: product
+      orderProductsDto: product,
+      latitude: street.latitude,
+      longitude: street.longitude
     };
     clientRef.current?.send(JSON.stringify(value));
     dispatch(clearItems());
@@ -113,16 +122,16 @@ const OrderCreate: FC = () => {
   const initialValues = {
     phone: user ? (user.role === 'ROLE_MASTER' ? user.phone : '') : '',
     firstname: user ? (user.role === 'ROLE_MASTER' ? user.firstname : '') : '',
-    street: '',
-    houseNumber: '',
+    // street: '',
+    // houseNumber: '',
     flat: '',
     addressComment: ''
   };
   const validation = yup.object().shape({
     firstname: yup.string().required('Поле обязательное'),
     phone: yup.string().required('Поле обязательное'),
-    street: yup.string().required('Поле обязательное'),
-    houseNumber: yup.string().required('Поле обязательное'),
+    // street: yup.string().required('Поле обязательное'),
+    // houseNumber: yup.string().required('Поле обязательное'),
     flat: yup.string().required('Поле обязательное')
   });
   const styleInput = `font-montserrat placeholder:text-gray-400 cursor-pointer rounded-md`;
@@ -145,7 +154,7 @@ const OrderCreate: FC = () => {
                 {({ isValid, values }) => (
                   <Form className="flex flex-col gap-2 pt-3">
                     <>
-                      <Input
+                      {/* <Input
                         name="street"
                         id="street"
                         inputType="formik"
@@ -158,6 +167,11 @@ const OrderCreate: FC = () => {
                         inputType="formik"
                         label="Дом"
                         className={`${styleInput}`}
+                      /> */}
+                      <SuggestionExample
+                        setAddress={setStreet}
+                        label="Адрес проживания"
+                        id="address"
                       />
                       <Input
                         name="flat"

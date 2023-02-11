@@ -16,7 +16,7 @@ import UserAppeal from '@/pages/UserAppeal';
 import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminCategory from '@/pages/admin/AdminCategory';
 import AdminRouteSheet from '@/pages/admin/AdminRouteSheet';
-import SuggestionExample from '@/pages/SuggestionExample';
+import SuggestionExample from '@/components/SuggestionExample';
 
 const Landing = lazy(() => import('@/pages/Landing'));
 const RouteSheet = lazy(() => import('@/pages/Couriers/RouteSheet'));

@@ -1,9 +1,10 @@
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
+import SuggestionExample from '@/components/SuggestionExample';
 import { useUpdateWarehouseMutation } from '@/redux/services/base.service';
 import { IWarehouse, IWarehouseUpdate } from '@/types';
 import { Form, Formik } from 'formik';
-import { FC, Dispatch, SetStateAction } from 'react';
+import { FC, Dispatch, SetStateAction, useState } from 'react';
 import toast from 'react-hot-toast';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
@@ -15,10 +16,18 @@ interface IEditModalProps {
 
 export const EditModal: FC<IEditModalProps> = ({ visible, setVisible, data }) => {
   const [update, { isLoading: isLoadingUpdate }] = useUpdateWarehouseMutation();
+  const [warehouseAddress, setWarehouseAddress] = useState({
+    houseNumber: '',
+    street: ''
+  });
 
   const handleEdit = (values: IWarehouseUpdate) => {
+    const value = {
+      ...values,
+      warehouseAddress: `${warehouseAddress.street} ${warehouseAddress.houseNumber}`
+    };
     toast
-      .promise(update(values).unwrap(), {
+      .promise(update(value).unwrap(), {
         loading: 'Loading',
         success: 'Updated Successfully',
         error: (error) => JSON.stringify(error, null, 2)
@@ -26,8 +35,12 @@ export const EditModal: FC<IEditModalProps> = ({ visible, setVisible, data }) =>
       .finally(() => {});
   };
   const handleEditSave = (values: IWarehouseUpdate) => {
+    const value = {
+      ...values,
+      warehouseAddress: `${warehouseAddress.street} ${warehouseAddress.houseNumber}`
+    };
     toast
-      .promise(update(values).unwrap(), {
+      .promise(update(value).unwrap(), {
         loading: 'Loading',
         success: 'Updated Successfully',
         error: (error) => JSON.stringify(error, null, 2)
@@ -62,7 +75,12 @@ export const EditModal: FC<IEditModalProps> = ({ visible, setVisible, data }) =>
               mask="+7 (999) 999 9999"
               placeholder="+7 (999) 999 9999"
             />
-            <Input inputType="formik" name="warehouseAddress" id="warehouseAddress" label="Адрес" />
+            <SuggestionExample
+              setAddress={setWarehouseAddress}
+              label="Адрес склада"
+              id="warehouseAddress"
+            />
+            {/* <Input inputType="formik" name="warehouseAddress" id="warehouseAddress" label="Адрес" /> */}
             <div className={`flex gap-3 justify-between`}>
               <Button type="submit" className={`hover:bg-blue-500`}>
                 Сохранить

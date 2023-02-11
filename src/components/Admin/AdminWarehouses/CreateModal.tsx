@@ -1,9 +1,10 @@
 import { Button, Input } from '@/components/Forms';
 import { Modal } from '@/components/Layout/Modal';
+import SuggestionExample from '@/components/SuggestionExample';
 import { useCreateWarehouseMutation } from '@/redux/services/base.service';
 import { IWarehouseUpdate } from '@/types';
 import { Form, Formik } from 'formik';
-import { Dispatch, FC, SetStateAction } from 'react';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
@@ -19,10 +20,19 @@ const INITIAL_VALUES: IWarehouseUpdate = {
 
 export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
   const [create, { isLoading }] = useCreateWarehouseMutation();
+  const [warehouseAddress, setWarehouseAddress] = useState({
+    street: '',
+    houseNumber: ''
+  });
   const handleCreate = (values: IWarehouseUpdate) => {
-    console.log(values);
+    const value = {
+      ...values,
+      warehouseAddress: `${warehouseAddress.street} ${warehouseAddress.houseNumber}`
+    };
+    console.log(value);
+
     toast
-      .promise(create(values).unwrap(), {
+      .promise(create(value).unwrap(), {
         loading: 'Загрузка...',
         success: 'Создано Успешно',
         error: (error) => JSON.stringify(error, null, 2)
@@ -53,7 +63,12 @@ export const CreateModal: FC<ICreateModalProps> = ({ setVisible, visible }) => {
               mask="+7 (999) 999 9999"
               placeholder="+7 (999) 999 9999"
             />
-            <Input inputType="formik" name="warehouseAddress" id="warehouseAddress" label="Адрес" />
+            <SuggestionExample
+              setAddress={setWarehouseAddress}
+              label="Адрес склада"
+              id="warehouseAddress"
+            />
+            {/* <Input inputType="formik" name="warehouseAddress" id="warehouseAddress" label="Адрес" /> */}
             <div className="modal-action">
               <Button type="submit" loading={isLoading}>
                 Добавить склад
