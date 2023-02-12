@@ -1,7 +1,8 @@
 import { OSM_URL } from '@/redux/http';
 import { IAddressData } from '@/types';
 import axios from 'axios';
-import { FC, useState } from 'react';
+import { FC, useState, useCallback } from 'react';
+import { SingleValue } from 'react-select';
 import AsyncSelect from 'react-select/async';
 
 interface REACT_SELECT_ADDRESS {
@@ -26,15 +27,29 @@ const fetchAddressess = async (address: string) => {
 
 const SuggestionExample: FC<Props> = ({ setAddress, label, id }) => {
   const [inputData, setInputData] = useState('');
+  const [debouncedCallback, setDebouncedCallback] = useState<any>(null);
+  const [valueV, setValue] = useState<
+    SingleValue<{
+      label: string;
+      value: IAddressData;
+    }>
+  >();
 
-  const promiseOptions = (
-    inputValue: string,
-    callback: (options: REACT_SELECT_ADDRESS[]) => void
-  ) => {
-    setTimeout(async () => {
-      callback(await fetchAddressess(inputValue));
-    }, 1000);
-  };
+  const fetchAddressesWithDebouncing = useCallback(
+    (inputValue: string, callback: (options: REACT_SELECT_ADDRESS[]) => void) => {
+      if (debouncedCallback) {
+        clearTimeout(debouncedCallback);
+      }
+
+      setDebouncedCallback(
+        setTimeout(async () => {
+          const options = await fetchAddressess(inputValue);
+          callback(options);
+        }, 1000)
+      );
+    },
+    [debouncedCallback]
+  );
 
   return (
     <div className="w-full">
@@ -46,19 +61,32 @@ const SuggestionExample: FC<Props> = ({ setAddress, label, id }) => {
       <AsyncSelect
         id={id ? id : ''}
         cacheOptions
-        
-        loadOptions={promiseOptions}
+        loadOptions={(inputValue, callback) => fetchAddressesWithDebouncing(inputValue, callback)}
         defaultOptions
-        placeholder='Введите улицу, дом и выберите адрес'
+        placeholder="Введите улицу, дом и выберите адрес"
         onInputChange={(value) => setInputData(value)}
         inputValue={inputData}
-        onChange={(value) => {
+        onChange={(
+          value: SingleValue<{
+            label: string;
+            value: IAddressData;
+          }>
+        ) => {
+          setValue(value);
           setAddress &&
             setAddress({
-              longitude: value?.value.lon,
-              latitude: value?.value.lat,
-              houseNumber: value?.value.address.house_number,
-              street: value?.value.address.road
+              longitude: value ? (value.value.lon ? value.value.lon : '') : '',
+              latitude: value ? (value.value.lat ? value.value.lat : '') : '',
+              houseNumber: value
+                ? value.value.address.house_number
+                  ? value.value.address.house_number
+                  : ''
+                : '',
+              street: value
+                ? value.value.address.road
+                  ? value.value.address.road
+                  : ''
+                : ''
             });
         }}
       />
