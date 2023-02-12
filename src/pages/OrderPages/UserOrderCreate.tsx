@@ -50,8 +50,8 @@ const UserOrderCreate = () => {
   const [street, setStreet] = useState<IStreetType>({
     houseNumber: profiles[0] ? profiles[0].houseNumber! : '',
     longitude: profiles[0] ? profiles[0].longitude! : '',
-    latitude:profiles[0] ? profiles[0].latitude! : '',
-    street:profiles[0] ? profiles[0].street! : ''
+    latitude: profiles[0] ? profiles[0].latitude! : '',
+    street: profiles[0] ? profiles[0].street! : ''
   });
   const [paymentMethod, setPaymentMethod] = useState('Картой');
 

@@ -120,6 +120,10 @@ const AdminAllUsers = () => {
         accessorKey: 'birthday'
       },
       {
+        header: 'active',
+        accessorKey: 'active'
+      },
+      {
         header: 'Изменить \n Деактивировать',
         cell: ({ row }) => (
           <ActionButtons
